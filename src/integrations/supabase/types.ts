@@ -196,6 +196,36 @@ export type Database = {
         }
         Relationships: []
       }
+      contacts: {
+        Row: {
+          category: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string | null
+          status: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name?: string | null
+          status?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       product_categories: {
         Row: {
           category_id: string
