@@ -12,7 +12,7 @@ function formatStars(num: number | null): string {
 
 export function ToolCard({ tool }: { tool: Tool }) {
   return (
-    <div className="group rounded-xl border bg-card p-5 transition-all hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 animate-fade-in">
+    <Link to={`/tools/${tool.id}`} className="block group rounded-xl border bg-card p-5 transition-all hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 animate-fade-in">
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-semibold text-lg text-foreground leading-tight">
           {tool.name}
