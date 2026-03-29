@@ -113,7 +113,7 @@ export default function AdminProductsPage() {
                 <Label>ステータス</Label>
                 <select
                   value={editProduct.status}
-                  onChange={(e) => setEditProduct({ ...editProduct, status: e.target.value as "draft" | "published" })}
+                  onChange={(e) => setEditProduct({ ...editProduct, status: e.target.value as string })}
                   className="border rounded px-2 py-1 text-sm bg-background"
                 >
                   <option value="draft">下書き</option>
