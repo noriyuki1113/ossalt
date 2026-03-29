@@ -30,6 +30,10 @@ import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx
 import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
 import AdminImportsPage from "./pages/admin/AdminImportsPage.tsx";
 import AdminScrapeRunsPage from "./pages/admin/AdminScrapeRunsPage.tsx";
+import PopularPage from "./pages/PopularPage.tsx";
+import OssToolsPage from "./pages/OssToolsPage.tsx";
+import SelfHostedToolsPage from "./pages/SelfHostedToolsPage.tsx";
+import JapaneseSupportedToolsPage from "./pages/JapaneseSupportedToolsPage.tsx";
 
 const queryClient = new QueryClient();
 
