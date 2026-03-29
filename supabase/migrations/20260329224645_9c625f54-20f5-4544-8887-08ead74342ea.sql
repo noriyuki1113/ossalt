@@ -1,0 +1,5 @@
+ALTER TABLE tools 
+ADD COLUMN IF NOT EXISTS primary_competitor TEXT,
+ADD COLUMN IF NOT EXISTS primary_competitor_ja TEXT,
+ADD COLUMN IF NOT EXISTS replaces TEXT[],
+ADD COLUMN IF NOT EXISTS replaces_ja TEXT[];
