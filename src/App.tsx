@@ -28,6 +28,8 @@ import AdminSubmissionsPage from "./pages/admin/AdminSubmissionsPage.tsx";
 import AdminProductEditPage from "./pages/admin/AdminProductEditPage.tsx";
 import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx";
 import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
+import AdminImportsPage from "./pages/admin/AdminImportsPage.tsx";
+import AdminScrapeRunsPage from "./pages/admin/AdminScrapeRunsPage.tsx";
 
 const queryClient = new QueryClient();
 
