@@ -28,6 +28,8 @@ import AdminSubmissionsPage from "./pages/admin/AdminSubmissionsPage.tsx";
 import AdminProductEditPage from "./pages/admin/AdminProductEditPage.tsx";
 import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx";
 import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
+import AdminImportsPage from "./pages/admin/AdminImportsPage.tsx";
+import AdminScrapeRunsPage from "./pages/admin/AdminScrapeRunsPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +70,8 @@ const App = () => (
               <Route path="alternatives/new" element={<AdminAlternativeEditPage />} />
               <Route path="alternatives/:id" element={<AdminAlternativeEditPage />} />
               <Route path="submissions" element={<AdminSubmissionsPage />} />
+              <Route path="imports" element={<AdminImportsPage />} />
+              <Route path="scrape-runs" element={<AdminScrapeRunsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
