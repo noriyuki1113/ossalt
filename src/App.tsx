@@ -34,6 +34,11 @@ import PopularPage from "./pages/PopularPage.tsx";
 import OssToolsPage from "./pages/OssToolsPage.tsx";
 import SelfHostedToolsPage from "./pages/SelfHostedToolsPage.tsx";
 import JapaneseSupportedToolsPage from "./pages/JapaneseSupportedToolsPage.tsx";
+import ArticlesPage from "./pages/ArticlesPage.tsx";
+import ArticleDetailPage from "./pages/ArticleDetailPage.tsx";
+import AdminArticlesPage from "./pages/admin/AdminArticlesPage.tsx";
+import AdminArticleEditPage from "./pages/admin/AdminArticleEditPage.tsx";
+import AdminArticleGeneratePage from "./pages/admin/AdminArticleGeneratePage.tsx";
 
 const queryClient = new QueryClient();
 
