@@ -310,6 +310,9 @@ export type Database = {
           last_commit_at: string | null
           license: string | null
           logo_background: string | null
+          logo_favicon_url: string | null
+          logo_github_avatar_url: string | null
+          logo_github_readme_url: string | null
           logo_source: string | null
           logo_url: string | null
           name: string
@@ -344,6 +347,9 @@ export type Database = {
           last_commit_at?: string | null
           license?: string | null
           logo_background?: string | null
+          logo_favicon_url?: string | null
+          logo_github_avatar_url?: string | null
+          logo_github_readme_url?: string | null
           logo_source?: string | null
           logo_url?: string | null
           name: string
@@ -378,6 +384,9 @@ export type Database = {
           last_commit_at?: string | null
           license?: string | null
           logo_background?: string | null
+          logo_favicon_url?: string | null
+          logo_github_avatar_url?: string | null
+          logo_github_readme_url?: string | null
           logo_source?: string | null
           logo_url?: string | null
           name?: string
