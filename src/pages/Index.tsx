@@ -12,12 +12,21 @@ import { useSeo } from "@/hooks/use-seo";
 
 export default function IndexPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialCategory = searchParams.get("category") || "すべて";
-  const initialSearch = searchParams.get("search") || "";
+  const urlCategory = searchParams.get("category") || "すべて";
+  const urlSearch = searchParams.get("search") || "";
 
-  const [search, setSearch] = useState(initialSearch);
-  const [debouncedSearch, setDebouncedSearch] = useState(initialSearch);
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [search, setSearch] = useState(urlSearch);
+  const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
+  const [selectedCategory, setSelectedCategory] = useState(urlCategory);
+
+  // Sync state from URL when navigating back to / (e.g. from detail page)
+  useEffect(() => {
+    setSearch(urlSearch);
+    setDebouncedSearch(urlSearch);
+    setSelectedCategory(urlCategory);
+    setPage(0);
+    setAllTools([]);
+  }, [urlSearch, urlCategory]);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
