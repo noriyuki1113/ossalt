@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SiteLayout } from "@/components/SiteLayout";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { ProductLogo } from "@/components/ProductLogo";
 import { FeatureIndicator, DifficultyBadge } from "@/components/ProductCard";
 import { DetailSkeleton } from "@/components/LoadingSkeleton";
 import { ErrorState } from "@/components/StateDisplays";
