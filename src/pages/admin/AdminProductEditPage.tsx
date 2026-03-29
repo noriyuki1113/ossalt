@@ -145,9 +145,15 @@ export default function AdminProductEditPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <AdminTextField label="ロゴURL" value={form.logo_url} onChange={(v) => set("logo_url", v)} placeholder="空の場合はfavicon/GitHubから自動取得" />
+                <AdminTextField label="ロゴURL" value={form.logo_url} onChange={(v) => set("logo_url", v)} placeholder="空の場合はGitHub/faviconから自動取得" />
                 <div className="mt-2 flex items-center gap-3">
-                  <ProductLogo name={form.name || "P"} logoUrl={form.logo_url || undefined} websiteUrl={form.website_url || undefined} githubUrl={form.github_url || undefined} size="lg" />
+                  <ProductLogo
+                    name={form.name || "P"}
+                    logoUrl={form.logo_url || undefined}
+                    websiteUrl={form.website_url || undefined}
+                    githubUrl={form.github_url || undefined}
+                    size="lg"
+                  />
                   <span className="text-xs text-muted-foreground">プレビュー</span>
                 </div>
               </div>

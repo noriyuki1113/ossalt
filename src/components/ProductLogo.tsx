@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { getLogoUrlCandidates, getInitials } from "@/lib/logo-utils";
+import { getLogoUrlCandidates, getInitials, type ProductLogoInput } from "@/lib/logo-utils";
 import { cn } from "@/lib/utils";
 
 type LogoSize = "sm" | "md" | "lg" | "xl";
@@ -7,6 +7,9 @@ type LogoSize = "sm" | "md" | "lg" | "xl";
 interface ProductLogoProps {
   name: string;
   logoUrl?: string | null;
+  logoGithubReadmeUrl?: string | null;
+  logoGithubAvatarUrl?: string | null;
+  logoFaviconUrl?: string | null;
   websiteUrl?: string | null;
   githubUrl?: string | null;
   size?: LogoSize;
@@ -20,13 +23,27 @@ const sizeMap: Record<LogoSize, { container: string; img: string; text: string }
   xl: { container: "h-20 w-20 rounded-2xl", img: "h-14 w-14", text: "text-3xl" },
 };
 
-export function ProductLogo({ name, logoUrl, websiteUrl, githubUrl, size = "md", className }: ProductLogoProps) {
-  const candidates = getLogoUrlCandidates({
+export function ProductLogo({
+  name,
+  logoUrl,
+  logoGithubReadmeUrl,
+  logoGithubAvatarUrl,
+  logoFaviconUrl,
+  websiteUrl,
+  githubUrl,
+  size = "md",
+  className,
+}: ProductLogoProps) {
+  const input: ProductLogoInput = {
     name,
     logo_url: logoUrl,
+    logo_github_readme_url: logoGithubReadmeUrl,
+    logo_github_avatar_url: logoGithubAvatarUrl,
+    logo_favicon_url: logoFaviconUrl,
     website_url: websiteUrl,
     github_url: githubUrl,
-  });
+  };
+  const candidates = getLogoUrlCandidates(input);
 
   const [candidateIndex, setCandidateIndex] = useState(0);
   const [allFailed, setAllFailed] = useState(candidates.length === 0);
