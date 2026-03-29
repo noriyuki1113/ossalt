@@ -144,7 +144,13 @@ export default function AdminProductEditPage() {
               <AdminTextField label="GitHub URL" value={form.github_url} onChange={(v) => set("github_url", v)} placeholder="https://github.com/..." />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <AdminTextField label="ロゴURL" value={form.logo_url} onChange={(v) => set("logo_url", v)} />
+              <div>
+                <AdminTextField label="ロゴURL" value={form.logo_url} onChange={(v) => set("logo_url", v)} placeholder="空の場合はfavicon/GitHubから自動取得" />
+                <div className="mt-2 flex items-center gap-3">
+                  <ProductLogo name={form.name || "P"} logoUrl={form.logo_url || undefined} websiteUrl={form.website_url || undefined} githubUrl={form.github_url || undefined} size="lg" />
+                  <span className="text-xs text-muted-foreground">プレビュー</span>
+                </div>
+              </div>
               <AdminNumberField label="GitHub Stars" value={form.github_stars} onChange={(v) => set("github_stars", v)} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
