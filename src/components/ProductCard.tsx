@@ -3,12 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Check, X, Star, ArrowRight, Shield } from "lucide-react";
 import { forwardRef } from "react";
+import { ProductLogo } from "@/components/ProductLogo";
 
 interface ProductCardProps {
   product: any;
 }
 
-/** Compact card matching the mockup "人気のオープンソースツール" grid */
+/** Compact card for grid listings */
 export const ProductCard = forwardRef<HTMLAnchorElement, ProductCardProps>(({ product }, ref) => {
   const stars = product.github_stars;
   const formatStars = (n: number) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
@@ -19,24 +20,21 @@ export const ProductCard = forwardRef<HTMLAnchorElement, ProductCardProps>(({ pr
       to={`/products/${product.slug}`}
       className="group bg-card border rounded-xl p-5 transition-all hover:shadow-md hover:-translate-y-0.5 flex flex-col"
     >
-      {/* Logo + Name */}
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 overflow-hidden">
-          {product.logo_url ? (
-            <img src={product.logo_url} alt={product.name} className="h-7 w-7 object-contain" loading="lazy" />
-          ) : (
-            <span className="text-base font-bold text-muted-foreground">{product.name[0]}</span>
-          )}
-        </div>
+        <ProductLogo
+          name={product.name}
+          logoUrl={product.logo_url}
+          websiteUrl={product.website_url}
+          githubUrl={product.github_url}
+          size="md"
+        />
         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate text-base">
           {product.name}
         </h3>
       </div>
 
-      {/* Description */}
       <p className="mt-2.5 text-sm text-muted-foreground line-clamp-2 flex-1">{product.short_description}</p>
 
-      {/* Badges */}
       <div className="mt-3 flex flex-wrap gap-1.5">
         {product.is_open_source && <Badge variant="secondary" className="text-xs font-normal">OSS</Badge>}
         {product.is_self_hostable && <Badge variant="secondary" className="text-xs font-normal">セルフホスト</Badge>}
@@ -44,7 +42,6 @@ export const ProductCard = forwardRef<HTMLAnchorElement, ProductCardProps>(({ pr
         {product.supports_japanese && <Badge variant="secondary" className="text-xs font-normal">🇯🇵 日本語</Badge>}
       </div>
 
-      {/* Bottom row: stars + license */}
       <div className="mt-3 pt-3 border-t flex items-center justify-between text-xs text-muted-foreground">
         <div className="flex items-center gap-3">
           {stars > 0 && (
@@ -73,13 +70,13 @@ ProductCard.displayName = "ProductCard";
 export function SponsorCard({ product }: { product: any }) {
   return (
     <div className="bg-card border rounded-xl p-6 flex flex-col items-center text-center hover:shadow-md transition-shadow">
-      <div className="h-14 w-14 rounded-xl bg-secondary flex items-center justify-center overflow-hidden">
-        {product.logo_url ? (
-          <img src={product.logo_url} alt={product.name} className="h-10 w-10 object-contain" loading="lazy" />
-        ) : (
-          <span className="text-2xl font-bold text-muted-foreground">{product.name[0]}</span>
-        )}
-      </div>
+      <ProductLogo
+        name={product.name}
+        logoUrl={product.logo_url}
+        websiteUrl={product.website_url}
+        githubUrl={product.github_url}
+        size="lg"
+      />
       <h3 className="mt-3 font-bold text-lg">{product.name}</h3>
       <p className="mt-1 text-sm text-muted-foreground line-clamp-1">{product.short_description}</p>
       <Link to={`/products/${product.slug}`} className="mt-4 w-full">
@@ -91,6 +88,7 @@ export function SponsorCard({ product }: { product: any }) {
   );
 }
 
+/** Detailed card used on alternative detail pages */
 export function ProductCardDetailed({ product, reason }: { product: any; reason?: string | null }) {
   const stars = product.github_stars;
   const formatStars = (n: number) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
@@ -99,13 +97,13 @@ export function ProductCardDetailed({ product, reason }: { product: any; reason?
     <div className="bg-card border rounded-xl p-6 hover:shadow-sm transition-shadow">
       <Link to={`/products/${product.slug}`} className="group">
         <div className="flex items-start gap-4">
-          <div className="h-12 w-12 rounded-xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden">
-            {product.logo_url ? (
-              <img src={product.logo_url} alt={product.name} className="h-9 w-9 object-contain" loading="lazy" />
-            ) : (
-              <span className="text-xl font-bold text-muted-foreground">{product.name[0]}</span>
-            )}
-          </div>
+          <ProductLogo
+            name={product.name}
+            logoUrl={product.logo_url}
+            websiteUrl={product.website_url}
+            githubUrl={product.github_url}
+            size="lg"
+          />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
