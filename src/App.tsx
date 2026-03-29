@@ -25,6 +25,9 @@ import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage.tsx";
 import AdminTagsPage from "./pages/admin/AdminTagsPage.tsx";
 import AdminAlternativesPage from "./pages/admin/AdminAlternativesPage.tsx";
 import AdminSubmissionsPage from "./pages/admin/AdminSubmissionsPage.tsx";
+import AdminProductEditPage from "./pages/admin/AdminProductEditPage.tsx";
+import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx";
+import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -55,9 +58,15 @@ const App = () => (
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="products" element={<AdminProductsPage />} />
+              <Route path="products/new" element={<AdminProductEditPage />} />
+              <Route path="products/:id" element={<AdminProductEditPage />} />
               <Route path="categories" element={<AdminCategoriesPage />} />
+              <Route path="categories/new" element={<AdminCategoryEditPage />} />
+              <Route path="categories/:id" element={<AdminCategoryEditPage />} />
               <Route path="tags" element={<AdminTagsPage />} />
               <Route path="alternatives" element={<AdminAlternativesPage />} />
+              <Route path="alternatives/new" element={<AdminAlternativeEditPage />} />
+              <Route path="alternatives/:id" element={<AdminAlternativeEditPage />} />
               <Route path="submissions" element={<AdminSubmissionsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
