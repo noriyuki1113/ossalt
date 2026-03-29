@@ -74,9 +74,9 @@ export default function IndexPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative bg-gradient-to-b from-primary/[0.03] via-background to-background">
+      <section className="relative bg-gradient-to-b from-primary/[0.06] via-background to-background">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl" />
         </div>
         <div className="container relative py-14 md:py-20 text-center">
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
