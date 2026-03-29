@@ -1,13 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-export function useProducts(options?: { categorySlug?: string; tagSlug?: string; search?: string; featured?: boolean }) {
+export function useProducts(options?: { categorySlug?: string; tagSlug?: string; search?: string; featured?: boolean; japaneseOnly?: boolean; ossOnly?: boolean; selfHostOnly?: boolean; cloudOnly?: boolean }) {
   return useQuery({
     queryKey: ["products", options],
     queryFn: async () => {
       let query = supabase.from("products").select("*").eq("status", "published").order("created_at", { ascending: false });
 
       if (options?.featured) query = query.eq("featured", true);
+      if (options?.japaneseOnly) query = query.eq("supports_japanese", true);
+      if (options?.ossOnly) query = query.eq("is_open_source", true);
+      if (options?.selfHostOnly) query = query.eq("is_self_hostable", true);
+      if (options?.cloudOnly) query = query.eq("has_cloud", true);
       if (options?.search) query = query.or(`name.ilike.%${options.search}%,short_description.ilike.%${options.search}%`);
 
       const { data, error } = await query;
@@ -49,11 +53,15 @@ export function useProduct(slug: string) {
       const { data: ptData } = await supabase.from("product_tags").select("tag_id, tags(*)").eq("product_id", data.id);
       const { data: features } = await supabase.from("product_features").select("*").eq("product_id", data.id);
 
+      // Find alternatives that include this product
+      const { data: altProducts } = await supabase.from("alternative_products").select("alternative_id, alternatives(source_name, source_slug)").eq("product_id", data.id);
+
       return {
         ...data,
         categories: pcData?.map((pc: any) => pc.categories).filter(Boolean) || [],
         tags: ptData?.map((pt: any) => pt.tags).filter(Boolean) || [],
         features: features || [],
+        relatedAlternatives: altProducts?.map((ap: any) => ap.alternatives).filter(Boolean) || [],
       };
     },
     enabled: !!slug,
@@ -94,15 +102,20 @@ export function useTags() {
   });
 }
 
-export function useAlternatives(options?: { featured?: boolean }) {
+export function useAlternatives(options?: { featured?: boolean; search?: string }) {
   return useQuery({
     queryKey: ["alternatives", options],
     queryFn: async () => {
-      let query = supabase.from("alternatives").select("*, categories(*)").order("created_at", { ascending: false });
+      let query = supabase.from("alternatives").select("*").order("created_at", { ascending: false });
       if (options?.featured) query = query.eq("featured", true);
       const { data, error } = await query;
       if (error) throw error;
-      return data || [];
+      let results = data || [];
+      if (options?.search) {
+        const q = options.search.toLowerCase();
+        results = results.filter(a => a.source_name.toLowerCase().includes(q) || (a as any).japanese_source_name?.toLowerCase().includes(q));
+      }
+      return results;
     },
   });
 }
@@ -111,7 +124,7 @@ export function useAlternative(slug: string) {
   return useQuery({
     queryKey: ["alternative", slug],
     queryFn: async () => {
-      const { data, error } = await supabase.from("alternatives").select("*, categories(*)").eq("source_slug", slug).single();
+      const { data, error } = await supabase.from("alternatives").select("*").eq("source_slug", slug).single();
       if (error) throw error;
 
       const { data: apData } = await supabase
@@ -120,7 +133,19 @@ export function useAlternative(slug: string) {
         .eq("alternative_id", data.id)
         .order("rank_order");
 
-      return { ...data, products: apData || [] };
+      // Get related alternatives
+      let relatedAlts: any[] = [];
+      const catHint = (data as any).category_hint;
+      if (catHint) {
+        const { data: related } = await supabase
+          .from("alternatives")
+          .select("source_name, source_slug")
+          .neq("id", data.id)
+          .limit(5);
+        relatedAlts = (related || []).filter((r: any) => true);
+      }
+
+      return { ...data, products: apData || [], relatedAlternatives: relatedAlts };
     },
     enabled: !!slug,
   });

@@ -17,6 +17,7 @@ export type Database = {
       alternative_products: {
         Row: {
           alternative_id: string
+          created_at: string
           id: string
           product_id: string
           rank_order: number | null
@@ -24,6 +25,7 @@ export type Database = {
         }
         Insert: {
           alternative_id: string
+          created_at?: string
           id?: string
           product_id: string
           rank_order?: number | null
@@ -31,6 +33,7 @@ export type Database = {
         }
         Update: {
           alternative_id?: string
+          created_at?: string
           id?: string
           product_id?: string
           rank_order?: number | null
@@ -55,33 +58,48 @@ export type Database = {
       }
       alternatives: {
         Row: {
+          category_hint: string | null
           category_id: string | null
           created_at: string
           description: string | null
           featured: boolean | null
           id: string
+          japanese_source_description: string | null
+          japanese_source_name: string | null
+          source_description: string | null
           source_name: string
           source_slug: string
+          source_url: string | null
           updated_at: string
         }
         Insert: {
+          category_hint?: string | null
           category_id?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean | null
           id?: string
+          japanese_source_description?: string | null
+          japanese_source_name?: string | null
+          source_description?: string | null
           source_name: string
           source_slug: string
+          source_url?: string | null
           updated_at?: string
         }
         Update: {
+          category_hint?: string | null
           category_id?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean | null
           id?: string
+          japanese_source_description?: string | null
+          japanese_source_name?: string | null
+          source_description?: string | null
           source_name?: string
           source_slug?: string
+          source_url?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -100,6 +118,8 @@ export type Database = {
           description: string | null
           icon: string | null
           id: string
+          japanese_description: string | null
+          japanese_name: string | null
           name: string
           slug: string
           sort_order: number | null
@@ -109,6 +129,8 @@ export type Database = {
           description?: string | null
           icon?: string | null
           id?: string
+          japanese_description?: string | null
+          japanese_name?: string | null
           name: string
           slug: string
           sort_order?: number | null
@@ -118,6 +140,8 @@ export type Database = {
           description?: string | null
           icon?: string | null
           id?: string
+          japanese_description?: string | null
+          japanese_name?: string | null
           name?: string
           slug?: string
           sort_order?: number | null
@@ -221,20 +245,31 @@ export type Database = {
       }
       products: {
         Row: {
+          best_for: string | null
           created_at: string
           description: string | null
           featured: boolean | null
+          github_forks: number | null
+          github_stars: number | null
           github_url: string | null
           has_cloud: boolean | null
           has_free_plan: boolean | null
           id: string
           is_open_source: boolean | null
           is_self_hostable: boolean | null
+          japanese_description: string | null
+          japanese_name: string | null
+          last_commit_at: string | null
+          license: string | null
           logo_url: string | null
           name: string
+          not_good_for: string | null
           pricing_summary: string | null
+          self_host_difficulty: string | null
           short_description: string | null
           slug: string
+          source_origin: string | null
+          source_url: string | null
           status: string
           supports_japanese: boolean | null
           target_audience: string | null
@@ -242,20 +277,31 @@ export type Database = {
           website_url: string | null
         }
         Insert: {
+          best_for?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean | null
+          github_forks?: number | null
+          github_stars?: number | null
           github_url?: string | null
           has_cloud?: boolean | null
           has_free_plan?: boolean | null
           id?: string
           is_open_source?: boolean | null
           is_self_hostable?: boolean | null
+          japanese_description?: string | null
+          japanese_name?: string | null
+          last_commit_at?: string | null
+          license?: string | null
           logo_url?: string | null
           name: string
+          not_good_for?: string | null
           pricing_summary?: string | null
+          self_host_difficulty?: string | null
           short_description?: string | null
           slug: string
+          source_origin?: string | null
+          source_url?: string | null
           status?: string
           supports_japanese?: boolean | null
           target_audience?: string | null
@@ -263,20 +309,31 @@ export type Database = {
           website_url?: string | null
         }
         Update: {
+          best_for?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean | null
+          github_forks?: number | null
+          github_stars?: number | null
           github_url?: string | null
           has_cloud?: boolean | null
           has_free_plan?: boolean | null
           id?: string
           is_open_source?: boolean | null
           is_self_hostable?: boolean | null
+          japanese_description?: string | null
+          japanese_name?: string | null
+          last_commit_at?: string | null
+          license?: string | null
           logo_url?: string | null
           name?: string
+          not_good_for?: string | null
           pricing_summary?: string | null
+          self_host_difficulty?: string | null
           short_description?: string | null
           slug?: string
+          source_origin?: string | null
+          source_url?: string | null
           status?: string
           supports_japanese?: boolean | null
           target_audience?: string | null
@@ -285,10 +342,44 @@ export type Database = {
         }
         Relationships: []
       }
+      scrape_runs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          meta: Json | null
+          source: string
+          started_at: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          meta?: Json | null
+          source: string
+          started_at?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          meta?: Json | null
+          source?: string
+          started_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           created_at: string
           email: string
+          github_url: string | null
           id: string
           message: string | null
           product_name: string
@@ -298,6 +389,7 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          github_url?: string | null
           id?: string
           message?: string | null
           product_name: string
@@ -307,6 +399,7 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          github_url?: string | null
           id?: string
           message?: string | null
           product_name?: string

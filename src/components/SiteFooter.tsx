@@ -7,12 +7,12 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-display text-lg font-bold text-gradient">AltFinder.jp</Link>
-            <p className="mt-2 text-sm text-muted-foreground">日本語で探す、最適な代替サービス比較サイト</p>
+            <p className="mt-2 text-sm text-muted-foreground">日本語で探す、OSSの代替サービス比較サイト</p>
           </div>
           <div>
             <h4 className="font-semibold text-sm mb-3">サービス</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/tools" className="hover:text-foreground transition-colors">ツール一覧</Link></li>
+              <li><Link to="/products" className="hover:text-foreground transition-colors">ツール一覧</Link></li>
               <li><Link to="/categories" className="hover:text-foreground transition-colors">カテゴリ</Link></li>
               <li><Link to="/alternatives" className="hover:text-foreground transition-colors">代替サービス</Link></li>
             </ul>
@@ -21,7 +21,6 @@ export function SiteFooter() {
             <h4 className="font-semibold text-sm mb-3">サイト情報</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/about" className="hover:text-foreground transition-colors">About</Link></li>
-              <li><Link to="/contact" className="hover:text-foreground transition-colors">お問い合わせ</Link></li>
               <li><Link to="/submit" className="hover:text-foreground transition-colors">掲載申請</Link></li>
             </ul>
           </div>

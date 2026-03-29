@@ -8,12 +8,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { LoadingState } from "@/components/StateDisplays";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 
-const empty = { source_name: "", source_slug: "", description: "", category_id: null as string | null, featured: false };
+const empty = { source_name: "", source_slug: "", description: "", japanese_source_name: "", japanese_source_description: "", category_hint: "", source_url: "", featured: false };
 
 export default function AdminAlternativesPage() {
   const qc = useQueryClient();
@@ -23,25 +22,20 @@ export default function AdminAlternativesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["admin-alternatives"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("alternatives").select("*, categories(name)").order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("alternatives").select("*").order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },
   });
 
-  const { data: categories } = useQuery({
-    queryKey: ["admin-categories-list"],
-    queryFn: async () => { const { data } = await supabase.from("categories").select("id, name").order("name"); return data || []; },
-  });
-
   const save = useMutation({
     mutationFn: async (item: typeof empty & { id?: string }) => {
-      if (item.id) {
-        const { id, ...rest } = item;
-        const { error } = await supabase.from("alternatives").update(rest).eq("id", id);
+      const { id, ...rest } = item as any;
+      if (id) {
+        const { error } = await supabase.from("alternatives").update({ source_name: rest.source_name, source_slug: rest.source_slug, description: rest.description, featured: rest.featured }).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("alternatives").insert(item);
+        const { error } = await supabase.from("alternatives").insert({ source_name: rest.source_name, source_slug: rest.source_slug, description: rest.description, featured: rest.featured });
         if (error) throw error;
       }
     },
@@ -68,13 +62,8 @@ export default function AdminAlternativesPage() {
               <div><Label>元サービス名</Label><Input value={edit.source_name} onChange={(e) => setEdit({ ...edit, source_name: e.target.value })} required /></div>
               <div><Label>スラッグ</Label><Input value={edit.source_slug} onChange={(e) => setEdit({ ...edit, source_slug: e.target.value })} required /></div>
               <div><Label>説明</Label><Textarea value={edit.description || ""} onChange={(e) => setEdit({ ...edit, description: e.target.value })} /></div>
-              <div>
-                <Label>カテゴリ</Label>
-                <select value={edit.category_id || ""} onChange={(e) => setEdit({ ...edit, category_id: e.target.value || null })} className="w-full border rounded px-2 py-1 text-sm bg-background">
-                  <option value="">未選択</option>
-                  {categories?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-                </select>
-              </div>
+              <div><Label>カテゴリヒント</Label><Input value={edit.category_hint || ""} onChange={(e) => setEdit({ ...edit, category_hint: e.target.value })} placeholder="例: チャット, CMS" /></div>
+              <div><Label>元サービスURL</Label><Input value={edit.source_url || ""} onChange={(e) => setEdit({ ...edit, source_url: e.target.value })} /></div>
               <div className="flex items-center gap-2">
                 <Switch checked={edit.featured || false} onCheckedChange={(v) => setEdit({ ...edit, featured: v })} />
                 <Label>注目</Label>
@@ -91,11 +80,11 @@ export default function AdminAlternativesPage() {
             {data?.map((a: any) => (
               <TableRow key={a.id}>
                 <TableCell className="font-medium">{a.source_name}の代替</TableCell>
-                <TableCell className="text-muted-foreground">{a.categories?.name || "—"}</TableCell>
+                <TableCell className="text-muted-foreground">{a.category_hint || "—"}</TableCell>
                 <TableCell>{a.featured ? "⭐" : "—"}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => { setEdit({ source_name: a.source_name, source_slug: a.source_slug, description: a.description, category_id: a.category_id, featured: a.featured, id: a.id }); setOpen(true); }}><Pencil className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="icon" onClick={() => { setEdit({ source_name: a.source_name, source_slug: a.source_slug, description: a.description, japanese_source_name: a.japanese_source_name || "", japanese_source_description: a.japanese_source_description || "", category_hint: a.category_hint || "", source_url: a.source_url || "", featured: a.featured, id: a.id }); setOpen(true); }}><Pencil className="h-4 w-4" /></Button>
                     <Button variant="ghost" size="icon" onClick={() => { if (confirm("削除しますか？")) del.mutate(a.id); }}><Trash2 className="h-4 w-4" /></Button>
                   </div>
                 </TableCell>

@@ -11,7 +11,7 @@ import { Send } from "lucide-react";
 
 export default function SubmitPage() {
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ product_name: "", website_url: "", email: "", message: "" });
+  const [form, setForm] = useState({ product_name: "", website_url: "", github_url: "", email: "", message: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,13 +20,18 @@ export default function SubmitPage() {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.from("submissions").insert(form);
+    const { error } = await supabase.from("submissions").insert({
+      product_name: form.product_name,
+      website_url: form.website_url,
+      email: form.email,
+      message: form.message || null,
+    });
     setLoading(false);
     if (error) {
       toast.error("送信に失敗しました");
     } else {
       toast.success("掲載申請を受け付けました！");
-      setForm({ product_name: "", website_url: "", email: "", message: "" });
+      setForm({ product_name: "", website_url: "", github_url: "", email: "", message: "" });
     }
   };
 
@@ -35,11 +40,11 @@ export default function SubmitPage() {
       <div className="container py-10 max-w-lg">
         <Breadcrumbs items={[{ label: "掲載申請" }]} />
         <h1 className="text-3xl font-bold">掲載申請</h1>
-        <p className="mt-2 text-muted-foreground">あなたのサービスをAltFinder.jpに掲載しませんか？</p>
+        <p className="mt-2 text-muted-foreground">あなたのOSSツールをAltFinder.jpに掲載しませんか？</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           <div>
-            <Label htmlFor="product_name">サービス名 *</Label>
+            <Label htmlFor="product_name">ツール名 *</Label>
             <Input id="product_name" value={form.product_name} onChange={(e) => setForm({ ...form, product_name: e.target.value })} required maxLength={200} />
           </div>
           <div>
@@ -47,12 +52,16 @@ export default function SubmitPage() {
             <Input id="website_url" type="url" value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })} required maxLength={500} />
           </div>
           <div>
+            <Label htmlFor="github_url">GitHub URL</Label>
+            <Input id="github_url" type="url" value={form.github_url} onChange={(e) => setForm({ ...form, github_url: e.target.value })} maxLength={500} placeholder="https://github.com/..." />
+          </div>
+          <div>
             <Label htmlFor="email">メールアドレス *</Label>
             <Input id="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required maxLength={320} />
           </div>
           <div>
             <Label htmlFor="message">メッセージ（任意）</Label>
-            <Textarea id="message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} maxLength={1000} />
+            <Textarea id="message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4} maxLength={1000} placeholder="ツールの特徴やおすすめポイントなど" />
           </div>
           <Button type="submit" disabled={loading} className="w-full">
             <Send className="mr-2 h-4 w-4" />{loading ? "送信中..." : "申請を送信する"}
