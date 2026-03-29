@@ -1,0 +1,99 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+export interface Tool {
+  id: number;
+  name: string | null;
+  url: string | null;
+  description_en: string | null;
+  description_ja: string | null;
+  parent_category_en: string | null;
+  parent_category_ja: string | null;
+  category_en: string | null;
+  category_ja: string | null;
+  github_url: string | null;
+  license: string | null;
+  stars: string | null;
+  stars_num: number | null;
+  created_at: string | null;
+}
+
+interface UseToolsOptions {
+  category?: string;
+  search?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export function useTools(options?: UseToolsOptions) {
+  const page = options?.page ?? 0;
+  const pageSize = options?.pageSize ?? 24;
+
+  return useQuery({
+    queryKey: ["tools", options],
+    queryFn: async () => {
+      let query = supabase
+        .from("tools")
+        .select("*", { count: "exact" })
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .range(page * pageSize, (page + 1) * pageSize - 1);
+
+      if (options?.category && options.category !== "すべて") {
+        query = query.eq("parent_category_ja", options.category);
+      }
+
+      if (options?.search) {
+        query = query.or(
+          `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%`
+        );
+      }
+
+      const { data, error, count } = await query;
+      if (error) throw error;
+      return { tools: (data as Tool[]) || [], totalCount: count || 0 };
+    },
+  });
+}
+
+export function useToolCategories() {
+  return useQuery({
+    queryKey: ["tool-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("tools")
+        .select("parent_category_ja");
+      if (error) throw error;
+
+      const counts = new Map<string, number>();
+      data?.forEach((t) => {
+        const cat = t.parent_category_ja;
+        if (cat) counts.set(cat, (counts.get(cat) || 0) + 1);
+      });
+
+      return Array.from(counts.entries())
+        .sort((a, b) => b[1] - a[1])
+        .map(([name, count]) => ({ name, count }));
+    },
+  });
+}
+
+export function useToolStats() {
+  return useQuery({
+    queryKey: ["tool-stats"],
+    queryFn: async () => {
+      const { data, error, count } = await supabase
+        .from("tools")
+        .select("stars_num, parent_category_ja", { count: "exact" });
+      if (error) throw error;
+
+      const totalStars = data?.reduce((sum, t) => sum + (t.stars_num || 0), 0) || 0;
+      const categories = new Set(data?.map((t) => t.parent_category_ja).filter(Boolean));
+
+      return {
+        toolCount: count || 0,
+        categoryCount: categories.size,
+        totalStars,
+      };
+    },
+  });
+}
