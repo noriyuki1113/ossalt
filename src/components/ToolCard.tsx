@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ExternalLink, Github, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ function formatStars(num: number | null): string {
 
 export function ToolCard({ tool }: { tool: Tool }) {
   return (
-    <div className="group rounded-xl border bg-card p-5 transition-all hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 animate-fade-in">
+    <Link to={`/tools/${tool.id}`} className="block group rounded-xl border bg-card p-5 transition-all hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 animate-fade-in">
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-semibold text-lg text-foreground leading-tight">
           {tool.name}
@@ -41,10 +42,10 @@ export function ToolCard({ tool }: { tool: Tool }) {
         )}
       </div>
 
-      <div className="mt-4 flex items-center gap-2">
+      <div className="mt-4 flex items-center gap-2" onClick={(e) => e.preventDefault()}>
         {tool.url && (
           <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5 rounded-lg" asChild>
-            <a href={tool.url} target="_blank" rel="noopener noreferrer">
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
               <ExternalLink className="h-3.5 w-3.5" />
               サイト
             </a>
@@ -52,14 +53,14 @@ export function ToolCard({ tool }: { tool: Tool }) {
         )}
         {tool.github_url && (
           <Button variant="ghost" size="sm" className="h-8 text-xs gap-1.5 rounded-lg" asChild>
-            <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+            <a href={tool.github_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
               <Github className="h-3.5 w-3.5" />
               GitHub
             </a>
           </Button>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
 
