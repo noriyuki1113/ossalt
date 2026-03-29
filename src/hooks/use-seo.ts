@@ -5,11 +5,17 @@ interface SeoProps {
   description?: string;
   canonical?: string;
   ogType?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
-export function useSeo({ title, description, canonical, ogType = "website" }: SeoProps) {
+const SITE_NAME = "OSSアルタナティブ";
+const BASE_URL = "https://find-my-alt.lovable.app";
+const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
+
+export function useSeo({ title, description, canonical, ogType = "website", ogImage, jsonLd }: SeoProps) {
   useEffect(() => {
-    const fullTitle = title.includes("AltFinder") ? title : `${title} | AltFinder.jp`;
+    const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
     document.title = fullTitle;
 
     const setMeta = (name: string, content: string, attr = "name") => {
@@ -28,21 +34,40 @@ export function useSeo({ title, description, canonical, ogType = "website" }: Se
     }
     setMeta("og:title", fullTitle, "property");
     setMeta("og:type", ogType, "property");
-    setMeta("og:site_name", "AltFinder.jp", "property");
+    setMeta("og:site_name", SITE_NAME, "property");
+    setMeta("og:image", ogImage || DEFAULT_OG_IMAGE, "property");
+    setMeta("twitter:card", "summary_large_image");
+    setMeta("twitter:title", fullTitle);
+    if (description) setMeta("twitter:description", description);
+    setMeta("twitter:image", ogImage || DEFAULT_OG_IMAGE);
 
-    if (canonical) {
-      let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-      if (!link) {
-        link = document.createElement("link");
-        link.setAttribute("rel", "canonical");
-        document.head.appendChild(link);
+    const canonicalUrl = canonical || `${BASE_URL}${window.location.pathname}`;
+    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!link) {
+      link = document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      document.head.appendChild(link);
+    }
+    link.setAttribute("href", canonicalUrl);
+    setMeta("og:url", canonicalUrl, "property");
+
+    // JSON-LD
+    let scriptEl = document.querySelector('script[data-seo-jsonld]') as HTMLScriptElement | null;
+    if (jsonLd) {
+      if (!scriptEl) {
+        scriptEl = document.createElement("script");
+        scriptEl.setAttribute("type", "application/ld+json");
+        scriptEl.setAttribute("data-seo-jsonld", "true");
+        document.head.appendChild(scriptEl);
       }
-      link.setAttribute("href", canonical);
-      setMeta("og:url", canonical, "property");
+      scriptEl.textContent = JSON.stringify(jsonLd);
+    } else if (scriptEl) {
+      scriptEl.remove();
     }
 
     return () => {
-      document.title = "AltFinder.jp — オープンソース代替サービス比較";
+      document.title = `${SITE_NAME} — 有料SaaSの代わりに使えるオープンソースツール集`;
+      if (scriptEl) scriptEl.remove();
     };
-  }, [title, description, canonical, ogType]);
+  }, [title, description, canonical, ogType, ogImage, jsonLd]);
 }
