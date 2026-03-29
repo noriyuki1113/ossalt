@@ -65,6 +65,8 @@ const App = () => (
             <Route path="/open-source-tools" element={<OssToolsPage />} />
             <Route path="/self-hosted-tools" element={<SelfHostedToolsPage />} />
             <Route path="/japanese-supported-tools" element={<JapaneseSupportedToolsPage />} />
+            <Route path="/articles" element={<ArticlesPage />} />
+            <Route path="/articles/:slug" element={<ArticleDetailPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
