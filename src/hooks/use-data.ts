@@ -1,11 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-export function useProducts(options?: { categorySlug?: string; tagSlug?: string; search?: string; featured?: boolean; japaneseOnly?: boolean; ossOnly?: boolean; selfHostOnly?: boolean; cloudOnly?: boolean }) {
+/* ───────── Products ───────── */
+
+interface ProductFilter {
+  categorySlug?: string;
+  tagSlug?: string;
+  search?: string;
+  featured?: boolean;
+  japaneseOnly?: boolean;
+  ossOnly?: boolean;
+  selfHostOnly?: boolean;
+  cloudOnly?: boolean;
+}
+
+export function useProducts(options?: ProductFilter) {
   return useQuery({
     queryKey: ["products", options],
     queryFn: async () => {
-      let query = supabase.from("products").select("*").eq("status", "published").order("created_at", { ascending: false });
+      let query = supabase
+        .from("products")
+        .select("*")
+        .eq("status", "published")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false });
 
       if (options?.featured) query = query.eq("featured", true);
       if (options?.japaneseOnly) query = query.eq("supports_japanese", true);
@@ -17,27 +35,31 @@ export function useProducts(options?: { categorySlug?: string; tagSlug?: string;
       const { data, error } = await query;
       if (error) throw error;
 
+      let results = data || [];
+
       if (options?.categorySlug) {
         const { data: catData } = await supabase.from("categories").select("id").eq("slug", options.categorySlug).single();
         if (catData) {
           const { data: pcData } = await supabase.from("product_categories").select("product_id").eq("category_id", catData.id);
-          const productIds = pcData?.map(pc => pc.product_id) || [];
-          return data?.filter(p => productIds.includes(p.id)) || [];
+          const ids = new Set(pcData?.map(pc => pc.product_id) || []);
+          results = results.filter(p => ids.has(p.id));
+        } else {
+          return [];
         }
-        return [];
       }
 
       if (options?.tagSlug) {
         const { data: tagData } = await supabase.from("tags").select("id").eq("slug", options.tagSlug).single();
         if (tagData) {
           const { data: ptData } = await supabase.from("product_tags").select("product_id").eq("tag_id", tagData.id);
-          const productIds = ptData?.map(pt => pt.product_id) || [];
-          return data?.filter(p => productIds.includes(p.id)) || [];
+          const ids = new Set(ptData?.map(pt => pt.product_id) || []);
+          results = results.filter(p => ids.has(p.id));
+        } else {
+          return [];
         }
-        return [];
       }
 
-      return data || [];
+      return results;
     },
   });
 }
@@ -46,27 +68,34 @@ export function useProduct(slug: string) {
   return useQuery({
     queryKey: ["product", slug],
     queryFn: async () => {
-      const { data, error } = await supabase.from("products").select("*").eq("slug", slug).eq("status", "published").single();
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("slug", slug)
+        .eq("status", "published")
+        .single();
       if (error) throw error;
 
-      const { data: pcData } = await supabase.from("product_categories").select("category_id, categories(*)").eq("product_id", data.id);
-      const { data: ptData } = await supabase.from("product_tags").select("tag_id, tags(*)").eq("product_id", data.id);
-      const { data: features } = await supabase.from("product_features").select("*").eq("product_id", data.id);
-
-      // Find alternatives that include this product
-      const { data: altProducts } = await supabase.from("alternative_products").select("alternative_id, alternatives(source_name, source_slug)").eq("product_id", data.id);
+      const [pcRes, ptRes, featRes, altRes] = await Promise.all([
+        supabase.from("product_categories").select("category_id, categories(*)").eq("product_id", data.id),
+        supabase.from("product_tags").select("tag_id, tags(*)").eq("product_id", data.id),
+        supabase.from("product_features").select("*").eq("product_id", data.id),
+        supabase.from("alternative_products").select("alternative_id, alternatives(source_name, source_slug)").eq("product_id", data.id),
+      ]);
 
       return {
         ...data,
-        categories: pcData?.map((pc: any) => pc.categories).filter(Boolean) || [],
-        tags: ptData?.map((pt: any) => pt.tags).filter(Boolean) || [],
-        features: features || [],
-        relatedAlternatives: altProducts?.map((ap: any) => ap.alternatives).filter(Boolean) || [],
+        categories: pcRes.data?.map((pc: any) => pc.categories).filter(Boolean) || [],
+        tags: ptRes.data?.map((pt: any) => pt.tags).filter(Boolean) || [],
+        features: featRes.data || [],
+        relatedAlternatives: altRes.data?.map((ap: any) => ap.alternatives).filter(Boolean) || [],
       };
     },
     enabled: !!slug,
   });
 }
+
+/* ───────── Categories ───────── */
 
 export function useCategories() {
   return useQuery({
@@ -102,55 +131,6 @@ export function useTags() {
   });
 }
 
-export function useAlternatives(options?: { featured?: boolean; search?: string }) {
-  return useQuery({
-    queryKey: ["alternatives", options],
-    queryFn: async () => {
-      let query = supabase.from("alternatives").select("*").order("created_at", { ascending: false });
-      if (options?.featured) query = query.eq("featured", true);
-      const { data, error } = await query;
-      if (error) throw error;
-      let results = data || [];
-      if (options?.search) {
-        const q = options.search.toLowerCase();
-        results = results.filter(a => a.source_name.toLowerCase().includes(q) || (a as any).japanese_source_name?.toLowerCase().includes(q));
-      }
-      return results;
-    },
-  });
-}
-
-export function useAlternative(slug: string) {
-  return useQuery({
-    queryKey: ["alternative", slug],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("alternatives").select("*").eq("source_slug", slug).single();
-      if (error) throw error;
-
-      const { data: apData } = await supabase
-        .from("alternative_products")
-        .select("*, products(*)")
-        .eq("alternative_id", data.id)
-        .order("rank_order");
-
-      // Get related alternatives
-      let relatedAlts: any[] = [];
-      const catHint = (data as any).category_hint;
-      if (catHint) {
-        const { data: related } = await supabase
-          .from("alternatives")
-          .select("source_name, source_slug")
-          .neq("id", data.id)
-          .limit(5);
-        relatedAlts = (related || []).filter((r: any) => true);
-      }
-
-      return { ...data, products: apData || [], relatedAlternatives: relatedAlts };
-    },
-    enabled: !!slug,
-  });
-}
-
 export function useCategoryProductCount(categoryId: string) {
   return useQuery({
     queryKey: ["category-product-count", categoryId],
@@ -163,5 +143,102 @@ export function useCategoryProductCount(categoryId: string) {
       return count || 0;
     },
     enabled: !!categoryId,
+  });
+}
+
+/* ───────── Alternatives ───────── */
+
+export function useAlternatives(options?: { featured?: boolean; search?: string }) {
+  return useQuery({
+    queryKey: ["alternatives", options],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("alternatives")
+        .select("*")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+
+      let results = data || [];
+
+      if (options?.featured) {
+        results = results.filter(a => a.featured);
+      }
+
+      if (options?.search) {
+        const q = options.search.toLowerCase();
+        results = results.filter(a =>
+          a.source_name.toLowerCase().includes(q) ||
+          (a.description?.toLowerCase().includes(q))
+        );
+      }
+
+      return results;
+    },
+  });
+}
+
+export function useAlternativesWithCounts() {
+  return useQuery({
+    queryKey: ["alternatives-with-counts"],
+    queryFn: async () => {
+      const { data: alts, error } = await supabase
+        .from("alternatives")
+        .select("*")
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+
+      if (!alts || alts.length === 0) return [];
+
+      const { data: counts } = await supabase
+        .from("alternative_products")
+        .select("alternative_id");
+
+      const countMap = new Map<string, number>();
+      counts?.forEach(c => {
+        countMap.set(c.alternative_id, (countMap.get(c.alternative_id) || 0) + 1);
+      });
+
+      return alts.map(a => ({
+        ...a,
+        product_count: countMap.get(a.id) || 0,
+      }));
+    },
+  });
+}
+
+export function useAlternative(slug: string) {
+  return useQuery({
+    queryKey: ["alternative", slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("alternatives")
+        .select("*")
+        .eq("source_slug", slug)
+        .single();
+      if (error) throw error;
+
+      const { data: apData } = await supabase
+        .from("alternative_products")
+        .select("*, products(*)")
+        .eq("alternative_id", data.id)
+        .order("rank_order");
+
+      // Get other alternatives for "related"
+      const { data: relatedAlts } = await supabase
+        .from("alternatives")
+        .select("source_name, source_slug")
+        .neq("id", data.id)
+        .eq("featured", true)
+        .limit(6);
+
+      return {
+        ...data,
+        products: apData || [],
+        relatedAlternatives: relatedAlts || [],
+      };
+    },
+    enabled: !!slug,
   });
 }
