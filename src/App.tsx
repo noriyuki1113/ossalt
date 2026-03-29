@@ -56,6 +56,10 @@ const App = () => (
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/:slug" element={<ToolDetailPage />} />
             <Route path="/submit" element={<SubmitPage />} />
+            <Route path="/popular" element={<PopularPage />} />
+            <Route path="/open-source-tools" element={<OssToolsPage />} />
+            <Route path="/self-hosted-tools" element={<SelfHostedToolsPage />} />
+            <Route path="/japanese-supported-tools" element={<JapaneseSupportedToolsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />

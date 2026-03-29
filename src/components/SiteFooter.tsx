@@ -15,6 +15,15 @@ export function SiteFooter() {
               <li><Link to="/products" className="hover:text-foreground transition-colors">ツール一覧</Link></li>
               <li><Link to="/categories" className="hover:text-foreground transition-colors">カテゴリ</Link></li>
               <li><Link to="/alternatives" className="hover:text-foreground transition-colors">代替サービス</Link></li>
+              <li><Link to="/popular" className="hover:text-foreground transition-colors">人気ランキング</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm mb-3">特集ページ</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li><Link to="/open-source-tools" className="hover:text-foreground transition-colors">OSSツール一覧</Link></li>
+              <li><Link to="/self-hosted-tools" className="hover:text-foreground transition-colors">セルフホストツール</Link></li>
+              <li><Link to="/japanese-supported-tools" className="hover:text-foreground transition-colors">日本語対応ツール</Link></li>
             </ul>
           </div>
           <div>
