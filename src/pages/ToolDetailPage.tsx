@@ -57,6 +57,9 @@ export default function ToolDetailPage() {
           <ProductLogo
             name={name}
             logoUrl={product.logo_url}
+            logoGithubReadmeUrl={(product as any).logo_github_readme_url}
+            logoGithubAvatarUrl={(product as any).logo_github_avatar_url}
+            logoFaviconUrl={(product as any).logo_favicon_url}
             websiteUrl={product.website_url}
             githubUrl={product.github_url}
             size="xl"
