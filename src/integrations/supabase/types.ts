@@ -309,6 +309,8 @@ export type Database = {
           japanese_name: string | null
           last_commit_at: string | null
           license: string | null
+          logo_background: string | null
+          logo_source: string | null
           logo_url: string | null
           name: string
           not_good_for: string | null
@@ -341,6 +343,8 @@ export type Database = {
           japanese_name?: string | null
           last_commit_at?: string | null
           license?: string | null
+          logo_background?: string | null
+          logo_source?: string | null
           logo_url?: string | null
           name: string
           not_good_for?: string | null
@@ -373,6 +377,8 @@ export type Database = {
           japanese_name?: string | null
           last_commit_at?: string | null
           license?: string | null
+          logo_background?: string | null
+          logo_source?: string | null
           logo_url?: string | null
           name?: string
           not_good_for?: string | null
