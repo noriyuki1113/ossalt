@@ -1,0 +1,48 @@
+import { useEffect } from "react";
+
+interface SeoProps {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+}
+
+export function useSeo({ title, description, canonical, ogType = "website" }: SeoProps) {
+  useEffect(() => {
+    const fullTitle = title.includes("AltFinder") ? title : `${title} | AltFinder.jp`;
+    document.title = fullTitle;
+
+    const setMeta = (name: string, content: string, attr = "name") => {
+      let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement | null;
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute(attr, name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    if (description) {
+      setMeta("description", description);
+      setMeta("og:description", description, "property");
+    }
+    setMeta("og:title", fullTitle, "property");
+    setMeta("og:type", ogType, "property");
+    setMeta("og:site_name", "AltFinder.jp", "property");
+
+    if (canonical) {
+      let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!link) {
+        link = document.createElement("link");
+        link.setAttribute("rel", "canonical");
+        document.head.appendChild(link);
+      }
+      link.setAttribute("href", canonical);
+      setMeta("og:url", canonical, "property");
+    }
+
+    return () => {
+      document.title = "AltFinder.jp — オープンソース代替サービス比較";
+    };
+  }, [title, description, canonical, ogType]);
+}
