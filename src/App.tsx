@@ -41,6 +41,9 @@ const App = () => (
             <Route path="/categories/:slug" element={<CategoryDetailPage />} />
             <Route path="/alternatives" element={<AlternativesPage />} />
             <Route path="/alternatives/:slug" element={<AlternativeDetailPage />} />
+            <Route path="/products" element={<ToolsPage />} />
+            <Route path="/products/:slug" element={<ToolDetailPage />} />
+            {/* Legacy /tools redirects */}
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/:slug" element={<ToolDetailPage />} />
             <Route path="/submit" element={<SubmitPage />} />
