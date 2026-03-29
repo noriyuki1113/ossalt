@@ -14,11 +14,11 @@ import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import type { Product } from "@/types";
 
-const emptyProduct = {
+const emptyProduct: Record<string, any> = {
   name: "", slug: "", short_description: "", description: "", website_url: "", github_url: "",
   logo_url: "", pricing_summary: "", has_free_plan: false, is_open_source: false,
   is_self_hostable: false, has_cloud: true, supports_japanese: false, target_audience: "",
-  featured: false, status: "draft" as const,
+  featured: false, status: "draft",
 };
 
 export default function AdminProductsPage() {
