@@ -70,6 +70,8 @@ const App = () => (
               <Route path="alternatives/new" element={<AdminAlternativeEditPage />} />
               <Route path="alternatives/:id" element={<AdminAlternativeEditPage />} />
               <Route path="submissions" element={<AdminSubmissionsPage />} />
+              <Route path="imports" element={<AdminImportsPage />} />
+              <Route path="scrape-runs" element={<AdminScrapeRunsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
