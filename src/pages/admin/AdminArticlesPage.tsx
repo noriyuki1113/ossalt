@@ -98,7 +98,7 @@ export default function AdminArticlesPage() {
         </div>
       )}
 
-      <ConfirmDialog open={!!deleteId} onClose={() => setDeleteId(null)} onConfirm={handleDelete} title="記事を削除しますか？" description="この操作は取り消せません。" />
+      <ConfirmDialog open={!!deleteId} onOpenChange={(o) => !o && setDeleteId(null)} onConfirm={handleDelete} title="記事を削除しますか？" description="この操作は取り消せません。" />
     </div>
   );
 }
