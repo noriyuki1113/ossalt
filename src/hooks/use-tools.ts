@@ -16,6 +16,10 @@ export interface Tool {
   stars: string | null;
   stars_num: number | null;
   created_at: string | null;
+  primary_competitor: string | null;
+  primary_competitor_ja: string | null;
+  replaces: string[] | null;
+  replaces_ja: string[] | null;
 }
 
 interface UseToolsOptions {

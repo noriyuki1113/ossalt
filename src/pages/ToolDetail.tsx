@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, ExternalLink, Github, Star, Scale, Share2,
-  CheckCircle2, ThumbsUp, ThumbsDown, Users, Building2, PiggyBank, Shield,
+  CheckCircle2, ThumbsUp, ThumbsDown, ArrowRight,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
@@ -72,9 +72,20 @@ export default function ToolDetailPage() {
     enabled: !!tool?.parent_category_ja,
   });
 
+  const competitor = tool?.primary_competitor_ja || tool?.primary_competitor || null;
+  const replacesJa = tool?.replaces_ja || [];
+
   useSeo({
-    title: tool ? `${tool.name} — OSSアルタナティブ` : "読み込み中…",
-    description: tool?.description_ja || tool?.description_en || "",
+    title: tool
+      ? competitor && competitor !== "有料SaaS"
+        ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
+        : `${tool.name} — OSSアルタナティブ`
+      : "読み込み中…",
+    description: tool
+      ? competitor && competitor !== "有料SaaS"
+        ? `${tool.name}は${competitor}の代替として使えるOSSです。無料・セルフホスト可能。特徴・違いを解説。`
+        : tool.description_ja || tool.description_en || ""
+      : "",
   });
 
   const favicon = tool ? getFaviconUrl(tool.url, 64) : null;
@@ -137,6 +148,8 @@ export default function ToolDetailPage() {
     { text: `GitHubスター: ${formatStars(tool.stars_num)}` },
     { text: `カテゴリ: ${tool.category_ja || tool.parent_category_ja || "未分類"}` },
   ];
+
+  const comparisonTarget = competitor && competitor !== "有料SaaS" ? competitor : "有料SaaS";
 
   const comparisonRows = [
     { item: "費用", oss: "無料", saas: "月額$10〜" },
@@ -211,6 +224,30 @@ export default function ToolDetailPage() {
             </Button>
           </div>
         </section>
+
+        {/* === Alternative Section === */}
+        {competitor && (
+          <>
+            <Divider />
+            <section>
+              <SectionTitle>このツールは {competitor} の代替です</SectionTitle>
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge className="text-base px-4 py-2 bg-primary/15 text-primary border-primary/30 font-semibold">
+                  {competitor}
+                </Badge>
+                {replacesJa.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {replacesJa.map((r) => (
+                      <Badge key={r} variant="secondary" className="text-xs">
+                        {r}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          </>
+        )}
 
         <Divider />
 
@@ -296,14 +333,14 @@ export default function ToolDetailPage() {
 
         {/* === 6. 比較表 === */}
         <section>
-          <SectionTitle>有料サービスとの比較</SectionTitle>
+          <SectionTitle>{tool.name} vs {comparisonTarget}</SectionTitle>
           <div className="rounded-xl border bg-card overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow className="border-border">
                   <TableHead className="w-[30%]">項目</TableHead>
                   <TableHead>{tool.name}（OSS）</TableHead>
-                  <TableHead>有料SaaS</TableHead>
+                  <TableHead>{comparisonTarget}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -320,6 +357,19 @@ export default function ToolDetailPage() {
         </section>
 
         <Divider />
+
+        {/* === CTA: もっと見る === */}
+        {competitor && competitor !== "有料SaaS" && (
+          <section>
+            <Button variant="outline" size="lg" className="w-full gap-2 rounded-xl text-base" asChild>
+              <Link to={`/?search=${encodeURIComponent(competitor)}`}>
+                {competitor} の代替をもっと見る <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </section>
+        )}
+
+        {competitor && competitor !== "有料SaaS" && <Divider />}
 
         {/* === 7. 関連ツール === */}
         {relatedTools && relatedTools.length > 0 && (
