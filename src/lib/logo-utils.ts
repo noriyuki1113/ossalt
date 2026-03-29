@@ -1,6 +1,6 @@
 /**
  * Product logo URL resolution utilities.
- * Priority: manual logo_url → favicon → GitHub avatar → null (fallback to initials)
+ * Priority: manual logo_url → github-readme → github-avatar → favicon → null (fallback to initials)
  */
 
 export function getFaviconUrl(websiteUrl: string | null | undefined): string | null {
@@ -33,6 +33,9 @@ export function getInitials(name: string): string {
 export interface ProductLogoInput {
   name: string;
   logo_url?: string | null;
+  logo_github_readme_url?: string | null;
+  logo_github_avatar_url?: string | null;
+  logo_favicon_url?: string | null;
   website_url?: string | null;
   github_url?: string | null;
 }
@@ -43,12 +46,33 @@ export interface ProductLogoInput {
  */
 export function getLogoUrlCandidates(product: ProductLogoInput): string[] {
   const candidates: string[] = [];
+
+  // 1. Manual / best logo
   if (product.logo_url) candidates.push(product.logo_url);
-  const favicon = getFaviconUrl(product.website_url);
-  if (favicon) candidates.push(favicon);
-  const ghAvatar = getGitHubAvatarUrl(product.github_url);
-  if (ghAvatar) candidates.push(ghAvatar);
-  return candidates;
+
+  // 2. GitHub README logo
+  if (product.logo_github_readme_url && product.logo_github_readme_url !== product.logo_url) {
+    candidates.push(product.logo_github_readme_url);
+  }
+
+  // 3. GitHub avatar (stored or generated)
+  if (product.logo_github_avatar_url) {
+    candidates.push(product.logo_github_avatar_url);
+  } else {
+    const ghAvatar = getGitHubAvatarUrl(product.github_url);
+    if (ghAvatar) candidates.push(ghAvatar);
+  }
+
+  // 4. Favicon (stored or generated)
+  if (product.logo_favicon_url) {
+    candidates.push(product.logo_favicon_url);
+  } else {
+    const favicon = getFaviconUrl(product.website_url);
+    if (favicon) candidates.push(favicon);
+  }
+
+  // Deduplicate
+  return [...new Set(candidates)];
 }
 
 /**
