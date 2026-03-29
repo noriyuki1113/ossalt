@@ -23,9 +23,10 @@ export default function IndexPage() {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   useSeo({
-    title: "OSSアルタナティブ — 有料SaaSの代わりに使えるオープンソースツール集",
+    title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
     description:
-      "680件以上のオープンソースツールを日本語で検索。有料SaaSの代替となるOSSを見つけましょう。",
+      "680件のオープンソースツールを日本語で検索。Notion・Slack・Figmaなど有料SaaSの無料代替を見つけよう。",
+    canonical: "https://find-my-alt.lovable.app/",
   });
 
   const { data, isLoading } = useTools({

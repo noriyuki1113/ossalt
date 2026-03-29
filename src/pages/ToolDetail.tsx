@@ -75,17 +75,37 @@ export default function ToolDetailPage() {
   const competitor = tool?.primary_competitor_ja || tool?.primary_competitor || null;
   const replacesJa = tool?.replaces_ja || [];
 
+  const seoTitle = tool
+    ? competitor && competitor !== "有料SaaS"
+      ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
+      : `${tool.name} — OSSアルタナティブ`
+    : "読み込み中…";
+
+  const seoDescription = tool
+    ? competitor && competitor !== "有料SaaS"
+      ? `${tool.name}は${competitor}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
+      : tool.description_ja || tool.description_en || ""
+    : "";
+
+  const jsonLd = tool
+    ? {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: tool.name,
+        description: tool.description_ja || tool.description_en || "",
+        applicationCategory: tool.category_ja || tool.parent_category_ja || "",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+        operatingSystem: "Web",
+        ...(tool.url ? { url: tool.url } : {}),
+      }
+    : undefined;
+
   useSeo({
-    title: tool
-      ? competitor && competitor !== "有料SaaS"
-        ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
-        : `${tool.name} — OSSアルタナティブ`
-      : "読み込み中…",
-    description: tool
-      ? competitor && competitor !== "有料SaaS"
-        ? `${tool.name}は${competitor}の代替として使えるOSSです。無料・セルフホスト可能。特徴・違いを解説。`
-        : tool.description_ja || tool.description_en || ""
-      : "",
+    title: seoTitle,
+    description: seoDescription,
+    canonical: tool ? `https://find-my-alt.lovable.app/tools/${tool.id}` : undefined,
+    ogImage: "https://find-my-alt.lovable.app/og-image.png",
+    jsonLd,
   });
 
   const favicon = tool ? getFaviconUrl(tool.url, 64) : null;
