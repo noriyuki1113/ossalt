@@ -12,13 +12,12 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingState } from "@/components/StateDisplays";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import type { Product } from "@/types";
 
 const emptyProduct: Record<string, any> = {
-  name: "", slug: "", short_description: "", description: "", website_url: "", github_url: "",
-  logo_url: "", pricing_summary: "", has_free_plan: false, is_open_source: false,
-  is_self_hostable: false, has_cloud: true, supports_japanese: false, target_audience: "",
-  featured: false, status: "draft",
+  name: "", slug: "", short_description: "", description: "", japanese_name: "", website_url: "", github_url: "",
+  logo_url: "", license: "", github_stars: 0, is_open_source: true, is_self_hostable: true, has_cloud: true,
+  supports_japanese: false, self_host_difficulty: "medium", best_for: "", not_good_for: "",
+  source_origin: "", featured: false, status: "draft",
 };
 
 export default function AdminProductsPage() {
@@ -37,33 +36,22 @@ export default function AdminProductsPage() {
 
   const saveMutation = useMutation({
     mutationFn: async (product: any) => {
-      if (product.id) {
-        const { id, ...rest } = product;
+      const { id, created_at, updated_at, ...rest } = product;
+      if (id) {
         const { error } = await supabase.from("products").update(rest).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("products").insert(product);
+        const { error } = await supabase.from("products").insert(rest);
         if (error) throw error;
       }
     },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["admin-products"] });
-      toast.success("保存しました");
-      setDialogOpen(false);
-      setEditProduct(emptyProduct);
-    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-products"] }); toast.success("保存しました"); setDialogOpen(false); },
     onError: () => toast.error("保存に失敗しました"),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("products").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["admin-products"] });
-      toast.success("削除しました");
-    },
+    mutationFn: async (id: string) => { const { error } = await supabase.from("products").delete().eq("id", id); if (error) throw error; },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-products"] }); toast.success("削除しました"); },
   });
 
   if (isLoading) return <LoadingState />;
@@ -83,20 +71,41 @@ export default function AdminProductsPage() {
                 <div><Label>名前</Label><Input value={editProduct.name} onChange={(e) => setEditProduct({ ...editProduct, name: e.target.value })} required /></div>
                 <div><Label>スラッグ</Label><Input value={editProduct.slug} onChange={(e) => setEditProduct({ ...editProduct, slug: e.target.value })} required /></div>
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div><Label>日本語名</Label><Input value={editProduct.japanese_name || ""} onChange={(e) => setEditProduct({ ...editProduct, japanese_name: e.target.value })} /></div>
+                <div><Label>ライセンス</Label><Input value={editProduct.license || ""} onChange={(e) => setEditProduct({ ...editProduct, license: e.target.value })} /></div>
+              </div>
               <div><Label>短い説明</Label><Input value={editProduct.short_description || ""} onChange={(e) => setEditProduct({ ...editProduct, short_description: e.target.value })} /></div>
-              <div><Label>詳細説明</Label><Textarea value={editProduct.description || ""} onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })} rows={4} /></div>
+              <div><Label>詳細説明</Label><Textarea value={editProduct.description || ""} onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })} rows={3} /></div>
               <div className="grid grid-cols-2 gap-4">
                 <div><Label>公式サイトURL</Label><Input value={editProduct.website_url || ""} onChange={(e) => setEditProduct({ ...editProduct, website_url: e.target.value })} /></div>
                 <div><Label>GitHub URL</Label><Input value={editProduct.github_url || ""} onChange={(e) => setEditProduct({ ...editProduct, github_url: e.target.value })} /></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div><Label>ロゴURL</Label><Input value={editProduct.logo_url || ""} onChange={(e) => setEditProduct({ ...editProduct, logo_url: e.target.value })} /></div>
-                <div><Label>料金概要</Label><Input value={editProduct.pricing_summary || ""} onChange={(e) => setEditProduct({ ...editProduct, pricing_summary: e.target.value })} /></div>
+                <div><Label>GitHub Stars</Label><Input type="number" value={editProduct.github_stars || 0} onChange={(e) => setEditProduct({ ...editProduct, github_stars: parseInt(e.target.value) || 0 })} /></div>
               </div>
-              <div><Label>ターゲット</Label><Input value={editProduct.target_audience || ""} onChange={(e) => setEditProduct({ ...editProduct, target_audience: e.target.value })} /></div>
+              <div><Label>向いている人</Label><Input value={editProduct.best_for || ""} onChange={(e) => setEditProduct({ ...editProduct, best_for: e.target.value })} /></div>
+              <div><Label>向いていない人</Label><Input value={editProduct.not_good_for || ""} onChange={(e) => setEditProduct({ ...editProduct, not_good_for: e.target.value })} /></div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>セルフホスト難易度</Label>
+                  <select value={editProduct.self_host_difficulty || "medium"} onChange={(e) => setEditProduct({ ...editProduct, self_host_difficulty: e.target.value })} className="w-full border rounded px-2 py-1 text-sm bg-background">
+                    <option value="easy">簡単</option>
+                    <option value="medium">普通</option>
+                    <option value="hard">難しい</option>
+                  </select>
+                </div>
+                <div>
+                  <Label>ステータス</Label>
+                  <select value={editProduct.status} onChange={(e) => setEditProduct({ ...editProduct, status: e.target.value })} className="w-full border rounded px-2 py-1 text-sm bg-background">
+                    <option value="draft">下書き</option>
+                    <option value="published">公開</option>
+                  </select>
+                </div>
+              </div>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { key: "has_free_plan", label: "無料プラン" },
                   { key: "is_open_source", label: "OSS" },
                   { key: "is_self_hostable", label: "セルフホスト" },
                   { key: "has_cloud", label: "クラウド版" },
@@ -104,37 +113,23 @@ export default function AdminProductsPage() {
                   { key: "featured", label: "注目" },
                 ].map((f) => (
                   <div key={f.key} className="flex items-center gap-2">
-                    <Switch checked={(editProduct as any)[f.key]} onCheckedChange={(v) => setEditProduct({ ...editProduct, [f.key]: v })} />
+                    <Switch checked={editProduct[f.key] || false} onCheckedChange={(v) => setEditProduct({ ...editProduct, [f.key]: v })} />
                     <Label>{f.label}</Label>
                   </div>
                 ))}
               </div>
-              <div className="flex items-center gap-2">
-                <Label>ステータス</Label>
-                <select
-                  value={editProduct.status}
-                  onChange={(e) => setEditProduct({ ...editProduct, status: e.target.value as string })}
-                  className="border rounded px-2 py-1 text-sm bg-background"
-                >
-                  <option value="draft">下書き</option>
-                  <option value="published">公開</option>
-                </select>
-              </div>
-              <Button type="submit" disabled={saveMutation.isPending} className="w-full">
-                {saveMutation.isPending ? "保存中..." : "保存"}
-              </Button>
+              <Button type="submit" disabled={saveMutation.isPending} className="w-full">{saveMutation.isPending ? "保存中..." : "保存"}</Button>
             </form>
           </DialogContent>
         </Dialog>
       </div>
-
       <div className="surface-elevated rounded-lg overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>名前</TableHead>
               <TableHead>ステータス</TableHead>
-              <TableHead>注目</TableHead>
+              <TableHead>Stars</TableHead>
               <TableHead>日本語</TableHead>
               <TableHead className="w-24">操作</TableHead>
             </TableRow>
@@ -144,7 +139,7 @@ export default function AdminProductsPage() {
               <TableRow key={p.id}>
                 <TableCell className="font-medium">{p.name}</TableCell>
                 <TableCell><Badge variant={p.status === "published" ? "default" : "secondary"}>{p.status === "published" ? "公開" : "下書き"}</Badge></TableCell>
-                <TableCell>{p.featured ? "⭐" : "—"}</TableCell>
+                <TableCell className="text-sm text-muted-foreground">{(p as any).github_stars || 0}</TableCell>
                 <TableCell>{p.supports_japanese ? "✓" : "—"}</TableCell>
                 <TableCell>
                   <div className="flex gap-1">
