@@ -502,6 +502,10 @@ export type Database = {
           name: string | null
           parent_category_en: string | null
           parent_category_ja: string | null
+          primary_competitor: string | null
+          primary_competitor_ja: string | null
+          replaces: string[] | null
+          replaces_ja: string[] | null
           stars: string | null
           stars_num: number | null
           url: string | null
@@ -518,6 +522,10 @@ export type Database = {
           name?: string | null
           parent_category_en?: string | null
           parent_category_ja?: string | null
+          primary_competitor?: string | null
+          primary_competitor_ja?: string | null
+          replaces?: string[] | null
+          replaces_ja?: string[] | null
           stars?: string | null
           stars_num?: number | null
           url?: string | null
@@ -534,6 +542,10 @@ export type Database = {
           name?: string | null
           parent_category_en?: string | null
           parent_category_ja?: string | null
+          primary_competitor?: string | null
+          primary_competitor_ja?: string | null
+          replaces?: string[] | null
+          replaces_ja?: string[] | null
           stars?: string | null
           stars_num?: number | null
           url?: string | null
