@@ -23,7 +23,7 @@ const emptyProduct: Record<string, any> = {
 
 export default function AdminProductsPage() {
   const qc = useQueryClient();
-  const [editProduct, setEditProduct] = useState<typeof emptyProduct & { id?: string }>(emptyProduct);
+  const [editProduct, setEditProduct] = useState<any>(emptyProduct);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const { data: products, isLoading } = useQuery({
