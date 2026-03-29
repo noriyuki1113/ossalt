@@ -25,6 +25,9 @@ import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage.tsx";
 import AdminTagsPage from "./pages/admin/AdminTagsPage.tsx";
 import AdminAlternativesPage from "./pages/admin/AdminAlternativesPage.tsx";
 import AdminSubmissionsPage from "./pages/admin/AdminSubmissionsPage.tsx";
+import AdminProductEditPage from "./pages/admin/AdminProductEditPage.tsx";
+import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx";
+import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
 
 const queryClient = new QueryClient();
 
