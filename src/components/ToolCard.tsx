@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import type { Tool } from "@/hooks/use-tools";
 
 function formatStars(num: number | null): string {
@@ -70,22 +69,26 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         )}
       </div>
 
-      <div className="mt-4 flex items-center gap-2" onClick={(e) => e.preventDefault()}>
+      <div className="mt-4 flex items-center gap-2">
         {tool.url && (
-          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5 rounded-lg" asChild>
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <ExternalLink className="h-3.5 w-3.5" />
-              サイト
-            </a>
-          </Button>
+          <span
+            role="link"
+            className="inline-flex items-center h-8 px-3 text-xs gap-1.5 rounded-lg border border-border bg-background hover:bg-accent transition-colors cursor-pointer"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.url!, "_blank", "noopener,noreferrer"); }}
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            サイト
+          </span>
         )}
         {tool.github_url && (
-          <Button variant="ghost" size="sm" className="h-8 text-xs gap-1.5 rounded-lg" asChild>
-            <a href={tool.github_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-              <Github className="h-3.5 w-3.5" />
-              GitHub
-            </a>
-          </Button>
+          <span
+            role="link"
+            className="inline-flex items-center h-8 px-3 text-xs gap-1.5 rounded-lg hover:bg-accent transition-colors cursor-pointer"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.github_url!, "_blank", "noopener,noreferrer"); }}
+          >
+            <Github className="h-3.5 w-3.5" />
+            GitHub
+          </span>
         )}
       </div>
     </Link>

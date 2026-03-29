@@ -48,7 +48,7 @@ export function useTools(options?: UseToolsOptions) {
 
       if (options?.search) {
         query = query.or(
-          `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%`
+          `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%,description_en.ilike.%${options.search}%,primary_competitor.ilike.%${options.search}%,primary_competitor_ja.ilike.%${options.search}%`
         );
       }
 
