@@ -34,6 +34,11 @@ import PopularPage from "./pages/PopularPage.tsx";
 import OssToolsPage from "./pages/OssToolsPage.tsx";
 import SelfHostedToolsPage from "./pages/SelfHostedToolsPage.tsx";
 import JapaneseSupportedToolsPage from "./pages/JapaneseSupportedToolsPage.tsx";
+import ArticlesPage from "./pages/ArticlesPage.tsx";
+import ArticleDetailPage from "./pages/ArticleDetailPage.tsx";
+import AdminArticlesPage from "./pages/admin/AdminArticlesPage.tsx";
+import AdminArticleEditPage from "./pages/admin/AdminArticleEditPage.tsx";
+import AdminArticleGeneratePage from "./pages/admin/AdminArticleGeneratePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +65,8 @@ const App = () => (
             <Route path="/open-source-tools" element={<OssToolsPage />} />
             <Route path="/self-hosted-tools" element={<SelfHostedToolsPage />} />
             <Route path="/japanese-supported-tools" element={<JapaneseSupportedToolsPage />} />
+            <Route path="/articles" element={<ArticlesPage />} />
+            <Route path="/articles/:slug" element={<ArticleDetailPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
@@ -80,6 +87,10 @@ const App = () => (
               <Route path="submissions" element={<AdminSubmissionsPage />} />
               <Route path="imports" element={<AdminImportsPage />} />
               <Route path="scrape-runs" element={<AdminScrapeRunsPage />} />
+              <Route path="articles" element={<AdminArticlesPage />} />
+              <Route path="articles/new" element={<AdminArticleEditPage />} />
+              <Route path="articles/generate" element={<AdminArticleGeneratePage />} />
+              <Route path="articles/:id" element={<AdminArticleEditPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -2,7 +2,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { LoadingState } from "@/components/StateDisplays";
-import { LayoutDashboard, Package, Layers, Tag, RefreshCw, Inbox, LogOut, Download, History } from "lucide-react";
+import { LayoutDashboard, Package, Layers, Tag, RefreshCw, Inbox, LogOut, Download, History, FileText } from "lucide-react";
 
 const adminLinks = [
   { href: "/admin", label: "ダッシュボード", icon: LayoutDashboard },
@@ -10,6 +10,7 @@ const adminLinks = [
   { href: "/admin/categories", label: "カテゴリ", icon: Layers },
   { href: "/admin/tags", label: "タグ", icon: Tag },
   { href: "/admin/alternatives", label: "代替ページ", icon: RefreshCw },
+  { href: "/admin/articles", label: "記事", icon: FileText },
   { href: "/admin/submissions", label: "掲載申請", icon: Inbox },
   { href: "/admin/imports", label: "データ取り込み", icon: Download },
   { href: "/admin/scrape-runs", label: "実行ログ", icon: History },
