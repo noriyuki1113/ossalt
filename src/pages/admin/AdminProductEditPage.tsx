@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AdminTextField, AdminTextareaField, AdminSwitchField, AdminSelectField, AdminNumberField } from "@/components/admin/AdminFormFields";
 import { LoadingState } from "@/components/StateDisplays";
+import { ProductLogo } from "@/components/ProductLogo";
 import { toast } from "sonner";
 import { ArrowLeft, Save } from "lucide-react";
 
