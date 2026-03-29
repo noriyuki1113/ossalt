@@ -489,6 +489,57 @@ export type Database = {
         }
         Relationships: []
       }
+      tools: {
+        Row: {
+          category_en: string | null
+          category_ja: string | null
+          created_at: string | null
+          description_en: string | null
+          description_ja: string | null
+          github_url: string | null
+          id: number
+          license: string | null
+          name: string | null
+          parent_category_en: string | null
+          parent_category_ja: string | null
+          stars: string | null
+          stars_num: number | null
+          url: string | null
+        }
+        Insert: {
+          category_en?: string | null
+          category_ja?: string | null
+          created_at?: string | null
+          description_en?: string | null
+          description_ja?: string | null
+          github_url?: string | null
+          id?: number
+          license?: string | null
+          name?: string | null
+          parent_category_en?: string | null
+          parent_category_ja?: string | null
+          stars?: string | null
+          stars_num?: number | null
+          url?: string | null
+        }
+        Update: {
+          category_en?: string | null
+          category_ja?: string | null
+          created_at?: string | null
+          description_en?: string | null
+          description_ja?: string | null
+          github_url?: string | null
+          id?: number
+          license?: string | null
+          name?: string | null
+          parent_category_en?: string | null
+          parent_category_ja?: string | null
+          stars?: string | null
+          stars_num?: number | null
+          url?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
