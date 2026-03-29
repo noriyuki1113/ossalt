@@ -432,6 +432,13 @@ export default function ToolDetailPage() {
             </div>
           </div>
         </section>
+
+        {/* Bottom back button */}
+        <div className="pb-16 flex justify-center">
+          <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
+            <Link to="/"><ArrowLeft className="h-4 w-4" />ツール一覧に戻る</Link>
+          </Button>
+        </div>
       </div>
     </SiteLayout>
   );
