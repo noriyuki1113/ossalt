@@ -36,7 +36,7 @@ export default function AdminProductsPage() {
   });
 
   const saveMutation = useMutation({
-    mutationFn: async (product: typeof emptyProduct & { id?: string }) => {
+    mutationFn: async (product: any) => {
       if (product.id) {
         const { id, ...rest } = product;
         const { error } = await supabase.from("products").update(rest).eq("id", id);
