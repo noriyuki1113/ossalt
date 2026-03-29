@@ -10,16 +10,44 @@ function formatStars(num: number | null): string {
   return String(num);
 }
 
-export function ToolCard({ tool }: { tool: Tool }) {
+function getFaviconUrl(url: string | null): string | null {
+  if (!url) return null;
+  try {
+    const domain = new URL(url).hostname;
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+  } catch {
+    return null;
+  }
+}
+
+export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
+  const favicon = getFaviconUrl(tool.url);
+
   return (
-    <Link to={`/tools/${tool.id}`} className="block group rounded-xl border bg-card p-5 transition-all hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 animate-fade-in">
+    <Link
+      to={`/tools/${tool.id}`}
+      className="block group rounded-xl border bg-card p-5 transition-all card-glow hover:-translate-y-0.5 animate-fade-in"
+      style={{ animationDelay: `${Math.min(index * 50, 600)}ms`, animationFillMode: "both" }}
+    >
       <div className="flex items-start justify-between gap-3">
-        <h3 className="font-semibold text-lg text-foreground leading-tight">
-          {tool.name}
-        </h3>
+        <div className="flex items-center gap-2.5 min-w-0">
+          {favicon && (
+            <img
+              src={favicon}
+              alt=""
+              width={20}
+              height={20}
+              className="rounded shrink-0"
+              loading="lazy"
+            />
+          )}
+          <h3 className="font-semibold text-lg text-foreground leading-tight truncate">
+            {tool.name}
+          </h3>
+        </div>
         {tool.stars_num && tool.stars_num > 0 ? (
-          <Badge variant="secondary" className="shrink-0 gap-1 font-medium text-xs">
-            <Star className="h-3 w-3 fill-current text-badge-amber" />
+          <Badge className="shrink-0 gap-1 font-medium text-xs bg-badge-amber/15 text-badge-amber border-badge-amber/30 hover:bg-badge-amber/20">
+            <Star className="h-3 w-3 fill-current" />
             {formatStars(tool.stars_num)}
           </Badge>
         ) : null}
@@ -68,7 +96,10 @@ export function ToolCardSkeleton() {
   return (
     <div className="rounded-xl border bg-card p-5 animate-pulse">
       <div className="flex items-start justify-between">
-        <div className="h-5 w-32 bg-muted rounded" />
+        <div className="flex items-center gap-2.5">
+          <div className="h-5 w-5 bg-muted rounded" />
+          <div className="h-5 w-32 bg-muted rounded" />
+        </div>
         <div className="h-5 w-14 bg-muted rounded-full" />
       </div>
       <div className="mt-3 space-y-2">

@@ -74,12 +74,13 @@ export default function IndexPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative bg-gradient-to-b from-primary/[0.06] via-background to-background">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl" />
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-primary/8 rounded-full blur-3xl" />
+          <div className="absolute top-20 left-1/3 w-[400px] h-[300px] bg-[hsl(270_70%_60%/0.06)] rounded-full blur-3xl" />
         </div>
         <div className="container relative py-14 md:py-20 text-center">
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-gradient">
             OSSアルタナティブ
           </h1>
           <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
@@ -102,13 +103,15 @@ export default function IndexPage() {
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="container py-4">
-        <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
+      {/* Category Filter - Sticky */}
+      <section className="sticky top-14 z-40 bg-background/90 backdrop-blur-md border-b py-3">
+        <div className="container">
+          <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
+        </div>
       </section>
 
       {/* Tool Grid */}
-      <section className="container pb-16">
+      <section className="container pb-16 pt-6">
         {isLoading && page === 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
@@ -121,8 +124,8 @@ export default function IndexPage() {
               {data?.totalCount ?? 0} 件のツール
             </p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {allTools.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
+              {allTools.map((tool, i) => (
+                <ToolCard key={tool.id} tool={tool} index={i} />
               ))}
             </div>
             {hasMore && (
