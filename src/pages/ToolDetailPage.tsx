@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ExternalLink, Github, Star, Check, X } from "lucide-react";
+import { ExternalLink, Github, Star, Check, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -9,14 +9,22 @@ import { DetailSkeleton } from "@/components/LoadingSkeleton";
 import { ErrorState } from "@/components/StateDisplays";
 import { useProduct } from "@/hooks/use-data";
 import { useSeo } from "@/hooks/use-seo";
+import { JsonLd, buildSoftwareAppJsonLd, buildBreadcrumbJsonLd } from "@/components/JsonLd";
 
 export default function ToolDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: product, isLoading } = useProduct(slug || "");
 
+  const name = product?.name || "";
+  const jpName = (product as any)?.japanese_name;
+
   useSeo({
-    title: product ? `${product.name} — オープンソース代替ツール詳細` : "ツール詳細",
-    description: product?.short_description || undefined,
+    title: product
+      ? `${name}とは？特徴・使い方・代替との違いを解説`
+      : "ツール詳細",
+    description: product
+      ? `${name}${jpName && jpName !== name ? `（${jpName}）` : ""}の特徴や使い方、メリット・デメリットを解説。${product.is_self_hostable ? "セルフホスト可能。" : ""}${product.supports_japanese ? "日本語対応。" : ""}${product.license ? `ライセンス: ${product.license}。` : ""}オープンソース代替ツールとして注目されています。`
+      : undefined,
     canonical: slug ? `https://altfinder.jp/products/${slug}` : undefined,
   });
 
@@ -28,29 +36,38 @@ export default function ToolDetailPage() {
   }
 
   const formatStars = (n: number) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
+  const relatedAlts = product.relatedAlternatives || [];
+  const categories = product.categories || [];
 
   return (
     <SiteLayout>
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "ホーム", url: "https://altfinder.jp/" },
+        { name: "ツール一覧", url: "https://altfinder.jp/products" },
+        { name, url: `https://altfinder.jp/products/${slug}` },
+      ])} />
+      <JsonLd data={buildSoftwareAppJsonLd(product)} />
+
       <div className="container py-10 md:py-14 max-w-4xl">
-        <Breadcrumbs items={[{ label: "ツール一覧", href: "/products" }, { label: product.name }]} />
+        <Breadcrumbs items={[{ label: "ツール一覧", href: "/products" }, { label: name }]} />
 
         {/* Header */}
         <div className="flex items-start gap-5">
           <div className="h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden">
             {product.logo_url ? (
-              <img src={product.logo_url} alt={product.name} className="h-12 w-12 md:h-14 md:w-14 object-contain" />
+              <img src={product.logo_url} alt={`${name}のロゴ`} className="h-12 w-12 md:h-14 md:w-14 object-contain" loading="lazy" />
             ) : (
-              <span className="text-2xl md:text-3xl font-bold text-muted-foreground">{product.name[0]}</span>
+              <span className="text-2xl md:text-3xl font-bold text-muted-foreground">{name[0]}</span>
             )}
           </div>
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
-            {(product as any).japanese_name && (product as any).japanese_name !== product.name && (
-              <p className="text-lg text-muted-foreground mt-0.5">{(product as any).japanese_name}</p>
+            <h1 className="text-3xl md:text-4xl font-bold">{name}とは</h1>
+            {jpName && jpName !== name && (
+              <p className="text-lg text-muted-foreground mt-0.5">{jpName}</p>
             )}
             <p className="mt-2 text-lg text-muted-foreground leading-relaxed">{product.short_description}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {product.categories?.map((cat: any) => (
+              {categories.map((cat: any) => (
                 <Link key={cat.id} to={`/categories/${cat.slug}`}>
                   <Badge variant="secondary" className="hover:bg-primary/10">{cat.name}</Badge>
                 </Link>
@@ -83,9 +100,9 @@ export default function ToolDetailPage() {
           )}
         </div>
 
-        {/* Features */}
+        {/* 特徴 */}
         <section className="mt-10 surface-elevated rounded-xl p-6 md:p-8">
-          <h2 className="text-xl font-bold mb-5">機能・特徴</h2>
+          <h2 className="text-xl font-bold mb-5">{name}の特徴</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             <FeatureIndicator value={product.is_open_source} label="オープンソース" />
             <FeatureIndicator value={product.is_self_hostable} label="セルフホスト可能" />
@@ -108,44 +125,48 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* Description */}
+        {/* 詳細説明 */}
         {product.description && (
           <section className="mt-8">
-            <h2 className="text-xl font-bold mb-4">詳細説明</h2>
-            <div className="text-muted-foreground leading-relaxed whitespace-pre-line">
-              {product.description}
+            <h2 className="text-xl font-bold mb-4">{name}の使い方・概要</h2>
+            <div className="text-muted-foreground leading-relaxed whitespace-pre-line">{product.description}</div>
+          </section>
+        )}
+
+        {/* メリット・デメリット */}
+        {((product as any).best_for || (product as any).not_good_for) && (
+          <section className="mt-8">
+            <h2 className="text-xl font-bold mb-4">メリット・デメリット</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {(product as any).best_for && (
+                <div className="surface-elevated rounded-xl p-6">
+                  <h3 className="font-semibold text-accent flex items-center gap-2 mb-3">
+                    <Check className="h-4 w-4" />向いている人
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{(product as any).best_for}</p>
+                </div>
+              )}
+              {(product as any).not_good_for && (
+                <div className="surface-elevated rounded-xl p-6">
+                  <h3 className="font-semibold text-destructive flex items-center gap-2 mb-3">
+                    <X className="h-4 w-4" />向いていない人
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{(product as any).not_good_for}</p>
+                </div>
+              )}
             </div>
           </section>
         )}
 
-        {/* Best for / Not good for */}
-        {((product as any).best_for || (product as any).not_good_for) && (
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
-            {(product as any).best_for && (
-              <div className="surface-elevated rounded-xl p-6">
-                <h3 className="font-semibold text-accent flex items-center gap-2 mb-3">
-                  <Check className="h-4 w-4" />向いている人
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{(product as any).best_for}</p>
-              </div>
-            )}
-            {(product as any).not_good_for && (
-              <div className="surface-elevated rounded-xl p-6">
-                <h3 className="font-semibold text-destructive flex items-center gap-2 mb-3">
-                  <X className="h-4 w-4" />向いていない人
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{(product as any).not_good_for}</p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Related alternatives */}
-        {product.relatedAlternatives && product.relatedAlternatives.length > 0 && (
+        {/* 関連 alternatives */}
+        {relatedAlts.length > 0 && (
           <section className="mt-8">
-            <h2 className="text-xl font-bold mb-4">関連する代替ページ</h2>
+            <h2 className="text-xl font-bold mb-4">他ツールとの違い・関連する代替ページ</h2>
+            <p className="text-sm text-muted-foreground mb-3">
+              {name}が代替候補として紹介されているサービスの一覧です。
+            </p>
             <div className="flex flex-wrap gap-2">
-              {product.relatedAlternatives.map((alt: any) => (
+              {relatedAlts.map((alt: any) => (
                 <Link key={alt.source_slug} to={`/alternatives/${alt.source_slug}`}>
                   <Badge variant="secondary" className="cursor-pointer hover:bg-primary/10 text-sm py-1.5 px-4">
                     {alt.source_name}の代替
@@ -155,6 +176,35 @@ export default function ToolDetailPage() {
             </div>
           </section>
         )}
+
+        {/* カテゴリリンク */}
+        {categories.length > 0 && (
+          <section className="mt-8">
+            <h2 className="text-xl font-bold mb-4">関連カテゴリ</h2>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat: any) => (
+                <Link key={cat.id} to={`/categories/${cat.slug}`}>
+                  <Badge variant="outline" className="cursor-pointer hover:bg-primary/10 text-sm py-1.5 px-4">
+                    {cat.japanese_name || cat.name}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* CTA */}
+        <section className="mt-12 surface-elevated rounded-xl p-6 md:p-8 text-center">
+          <p className="text-muted-foreground mb-3">他のオープンソースツールも比較してみませんか？</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/alternatives">
+              <Button variant="outline" size="sm" className="rounded-xl">代替サービス一覧 <ArrowRight className="ml-1 h-3.5 w-3.5" /></Button>
+            </Link>
+            <Link to="/products">
+              <Button variant="outline" size="sm" className="rounded-xl">OSSツール一覧 <ArrowRight className="ml-1 h-3.5 w-3.5" /></Button>
+            </Link>
+          </div>
+        </section>
       </div>
     </SiteLayout>
   );

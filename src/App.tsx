@@ -30,6 +30,10 @@ import AdminAlternativeEditPage from "./pages/admin/AdminAlternativeEditPage.tsx
 import AdminCategoryEditPage from "./pages/admin/AdminCategoryEditPage.tsx";
 import AdminImportsPage from "./pages/admin/AdminImportsPage.tsx";
 import AdminScrapeRunsPage from "./pages/admin/AdminScrapeRunsPage.tsx";
+import PopularPage from "./pages/PopularPage.tsx";
+import OssToolsPage from "./pages/OssToolsPage.tsx";
+import SelfHostedToolsPage from "./pages/SelfHostedToolsPage.tsx";
+import JapaneseSupportedToolsPage from "./pages/JapaneseSupportedToolsPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +56,10 @@ const App = () => (
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/:slug" element={<ToolDetailPage />} />
             <Route path="/submit" element={<SubmitPage />} />
+            <Route path="/popular" element={<PopularPage />} />
+            <Route path="/open-source-tools" element={<OssToolsPage />} />
+            <Route path="/self-hosted-tools" element={<SelfHostedToolsPage />} />
+            <Route path="/japanese-supported-tools" element={<JapaneseSupportedToolsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
