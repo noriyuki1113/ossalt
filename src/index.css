@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -46,7 +46,8 @@
     --sidebar-ring: 217 91% 60%;
 
     /* Custom tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(217 91% 60%), hsl(200 80% 50%));
+    --hero-gradient: linear-gradient(135deg, hsl(217 91% 60%), hsl(270 70% 60%));
+    --card-glow: 217 91% 60%;
     --surface-elevated: 0 0% 6.7%;
     --badge-green: 150 60% 42%;
     --badge-green-foreground: 0 0% 100%;
@@ -78,5 +79,14 @@
 
   .surface-elevated {
     @apply bg-card shadow-sm border;
+  }
+
+  .card-glow {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-glow:hover {
+    border-color: hsl(var(--card-glow) / 0.5);
+    box-shadow: 0 0 20px -5px hsl(var(--card-glow) / 0.15);
   }
 }

@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ExternalLink, Github, Star, GitFork, Scale, Clock } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Star, Scale, Share2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,31 @@ function formatStars(num: number | null): string {
   if (!num) return "0";
   if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
   return String(num);
+}
+
+function getFaviconUrl(url: string | null, size = 64): string | null {
+  if (!url) return null;
+  try {
+    const domain = new URL(url).hostname;
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`;
+  } catch {
+    return null;
+  }
+}
+
+function ShareButton({ tool }: { tool: Tool }) {
+  const text = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
+  const url = window.location.href;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+  return (
+    <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" asChild>
+      <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
+        <Share2 className="h-3.5 w-3.5" />
+        Xでシェア
+      </a>
+    </Button>
+  );
 }
 
 export default function ToolDetailPage() {
@@ -53,6 +78,8 @@ export default function ToolDetailPage() {
     description: tool?.description_ja || tool?.description_en || "",
   });
 
+  const favicon = tool ? getFaviconUrl(tool.url, 64) : null;
+
   if (isLoading) {
     return (
       <SiteLayout>
@@ -91,20 +118,35 @@ export default function ToolDetailPage() {
       </div>
 
       {/* Hero */}
-      <section className="container pt-6 pb-10 max-w-3xl mx-auto">
-        <div className="flex items-start justify-between gap-4 flex-wrap">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">{tool.name}</h1>
-          {tool.stars_num && tool.stars_num > 0 && (
-            <Badge variant="secondary" className="gap-1.5 text-sm px-3 py-1 shrink-0">
-              <Star className="h-4 w-4 fill-current text-badge-amber" />
-              {formatStars(tool.stars_num)}
-            </Badge>
+      <section className="container pt-6 pb-10 max-w-3xl mx-auto animate-fade-in">
+        <div className="flex items-start gap-4 flex-wrap">
+          {favicon && (
+            <img src={favicon} alt="" width={48} height={48} className="rounded-lg shrink-0 mt-1" />
           )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">{tool.name}</h1>
+              {tool.stars_num && tool.stars_num > 0 && (
+                <Badge className="gap-1.5 text-sm px-3 py-1 shrink-0 bg-badge-amber/15 text-badge-amber border-badge-amber/30">
+                  <Star className="h-4 w-4 fill-current" />
+                  {formatStars(tool.stars_num)}
+                </Badge>
+              )}
+            </div>
+          </div>
         </div>
 
-        <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-          {tool.description_ja || tool.description_en || "説明なし"}
-        </p>
+        {/* Description */}
+        <div className="mt-5 space-y-3">
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            {tool.description_ja || "説明なし"}
+          </p>
+          {tool.description_en && tool.description_ja && (
+            <p className="text-sm text-muted-foreground/70 leading-relaxed italic">
+              {tool.description_en}
+            </p>
+          )}
+        </div>
 
         {/* Badges */}
         <div className="mt-5 flex flex-wrap gap-2">
@@ -137,6 +179,7 @@ export default function ToolDetailPage() {
               </a>
             </Button>
           )}
+          <ShareButton tool={tool} />
         </div>
       </section>
 
@@ -164,13 +207,26 @@ export default function ToolDetailPage() {
         </section>
       )}
 
+      {/* Alternative services hint */}
+      {tool.category_ja && (
+        <section className="container pb-10 max-w-3xl mx-auto">
+          <div className="rounded-xl border bg-card p-6">
+            <h2 className="text-lg font-semibold mb-2">代替できるサービス</h2>
+            <p className="text-sm text-muted-foreground">
+              {tool.name} は「{tool.category_ja}」カテゴリのオープンソースツールです。
+              同様の機能を持つ有料SaaSの代替として利用できます。
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Related tools */}
       {relatedTools && relatedTools.length > 0 && (
         <section className="container pb-16 max-w-5xl mx-auto">
           <h2 className="text-xl font-bold mb-6">関連ツール</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {relatedTools.map((t) => (
-              <ToolCard key={t.id} tool={t} />
+            {relatedTools.map((t, i) => (
+              <ToolCard key={t.id} tool={t} index={i} />
             ))}
           </div>
         </section>
