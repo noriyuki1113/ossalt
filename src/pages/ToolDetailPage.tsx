@@ -54,13 +54,13 @@ export default function ToolDetailPage() {
 
         {/* Header */}
         <div className="flex items-start gap-5">
-          <div className="h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-secondary flex items-center justify-center shrink-0 overflow-hidden">
-            {product.logo_url ? (
-              <img src={product.logo_url} alt={`${name}のロゴ`} className="h-12 w-12 md:h-14 md:w-14 object-contain" loading="lazy" />
-            ) : (
-              <span className="text-2xl md:text-3xl font-bold text-muted-foreground">{name[0]}</span>
-            )}
-          </div>
+          <ProductLogo
+            name={name}
+            logoUrl={product.logo_url}
+            websiteUrl={product.website_url}
+            githubUrl={product.github_url}
+            size="xl"
+          />
           <div>
             <h1 className="text-3xl md:text-4xl font-bold">{name}とは</h1>
             {jpName && jpName !== name && (
