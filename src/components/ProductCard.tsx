@@ -106,6 +106,9 @@ export function ProductCardDetailed({ product, reason }: { product: any; reason?
           <ProductLogo
             name={product.name}
             logoUrl={product.logo_url}
+            logoGithubReadmeUrl={product.logo_github_readme_url}
+            logoGithubAvatarUrl={product.logo_github_avatar_url}
+            logoFaviconUrl={product.logo_favicon_url}
             websiteUrl={product.website_url}
             githubUrl={product.github_url}
             size="lg"
