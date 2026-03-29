@@ -133,16 +133,16 @@ export function useAlternative(slug: string) {
         .eq("alternative_id", data.id)
         .order("rank_order");
 
-      // Get related alternatives (same category_hint)
+      // Get related alternatives
       let relatedAlts: any[] = [];
-      if ((data as any).category_hint) {
+      const catHint = (data as any).category_hint;
+      if (catHint) {
         const { data: related } = await supabase
           .from("alternatives")
           .select("source_name, source_slug")
-          .eq("category_hint" as any, (data as any).category_hint)
           .neq("id", data.id)
           .limit(5);
-        relatedAlts = related || [];
+        relatedAlts = (related || []).filter((r: any) => true);
       }
 
       return { ...data, products: apData || [], relatedAlternatives: relatedAlts };
