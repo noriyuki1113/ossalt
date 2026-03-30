@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Check, Copy, ExternalLink, Star, Twitter } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { CountUp } from "@/components/CountUp";
 import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SaasItem {
   name: string;
