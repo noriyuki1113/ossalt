@@ -1,20 +1,20 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ArrowLeft, ExternalLink, Github, Star, Scale, Share2,
-  CheckCircle2, ThumbsUp, ThumbsDown, ArrowRight,
+  ArrowLeft, ExternalLink, Github, Star, Scale,
+  CheckCircle2, ArrowRight, Copy, Server, Clock,
+  GitFork, Linkedin, Twitter,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
-import { ToolCard } from "@/components/ToolCard";
 import { useSeo } from "@/hooks/use-seo";
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
-} from "@/components/ui/table";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
+import { toast } from "sonner";
+
+/* ── helpers ── */
 
 function formatStars(num: number | null): string {
   if (!num) return "0";
@@ -31,18 +31,100 @@ function getFaviconUrl(url: string | null, size = 64): string | null {
   }
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+/* Infer tech tags from category */
+function inferTechTags(tool: Tool): string[] {
+  const cat = (tool.parent_category_en || tool.category_en || "").toLowerCase();
+  const desc = (tool.description_en || "").toLowerCase();
+  const tags: string[] = [];
+
+  if (cat.includes("ai") || cat.includes("machine")) {
+    tags.push("Python", "LangChain", "OpenAI");
+  } else if (cat.includes("developer") || cat.includes("dev")) {
+    tags.push("TypeScript", "React", "Docker");
+  } else if (cat.includes("infra") || cat.includes("ops")) {
+    tags.push("Kubernetes", "Terraform", "Go");
+  } else if (cat.includes("data") || cat.includes("analytics")) {
+    tags.push("PostgreSQL", "Redis", "Elasticsearch");
+  } else if (cat.includes("content") || cat.includes("publishing")) {
+    tags.push("Next.js", "Markdown", "Node.js");
+  } else if (cat.includes("security") || cat.includes("privacy")) {
+    tags.push("Go", "Rust", "OAuth");
+  } else if (cat.includes("business") || cat.includes("productivity")) {
+    tags.push("TypeScript", "PostgreSQL", "Docker");
+  } else if (cat.includes("community") || cat.includes("social")) {
+    tags.push("Ruby", "React", "Redis");
+  } else {
+    tags.push("Open Source", "Self-hosted");
+  }
+
+  // Add from description
+  if (desc.includes("rust")) tags.push("Rust");
+  if (desc.includes("golang") || desc.includes(" go ")) tags.push("Go");
+  if (desc.includes("python")) tags.push("Python");
+
+  return [...new Set(tags)].slice(0, 5);
+}
+
+/* Generate key benefits from category */
+function getKeyBenefits(tool: Tool): string[] {
+  const base = [
+    `${tool.license || "オープンソース"}ライセンスで完全無料`,
+    "セルフホスト対応でデータを完全管理",
+  ];
+  const cat = (tool.parent_category_ja || "").toLowerCase();
+  if (cat.includes("ai")) {
+    base.push("最新のAIモデルを自由に統合", "プライベートデータでの運用が可能");
+  } else if (cat.includes("開発")) {
+    base.push("CI/CDパイプラインに統合可能", "APIファーストで拡張が容易");
+  } else if (cat.includes("インフラ")) {
+    base.push("マルチクラウド対応", "Infrastructure as Codeで管理");
+  } else if (cat.includes("ビジネス") || cat.includes("生産性")) {
+    base.push("チーム規模を問わず利用可能", "カスタムワークフローに対応");
+  } else if (cat.includes("データ")) {
+    base.push("リアルタイムダッシュボードを構築", "複数データソースを統合");
+  } else if (cat.includes("セキュリティ")) {
+    base.push("コンプライアンス要件に対応", "監査ログの完全管理");
+  } else {
+    base.push("コミュニティ主導の活発な開発", "プラグイン・拡張で機能追加");
+  }
+  return base.slice(0, 4);
+}
+
+/* ── Compact related card ── */
+
+function RelatedCard({ tool }: { tool: Tool }) {
+  const favicon = getFaviconUrl(tool.url, 32);
   return (
-    <h2 className="text-xl font-bold flex items-center gap-3 mb-6">
-      <span className="w-1 h-6 rounded-full bg-primary shrink-0" />
-      {children}
-    </h2>
+    <Link
+      to={`/tools/${tool.id}`}
+      className="flex items-start gap-3 rounded-xl border bg-card p-4 transition-all hover:-translate-y-0.5 card-glow"
+    >
+      {favicon ? (
+        <img src={favicon} alt="" width={20} height={20} className="rounded shrink-0 mt-0.5" loading="lazy" />
+      ) : (
+        <span className="h-5 w-5 rounded bg-muted text-muted-foreground text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5 uppercase">
+          {tool.name?.charAt(0) || "?"}
+        </span>
+      )}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <h4 className="font-semibold text-sm truncate">{tool.name}</h4>
+          {tool.stars_num != null && tool.stars_num > 0 && (
+            <Badge className="gap-0.5 text-[10px] bg-badge-amber/15 text-badge-amber border-badge-amber/30 shrink-0">
+              <Star className="h-2.5 w-2.5 fill-current" />
+              {formatStars(tool.stars_num)}
+            </Badge>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+          {tool.description_ja || tool.description_en || ""}
+        </p>
+      </div>
+    </Link>
   );
 }
 
-function Divider() {
-  return <hr className="border-border my-10" />;
-}
+/* ── Main Page ── */
 
 export default function ToolDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -74,7 +156,6 @@ export default function ToolDetailPage() {
   });
 
   const competitor = tool?.primary_competitor_ja || tool?.primary_competitor || null;
-  const replacesJa = tool?.replaces_ja || [];
 
   const seoTitle = tool
     ? competitor && competitor !== "有料SaaS"
@@ -109,13 +190,11 @@ export default function ToolDetailPage() {
     jsonLd,
   });
 
-  const favicon = tool ? getFaviconUrl(tool.url, 64) : null;
-
   if (isLoading) {
     return (
       <SiteLayout>
         <div className="container py-12">
-          <div className="animate-pulse space-y-6 max-w-3xl mx-auto">
+          <div className="animate-pulse space-y-6 max-w-5xl mx-auto">
             <div className="h-6 w-40 bg-muted rounded" />
             <div className="h-10 w-64 bg-muted rounded" />
             <div className="h-5 w-full bg-muted rounded" />
@@ -138,311 +217,337 @@ export default function ToolDetailPage() {
     );
   }
 
-  const shareUrl = window.location.href;
+  const favicon = getFaviconUrl(tool.url, 64);
+  const shareUrl = `https://find-my-alt.lovable.app/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
-  const recommendedUsers = [
-    { icon: "👨‍💻", label: "開発者・エンジニア" },
-    { icon: "🏢", label: "スタートアップ・中小企業" },
-    { icon: "💰", label: "コストを削減したい企業" },
-    { icon: "🔒", label: "データをセルフホストしたい人" },
-  ];
+  const keyBenefits = getKeyBenefits(tool);
+  const techTags = inferTechTags(tool);
 
-  const pros = [
-    "無料で使える",
-    "ソースコードが公開されている",
-    "カスタマイズ可能",
-    "ベンダーロックインなし",
-  ];
+  const competitorKey = tool.primary_competitor || "";
+  const altSlug = COMPETITOR_TO_SLUG[competitorKey];
 
-  const cons = [
-    "セルフホストの技術知識が必要",
-    "サポートはコミュニティ依存",
-    "エンタープライズ機能は限定的",
-  ];
-
-  const features = [
-    { text: "オープンソース・無料" },
-    { text: "セルフホスト可能" },
-    { text: `ライセンス: ${tool.license || "不明"}` },
-    { text: `GitHubスター: ${formatStars(tool.stars_num)}` },
-    { text: `カテゴリ: ${tool.category_ja || tool.parent_category_ja || "未分類"}` },
-  ];
-
-  const comparisonTarget = competitor && competitor !== "有料SaaS" ? competitor : "有料SaaS";
-
-  const comparisonRows = [
-    { item: "費用", oss: "無料", saas: "月額$10〜" },
-    { item: "ホスティング", oss: "セルフホスト", saas: "クラウド" },
-    { item: "カスタマイズ", oss: "✅ 自由", saas: "❌ 制限あり" },
-    { item: "サポート", oss: "コミュニティ", saas: "公式サポート" },
-    { item: "データ管理", oss: "✅ 完全管理", saas: "❌ 預ける" },
-  ];
+  const copyLink = () => {
+    navigator.clipboard.writeText(shareUrl);
+    toast.success("リンクをコピーしました");
+  };
 
   return (
     <SiteLayout>
       {/* Back nav */}
-      <div className="container pt-8">
-        <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground -ml-2" asChild>
-          <Link to="/"><ArrowLeft className="h-4 w-4" />ツール一覧に戻る</Link>
-        </Button>
+      <div className="container max-w-6xl mx-auto pt-6 px-4">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          ツール一覧に戻る
+        </Link>
       </div>
 
-      <div className="container max-w-4xl mx-auto animate-fade-in">
-        {/* === 1. Header === */}
-        <section className="pt-6 pb-2">
-          <div className="flex items-start gap-4 flex-wrap">
-            {favicon && <img src={favicon} alt="" width={48} height={48} className="rounded-lg shrink-0 mt-1" />}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-4 flex-wrap">
-                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">{tool.name}</h1>
-                {tool.stars_num != null && tool.stars_num > 0 && (
-                  <Badge className="gap-1.5 text-sm px-3 py-1 shrink-0 bg-badge-amber/15 text-badge-amber border-badge-amber/30">
-                    <Star className="h-4 w-4 fill-current" />{formatStars(tool.stars_num)}
+      {/* ── Two-column layout ── */}
+      <div className="container max-w-6xl mx-auto px-4 py-8 animate-fade-in">
+        <div className="flex flex-col lg:flex-row gap-8">
+
+          {/* ── LEFT COLUMN (main) ── */}
+          <div className="flex-1 min-w-0 lg:max-w-[70%]">
+
+            {/* Header */}
+            <section>
+              <div className="flex items-start gap-4">
+                {favicon ? (
+                  <img
+                    src={favicon}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="rounded-xl shrink-0 border border-border"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <span className="h-16 w-16 rounded-xl bg-muted text-muted-foreground text-2xl font-bold flex items-center justify-center shrink-0 uppercase border border-border">
+                    {tool.name?.charAt(0) || "?"}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <h1 className="text-3xl font-extrabold tracking-tight">{tool.name}</h1>
+                  {competitor && competitor !== "有料SaaS" && (
+                    <p className="text-sm text-primary mt-1">
+                      {competitor} の代替OSSツール
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-5 space-y-2">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                  {tool.description_ja || "説明なし"}
+                </p>
+                {tool.description_en && tool.description_ja && (
+                  <p className="text-sm text-muted-foreground/50 leading-relaxed italic">
+                    {tool.description_en}
+                  </p>
+                )}
+              </div>
+            </section>
+
+            {/* Buttons */}
+            <section className="mt-6 flex flex-wrap items-center gap-3">
+              {tool.url && (
+                <Button size="lg" className="gap-2 rounded-xl text-base" asChild>
+                  <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                    サイトへ <ArrowRight className="h-4 w-4" />
+                  </a>
+                </Button>
+              )}
+              {tool.github_url && (
+                <Button variant="outline" size="lg" className="gap-2 rounded-xl text-base" asChild>
+                  <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+                    <Github className="h-4 w-4" />
+                    GitHubを見る
+                  </a>
+                </Button>
+              )}
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={copyLink}
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="リンクをコピー"
+                >
+                  <Copy className="h-4 w-4 text-muted-foreground" />
+                </button>
+                <a
+                  href={twitterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="Xでシェア"
+                >
+                  <Twitter className="h-4 w-4 text-muted-foreground" />
+                </a>
+                <a
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="LinkedInでシェア"
+                >
+                  <Linkedin className="h-4 w-4 text-muted-foreground" />
+                </a>
+              </div>
+            </section>
+
+            <hr className="border-border my-8" />
+
+            {/* Description & Key Benefits */}
+            <section>
+              <h2 className="text-xl font-bold mb-4">{tool.name} とは？</h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                {tool.name} は、{tool.category_ja || tool.parent_category_ja || "様々な用途"}のためのオープンソースツールです。
+                {tool.description_ja && ` ${tool.description_ja}`}
+                {competitor && competitor !== "有料SaaS" && ` ${competitor}の代替として多くの開発者に利用されています。`}
+              </p>
+
+              <h3 className="text-base font-semibold mb-3">主なメリット</h3>
+              <ul className="space-y-2.5">
+                {keyBenefits.map((b) => (
+                  <li key={b} className="flex items-start gap-3 text-sm">
+                    <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <span className="text-muted-foreground">{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <hr className="border-border my-8" />
+
+            {/* Category & Tags */}
+            <section>
+              <h2 className="text-lg font-bold mb-3">カテゴリ</h2>
+              <div className="flex flex-wrap gap-2">
+                {tool.parent_category_ja && (
+                  <Badge variant="secondary" className="text-sm">{tool.parent_category_ja}</Badge>
+                )}
+                {tool.category_ja && tool.category_ja !== tool.parent_category_ja && (
+                  <Badge variant="secondary" className="text-sm">{tool.category_ja}</Badge>
+                )}
+                {tool.license && (
+                  <Badge variant="outline" className="gap-1 text-sm">
+                    <Scale className="h-3 w-3" />{tool.license}
                   </Badge>
                 )}
               </div>
-            </div>
+            </section>
           </div>
 
-          <div className="mt-4 space-y-2">
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">{tool.description_ja || "説明なし"}</p>
-            {tool.description_en && tool.description_ja && (
-              <p className="text-sm text-muted-foreground/60 leading-relaxed italic">{tool.description_en}</p>
-            )}
-          </div>
+          {/* ── RIGHT COLUMN (sidebar) ── */}
+          <aside className="w-full lg:w-[30%] shrink-0 space-y-5">
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {tool.parent_category_ja && <Badge variant="secondary">{tool.parent_category_ja}</Badge>}
-            {tool.category_ja && tool.category_ja !== tool.parent_category_ja && (
-              <Badge variant="secondary">{tool.category_ja}</Badge>
-            )}
-            {tool.license && (
-              <Badge variant="outline" className="gap-1"><Scale className="h-3 w-3" />{tool.license}</Badge>
-            )}
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            {tool.url && (
-              <Button size="lg" className="gap-2 rounded-xl text-base" asChild>
-                <a href={tool.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4" />サイトへ
-                </a>
-              </Button>
-            )}
-            {tool.github_url && (
-              <Button variant="outline" size="lg" className="gap-2 rounded-xl text-base" asChild>
-                <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
-                  <Github className="h-4 w-4" />GitHubを見る
-                </a>
-              </Button>
-            )}
-            <Button variant="outline" size="sm" className="gap-1.5 rounded-lg" asChild>
-              <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
-                <Share2 className="h-3.5 w-3.5" />Xでシェア
-              </a>
-            </Button>
-          </div>
-        </section>
-
-        {/* === Alternative Section === */}
-        {competitor && (
-          <>
-            <Divider />
-            <section>
-              <SectionTitle>このツールは {competitor} の代替です</SectionTitle>
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge className="text-base px-4 py-2 bg-primary/15 text-primary border-primary/30 font-semibold">
-                  {competitor}
-                </Badge>
-                {replacesJa.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {replacesJa.map((r) => (
-                      <Badge key={r} variant="secondary" className="text-xs">
-                        {r}
-                      </Badge>
-                    ))}
+            {/* GitHub Status Card */}
+            <div className="rounded-xl border bg-card p-5">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
+                GitHub Stats
+              </h3>
+              <div className="space-y-3">
+                {tool.stars_num != null && tool.stars_num > 0 && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Star className="h-4 w-4 text-badge-amber" />
+                      Stars
+                    </span>
+                    <span className="font-semibold text-sm">{formatStars(tool.stars_num)}</span>
                   </div>
                 )}
+                {tool.github_url && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <GitFork className="h-4 w-4" />
+                        Forks
+                      </span>
+                      <span className="text-sm text-muted-foreground">—</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Clock className="h-4 w-4" />
+                        Last commit
+                      </span>
+                      <span className="text-sm text-muted-foreground">—</span>
+                    </div>
+                  </>
+                )}
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Server className="h-4 w-4" />
+                    Self-hosted
+                  </span>
+                  <span className="font-semibold text-sm text-primary">Yes</span>
+                </div>
               </div>
-            </section>
-          </>
-        )}
 
-        <Divider />
-
-        {/* === 2. おすすめユーザー === */}
-        <section>
-          <SectionTitle>こんな人におすすめ</SectionTitle>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {recommendedUsers.map((u) => (
-              <div key={u.label} className="rounded-xl border bg-card p-4 text-center space-y-2">
-                <span className="text-2xl">{u.icon}</span>
-                <p className="text-sm font-medium">{u.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <Divider />
-
-        {/* === 3. 概要 === */}
-        <section>
-          <SectionTitle>概要</SectionTitle>
-          <div className="rounded-xl border bg-card p-6 space-y-3">
-            <p className="text-base md:text-lg leading-relaxed">
-              {tool.name} は、{tool.category_ja || tool.parent_category_ja || "様々な用途"}のためのオープンソースツールです。
-            </p>
-            {tool.description_ja && (
-              <p className="text-muted-foreground leading-relaxed">{tool.description_ja}</p>
-            )}
-          </div>
-        </section>
-
-        <Divider />
-
-        {/* === 4. 主な特徴 === */}
-        <section>
-          <SectionTitle>主な特徴</SectionTitle>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {features.map((f) => (
-              <div key={f.text} className="flex items-center gap-3 rounded-xl border bg-card p-4">
-                <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm font-medium">{f.text}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <Divider />
-
-        {/* === 5. メリット・デメリット === */}
-        <section>
-          <SectionTitle>メリット・デメリット</SectionTitle>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-emerald-500/20 bg-card p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <ThumbsUp className="h-5 w-5 text-emerald-400" />
-                <h3 className="font-semibold text-emerald-400">メリット</h3>
-              </div>
-              <ul className="space-y-2">
-                {pros.map((p) => (
-                  <li key={p} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-emerald-400 mt-0.5">✓</span>{p}
-                  </li>
-                ))}
-              </ul>
+              {tool.github_url && (
+                <Button variant="outline" className="w-full mt-4 gap-2 rounded-xl text-sm" asChild>
+                  <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+                    <Github className="h-4 w-4" />
+                    View Repository
+                  </a>
+                </Button>
+              )}
             </div>
-            <div className="rounded-xl border border-red-500/20 bg-card p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <ThumbsDown className="h-5 w-5 text-red-400" />
-                <h3 className="font-semibold text-red-400">デメリット</h3>
+
+            {/* Categories sidebar */}
+            <div className="rounded-xl border bg-card p-5">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                カテゴリ
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                {tool.parent_category_ja && (
+                  <Link
+                    to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    {tool.parent_category_ja}
+                  </Link>
+                )}
+                {tool.category_ja && tool.category_ja !== tool.parent_category_ja && (
+                  <Link
+                    to={`/?category=${encodeURIComponent(tool.parent_category_ja || "")}`}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    {tool.category_ja}
+                  </Link>
+                )}
               </div>
-              <ul className="space-y-2">
-                {cons.map((c) => (
-                  <li key={c} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-red-400 mt-0.5">✗</span>{c}
-                  </li>
-                ))}
-              </ul>
             </div>
-          </div>
-        </section>
 
-        <Divider />
-
-        {/* === 6. 比較表 === */}
-        <section>
-          <SectionTitle>{tool.name} vs {comparisonTarget}</SectionTitle>
-          <div className="rounded-xl border bg-card overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-border">
-                  <TableHead className="w-[30%]">項目</TableHead>
-                  <TableHead>{tool.name}（OSS）</TableHead>
-                  <TableHead>{comparisonTarget}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {comparisonRows.map((r) => (
-                  <TableRow key={r.item} className="border-border">
-                    <TableCell className="font-medium">{r.item}</TableCell>
-                    <TableCell>{r.oss}</TableCell>
-                    <TableCell>{r.saas}</TableCell>
-                  </TableRow>
+            {/* Built with (tech tags) */}
+            <div className="rounded-xl border bg-card p-5">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                Built with
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {techTags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs font-normal">
+                    {tag}
+                  </Badge>
                 ))}
-              </TableBody>
-            </Table>
-          </div>
-        </section>
+              </div>
+            </div>
 
-        <Divider />
+            {/* Share */}
+            <div className="rounded-xl border bg-card p-5">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                Share
+              </h3>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={copyLink}
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="Copy Link"
+                >
+                  <Copy className="h-4 w-4 text-muted-foreground" />
+                </button>
+                <a
+                  href={twitterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="X"
+                >
+                  <Twitter className="h-4 w-4 text-muted-foreground" />
+                </a>
+                <a
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  title="LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4 text-muted-foreground" />
+                </a>
+              </div>
+            </div>
 
-        {/* === CTA: もっと見る === */}
-        {competitor && competitor !== "有料SaaS" && (() => {
-          const competitorKey = tool.primary_competitor || "";
-          const altSlug = COMPETITOR_TO_SLUG[competitorKey];
-          const linkTo = altSlug ? `/alternatives/${altSlug}` : `/?search=${encodeURIComponent(competitor)}`;
-          return (
-            <section>
-              <Button variant="outline" size="lg" className="w-full gap-2 rounded-xl text-base" asChild>
-                <Link to={linkTo}>
-                  {competitor} の代替をもっと見る <ArrowRight className="h-4 w-4" />
+            {/* Check alternatives */}
+            {competitor && competitor !== "有料SaaS" && altSlug && (
+              <div className="rounded-xl border bg-card p-5">
+                <Link
+                  to={`/alternatives/${altSlug}`}
+                  className="flex items-center gap-2 text-sm text-primary hover:underline font-medium"
+                >
+                  Check {competitorKey} alternatives
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-              </Button>
-            </section>
-          );
-        })()}
+              </div>
+            )}
+          </aside>
+        </div>
 
-        {competitor && competitor !== "有料SaaS" && <Divider />}
+        {/* ── Bottom sections (full width) ── */}
+        <hr className="border-border my-10" />
 
-        {/* === 7. 関連ツール === */}
+        {/* Related tools */}
         {relatedTools && relatedTools.length > 0 && (
           <section>
-            <SectionTitle>関連ツール</SectionTitle>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedTools.map((t, i) => (
-                <ToolCard key={t.id} tool={t} index={i} />
+            <h2 className="text-xl font-bold mb-6">Similar open source projects</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {relatedTools.map((t) => (
+                <RelatedCard key={t.id} tool={t} />
               ))}
             </div>
           </section>
         )}
 
-        {relatedTools && relatedTools.length > 0 && <Divider />}
-
-        {/* === 8. CTA === */}
-        <section className="pb-16">
-          <div className="rounded-2xl bg-gradient-to-r from-primary/80 to-primary p-8 md:p-12 text-center space-y-5">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-primary-foreground">
-              {tool.name} を今すぐ試す
-            </h2>
-            <p className="text-primary-foreground/80 max-w-lg mx-auto">
-              オープンソースで無料。セルフホストで完全にコントロール。
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {tool.url && (
-                <Button size="lg" variant="secondary" className="gap-2 rounded-xl text-base font-semibold" asChild>
-                  <a href={tool.url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4" />サイトへ
-                  </a>
-                </Button>
-              )}
-              {tool.github_url && (
-                <Button size="lg" variant="outline" className="gap-2 rounded-xl text-base font-semibold border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                  <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
-                    <Github className="h-4 w-4" />GitHubを見る
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Bottom back button */}
-        <div className="pb-16 flex justify-center">
+        {/* View all */}
+        <div className="mt-10 pb-16 flex justify-center">
           <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
-            <Link to="/"><ArrowLeft className="h-4 w-4" />ツール一覧に戻る</Link>
+            <Link to="/">
+              View all tools <ArrowRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
