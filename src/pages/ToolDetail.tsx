@@ -390,7 +390,7 @@ export default function ToolDetailPage() {
             {/* GitHub Status Card */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                GitHub Stats
+                GitHub情報
               </h3>
               <div className="space-y-3">
                 {tool.stars_num != null && tool.stars_num > 0 && (
