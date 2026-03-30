@@ -1,0 +1,309 @@
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { Check, Copy, ExternalLink, Star, Twitter } from "lucide-react";
+import { SiteLayout } from "@/components/SiteLayout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { CountUp } from "@/components/CountUp";
+import { useSeo } from "@/hooks/use-seo";
+import { toast } from "sonner";
+
+interface SaasItem {
+  name: string;
+  monthlyPerUser: number;
+  ossName: string;
+  ossStars: string;
+  ossSlug: string;
+}
+
+const SAAS_LIST: SaasItem[] = [
+  { name: "Notion", monthlyPerUser: 16, ossName: "AppFlowy", ossStars: "69K", ossSlug: "appflowy" },
+  { name: "Slack", monthlyPerUser: 15, ossName: "Mattermost", ossStars: "36K", ossSlug: "mattermost" },
+  { name: "Figma", monthlyPerUser: 15, ossName: "Penpot", ossStars: "45K", ossSlug: "penpot" },
+  { name: "Jira", monthlyPerUser: 10, ossName: "Plane", ossStars: "54K", ossSlug: "plane" },
+  { name: "GitHub Copilot", monthlyPerUser: 19, ossName: "Continue", ossStars: "32K", ossSlug: "continue" },
+  { name: "Salesforce", monthlyPerUser: 75, ossName: "Twenty", ossStars: "24K", ossSlug: "twenty" },
+  { name: "HubSpot", monthlyPerUser: 50, ossName: "Erxes", ossStars: "8K", ossSlug: "erxes" },
+  { name: "Zendesk", monthlyPerUser: 55, ossName: "Chatwoot", ossStars: "22K", ossSlug: "chatwoot" },
+  { name: "Airtable", monthlyPerUser: 20, ossName: "NocoDB", ossStars: "63K", ossSlug: "nocodb" },
+  { name: "Typeform", monthlyPerUser: 25, ossName: "Formbricks", ossStars: "11K", ossSlug: "formbricks" },
+  { name: "DocuSign", monthlyPerUser: 30, ossName: "Documenso", ossStars: "9K", ossSlug: "documenso" },
+  { name: "Zoom", monthlyPerUser: 15, ossName: "Jitsi", ossStars: "23K", ossSlug: "jitsi" },
+  { name: "Dropbox", monthlyPerUser: 15, ossName: "Nextcloud", ossStars: "34K", ossSlug: "nextcloud" },
+  { name: "1Password", monthlyPerUser: 8, ossName: "Bitwarden", ossStars: "18K", ossSlug: "bitwarden" },
+  { name: "Webflow", monthlyPerUser: 39, ossName: "WebStudio", ossStars: "8K", ossSlug: "webstudio" },
+  { name: "Retool", monthlyPerUser: 10, ossName: "ToolJet", ossStars: "38K", ossSlug: "tooljet" },
+  { name: "Datadog", monthlyPerUser: 34, ossName: "Grafana", ossStars: "73K", ossSlug: "grafana" },
+  { name: "Mailchimp", monthlyPerUser: 20, ossName: "Listmonk", ossStars: "15K", ossSlug: "listmonk" },
+  { name: "Calendly", monthlyPerUser: 12, ossName: "Cal.com", ossStars: "33K", ossSlug: "cal-com" },
+  { name: "Loom", monthlyPerUser: 12, ossName: "Cap", ossStars: "18K", ossSlug: "cap" },
+];
+
+const JPY_RATE = 150;
+
+function getServerCost(teamSize: number): { min: number; max: number } {
+  if (teamSize <= 10) return { min: 5000, max: 10000 };
+  if (teamSize <= 50) return { min: 10000, max: 20000 };
+  if (teamSize <= 200) return { min: 15000, max: 25000 };
+  return { min: 20000, max: 30000 };
+}
+
+function formatJPY(n: number): string {
+  return "¥" + n.toLocaleString("ja-JP");
+}
+
+export default function SavingsPage() {
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [teamSize, setTeamSize] = useState(10);
+  const [copied, setCopied] = useState(false);
+
+  useSeo({
+    title: "SaaS→OSS コスト削減シミュレーター",
+    description:
+      "NotionやSlackなど有料SaaSをOSSに切り替えた場合の年間節約額を無料で計算。チーム規模に合わせた最適なOSSスタックをご提案。",
+    canonical: "https://ossalt.jp/savings",
+  });
+
+  const toggle = (name: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
+  const results = useMemo(() => {
+    const selectedItems = SAAS_LIST.filter((s) => selected.has(s.name));
+    const monthlyUSD = selectedItems.reduce((sum, s) => sum + s.monthlyPerUser, 0);
+    const monthlyJPY = monthlyUSD * JPY_RATE * teamSize;
+    const yearlyJPY = monthlyJPY * 12;
+    const server = getServerCost(teamSize);
+    const serverYearly = { min: server.min * 12, max: server.max * 12 };
+    const savingsMin = yearlyJPY - serverYearly.max;
+    const savingsMax = yearlyJPY - serverYearly.min;
+    return { selectedItems, monthlyJPY, yearlyJPY, server, serverYearly, savingsMin, savingsMax };
+  }, [selected, teamSize]);
+
+  const hasSelection = selected.size > 0;
+
+  const currentStep = !hasSelection ? 1 : teamSize > 0 ? 3 : 2;
+  const progressValue = !hasSelection ? 25 : 100;
+
+  const shareText = () => {
+    const lines = [
+      "有料SaaSをOSSに切り替えたら",
+      `年間${formatJPY(Math.max(results.savingsMin, 0))}円節約できることがわかった💰`,
+      "",
+      ...results.selectedItems.map((s) => `${s.name}→${s.ossName}`),
+      "",
+      "#OSS #コスト削減 #おすすめツール",
+      "ossalt.jp/savings",
+    ];
+    return lines.join("\n");
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(shareText());
+    setCopied(true);
+    toast.success("コピーしました");
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleTweet = () => {
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText())}`;
+    window.open(url, "_blank");
+  };
+
+  return (
+    <SiteLayout>
+      <div className="container max-w-3xl py-10 md:py-16 space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-gradient">
+            有料SaaSをOSSに切り替えたら
+            <br />
+            年間いくら節約できる？
+          </h1>
+          <p className="text-muted-foreground">
+            現在使っているツールを選んで、節約額を計算しよう
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div className="space-y-1">
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span className={currentStep >= 1 ? "text-primary font-medium" : ""}>① SaaS選択</span>
+            <span className={currentStep >= 2 ? "text-primary font-medium" : ""}>② 人数入力</span>
+            <span className={currentStep >= 3 ? "text-primary font-medium" : ""}>③ 結果</span>
+          </div>
+          <Progress value={progressValue} className="h-2" />
+        </div>
+
+        {/* Step 1 */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Step 1: 使っている有料SaaSを選択</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {SAAS_LIST.map((saas) => (
+                <label
+                  key={saas.name}
+                  className={`flex items-center gap-3 rounded-lg border p-3 cursor-pointer transition-colors ${
+                    selected.has(saas.name)
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-muted-foreground/30"
+                  }`}
+                >
+                  <Checkbox
+                    checked={selected.has(saas.name)}
+                    onCheckedChange={() => toggle(saas.name)}
+                  />
+                  <span className="flex-1 text-sm font-medium">{saas.name}</span>
+                  <span className="text-xs text-muted-foreground">${saas.monthlyPerUser}/月</span>
+                </label>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Step 2 */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg">Step 2: チーム人数を入力</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-4">
+              <Slider
+                value={[teamSize]}
+                onValueChange={([v]) => setTeamSize(v)}
+                min={1}
+                max={500}
+                step={1}
+                className="flex-1"
+              />
+              <Input
+                type="number"
+                min={1}
+                max={500}
+                value={teamSize}
+                onChange={(e) => setTeamSize(Math.max(1, Math.min(500, Number(e.target.value) || 1)))}
+                className="w-20 text-center"
+              />
+              <span className="text-sm text-muted-foreground">人</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Step 3: Results */}
+        {hasSelection && (
+          <div className="space-y-6 animate-fade-in">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Step 3: 計算結果</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Current cost */}
+                <div className="space-y-1">
+                  <p className="text-sm text-muted-foreground">現在のコスト</p>
+                  <p className="text-lg font-bold">
+                    {formatJPY(results.monthlyJPY)} <span className="text-sm font-normal text-muted-foreground">/ 月</span>
+                  </p>
+                  <p className="text-lg font-bold">
+                    {formatJPY(results.yearlyJPY)} <span className="text-sm font-normal text-muted-foreground">/ 年</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground">（1ドル＝150円換算）</p>
+                </div>
+
+                {/* OSS cost */}
+                <div className="space-y-1">
+                  <p className="text-sm text-muted-foreground">OSS切り替え後のコスト（サーバー代目安）</p>
+                  <p className="text-lg font-bold">
+                    {formatJPY(results.server.min)}〜{formatJPY(results.server.max)}{" "}
+                    <span className="text-sm font-normal text-muted-foreground">/ 月</span>
+                  </p>
+                </div>
+
+                {/* Savings */}
+                <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6 text-center space-y-2">
+                  <p className="text-sm text-muted-foreground">🎉 年間節約額</p>
+                  <p className="text-3xl md:text-5xl font-extrabold text-emerald-400">
+                    <CountUp
+                      end={Math.max(results.savingsMin, 0)}
+                      duration={1000}
+                      formatter={(n) => formatJPY(n)}
+                    />
+                  </p>
+                  {results.savingsMin !== results.savingsMax && (
+                    <p className="text-sm text-muted-foreground">
+                      〜 {formatJPY(Math.max(results.savingsMax, 0))}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Step 4: OSS Stack */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">おすすめOSSスタック</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {results.selectedItems.map((item) => (
+                    <div
+                      key={item.name}
+                      className="flex items-center justify-between rounded-lg border border-border p-3"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Badge variant="secondary" className="shrink-0 text-xs">
+                          {item.name}
+                        </Badge>
+                        <span className="text-sm">→</span>
+                        <span className="font-medium text-sm truncate">{item.ossName}</span>
+                      </div>
+                      <div className="flex items-center gap-3 shrink-0">
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
+                          {item.ossStars}
+                        </span>
+                        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
+                          <Link to={`/tools/${item.ossSlug}`}>
+                            詳細 <ExternalLink className="h-3 w-3" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Step 5: Share */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">結果をシェア</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-wrap gap-3">
+                <Button onClick={handleTweet} className="gap-2">
+                  <Twitter className="h-4 w-4" />
+                  Xでシェア
+                </Button>
+                <Button variant="outline" onClick={handleCopy} className="gap-2">
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? "コピーしました" : "結果をコピー"}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+    </SiteLayout>
+  );
+}
