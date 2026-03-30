@@ -433,7 +433,7 @@ export default function ToolDetailPage() {
                 <Button variant="outline" className="w-full mt-4 gap-2 rounded-xl text-sm" asChild>
                   <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
                     <Github className="h-4 w-4" />
-                    View Repository
+                    リポジトリを見る
                   </a>
                 </Button>
               )}
