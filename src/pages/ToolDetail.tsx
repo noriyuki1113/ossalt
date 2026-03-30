@@ -467,7 +467,7 @@ export default function ToolDetailPage() {
             {/* Built with (tech tags) */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Built with
+                使用技術
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {techTags.map((tag) => (
