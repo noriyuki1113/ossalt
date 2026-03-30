@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Search } from "lucide-react";
+import { useSearchParams, Link } from "react-router-dom";
+import { Search, Trophy } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
