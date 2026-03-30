@@ -425,7 +425,7 @@ export default function ToolDetailPage() {
                     <Server className="h-4 w-4" />
                     セルフホスト
                   </span>
-                  <span className="font-semibold text-sm text-primary">Yes</span>
+                  <span className="font-semibold text-sm text-primary">可能</span>
                 </div>
               </div>
 
