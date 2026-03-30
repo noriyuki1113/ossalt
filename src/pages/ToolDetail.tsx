@@ -14,6 +14,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import type { Tool } from "@/hooks/use-tools";
+import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 
 function formatStars(num: number | null): string {
   if (!num) return "0";
