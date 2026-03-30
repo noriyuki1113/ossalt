@@ -1,13 +1,14 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Search, Trophy } from "lucide-react";
+import { Search, Trophy, ArrowUpDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { StatsBar } from "@/components/StatsBar";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
-import { useTools, type Tool } from "@/hooks/use-tools";
+import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
 export default function IndexPage() {
