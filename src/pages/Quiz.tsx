@@ -128,6 +128,10 @@ export default function QuizPage() {
   const currentStep = STEPS[step];
   const isMulti = currentStep?.multi;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step, showResults]);
+
   const handleSelect = (value: string) => {
     if (isMulti) {
       setAnswers((prev) => {
