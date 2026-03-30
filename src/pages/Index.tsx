@@ -36,6 +36,7 @@ export default function IndexPage() {
     category: selectedCategory,
     search: debouncedSearch,
     page,
+    sort,
   });
 
   // Debounce search - only reset when search value actually changes
