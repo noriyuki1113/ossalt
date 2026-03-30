@@ -276,8 +276,8 @@ export default function ToolDetailPage() {
                 <div className="min-w-0">
                   <h1 className="text-3xl font-extrabold tracking-tight">{tool.name}</h1>
                   {competitor && competitor !== "有料SaaS" && (
-                    <p className="text-sm text-primary mt-1">
-                      {competitor} の代替OSSツール
+                    <p className="text-sm text-primary mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                      {competitor} の代替
                     </p>
                   )}
                 </div>
