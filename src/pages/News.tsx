@@ -117,7 +117,7 @@ export default function NewsPage() {
     title: "OSSニュース・注目ツール | OSSアルタナティブ",
     description:
       "今週の注目OSSツールとGitHubトレンドを毎週更新。人気のオープンソースツールをいち早くチェック。",
-    canonical: "https://find-my-alt.lovable.app/news",
+    canonical: "https://find-my-alt.vercel.app/news",
   });
 
   // Featured: top 5 by stars

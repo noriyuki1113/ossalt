@@ -122,7 +122,7 @@ export default function QuizPage() {
   useSeo({
     title: "私に合うOSSを診断 | OSSアルタナティブ",
     description: "質問に答えるだけであなたに最適なオープンソースツールが見つかる診断ツール。",
-    canonical: "https://find-my-alt.lovable.app/quiz",
+    canonical: "https://find-my-alt.vercel.app/quiz",
   });
 
   const currentStep = STEPS[step];

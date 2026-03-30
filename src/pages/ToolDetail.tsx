@@ -185,8 +185,8 @@ export default function ToolDetailPage() {
   useSeo({
     title: seoTitle,
     description: seoDescription,
-    canonical: tool ? `https://find-my-alt.lovable.app/tools/${tool.id}` : undefined,
-    ogImage: "https://find-my-alt.lovable.app/og-image.png",
+    canonical: tool ? `https://find-my-alt.vercel.app/tools/${tool.id}` : undefined,
+    ogImage: "https://find-my-alt.vercel.app/og-image.png",
     jsonLd,
   });
 
@@ -218,7 +218,7 @@ export default function ToolDetailPage() {
   }
 
   const favicon = getFaviconUrl(tool.url, 64);
-  const shareUrl = `https://find-my-alt.lovable.app/tools/${tool.id}`;
+  const shareUrl = `https://find-my-alt.vercel.app/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
