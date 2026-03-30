@@ -10,7 +10,7 @@ interface SeoProps {
 }
 
 const SITE_NAME = "OSSアルタナティブ";
-const BASE_URL = "https://find-my-alt.lovable.app";
+const BASE_URL = "https://find-my-alt.vercel.app";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 export function useSeo({ title, description, canonical, ogType = "website", ogImage, jsonLd }: SeoProps) {

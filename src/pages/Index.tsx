@@ -27,7 +27,7 @@ export default function IndexPage() {
     title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
     description:
       "680件のオープンソースツールを日本語で検索。Notion・Slack・Figmaなど有料SaaSの無料代替を見つけよう。",
-    canonical: "https://find-my-alt.lovable.app/",
+    canonical: "https://find-my-alt.vercel.app/",
   });
 
   const { data, isLoading } = useTools({
