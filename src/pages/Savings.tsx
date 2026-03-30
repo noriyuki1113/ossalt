@@ -97,7 +97,7 @@ export default function SavingsPage() {
   const shareText = () => {
     const lines = [
       "有料SaaSをOSSに切り替えたら",
-      `年間${formatJPY(Math.max(results.savingsMin, 0))}円節約できることがわかった💰`,
+      `年間${formatJPY(Math.max(results.savings, 0))}円節約できることがわかった💰`,
       "",
       ...results.selectedItems.map((s) => `${s.name}→${s.ossName}`),
       "",
