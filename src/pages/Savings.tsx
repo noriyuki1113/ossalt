@@ -46,11 +46,11 @@ const SAAS_LIST: SaasItem[] = [
 
 const JPY_RATE = 150;
 
-function getServerCost(teamSize: number): { min: number; max: number } {
-  if (teamSize <= 10) return { min: 5000, max: 10000 };
-  if (teamSize <= 50) return { min: 10000, max: 20000 };
-  if (teamSize <= 200) return { min: 15000, max: 25000 };
-  return { min: 20000, max: 30000 };
+function getServerMonthly(teamSize: number): number {
+  if (teamSize <= 10) return 5000;
+  if (teamSize <= 50) return 10000;
+  if (teamSize <= 100) return 20000;
+  return 30000;
 }
 
 function formatJPY(n: number): string {
