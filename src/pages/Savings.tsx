@@ -77,6 +77,7 @@ export default function SavingsPage() {
       });
   }, []);
 
+  const [teamSize, setTeamSize] = useState(10);
   const [copied, setCopied] = useState(false);
 
   useSeo({
