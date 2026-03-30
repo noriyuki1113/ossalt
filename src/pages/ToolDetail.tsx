@@ -390,14 +390,14 @@ export default function ToolDetailPage() {
             {/* GitHub Status Card */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-                GitHub Stats
+                GitHub情報
               </h3>
               <div className="space-y-3">
                 {tool.stars_num != null && tool.stars_num > 0 && (
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Star className="h-4 w-4 text-badge-amber" />
-                      Stars
+                      スター数
                     </span>
                     <span className="font-semibold text-sm">{formatStars(tool.stars_num)}</span>
                   </div>
@@ -407,14 +407,14 @@ export default function ToolDetailPage() {
                     <div className="flex items-center justify-between">
                       <span className="flex items-center gap-2 text-sm text-muted-foreground">
                         <GitFork className="h-4 w-4" />
-                        Forks
+                        フォーク数
                       </span>
                       <span className="text-sm text-muted-foreground">—</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-4 w-4" />
-                        Last commit
+                        最終コミット
                       </span>
                       <span className="text-sm text-muted-foreground">—</span>
                     </div>
@@ -423,9 +423,9 @@ export default function ToolDetailPage() {
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Server className="h-4 w-4" />
-                    Self-hosted
+                    セルフホスト
                   </span>
-                  <span className="font-semibold text-sm text-primary">Yes</span>
+                  <span className="font-semibold text-sm text-primary">可能</span>
                 </div>
               </div>
 
@@ -433,7 +433,7 @@ export default function ToolDetailPage() {
                 <Button variant="outline" className="w-full mt-4 gap-2 rounded-xl text-sm" asChild>
                   <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
                     <Github className="h-4 w-4" />
-                    View Repository
+                    リポジトリを見る
                   </a>
                 </Button>
               )}
@@ -467,7 +467,7 @@ export default function ToolDetailPage() {
             {/* Built with (tech tags) */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Built with
+                使用技術
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {techTags.map((tag) => (
@@ -481,7 +481,7 @@ export default function ToolDetailPage() {
             {/* Share */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Share
+                シェア
               </h3>
               <div className="flex items-center gap-2">
                 <button
@@ -519,7 +519,7 @@ export default function ToolDetailPage() {
                   to={`/alternatives/${altSlug}`}
                   className="flex items-center gap-2 text-sm text-primary hover:underline font-medium"
                 >
-                  Check {competitorKey} alternatives
+                  {competitorKey}の代替をもっと見る
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -546,7 +546,7 @@ export default function ToolDetailPage() {
         <div className="mt-10 pb-16 flex justify-center">
           <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
             <Link to="/">
-              View all tools <ArrowRight className="h-4 w-4" />
+              全てのツールを見る <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
