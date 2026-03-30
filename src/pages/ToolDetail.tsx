@@ -414,7 +414,7 @@ export default function ToolDetailPage() {
                     <div className="flex items-center justify-between">
                       <span className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-4 w-4" />
-                        Last commit
+                        最終コミット
                       </span>
                       <span className="text-sm text-muted-foreground">—</span>
                     </div>
