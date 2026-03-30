@@ -26,11 +26,14 @@ export interface Tool {
   github_stars_updated_at: string | null;
 }
 
+export type SortOption = "stars" | "recent" | "name" | "newest";
+
 interface UseToolsOptions {
   category?: string;
   search?: string;
   page?: number;
   pageSize?: number;
+  sort?: SortOption;
 }
 
 export function useTools(options?: UseToolsOptions) {
