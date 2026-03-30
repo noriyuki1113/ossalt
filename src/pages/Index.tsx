@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Search } from "lucide-react";
+import { useSearchParams, Link } from "react-router-dom";
+import { Search, Trophy } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -107,6 +107,16 @@ export default function IndexPage() {
             <StatsBar />
           </div>
         </div>
+      </section>
+
+      {/* Ranking CTA */}
+      <section className="container pt-4 pb-2 flex justify-center">
+        <Button variant="outline" className="gap-2 rounded-xl" asChild>
+          <Link to="/ranking">
+            <Trophy className="h-4 w-4 text-badge-amber" />
+            🏆 ランキングを見る
+          </Link>
+        </Button>
       </section>
 
       {/* Category Filter - Sticky */}

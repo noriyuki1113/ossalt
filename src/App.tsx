@@ -14,6 +14,7 @@ import Disclaimer from "./pages/Disclaimer";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AlternativesPage from "./pages/AlternativesPage";
+import RankingPage from "./pages/Ranking";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/alternatives/:slug" element={<AlternativesPage />} />
+          <Route path="/ranking" element={<RankingPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />
