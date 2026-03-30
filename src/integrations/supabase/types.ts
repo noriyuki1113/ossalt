@@ -526,8 +526,12 @@ export type Database = {
           created_at: string | null
           description_en: string | null
           description_ja: string | null
+          forks_num: number | null
+          github_stars_updated_at: string | null
           github_url: string | null
           id: number
+          language: string | null
+          last_commit: string | null
           license: string | null
           name: string | null
           parent_category_en: string | null
@@ -546,8 +550,12 @@ export type Database = {
           created_at?: string | null
           description_en?: string | null
           description_ja?: string | null
+          forks_num?: number | null
+          github_stars_updated_at?: string | null
           github_url?: string | null
           id?: number
+          language?: string | null
+          last_commit?: string | null
           license?: string | null
           name?: string | null
           parent_category_en?: string | null
@@ -566,8 +574,12 @@ export type Database = {
           created_at?: string | null
           description_en?: string | null
           description_ja?: string | null
+          forks_num?: number | null
+          github_stars_updated_at?: string | null
           github_url?: string | null
           id?: number
+          language?: string | null
+          last_commit?: string | null
           license?: string | null
           name?: string | null
           parent_category_en?: string | null
