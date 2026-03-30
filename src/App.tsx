@@ -14,6 +14,7 @@ import Disclaimer from "./pages/Disclaimer";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AlternativesPage from "./pages/AlternativesPage";
+import RankingPage from "./pages/Ranking";
 
 const queryClient = new QueryClient();
 
