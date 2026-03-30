@@ -1,13 +1,14 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Search, Trophy } from "lucide-react";
+import { Search, Trophy, ArrowUpDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { StatsBar } from "@/components/StatsBar";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
-import { useTools, type Tool } from "@/hooks/use-tools";
+import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
 export default function IndexPage() {
@@ -18,6 +19,7 @@ export default function IndexPage() {
   const [search, setSearch] = useState(urlSearch);
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
+  const [sort, setSort] = useState<SortOption>("stars");
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
@@ -34,6 +36,7 @@ export default function IndexPage() {
     category: selectedCategory,
     search: debouncedSearch,
     page,
+    sort,
   });
 
   // Debounce search - only reset when search value actually changes
@@ -71,6 +74,12 @@ export default function IndexPage() {
 
   const handleCategoryChange = useCallback((cat: string) => {
     setSelectedCategory(cat);
+    setPage(0);
+    setAllTools([]);
+  }, []);
+
+  const handleSortChange = useCallback((value: string) => {
+    setSort(value as SortOption);
     setPage(0);
     setAllTools([]);
   }, []);
@@ -146,9 +155,23 @@ export default function IndexPage() {
           </div>
         ) : allTools.length > 0 ? (
           <>
-            <p className="text-sm text-muted-foreground mb-5">
-              {data?.totalCount ?? 0} 件のツール
-            </p>
+            <div className="flex items-center justify-between mb-5">
+              <p className="text-sm text-muted-foreground">
+                {data?.totalCount ?? 0} 件のツール
+              </p>
+              <Select value={sort} onValueChange={handleSortChange}>
+                <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border">
+                  <ArrowUpDown className="h-3.5 w-3.5" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="stars">⭐ スター数順</SelectItem>
+                  <SelectItem value="recent">🕐 最近更新順</SelectItem>
+                  <SelectItem value="name">🔤 A-Z順</SelectItem>
+                  <SelectItem value="newest">🆕 新着順</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {allTools.map((tool, i) => (
                 <ToolCard key={tool.id} tool={tool} index={i} />

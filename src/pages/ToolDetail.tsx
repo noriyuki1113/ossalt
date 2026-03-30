@@ -3,8 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, ExternalLink, Github, Star, Scale,
   CheckCircle2, ArrowRight, Copy, Server, Clock,
-  GitFork, Linkedin, Twitter,
+  GitFork, Linkedin, Twitter, Code2,
 } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { ja } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -486,23 +488,52 @@ export default function ToolDetailPage() {
                     <span className="font-semibold text-sm">{formatStars(tool.stars_num)}</span>
                   </div>
                 )}
-                {tool.github_url && (
-                  <>
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <GitFork className="h-4 w-4" />
-                        フォーク数
-                      </span>
-                      <span className="text-sm text-muted-foreground">—</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        最終コミット
-                      </span>
-                      <span className="text-sm text-muted-foreground">—</span>
-                    </div>
-                  </>
+                {tool.forks_num != null && tool.forks_num > 0 && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <GitFork className="h-4 w-4" />
+                      フォーク数
+                    </span>
+                    <span className="font-semibold text-sm">{formatStars(tool.forks_num)}</span>
+                  </div>
+                )}
+                {!tool.forks_num && tool.github_url && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <GitFork className="h-4 w-4" />
+                      フォーク数
+                    </span>
+                    <span className="text-sm text-muted-foreground">—</span>
+                  </div>
+                )}
+                {tool.last_commit && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      最終コミット
+                    </span>
+                    <span className="font-semibold text-sm">
+                      {formatDistanceToNow(new Date(tool.last_commit), { addSuffix: true, locale: ja })}
+                    </span>
+                  </div>
+                )}
+                {!tool.last_commit && tool.github_url && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      最終コミット
+                    </span>
+                    <span className="text-sm text-muted-foreground">—</span>
+                  </div>
+                )}
+                {tool.language && (
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Code2 className="h-4 w-4" />
+                      言語
+                    </span>
+                    <span className="font-semibold text-sm">{tool.language}</span>
+                  </div>
                 )}
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-2 text-sm text-muted-foreground">

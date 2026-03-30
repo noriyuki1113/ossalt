@@ -20,13 +20,20 @@ export interface Tool {
   primary_competitor_ja: string | null;
   replaces: string[] | null;
   replaces_ja: string[] | null;
+  forks_num: number | null;
+  last_commit: string | null;
+  language: string | null;
+  github_stars_updated_at: string | null;
 }
+
+export type SortOption = "stars" | "recent" | "name" | "newest";
 
 interface UseToolsOptions {
   category?: string;
   search?: string;
   page?: number;
   pageSize?: number;
+  sort?: SortOption;
 }
 
 export function useTools(options?: UseToolsOptions) {
@@ -36,11 +43,23 @@ export function useTools(options?: UseToolsOptions) {
   return useQuery({
     queryKey: ["tools", options],
     queryFn: async () => {
+      const sort = options?.sort ?? "stars";
       let query = supabase
         .from("tools")
-        .select("*", { count: "exact" })
-        .order("stars_num", { ascending: false, nullsFirst: false })
-        .range(page * pageSize, (page + 1) * pageSize - 1);
+        .select("*", { count: "exact" });
+
+      // Apply sort
+      if (sort === "recent") {
+        query = query.order("last_commit", { ascending: false, nullsFirst: false });
+      } else if (sort === "name") {
+        query = query.order("name", { ascending: true, nullsFirst: false });
+      } else if (sort === "newest") {
+        query = query.order("created_at", { ascending: false, nullsFirst: false });
+      } else {
+        query = query.order("stars_num", { ascending: false, nullsFirst: false });
+      }
+
+      query = query.range(page * pageSize, (page + 1) * pageSize - 1);
 
       if (options?.category && options.category !== "すべて") {
         query = query.eq("parent_category_ja", options.category);
