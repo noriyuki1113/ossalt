@@ -533,7 +533,7 @@ export default function ToolDetailPage() {
         {/* Related tools */}
         {relatedTools && relatedTools.length > 0 && (
           <section>
-            <h2 className="text-xl font-bold mb-6">Similar open source projects</h2>
+            <h2 className="text-xl font-bold mb-6">関連するOSSプロジェクト</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {relatedTools.map((t) => (
                 <RelatedCard key={t.id} tool={t} />
