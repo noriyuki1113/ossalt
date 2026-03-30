@@ -18,18 +18,10 @@ export default function IndexPage() {
   const [search, setSearch] = useState(urlSearch);
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
-
-  // Sync state from URL when navigating back to / (e.g. from detail page)
-  useEffect(() => {
-    setSearch(urlSearch);
-    setDebouncedSearch(urlSearch);
-    setSelectedCategory(urlCategory);
-    setPage(0);
-    setAllTools([]);
-  }, [urlSearch, urlCategory]);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const prevSearchRef = useRef(search);
 
   useSeo({
     title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
