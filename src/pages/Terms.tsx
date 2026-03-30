@@ -60,6 +60,7 @@ export default function TermsPage() {
           </Section>
         </div>
       </div>
+      <PageBackBottom />
     </SiteLayout>
   );
 }

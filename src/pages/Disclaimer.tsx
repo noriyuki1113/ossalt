@@ -58,6 +58,7 @@ export default function DisclaimerPage() {
           </Section>
         </div>
       </div>
+      <PageBackBottom />
     </SiteLayout>
   );
 }

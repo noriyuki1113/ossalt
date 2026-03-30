@@ -75,6 +75,7 @@ export default function PrivacyPage() {
           </Section>
         </div>
       </div>
+      <PageBackBottom />
     </SiteLayout>
   );
 }

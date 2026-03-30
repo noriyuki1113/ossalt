@@ -83,6 +83,7 @@ export default function AboutPage() {
           からお願いします。
         </p>
       </div>
+      <PageBackBottom />
     </SiteLayout>
   );
 }
