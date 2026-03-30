@@ -363,6 +363,90 @@ export default function ToolDetailPage() {
               </ul>
             </section>
 
+            {/* Alternative Services Section */}
+            {competitor && competitor !== "有料SaaS" && (
+              <>
+                <hr className="border-border my-8" />
+                <section className="border-l-4 border-primary pl-5">
+                  <h2 className="text-xl font-bold mb-4">
+                    このツールは {competitor} の代替です
+                  </h2>
+
+                  {/* Main competitor badge */}
+                  <div className="mb-4">
+                    <Badge className="text-sm px-3 py-1.5 bg-primary/10 text-primary border-primary/30 hover:bg-primary/20">
+                      {competitor}
+                    </Badge>
+                  </div>
+
+                  {/* Other replacements */}
+                  {tool.replaces_ja && tool.replaces_ja.length > 0 && (
+                    <div className="mb-5">
+                      <p className="text-xs text-muted-foreground mb-2">その他の代替元</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {tool.replaces_ja.map((r) => (
+                          <Badge key={r} variant="secondary" className="text-xs font-normal">
+                            {r}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Comparison table */}
+                  <div className="rounded-lg border overflow-hidden mb-4">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-muted/50">
+                          <th className="text-left p-3 font-medium text-muted-foreground">項目</th>
+                          <th className="text-left p-3 font-medium">{tool.name}</th>
+                          <th className="text-left p-3 font-medium">{tool.primary_competitor || competitor}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b">
+                          <td className="p-3 text-muted-foreground">費用</td>
+                          <td className="p-3 font-medium text-primary">無料</td>
+                          <td className="p-3 text-muted-foreground">有料</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="p-3 text-muted-foreground">ホスティング</td>
+                          <td className="p-3 font-medium text-primary">セルフホスト</td>
+                          <td className="p-3 text-muted-foreground">クラウド</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="p-3 text-muted-foreground">カスタマイズ</td>
+                          <td className="p-3">✅ 自由</td>
+                          <td className="p-3">❌ 制限あり</td>
+                        </tr>
+                        <tr className="border-b">
+                          <td className="p-3 text-muted-foreground">ソースコード</td>
+                          <td className="p-3">✅ 公開</td>
+                          <td className="p-3">❌ 非公開</td>
+                        </tr>
+                        <tr>
+                          <td className="p-3 text-muted-foreground">データ管理</td>
+                          <td className="p-3">✅ 完全管理</td>
+                          <td className="p-3">❌ 預ける</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* CTA link */}
+                  {altSlug && (
+                    <Link
+                      to={`/alternatives/${altSlug}`}
+                      className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium"
+                    >
+                      {tool.primary_competitor || competitor}の代替をもっと見る
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  )}
+                </section>
+              </>
+            )}
+
             <hr className="border-border my-8" />
 
             {/* Category & Tags */}
