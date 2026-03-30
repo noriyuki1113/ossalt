@@ -267,13 +267,15 @@ export default function SavingsPage() {
                           {item.ossStars}
                         </span>
                       </div>
-                      <div className="text-right">
-                        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
-                          <Link to={`/tools/${item.ossSlug}`}>
-                            詳細を見る <ExternalLink className="h-3 w-3" />
-                          </Link>
-                        </Button>
-                      </div>
+                      {toolIdMap[item.ossName] && (
+                        <div className="text-right">
+                          <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
+                            <Link to={`/tools/${toolIdMap[item.ossName]}`}>
+                              詳細を見る <ExternalLink className="h-3 w-3" />
+                            </Link>
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
