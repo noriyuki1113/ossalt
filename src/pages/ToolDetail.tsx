@@ -546,7 +546,7 @@ export default function ToolDetailPage() {
         <div className="mt-10 pb-16 flex justify-center">
           <Button variant="outline" size="lg" className="gap-2 rounded-xl" asChild>
             <Link to="/">
-              View all tools <ArrowRight className="h-4 w-4" />
+              全てのツールを見る <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
