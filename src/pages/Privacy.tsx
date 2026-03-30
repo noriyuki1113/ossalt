@@ -1,6 +1,7 @@
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Link } from "react-router-dom";
+import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
 
 export default function PrivacyPage() {
   useSeo({
