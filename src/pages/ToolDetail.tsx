@@ -481,7 +481,7 @@ export default function ToolDetailPage() {
             {/* Share */}
             <div className="rounded-xl border bg-card p-5">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                Share
+                シェア
               </h3>
               <div className="flex items-center gap-2">
                 <button
