@@ -220,30 +220,11 @@ export default function SavingsPage() {
                   <p className="text-xs text-muted-foreground">（1ドル＝150円換算）</p>
                 </div>
 
-                {/* OSS cost */}
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">OSS切り替え後のコスト（サーバー代目安）</p>
-                  <p className="text-lg font-bold">
-                    {formatJPY(results.serverMonthly)}{" "}
-                    <span className="text-sm font-normal text-muted-foreground">/ 月</span>
-                  </p>
-                  <p className="text-lg font-bold">
-                    {formatJPY(results.serverYearly)}{" "}
-                    <span className="text-sm font-normal text-muted-foreground">/ 年</span>
-                  </p>
-                </div>
-
-                {/* Savings */}
-                <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-6 text-center space-y-2">
-                  <p className="text-sm text-muted-foreground">🎉 年間節約額</p>
-                  <p className="text-3xl md:text-5xl font-extrabold text-emerald-400">
-                    <CountUp
-                      end={Math.max(results.savings, 0)}
-                      duration={1000}
-                      formatter={(n) => formatJPY(n)}
-                    />
-                  </p>
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  OSSに切り替えれば、このコストを
+                  <br />
+                  大幅に削減できる可能性があります💡
+                </p>
               </CardContent>
             </Card>
 
