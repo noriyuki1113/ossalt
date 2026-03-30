@@ -20,6 +20,10 @@ export interface Tool {
   primary_competitor_ja: string | null;
   replaces: string[] | null;
   replaces_ja: string[] | null;
+  forks_num: number | null;
+  last_commit: string | null;
+  language: string | null;
+  github_stars_updated_at: string | null;
 }
 
 interface UseToolsOptions {
