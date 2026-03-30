@@ -19,7 +19,6 @@ interface SaasItem {
   monthlyPerUser: number;
   ossName: string;
   ossStars: string;
-  ossSlug: string;
 }
 
 const SAAS_LIST: SaasItem[] = [
