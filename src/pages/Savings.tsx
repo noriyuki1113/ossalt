@@ -83,11 +83,10 @@ export default function SavingsPage() {
     const monthlyUSD = selectedItems.reduce((sum, s) => sum + s.monthlyPerUser, 0);
     const monthlyJPY = monthlyUSD * JPY_RATE * teamSize;
     const yearlyJPY = monthlyJPY * 12;
-    const server = getServerCost(teamSize);
-    const serverYearly = { min: server.min * 12, max: server.max * 12 };
-    const savingsMin = yearlyJPY - serverYearly.max;
-    const savingsMax = yearlyJPY - serverYearly.min;
-    return { selectedItems, monthlyJPY, yearlyJPY, server, serverYearly, savingsMin, savingsMax };
+    const serverMonthly = getServerMonthly(teamSize);
+    const serverYearly = serverMonthly * 12;
+    const savings = yearlyJPY - serverYearly;
+    return { selectedItems, monthlyJPY, yearlyJPY, serverMonthly, serverYearly, savings };
   }, [selected, teamSize]);
 
   const hasSelection = selected.size > 0;
