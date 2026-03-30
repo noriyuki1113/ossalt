@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AlternativesPage from "./pages/AlternativesPage";
 import RankingPage from "./pages/Ranking";
+import QuizPage from "./pages/Quiz";
+import NewsPage from "./pages/News";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +37,8 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/alternatives/:slug" element={<AlternativesPage />} />
           <Route path="/ranking" element={<RankingPage />} />
+          <Route path="/quiz" element={<QuizPage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />

@@ -7,9 +7,17 @@ export function SiteHeader() {
         <Link to="/" className="font-display text-lg font-bold tracking-tight text-foreground">
           OSSアルタナティブ
         </Link>
-        <p className="hidden md:block text-sm text-muted-foreground">
-          有料SaaSの代わりに使えるオープンソースツール集
-        </p>
+        <nav className="flex items-center gap-4">
+          <Link
+            to="/news"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            📰 ニュース
+          </Link>
+          <span className="hidden md:block text-sm text-muted-foreground">
+            有料SaaSの代わりに使えるOSS集
+          </span>
+        </nav>
       </div>
     </header>
   );

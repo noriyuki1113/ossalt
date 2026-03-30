@@ -109,8 +109,13 @@ export default function IndexPage() {
         </div>
       </section>
 
-      {/* Ranking CTA */}
-      <section className="container pt-4 pb-2 flex justify-center">
+      {/* CTA buttons */}
+      <section className="container pt-4 pb-2 flex justify-center gap-3 flex-wrap">
+        <Button variant="outline" className="gap-2 rounded-xl" asChild>
+          <Link to="/quiz">
+            🔍 診断ツールで探す
+          </Link>
+        </Button>
         <Button variant="outline" className="gap-2 rounded-xl" asChild>
           <Link to="/ranking">
             <Trophy className="h-4 w-4 text-badge-amber" />
