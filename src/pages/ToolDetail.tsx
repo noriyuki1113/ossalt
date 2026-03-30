@@ -3,8 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, ExternalLink, Github, Star, Scale,
   CheckCircle2, ArrowRight, Copy, Server, Clock,
-  GitFork, Linkedin, Twitter,
+  GitFork, Linkedin, Twitter, Code2,
 } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { ja } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
