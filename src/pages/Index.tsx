@@ -18,18 +18,10 @@ export default function IndexPage() {
   const [search, setSearch] = useState(urlSearch);
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
-
-  // Sync state from URL when navigating back to / (e.g. from detail page)
-  useEffect(() => {
-    setSearch(urlSearch);
-    setDebouncedSearch(urlSearch);
-    setSelectedCategory(urlCategory);
-    setPage(0);
-    setAllTools([]);
-  }, [urlSearch, urlCategory]);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const prevSearchRef = useRef(search);
 
   useSeo({
     title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
@@ -44,12 +36,16 @@ export default function IndexPage() {
     page,
   });
 
-  // Debounce search
+  // Debounce search - only reset when search value actually changes
   useEffect(() => {
+    if (search === prevSearchRef.current && search === debouncedSearch) {
+      return; // No actual change, skip (prevents clearing on mount)
+    }
     debounceRef.current = setTimeout(() => {
       setDebouncedSearch(search);
       setPage(0);
       setAllTools([]);
+      prevSearchRef.current = search;
     }, 300);
     return () => clearTimeout(debounceRef.current);
   }, [search]);
@@ -122,7 +118,7 @@ export default function IndexPage() {
 
       {/* Tool Grid */}
       <section className="container pb-16 pt-6">
-        {isLoading && page === 0 ? (
+        {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
               <ToolCardSkeleton key={i} />
