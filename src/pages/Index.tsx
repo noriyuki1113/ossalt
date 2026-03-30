@@ -155,9 +155,23 @@ export default function IndexPage() {
           </div>
         ) : allTools.length > 0 ? (
           <>
-            <p className="text-sm text-muted-foreground mb-5">
-              {data?.totalCount ?? 0} 件のツール
-            </p>
+            <div className="flex items-center justify-between mb-5">
+              <p className="text-sm text-muted-foreground">
+                {data?.totalCount ?? 0} 件のツール
+              </p>
+              <Select value={sort} onValueChange={handleSortChange}>
+                <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border">
+                  <ArrowUpDown className="h-3.5 w-3.5" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="stars">⭐ スター数順</SelectItem>
+                  <SelectItem value="recent">🕐 最近更新順</SelectItem>
+                  <SelectItem value="name">🔤 A-Z順</SelectItem>
+                  <SelectItem value="newest">🆕 新着順</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {allTools.map((tool, i) => (
                 <ToolCard key={tool.id} tool={tool} index={i} />
