@@ -17,6 +17,7 @@ import AlternativesPage from "./pages/AlternativesPage";
 import RankingPage from "./pages/Ranking";
 import QuizPage from "./pages/Quiz";
 import NewsPage from "./pages/News";
+import SavingsPage from "./pages/Savings";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/savings" element={<SavingsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />

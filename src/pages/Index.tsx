@@ -122,6 +122,11 @@ export default function IndexPage() {
             🏆 ランキングを見る
           </Link>
         </Button>
+        <Button variant="outline" className="gap-2 rounded-xl" asChild>
+          <Link to="/savings">
+            💰 いくら節約できる？
+          </Link>
+        </Button>
       </section>
 
       {/* Category Filter - Sticky */}
