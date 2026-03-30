@@ -407,7 +407,7 @@ export default function ToolDetailPage() {
                     <div className="flex items-center justify-between">
                       <span className="flex items-center gap-2 text-sm text-muted-foreground">
                         <GitFork className="h-4 w-4" />
-                        Forks
+                        フォーク数
                       </span>
                       <span className="text-sm text-muted-foreground">—</span>
                     </div>
