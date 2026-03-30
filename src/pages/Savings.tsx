@@ -60,7 +60,23 @@ function formatJPY(n: number): string {
 
 export default function SavingsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [teamSize, setTeamSize] = useState(10);
+  const [toolIdMap, setToolIdMap] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const ossNames = SAAS_LIST.map((s) => s.ossName);
+    supabase
+      .from("tools")
+      .select("id, name")
+      .in("name", ossNames)
+      .then(({ data }) => {
+        if (data) {
+          const map: Record<string, number> = {};
+          data.forEach((t) => { if (t.name) map[t.name] = t.id; });
+          setToolIdMap(map);
+        }
+      });
+  }, []);
+
   const [copied, setCopied] = useState(false);
 
   useSeo({
