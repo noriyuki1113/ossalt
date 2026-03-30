@@ -17,6 +17,7 @@ import AlternativesPage from "./pages/AlternativesPage";
 import RankingPage from "./pages/Ranking";
 import QuizPage from "./pages/Quiz";
 import NewsPage from "./pages/News";
+import SavingsPage from "./pages/Savings";
 
 const queryClient = new QueryClient();
 
