@@ -50,6 +50,24 @@ Deno.serve(async () => {
     }
   }
 
+  // Alternative pages
+  const altSlugs = [
+    "notion","figma","zapier","slack","firebase","airtable","trello","jira",
+    "wordpress","shopify","google-analytics","datadog","auth0","typeform",
+    "github-copilot","tableau","contentful","launchdarkly","google-drive",
+    "intercom","retool","postman","webflow","evernote","chatgpt","devin",
+    "stripe-billing","pinecone","bitly","canny",
+  ];
+  for (const slug of altSlugs) {
+    xml += `
+  <url>
+    <loc>${BASE_URL}/alternatives/${slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+  }
+
   // Category pages
   for (const cat of categories) {
     xml += `
