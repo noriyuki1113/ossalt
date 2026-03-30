@@ -5,7 +5,7 @@ const corsHeaders = {
   "Cache-Control": "public, max-age=3600",
 };
 
-const BASE_URL = "https://find-my-alt.vercel.app";
+const BASE_URL = "https://ossalt.jp";
 
 Deno.serve(async () => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;

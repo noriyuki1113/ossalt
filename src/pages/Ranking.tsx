@@ -393,7 +393,7 @@ export default function RankingPage() {
     title: "OSSツール人気ランキング | OSSアルタナティブ",
     description:
       "GitHubスター数で見るOSSツール人気ランキング。AI・開発・生産性など全カテゴリのトップツールを一覧で確認。",
-    canonical: "https://find-my-alt.vercel.app/ranking",
+    canonical: "https://ossalt.jp/ranking",
   });
 
   return (

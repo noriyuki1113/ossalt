@@ -78,7 +78,7 @@ export default function AlternativesPage() {
       ? `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。無料・セルフホスト可能なOSS代替を探そう。`
       : "",
     canonical: competitor
-      ? `https://find-my-alt.vercel.app/alternatives/${slug}`
+      ? `https://ossalt.jp/alternatives/${slug}`
       : undefined,
   });
 
