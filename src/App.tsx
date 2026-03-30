@@ -40,6 +40,7 @@ const App = () => (
           <Route path="/ranking" element={<RankingPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/savings" element={<SavingsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />
