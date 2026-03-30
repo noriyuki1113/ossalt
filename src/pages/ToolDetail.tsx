@@ -14,6 +14,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import type { Tool } from "@/hooks/use-tools";
+import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 
 function formatStars(num: number | null): string {
   if (!num) return "0";
@@ -379,15 +380,20 @@ export default function ToolDetailPage() {
         <Divider />
 
         {/* === CTA: もっと見る === */}
-        {competitor && competitor !== "有料SaaS" && (
-          <section>
-            <Button variant="outline" size="lg" className="w-full gap-2 rounded-xl text-base" asChild>
-              <Link to={`/?search=${encodeURIComponent(competitor)}`}>
-                {competitor} の代替をもっと見る <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </section>
-        )}
+        {competitor && competitor !== "有料SaaS" && (() => {
+          const competitorKey = tool.primary_competitor || "";
+          const altSlug = COMPETITOR_TO_SLUG[competitorKey];
+          const linkTo = altSlug ? `/alternatives/${altSlug}` : `/?search=${encodeURIComponent(competitor)}`;
+          return (
+            <section>
+              <Button variant="outline" size="lg" className="w-full gap-2 rounded-xl text-base" asChild>
+                <Link to={linkTo}>
+                  {competitor} の代替をもっと見る <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </section>
+          );
+        })()}
 
         {competitor && competitor !== "有料SaaS" && <Divider />}
 
