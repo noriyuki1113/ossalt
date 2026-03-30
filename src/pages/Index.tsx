@@ -78,6 +78,12 @@ export default function IndexPage() {
     setAllTools([]);
   }, []);
 
+  const handleSortChange = useCallback((value: string) => {
+    setSort(value as SortOption);
+    setPage(0);
+    setAllTools([]);
+  }, []);
+
   const hasMore = data ? allTools.length < data.totalCount : false;
 
   return (
