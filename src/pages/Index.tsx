@@ -118,7 +118,7 @@ export default function IndexPage() {
 
       {/* Tool Grid */}
       <section className="container pb-16 pt-6">
-        {isLoading && page === 0 ? (
+        {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 12 }).map((_, i) => (
               <ToolCardSkeleton key={i} />
