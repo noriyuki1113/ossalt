@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, RotateCcw, Star, Sparkles } from "lucide-react";
@@ -127,6 +127,10 @@ export default function QuizPage() {
 
   const currentStep = STEPS[step];
   const isMulti = currentStep?.multi;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step, showResults]);
 
   const handleSelect = (value: string) => {
     if (isMulti) {
