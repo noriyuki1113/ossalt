@@ -19,6 +19,25 @@ function getFaviconUrl(url: string | null): string | null {
   }
 }
 
+const LANG_COLORS: Record<string, string> = {
+  Python: "bg-blue-500/15 text-blue-400 border-blue-500/30",
+  TypeScript: "bg-teal-500/15 text-teal-400 border-teal-500/30",
+  JavaScript: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
+  Go: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30",
+  Rust: "bg-orange-500/15 text-orange-400 border-orange-500/30",
+  Ruby: "bg-red-500/15 text-red-400 border-red-500/30",
+  Java: "bg-amber-700/15 text-amber-600 border-amber-700/30",
+  Kotlin: "bg-purple-500/15 text-purple-400 border-purple-500/30",
+  Swift: "bg-orange-400/15 text-orange-300 border-orange-400/30",
+  "C++": "bg-pink-500/15 text-pink-400 border-pink-500/30",
+  C: "bg-gray-500/15 text-gray-400 border-gray-500/30",
+  PHP: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30",
+};
+
+function getLanguageBadgeClass(lang: string): string {
+  return LANG_COLORS[lang] || "bg-muted text-muted-foreground border-border";
+}
+
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const favicon = getFaviconUrl(tool.url);
 
@@ -74,6 +93,11 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
+        {tool.language && (
+          <Badge className={`text-xs font-normal border ${getLanguageBadgeClass(tool.language)}`}>
+            💻 {tool.language}
+          </Badge>
+        )}
         {tool.parent_category_ja && (
           <Badge variant="secondary" className="text-xs font-normal">
             {tool.parent_category_ja}
