@@ -89,6 +89,7 @@ export default function ContactPage() {
 
   return (
     <SiteLayout>
+      <PageBackTop />
       <div className="container max-w-xl mx-auto py-12 px-4 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-8">
           お問い合わせ
