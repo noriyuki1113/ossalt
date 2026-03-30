@@ -3,7 +3,6 @@ import { useSeo } from "@/hooks/use-seo";
 import { Link } from "react-router-dom";
 import { BookOpen, Search, Globe, Heart } from "lucide-react";
 import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
-import { BookOpen, Search, Globe, Heart } from "lucide-react";
 
 export default function AboutPage() {
   useSeo({
