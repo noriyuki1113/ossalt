@@ -46,11 +46,11 @@ const SAAS_LIST: SaasItem[] = [
 
 const JPY_RATE = 150;
 
-function getServerCost(teamSize: number): { min: number; max: number } {
-  if (teamSize <= 10) return { min: 5000, max: 10000 };
-  if (teamSize <= 50) return { min: 10000, max: 20000 };
-  if (teamSize <= 200) return { min: 15000, max: 25000 };
-  return { min: 20000, max: 30000 };
+function getServerMonthly(teamSize: number): number {
+  if (teamSize <= 10) return 5000;
+  if (teamSize <= 50) return 10000;
+  if (teamSize <= 100) return 20000;
+  return 30000;
 }
 
 function formatJPY(n: number): string {
@@ -83,11 +83,10 @@ export default function SavingsPage() {
     const monthlyUSD = selectedItems.reduce((sum, s) => sum + s.monthlyPerUser, 0);
     const monthlyJPY = monthlyUSD * JPY_RATE * teamSize;
     const yearlyJPY = monthlyJPY * 12;
-    const server = getServerCost(teamSize);
-    const serverYearly = { min: server.min * 12, max: server.max * 12 };
-    const savingsMin = yearlyJPY - serverYearly.max;
-    const savingsMax = yearlyJPY - serverYearly.min;
-    return { selectedItems, monthlyJPY, yearlyJPY, server, serverYearly, savingsMin, savingsMax };
+    const serverMonthly = getServerMonthly(teamSize);
+    const serverYearly = serverMonthly * 12;
+    const savings = yearlyJPY - serverYearly;
+    return { selectedItems, monthlyJPY, yearlyJPY, serverMonthly, serverYearly, savings };
   }, [selected, teamSize]);
 
   const hasSelection = selected.size > 0;
@@ -98,7 +97,7 @@ export default function SavingsPage() {
   const shareText = () => {
     const lines = [
       "有料SaaSをOSSに切り替えたら",
-      `年間${formatJPY(Math.max(results.savingsMin, 0))}円節約できることがわかった💰`,
+      `年間${formatJPY(Math.max(results.savings, 0))}円節約できることがわかった💰`,
       "",
       ...results.selectedItems.map((s) => `${s.name}→${s.ossName}`),
       "",
@@ -225,8 +224,12 @@ export default function SavingsPage() {
                 <div className="space-y-1">
                   <p className="text-sm text-muted-foreground">OSS切り替え後のコスト（サーバー代目安）</p>
                   <p className="text-lg font-bold">
-                    {formatJPY(results.server.min)}〜{formatJPY(results.server.max)}{" "}
+                    {formatJPY(results.serverMonthly)}{" "}
                     <span className="text-sm font-normal text-muted-foreground">/ 月</span>
+                  </p>
+                  <p className="text-lg font-bold">
+                    {formatJPY(results.serverYearly)}{" "}
+                    <span className="text-sm font-normal text-muted-foreground">/ 年</span>
                   </p>
                 </div>
 
@@ -235,16 +238,11 @@ export default function SavingsPage() {
                   <p className="text-sm text-muted-foreground">🎉 年間節約額</p>
                   <p className="text-3xl md:text-5xl font-extrabold text-emerald-400">
                     <CountUp
-                      end={Math.max(results.savingsMin, 0)}
+                      end={Math.max(results.savings, 0)}
                       duration={1000}
                       formatter={(n) => formatJPY(n)}
                     />
                   </p>
-                  {results.savingsMin !== results.savingsMax && (
-                    <p className="text-sm text-muted-foreground">
-                      〜 {formatJPY(Math.max(results.savingsMax, 0))}
-                    </p>
-                  )}
                 </div>
               </CardContent>
             </Card>
@@ -255,27 +253,25 @@ export default function SavingsPage() {
                 <CardTitle className="text-lg">おすすめOSSスタック</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {results.selectedItems.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center justify-between rounded-lg border border-border p-3"
+                      className="rounded-lg border border-border p-4 space-y-2"
                     >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Badge variant="secondary" className="shrink-0 text-xs">
-                          {item.name}
-                        </Badge>
-                        <span className="text-sm">→</span>
-                        <span className="font-medium text-sm truncate">{item.ossName}</span>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-medium text-sm">{item.name}</span>
+                        <span className="text-muted-foreground">→</span>
+                        <span className="font-bold text-sm text-primary">{item.ossName}</span>
+                        <span className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
                           <Star className="h-3 w-3 text-yellow-500 fill-yellow-500" />
                           {item.ossStars}
                         </span>
+                      </div>
+                      <div className="text-right">
                         <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
                           <Link to={`/tools/${item.ossSlug}`}>
-                            詳細 <ExternalLink className="h-3 w-3" />
+                            詳細を見る <ExternalLink className="h-3 w-3" />
                           </Link>
                         </Button>
                       </div>
