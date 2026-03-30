@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Check, Copy, ExternalLink, Star, Twitter } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -12,36 +12,36 @@ import { Badge } from "@/components/ui/badge";
 import { CountUp } from "@/components/CountUp";
 import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SaasItem {
   name: string;
   monthlyPerUser: number;
   ossName: string;
   ossStars: string;
-  ossSlug: string;
 }
 
 const SAAS_LIST: SaasItem[] = [
-  { name: "Notion", monthlyPerUser: 16, ossName: "AppFlowy", ossStars: "69K", ossSlug: "appflowy" },
-  { name: "Slack", monthlyPerUser: 15, ossName: "Mattermost", ossStars: "36K", ossSlug: "mattermost" },
-  { name: "Figma", monthlyPerUser: 15, ossName: "Penpot", ossStars: "45K", ossSlug: "penpot" },
-  { name: "Jira", monthlyPerUser: 10, ossName: "Plane", ossStars: "54K", ossSlug: "plane" },
-  { name: "GitHub Copilot", monthlyPerUser: 19, ossName: "Continue", ossStars: "32K", ossSlug: "continue" },
-  { name: "Salesforce", monthlyPerUser: 75, ossName: "Twenty", ossStars: "24K", ossSlug: "twenty" },
-  { name: "HubSpot", monthlyPerUser: 50, ossName: "Erxes", ossStars: "8K", ossSlug: "erxes" },
-  { name: "Zendesk", monthlyPerUser: 55, ossName: "Chatwoot", ossStars: "22K", ossSlug: "chatwoot" },
-  { name: "Airtable", monthlyPerUser: 20, ossName: "NocoDB", ossStars: "63K", ossSlug: "nocodb" },
-  { name: "Typeform", monthlyPerUser: 25, ossName: "Formbricks", ossStars: "11K", ossSlug: "formbricks" },
-  { name: "DocuSign", monthlyPerUser: 30, ossName: "Documenso", ossStars: "9K", ossSlug: "documenso" },
-  { name: "Zoom", monthlyPerUser: 15, ossName: "Jitsi", ossStars: "23K", ossSlug: "jitsi" },
-  { name: "Dropbox", monthlyPerUser: 15, ossName: "Nextcloud", ossStars: "34K", ossSlug: "nextcloud" },
-  { name: "1Password", monthlyPerUser: 8, ossName: "Bitwarden", ossStars: "18K", ossSlug: "bitwarden" },
-  { name: "Webflow", monthlyPerUser: 39, ossName: "WebStudio", ossStars: "8K", ossSlug: "webstudio" },
-  { name: "Retool", monthlyPerUser: 10, ossName: "ToolJet", ossStars: "38K", ossSlug: "tooljet" },
-  { name: "Datadog", monthlyPerUser: 34, ossName: "Grafana", ossStars: "73K", ossSlug: "grafana" },
-  { name: "Mailchimp", monthlyPerUser: 20, ossName: "Listmonk", ossStars: "15K", ossSlug: "listmonk" },
-  { name: "Calendly", monthlyPerUser: 12, ossName: "Cal.com", ossStars: "33K", ossSlug: "cal-com" },
-  { name: "Loom", monthlyPerUser: 12, ossName: "Cap", ossStars: "18K", ossSlug: "cap" },
+  { name: "Notion", monthlyPerUser: 16, ossName: "AppFlowy", ossStars: "69K" },
+  { name: "Slack", monthlyPerUser: 15, ossName: "Mattermost", ossStars: "36K" },
+  { name: "Figma", monthlyPerUser: 15, ossName: "Penpot", ossStars: "45K" },
+  { name: "Jira", monthlyPerUser: 10, ossName: "Plane", ossStars: "54K" },
+  { name: "GitHub Copilot", monthlyPerUser: 19, ossName: "Continue", ossStars: "32K" },
+  { name: "Salesforce", monthlyPerUser: 75, ossName: "Twenty", ossStars: "24K" },
+  { name: "HubSpot", monthlyPerUser: 50, ossName: "Erxes", ossStars: "8K" },
+  { name: "Zendesk", monthlyPerUser: 55, ossName: "Chatwoot", ossStars: "22K" },
+  { name: "Airtable", monthlyPerUser: 20, ossName: "NocoDB", ossStars: "63K" },
+  { name: "Typeform", monthlyPerUser: 25, ossName: "Formbricks", ossStars: "11K" },
+  { name: "DocuSign", monthlyPerUser: 30, ossName: "Documenso", ossStars: "9K" },
+  { name: "Zoom", monthlyPerUser: 15, ossName: "Jitsi", ossStars: "23K" },
+  { name: "Dropbox", monthlyPerUser: 15, ossName: "Nextcloud", ossStars: "34K" },
+  { name: "1Password", monthlyPerUser: 8, ossName: "Bitwarden", ossStars: "18K" },
+  { name: "Webflow", monthlyPerUser: 39, ossName: "WebStudio", ossStars: "8K" },
+  { name: "Retool", monthlyPerUser: 10, ossName: "ToolJet", ossStars: "38K" },
+  { name: "Datadog", monthlyPerUser: 34, ossName: "Grafana", ossStars: "73K" },
+  { name: "Mailchimp", monthlyPerUser: 20, ossName: "Listmonk", ossStars: "15K" },
+  { name: "Calendly", monthlyPerUser: 12, ossName: "Cal.com", ossStars: "33K" },
+  { name: "Loom", monthlyPerUser: 12, ossName: "Cap", ossStars: "18K" },
 ];
 
 const JPY_RATE = 150;
@@ -59,6 +59,23 @@ function formatJPY(n: number): string {
 
 export default function SavingsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [toolIdMap, setToolIdMap] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const ossNames = SAAS_LIST.map((s) => s.ossName);
+    supabase
+      .from("tools")
+      .select("id, name")
+      .in("name", ossNames)
+      .then(({ data }) => {
+        if (data) {
+          const map: Record<string, number> = {};
+          data.forEach((t) => { if (t.name) map[t.name] = t.id; });
+          setToolIdMap(map);
+        }
+      });
+  }, []);
+
   const [teamSize, setTeamSize] = useState(10);
   const [copied, setCopied] = useState(false);
 
@@ -249,13 +266,15 @@ export default function SavingsPage() {
                           {item.ossStars}
                         </span>
                       </div>
-                      <div className="text-right">
-                        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
-                          <Link to={`/tools/${item.ossSlug}`}>
-                            詳細を見る <ExternalLink className="h-3 w-3" />
-                          </Link>
-                        </Button>
-                      </div>
+                      {toolIdMap[item.ossName] && (
+                        <div className="text-right">
+                          <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" asChild>
+                            <Link to={`/tools/${toolIdMap[item.ossName]}`}>
+                              詳細を見る <ExternalLink className="h-3 w-3" />
+                            </Link>
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
