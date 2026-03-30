@@ -36,12 +36,16 @@ export default function IndexPage() {
     page,
   });
 
-  // Debounce search
+  // Debounce search - only reset when search value actually changes
   useEffect(() => {
+    if (search === prevSearchRef.current && search === debouncedSearch) {
+      return; // No actual change, skip (prevents clearing on mount)
+    }
     debounceRef.current = setTimeout(() => {
       setDebouncedSearch(search);
       setPage(0);
       setAllTools([]);
+      prevSearchRef.current = search;
     }, 300);
     return () => clearTimeout(debounceRef.current);
   }, [search]);
