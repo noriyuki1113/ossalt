@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import AlternativesPage from "./pages/AlternativesPage";
 import RankingPage from "./pages/Ranking";
+import QuizPage from "./pages/Quiz";
+import NewsPage from "./pages/News";
 
 const queryClient = new QueryClient();
 
