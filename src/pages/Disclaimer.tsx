@@ -1,5 +1,6 @@
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
+import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
 
 export default function DisclaimerPage() {
   useSeo({
@@ -9,6 +10,7 @@ export default function DisclaimerPage() {
 
   return (
     <SiteLayout>
+      <PageBackTop />
       <div className="container max-w-3xl mx-auto py-12 px-4 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-8">
           免責事項
@@ -56,6 +58,7 @@ export default function DisclaimerPage() {
           </Section>
         </div>
       </div>
+      <PageBackBottom />
     </SiteLayout>
   );
 }
