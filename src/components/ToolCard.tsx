@@ -30,15 +30,32 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          {favicon && (
-            <img
-              src={favicon}
-              alt=""
-              width={20}
-              height={20}
-              className="rounded shrink-0"
-              loading="lazy"
-            />
+          {favicon ? (
+            <>
+              <img
+                src={favicon}
+                alt=""
+                width={20}
+                height={20}
+                className="rounded shrink-0"
+                loading="lazy"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  const fallback = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+              />
+              <span
+                className="h-5 w-5 rounded bg-muted text-muted-foreground text-[11px] font-bold items-center justify-center shrink-0 uppercase"
+                style={{ display: 'none' }}
+              >
+                {tool.name?.charAt(0) || '?'}
+              </span>
+            </>
+          ) : (
+            <span className="h-5 w-5 rounded bg-muted text-muted-foreground text-[11px] font-bold flex items-center justify-center shrink-0 uppercase">
+              {tool.name?.charAt(0) || '?'}
+            </span>
           )}
           <h3 className="font-semibold text-lg text-foreground leading-tight truncate">
             {tool.name}
