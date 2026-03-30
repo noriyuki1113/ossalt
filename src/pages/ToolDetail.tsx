@@ -519,7 +519,7 @@ export default function ToolDetailPage() {
                   to={`/alternatives/${altSlug}`}
                   className="flex items-center gap-2 text-sm text-primary hover:underline font-medium"
                 >
-                  Check {competitorKey} alternatives
+                  {competitorKey}の代替をもっと見る
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
