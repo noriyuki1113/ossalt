@@ -18,6 +18,7 @@ import RankingPage from "./pages/Ranking";
 import QuizPage from "./pages/Quiz";
 import NewsPage from "./pages/News";
 import SavingsPage from "./pages/Savings";
+import AdminPage from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/savings" element={<SavingsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />
