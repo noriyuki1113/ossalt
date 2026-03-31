@@ -67,6 +67,16 @@ export default function ContactPage() {
       return;
     }
 
+    // Send email notification (fire-and-forget)
+    supabase.functions.invoke("send-contact-email", {
+      body: {
+        name: form.name || null,
+        email: form.email,
+        category: form.category,
+        message: form.message,
+      },
+    }).catch((err) => console.error("Email notification failed:", err));
+
     setSubmitted(true);
     toast.success("お問い合わせを送信しました。");
   };
