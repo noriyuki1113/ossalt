@@ -1,13 +1,17 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useSearchParams, Link } from "react-router-dom";
-import { Search, Trophy, ArrowUpDown } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useSearchParams } from "react-router-dom";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { StatsBar } from "@/components/StatsBar";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
+import { HeroSection } from "@/components/home/HeroSection";
+import { FeaturedTools } from "@/components/home/FeaturedTools";
+import { PopularAlternatives } from "@/components/home/PopularAlternatives";
+import { UseCaseSection } from "@/components/home/UseCaseSection";
+import { SelfHostSection } from "@/components/home/SelfHostSection";
+import { FAQSection } from "@/components/home/FAQSection";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
@@ -25,10 +29,12 @@ export default function IndexPage() {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
   const prevSearchRef = useRef(search);
 
+  // Show full catalog when search or category is active
+  const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
+
   useSeo({
     title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
-    description:
-      "680件のオープンソースツールを日本語で検索。Notion・Slack・Figmaなど有料SaaSの無料代替を見つけよう。",
+    description: "680件のオープンソースツールを日本語で検索。Notion・Slack・Figmaなど有料SaaSの無料代替を見つけよう。",
     canonical: "https://ossalt.jp/",
   });
 
@@ -39,11 +45,8 @@ export default function IndexPage() {
     sort,
   });
 
-  // Debounce search - only reset when search value actually changes
   useEffect(() => {
-    if (search === prevSearchRef.current && search === debouncedSearch) {
-      return; // No actual change, skip (prevents clearing on mount)
-    }
+    if (search === prevSearchRef.current && search === debouncedSearch) return;
     debounceRef.current = setTimeout(() => {
       setDebouncedSearch(search);
       setPage(0);
@@ -53,7 +56,6 @@ export default function IndexPage() {
     return () => clearTimeout(debounceRef.current);
   }, [search]);
 
-  // Sync URL params
   useEffect(() => {
     const params = new URLSearchParams();
     if (selectedCategory !== "すべて") params.set("category", selectedCategory);
@@ -61,7 +63,6 @@ export default function IndexPage() {
     setSearchParams(params, { replace: true });
   }, [selectedCategory, debouncedSearch, setSearchParams]);
 
-  // Accumulate tools for "load more"
   useEffect(() => {
     if (data?.tools) {
       if (page === 0) {
@@ -89,114 +90,82 @@ export default function IndexPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-primary/8 rounded-full blur-3xl" />
-          <div className="absolute top-20 left-1/3 w-[400px] h-[300px] bg-[hsl(270_70%_60%/0.06)] rounded-full blur-3xl" />
-        </div>
-        <div className="container relative py-14 md:py-20 text-center">
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-gradient">
-            OSSアルタナティブ
-          </h1>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
-            有料SaaSの代わりに使えるオープンソースツール集
-          </p>
-
-          <div className="mt-8 max-w-lg mx-auto relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="ツール名・説明で検索…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="h-12 pl-10 rounded-xl text-base border-border focus-visible:ring-primary"
-            />
-          </div>
-
-          <div className="mt-8">
-            <StatsBar />
-          </div>
-        </div>
-      </section>
-
-      {/* CTA buttons */}
-      <section className="container pt-4 pb-2 flex justify-center gap-3 flex-wrap">
-        <Button variant="outline" className="gap-2 rounded-xl" asChild>
-          <Link to="/quiz">
-            🔍 診断ツールで探す
-          </Link>
-        </Button>
-        <Button variant="outline" className="gap-2 rounded-xl" asChild>
-          <Link to="/ranking">
-            <Trophy className="h-4 w-4 text-badge-amber" />
-            🏆 ランキングを見る
-          </Link>
-        </Button>
-        <Button variant="outline" className="gap-2 rounded-xl" asChild>
-          <Link to="/savings">
-            💰 いくら節約できる？
-          </Link>
-        </Button>
-      </section>
+      <HeroSection
+        search={search}
+        onSearchChange={setSearch}
+        onCategorySelect={handleCategoryChange}
+      />
 
       {/* Category Filter - Sticky */}
-      <section className="sticky top-14 z-40 bg-background/90 backdrop-blur-md border-b py-3">
+      <section className="sticky top-16 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50 py-3">
         <div className="container">
           <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
         </div>
       </section>
 
-      {/* Tool Grid */}
-      <section className="container pb-16 pt-6">
-        {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <ToolCardSkeleton key={i} />
-            ))}
-          </div>
-        ) : allTools.length > 0 ? (
-          <>
-            <div className="flex items-center justify-between mb-5">
-              <p className="text-sm text-muted-foreground">
-                {data?.totalCount ?? 0} 件のツール
-              </p>
-              <Select value={sort} onValueChange={handleSortChange}>
-                <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border">
-                  <ArrowUpDown className="h-3.5 w-3.5" />
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="stars">⭐ スター数順</SelectItem>
-                  <SelectItem value="recent">🕐 最近更新順</SelectItem>
-                  <SelectItem value="name">🔤 A-Z順</SelectItem>
-                  <SelectItem value="newest">🆕 新着順</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {allTools.map((tool, i) => (
-                <ToolCard key={tool.id} tool={tool} index={i} />
+      {isBrowsing ? (
+        /* Full catalog / search results */
+        <section className="container pb-16 pt-8">
+          {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <ToolCardSkeleton key={i} />
               ))}
             </div>
-            {hasMore && (
-              <div className="mt-8 text-center">
-                <Button
-                  variant="outline"
-                  className="rounded-xl px-8"
-                  onClick={() => setPage((p) => p + 1)}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "読み込み中…" : "さらに読み込む"}
-                </Button>
+          ) : allTools.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-sm text-muted-foreground">
+                  {data?.totalCount ?? 0} 件のツール
+                </p>
+                <Select value={sort} onValueChange={handleSortChange}>
+                  <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border/60">
+                    <ArrowUpDown className="h-3.5 w-3.5" />
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="stars">⭐ スター数順</SelectItem>
+                    <SelectItem value="recent">🕐 最近更新順</SelectItem>
+                    <SelectItem value="name">🔤 A-Z順</SelectItem>
+                    <SelectItem value="newest">🆕 新着順</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            )}
-          </>
-        ) : (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground">ツールが見つかりませんでした</p>
-            <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
-          </div>
-        )}
-      </section>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {allTools.map((tool, i) => (
+                  <ToolCard key={tool.id} tool={tool} index={i} />
+                ))}
+              </div>
+              {hasMore && (
+                <div className="mt-10 text-center">
+                  <Button
+                    variant="outline"
+                    className="rounded-xl px-8 border-border/60"
+                    onClick={() => setPage((p) => p + 1)}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "読み込み中…" : "さらに読み込む"}
+                  </Button>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground">ツールが見つかりませんでした</p>
+              <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
+            </div>
+          )}
+        </section>
+      ) : (
+        /* Homepage sections */
+        <>
+          <PopularAlternatives />
+          <FeaturedTools />
+          <UseCaseSection />
+          <SelfHostSection />
+          <FAQSection />
+        </>
+      )}
     </SiteLayout>
   );
 }
