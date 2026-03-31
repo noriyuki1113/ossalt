@@ -105,20 +105,18 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Check for limit parameter (for testing)
+    // Support offset/limit for chunked execution
     const url = new URL(req.url);
     const limitParam = url.searchParams.get("limit");
+    const offsetParam = url.searchParams.get("offset");
+    const limit = limitParam ? parseInt(limitParam, 10) : 100;
+    const offset = offsetParam ? parseInt(offsetParam, 10) : 0;
 
-    let query = supabase
+    const { data: tools, error: fetchError } = await supabase
       .from("tools")
       .select("id, name, description_en, category_en, parent_category_en")
-      .order("id");
-
-    if (limitParam) {
-      query = query.limit(parseInt(limitParam, 10));
-    }
-
-    const { data: tools, error: fetchError } = await query;
+      .order("id")
+      .range(offset, offset + limit - 1);
 
     if (fetchError) throw fetchError;
     if (!tools || tools.length === 0) {
