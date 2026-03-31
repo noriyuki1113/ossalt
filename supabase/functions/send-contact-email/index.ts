@@ -19,7 +19,7 @@ Deno.serve(async (req) => {
 
     const { error } = await resend.emails.send({
       from: "noreply@ossalt.jp",
-      to: "noriyuki1113@gmail.com",
+      to: "noriyuki.ktm@gmail.com",
       subject: "【ossalt.jp】お問い合わせが届きました",
       html: `
         <h2>お問い合わせが届きました</h2>
