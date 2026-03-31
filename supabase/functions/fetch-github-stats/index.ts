@@ -59,68 +59,69 @@ Deno.serve(async (req) => {
     const githubToken = Deno.env.get("GITHUB_TOKEN") || undefined;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Fetch all tools with github_url
+    // Support offset/limit via query params for batch processing
+    const url = new URL(req.url);
+    const offset = parseInt(url.searchParams.get("offset") || "0", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+
+    // Fetch tools with github_url, prioritizing those not yet updated
     const { data: tools, error } = await supabase
       .from("tools")
-      .select("id, github_url")
+      .select("id, github_url, github_stars_updated_at")
       .not("github_url", "is", null)
-      .neq("github_url", "");
+      .neq("github_url", "")
+      .order("github_stars_updated_at", { ascending: true, nullsFirst: true })
+      .range(offset, offset + limit - 1);
 
     if (error) throw error;
     if (!tools || tools.length === 0) {
       return new Response(
-        JSON.stringify({ message: "No tools with GitHub URLs found", updated: 0 }),
+        JSON.stringify({ message: "No tools to process", updated: 0, offset, limit }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log(`Found ${tools.length} tools with GitHub URLs`);
+    console.log(`Processing ${tools.length} tools (offset=${offset}, limit=${limit})`);
 
     let updated = 0;
     let errors = 0;
-    const BATCH_SIZE = 100;
 
-    for (let i = 0; i < tools.length; i += BATCH_SIZE) {
-      const batch = tools.slice(i, i + BATCH_SIZE);
-      console.log(`Processing batch ${Math.floor(i / BATCH_SIZE) + 1}...`);
-
-      for (const tool of batch) {
-        const ownerRepo = extractOwnerRepo(tool.github_url);
-        if (!ownerRepo) {
-          errors++;
-          continue;
-        }
-
-        const data = await fetchGitHubRepo(ownerRepo, githubToken);
-        if (!data) {
-          errors++;
-          await sleep(100);
-          continue;
-        }
-
-        const { error: updateError } = await supabase
-          .from("tools")
-          .update({
-            stars_num: data.stargazers_count,
-            forks_num: data.forks_count,
-            last_commit: data.pushed_at,
-            language: data.language,
-            github_stars_updated_at: new Date().toISOString(),
-          })
-          .eq("id", tool.id);
-
-        if (updateError) {
-          console.error(`Update error for tool ${tool.id}: ${updateError.message}`);
-          errors++;
-        } else {
-          updated++;
-        }
-
-        await sleep(100);
+    for (const tool of tools) {
+      const ownerRepo = extractOwnerRepo(tool.github_url);
+      if (!ownerRepo) {
+        errors++;
+        continue;
       }
+
+      const data = await fetchGitHubRepo(ownerRepo, githubToken);
+      if (!data) {
+        errors++;
+        await sleep(50);
+        continue;
+      }
+
+      const { error: updateError } = await supabase
+        .from("tools")
+        .update({
+          stars_num: data.stargazers_count,
+          forks_num: data.forks_count,
+          last_commit: data.pushed_at,
+          language: data.language,
+          github_stars_updated_at: new Date().toISOString(),
+        })
+        .eq("id", tool.id);
+
+      if (updateError) {
+        console.error(`Update error for tool ${tool.id}: ${updateError.message}`);
+        errors++;
+      } else {
+        updated++;
+      }
+
+      await sleep(50);
     }
 
-    const result = { message: "GitHub stats update complete", updated, errors, total: tools.length };
+    const result = { message: "GitHub stats update complete", updated, errors, total: tools.length, offset, limit };
     console.log(JSON.stringify(result));
 
     return new Response(JSON.stringify(result), {
