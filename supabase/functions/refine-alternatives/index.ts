@@ -45,7 +45,7 @@ async function callAI(
 JSON以外は出力しないでください。`;
 
   const res = await fetch(
-    "https://ai.gateway.lovable.dev/v1/chat/completions",
+    "https://api.openai.com/v1/chat/completions",
     {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ JSON以外は出力しないでください。`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -62,13 +62,14 @@ JSON以外は出力しないでください。`;
           },
           { role: "user", content: prompt },
         ],
+        temperature: 0.3,
       }),
     }
   );
 
   if (!res.ok) {
     const t = await res.text();
-    console.error(`AI error for ${name}: ${res.status} ${t}`);
+    console.error(`OpenAI error for ${name}: ${res.status} ${t}`);
     return null;
   }
 
@@ -77,7 +78,6 @@ JSON以外は出力しないでください。`;
   if (!content) return null;
 
   try {
-    // Strip markdown fences if present
     const cleaned = content
       .replace(/^```json?\s*/i, "")
       .replace(/```\s*$/, "")
@@ -97,19 +97,28 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
+    const openaiApiKey = Deno.env.get("OPENAI_API_KEY");
 
-    if (!lovableApiKey) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    if (!openaiApiKey) {
+      throw new Error("OPENAI_API_KEY is not configured");
     }
 
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Fetch all tools
-    const { data: tools, error: fetchError } = await supabase
+    // Check for limit parameter (for testing)
+    const url = new URL(req.url);
+    const limitParam = url.searchParams.get("limit");
+
+    let query = supabase
       .from("tools")
-      .select("id, name, description_en, category_en, parent_category_en, url")
+      .select("id, name, description_en, category_en, parent_category_en")
       .order("id");
+
+    if (limitParam) {
+      query = query.limit(parseInt(limitParam, 10));
+    }
+
+    const { data: tools, error: fetchError } = await query;
 
     if (fetchError) throw fetchError;
     if (!tools || tools.length === 0) {
@@ -128,11 +137,10 @@ Deno.serve(async (req) => {
     for (let i = 0; i < tools.length; i += BATCH_SIZE) {
       const batch = tools.slice(i, i + BATCH_SIZE);
 
-      // Process batch concurrently
-      const results = await Promise.allSettled(
+      await Promise.allSettled(
         batch.map(async (tool) => {
           const result = await callAI(
-            lovableApiKey,
+            openaiApiKey,
             tool.name || "",
             tool.description_en || "",
             tool.category_en || ""
@@ -171,7 +179,6 @@ Deno.serve(async (req) => {
         `Batch ${Math.floor(i / BATCH_SIZE) + 1}: processed ${batch.length} tools (total: ${success} success, ${errors} errors)`
       );
 
-      // Delay between batches
       if (i + BATCH_SIZE < tools.length) {
         await sleep(DELAY_MS);
       }
