@@ -12,28 +12,24 @@ export function StatsBar() {
   const { data } = useToolStats();
 
   return (
-    <div className="flex items-center justify-center gap-6 md:gap-10 flex-wrap">
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Package className="h-4 w-4 text-primary" />
-        <span className="font-medium text-foreground">
-          {data ? <><CountUp end={data.toolCount} />件</> : "---"}
-        </span>
-        <span>ツール数</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Tags className="h-4 w-4 text-primary" />
-        <span className="font-medium text-foreground">
-          {data ? <><CountUp end={data.categoryCount} />カテゴリ</> : "---"}
-        </span>
-        <span>カテゴリ</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Star className="h-4 w-4 text-primary" />
-        <span className="font-medium text-foreground">
-          {data ? <CountUp end={data.totalStars} formatter={formatNumber} /> : "---"}
-        </span>
-        <span>総スター数</span>
-      </div>
+    <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
+      {[
+        { icon: Package, value: data?.toolCount, suffix: "件", label: "ツール数" },
+        { icon: Tags, value: data?.categoryCount, suffix: "カテゴリ", label: "カテゴリ" },
+        { icon: Star, value: data?.totalStars, formatter: formatNumber, label: "総スター数" },
+      ].map(({ icon: Icon, value, suffix, formatter, label }) => (
+        <div key={label} className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-2">
+            <Icon className="h-4 w-4 text-primary" />
+            <span className="font-bold text-lg text-foreground tabular-nums">
+              {value != null ? (
+                formatter ? <CountUp end={value} formatter={formatter} /> : <><CountUp end={value} />{suffix && <span className="text-sm font-normal text-muted-foreground ml-0.5">{suffix}</span>}</>
+              ) : "—"}
+            </span>
+          </div>
+          <span className="text-xs text-muted-foreground">{label}</span>
+        </div>
+      ))}
     </div>
   );
 }

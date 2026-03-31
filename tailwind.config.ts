@@ -9,13 +9,14 @@ export default {
       center: true,
       padding: "1.5rem",
       screens: {
-        "2xl": "1200px",
+        "2xl": "1280px",
       },
     },
     extend: {
       fontFamily: {
         sans: ['"Inter"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
         display: ['"Inter"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
+        jp: ['"Noto Sans JP"', '"Inter"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -64,6 +65,8 @@ export default {
         "badge-green": "hsl(var(--badge-green))",
         "badge-amber": "hsl(var(--badge-amber))",
         "text-tertiary": "hsl(var(--text-tertiary))",
+        "accent-2": "hsl(var(--accent-2))",
+        surface: "hsl(var(--surface))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,14 +83,19 @@ export default {
           to: { height: "0" },
         },
         "fade-in": {
-          from: { opacity: "0", transform: "translateY(8px)" },
+          from: { opacity: "0", transform: "translateY(12px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in-up": {
+          from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.4s ease-out forwards",
+        "fade-in": "fade-in 0.5s ease-out forwards",
+        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
       },
     },
   },
