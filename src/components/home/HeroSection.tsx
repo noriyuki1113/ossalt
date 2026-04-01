@@ -76,7 +76,10 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
             variant="outline"
             size="lg"
             className="w-full sm:w-auto rounded-xl px-8 text-base border-border/60"
-            onClick={() => onCategorySelect("すべて")}
+            onClick={() => {
+              const el = document.getElementById("popular-alternatives");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
           >
             代替ツールを見つける
           </Button>
