@@ -4,11 +4,11 @@ import { StatsBar } from "@/components/StatsBar";
 import { Link } from "react-router-dom";
 
 const POPULAR_CATEGORIES = [
-  { label: "AI・機械学習", category: "AI・機械学習" },
-  { label: "開発者ツール", category: "開発者ツール" },
-  { label: "ビジネスソフトウェア", category: "ビジネスソフトウェア" },
+  { label: "AI・ML", category: "AI・ML" },
+  { label: "開発ツール", category: "開発ツール" },
+  { label: "業務ソフト", category: "業務ソフト" },
   { label: "インフラ・運用", category: "インフラ・運用" },
-  { label: "セキュリティ", category: "セキュリティ・プライバシー" },
+  { label: "セキュリティ", category: "セキュリティ" },
 ];
 
 interface HeroSectionProps {
@@ -40,15 +40,14 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         </h1>
 
         <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          Notion、Slack、Figma…あなたが使っている有料ツールの<br className="hidden md:inline" />
-          オープンソース代替を日本語で探せます
+          日本語で探せる、OSS代替ツールの比較サイト
         </p>
 
         {/* Search */}
         <div className="mt-10 max-w-xl mx-auto relative animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="ツール名、代替元、カテゴリで検索…"
+            placeholder="ツール名やカテゴリで検索…"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             className="h-14 pl-12 pr-4 rounded-xl text-base border-border/60 bg-card/80 backdrop-blur-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-muted-foreground/60"

@@ -25,7 +25,7 @@ export function FeaturedTools() {
             注目の<span className="text-gradient">OSS</span>プロジェクト
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            GitHubスター数が多い人気のオープンソースツール
+            GitHub スター数が多い人気のOSS
           </p>
         </div>
       </div>
