@@ -101,6 +101,8 @@ Deno.serve(async (req) => {
         continue;
       }
 
+      const licenseValue = data.license?.spdx_id || data.license?.name || null;
+
       const { error: updateError } = await supabase
         .from("tools")
         .update({
@@ -108,6 +110,7 @@ Deno.serve(async (req) => {
           forks_num: data.forks_count,
           last_commit: data.pushed_at,
           language: data.language,
+          license: licenseValue,
           github_stars_updated_at: new Date().toISOString(),
         })
         .eq("id", tool.id);
