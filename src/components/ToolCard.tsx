@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
-import { ExternalLink, Github, Star, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, Star, ArrowRight, GitFork, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Tool } from "@/hooks/use-tools";
 
-function formatStars(num: number | null): string {
+function formatCount(num: number | null): string {
   if (!num) return "0";
   if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
   return String(num);
+}
+
+function formatRelativeDate(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  try {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays < 1) return "今日";
+    if (diffDays < 30) return `${diffDays}日前`;
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return `${diffMonths}ヶ月前`;
+    const diffYears = Math.floor(diffMonths / 12);
+    return `${diffYears}年前`;
+  } catch {
+    return null;
+  }
 }
 
 function getFaviconUrl(url: string | null): string | null {
