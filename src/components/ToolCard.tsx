@@ -1,12 +1,30 @@
 import { Link } from "react-router-dom";
-import { ExternalLink, Github, Star, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, Star, ArrowRight, GitFork, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Tool } from "@/hooks/use-tools";
 
-function formatStars(num: number | null): string {
+function formatCount(num: number | null): string {
   if (!num) return "0";
   if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
   return String(num);
+}
+
+function formatRelativeDate(dateStr: string | null): string | null {
+  if (!dateStr) return null;
+  try {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays < 1) return "今日";
+    if (diffDays < 30) return `${diffDays}日前`;
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return `${diffMonths}ヶ月前`;
+    const diffYears = Math.floor(diffMonths / 12);
+    return `${diffYears}年前`;
+  } catch {
+    return null;
+  }
 }
 
 function getFaviconUrl(url: string | null): string | null {
@@ -85,7 +103,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         {tool.stars_num && tool.stars_num > 0 ? (
           <span className="shrink-0 flex items-center gap-1 text-xs text-badge-amber font-medium">
             <Star className="h-3 w-3 fill-current" />
-            {formatStars(tool.stars_num)}
+            {formatCount(tool.stars_num)}
           </span>
         ) : null}
       </div>
@@ -136,6 +154,18 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         {tool.license && (
           <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5">
             {tool.license}
+          </Badge>
+        )}
+        {tool.forks_num && tool.forks_num > 0 ? (
+          <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5 gap-0.5">
+            <GitFork className="h-2.5 w-2.5" />
+            {formatCount(tool.forks_num)}
+          </Badge>
+        ) : null}
+        {formatRelativeDate(tool.last_commit) && (
+          <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5 gap-0.5">
+            <Clock className="h-2.5 w-2.5" />
+            {formatRelativeDate(tool.last_commit)}
           </Badge>
         )}
       </div>
