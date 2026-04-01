@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { StatsBar } from "@/components/StatsBar";
+import { ValueProps } from "@/components/home/ValueProps";
 import { Link } from "react-router-dom";
 
 const POPULAR_CATEGORIES = [
