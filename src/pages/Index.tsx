@@ -11,7 +11,10 @@ import { FeaturedTools } from "@/components/home/FeaturedTools";
 import { PopularAlternatives } from "@/components/home/PopularAlternatives";
 import { UseCaseSection } from "@/components/home/UseCaseSection";
 import { SelfHostSection } from "@/components/home/SelfHostSection";
+import { NewToolsSection } from "@/components/home/NewToolsSection";
 import { FAQSection } from "@/components/home/FAQSection";
+import { FAQBottomLinks } from "@/components/home/FAQBottomLinks";
+import { BottomCTA } from "@/components/home/BottomCTA";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
