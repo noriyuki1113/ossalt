@@ -26,6 +26,7 @@ async function fetchGitHubRepo(
   forks_count: number;
   pushed_at: string;
   language: string | null;
+  license: { name: string; spdx_id: string } | null;
 } | null> {
   const headers: Record<string, string> = {
     Accept: "application/vnd.github.v3+json",
