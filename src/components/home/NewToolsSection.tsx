@@ -1,0 +1,39 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
+import type { Tool } from "@/hooks/use-tools";
+
+export function NewToolsSection() {
+  const { data: tools, isLoading } = useQuery({
+    queryKey: ["new-tools"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("tools")
+        .select("*")
+        .order("created_at", { ascending: false, nullsFirst: false })
+        .limit(6);
+      if (error) throw error;
+      return data as Tool[];
+    },
+  });
+
+  return (
+    <section className="container py-16">
+      <div className="mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+          🆕 最近追加された<span className="text-gradient">ツール</span>
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          新しく掲載されたOSSツール
+        </p>
+      </div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => <ToolCardSkeleton key={i} />)
+          : tools?.map((tool, i) => <ToolCard key={tool.id} tool={tool} index={i} />)
+        }
+      </div>
+    </section>
+  );
+}
