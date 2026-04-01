@@ -26,6 +26,7 @@ async function fetchGitHubRepo(
   forks_count: number;
   pushed_at: string;
   language: string | null;
+  license: { name: string; spdx_id: string } | null;
 } | null> {
   const headers: Record<string, string> = {
     Accept: "application/vnd.github.v3+json",
@@ -100,6 +101,8 @@ Deno.serve(async (req) => {
         continue;
       }
 
+      const licenseValue = data.license?.spdx_id || data.license?.name || null;
+
       const { error: updateError } = await supabase
         .from("tools")
         .update({
@@ -107,6 +110,7 @@ Deno.serve(async (req) => {
           forks_num: data.forks_count,
           last_commit: data.pushed_at,
           language: data.language,
+          license: licenseValue,
           github_stars_updated_at: new Date().toISOString(),
         })
         .eq("id", tool.id);
