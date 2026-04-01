@@ -4,11 +4,11 @@ import { StatsBar } from "@/components/StatsBar";
 import { Link } from "react-router-dom";
 
 const POPULAR_CATEGORIES = [
-  { label: "AI・機械学習", category: "AI・機械学習" },
-  { label: "開発者ツール", category: "開発者ツール" },
-  { label: "ビジネスソフトウェア", category: "ビジネスソフトウェア" },
+  { label: "AI・ML", category: "AI・ML" },
+  { label: "開発ツール", category: "開発ツール" },
+  { label: "業務ソフト", category: "業務ソフト" },
   { label: "インフラ・運用", category: "インフラ・運用" },
-  { label: "セキュリティ", category: "セキュリティ・プライバシー" },
+  { label: "セキュリティ", category: "セキュリティ" },
 ];
 
 interface HeroSectionProps {
