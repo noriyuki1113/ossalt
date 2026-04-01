@@ -103,7 +103,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         {tool.stars_num && tool.stars_num > 0 ? (
           <span className="shrink-0 flex items-center gap-1 text-xs text-badge-amber font-medium">
             <Star className="h-3 w-3 fill-current" />
-            {formatStars(tool.stars_num)}
+            {formatCount(tool.stars_num)}
           </span>
         ) : null}
       </div>
