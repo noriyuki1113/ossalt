@@ -44,7 +44,7 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         </h1>
 
         <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          OSSで代替できるツールを見つけよう
+          毎月のSaaSコストを、OSSで削減しよう
         </p>
 
         {/* Value Props */}
