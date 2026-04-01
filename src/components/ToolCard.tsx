@@ -47,6 +47,30 @@ function getGithubAvatarUrl(githubUrl: string | null): string | null {
   return null;
 }
 
+function ToolIcon({ favicon, ghAvatar, name, size = 22 }: { favicon: string | null; ghAvatar: string | null; name: string | null; size?: number }) {
+  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
+  const s = `${size}px`;
+
+  if (!src) {
+    return (
+      <span className="rounded-md bg-secondary text-muted-foreground font-bold flex items-center justify-center shrink-0 uppercase" style={{ width: s, height: s, fontSize: `${Math.round(size * 0.45)}px` }}>
+        {name?.charAt(0) || "?"}
+      </span>
+    );
+  }
+
+  return (
+    <>
+      <img src={src} alt="" width={size} height={size} className="rounded-md shrink-0 bg-secondary" loading="lazy"
+        onError={() => {
+          if (src === favicon && ghAvatar) setSrc(ghAvatar);
+          else setSrc(null);
+        }}
+      />
+    </>
+  );
+}
+
 const LANG_COLORS: Record<string, string> = {
   Python: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   TypeScript: "bg-teal-500/10 text-teal-400 border-teal-500/20",
