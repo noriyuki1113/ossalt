@@ -100,7 +100,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       )}
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-4 flex-1">
+      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-4 flex-1 break-words">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
