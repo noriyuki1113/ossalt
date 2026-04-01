@@ -48,7 +48,7 @@ export function PopularAlternatives() {
   if (!groups || groups.length === 0) return null;
 
   return (
-    <section className="container py-16">
+    <section id="popular-alternatives" className="container py-16">
       <div className="mb-8">
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
           よく比較される<span className="text-gradient">代替サービス</span>
