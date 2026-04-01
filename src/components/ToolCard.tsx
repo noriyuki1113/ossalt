@@ -121,7 +121,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1 break-words">
+      <p className="text-sm text-muted-foreground line-clamp-1 leading-relaxed mb-3 flex-1 break-words">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
