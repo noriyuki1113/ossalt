@@ -39,5 +39,32 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+    (function(){
+      var u="https://wcuofgycadbydhtuevay.supabase.co/functions/v1/track";
+      function t(d){
+        navigator.sendBeacon?navigator.sendBeacon(u,JSON.stringify(d)):
+        fetch(u,{method:"POST",body:JSON.stringify(d),keepalive:true});
+      }
+      t({event_type:"page_view",path:location.pathname,referrer:document.referrer});
+      document.addEventListener("click",function(e){
+        var el=e.target.closest("a,button");
+        if(el){
+          t({event_type:"click",path:location.pathname,
+            element:el.tagName+"."+(el.textContent||"").slice(0,50).trim()});
+        }
+      });
+      document.addEventListener("submit",function(e){
+        var inp=e.target.querySelector('input[type="search"],input[name*="search"],input[name*="q"]');
+        if(inp&&inp.value){
+          t({event_type:"search",path:location.pathname,keyword:inp.value.slice(0,200)});
+        }
+      });
+      window.addEventListener("error",function(e){
+        t({event_type:"error",path:location.pathname,
+          error_message:(e.message||"Unknown")+" at "+e.filename+":"+e.lineno});
+      });
+    })();
+    </script>
   </body>
 </html>
