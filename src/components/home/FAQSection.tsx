@@ -43,12 +43,12 @@ export function FAQSection() {
             <AccordionItem
               key={i}
               value={`faq-${i}`}
-              className="rounded-xl border border-border/60 bg-card px-6 data-[state=open]:border-primary/20"
+              className="rounded-xl border border-border/60 bg-card px-6 data-[state=open]:border-primary/20 overflow-hidden"
             >
-              <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 break-keep text-left">
+              <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 text-left">
                 {item.q}
               </AccordionTrigger>
-              <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5 break-keep">
+              <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5 w-full min-w-0 whitespace-normal break-words">
                 {item.a}
               </AccordionContent>
             </AccordionItem>
