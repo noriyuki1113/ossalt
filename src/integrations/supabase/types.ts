@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      advertise_inquiries: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          plan: string
+          product_name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          plan?: string
+          product_name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          plan?: string
+          product_name?: string
+        }
+        Relationships: []
+      }
       alternative_products: {
         Row: {
           alternative_id: string
