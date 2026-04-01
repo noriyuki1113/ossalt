@@ -156,6 +156,18 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             {tool.license}
           </Badge>
         )}
+        {tool.forks_num && tool.forks_num > 0 ? (
+          <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5 gap-0.5">
+            <GitFork className="h-2.5 w-2.5" />
+            {formatCount(tool.forks_num)}
+          </Badge>
+        ) : null}
+        {formatRelativeDate(tool.last_commit) && (
+          <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5 gap-0.5">
+            <Clock className="h-2.5 w-2.5" />
+            {formatRelativeDate(tool.last_commit)}
+          </Badge>
+        )}
       </div>
 
       {/* CTAs */}
