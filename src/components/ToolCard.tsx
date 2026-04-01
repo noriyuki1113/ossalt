@@ -126,7 +126,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       </p>
 
       {/* Tags row */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-4">
+      <div className="flex flex-wrap items-center gap-1.5 mb-3">
         {tool.language && (
           <Badge className={`text-[11px] font-normal border px-2 py-0 h-5 ${getLanguageBadgeClass(tool.language)}`}>
             {tool.language}
