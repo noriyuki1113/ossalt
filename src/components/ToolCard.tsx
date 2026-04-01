@@ -105,19 +105,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       {/* Header: icon + name + stars */}
       <div className="flex items-start gap-3 mb-2 min-w-0">
         <div className="flex-1 min-w-0 flex items-center gap-2.5">
-          {favicon ? (
-            <>
-              <img src={favicon} alt="" width={22} height={22} className="rounded-md shrink-0" loading="lazy"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; const f = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if (f) f.style.display = 'flex'; }} />
-              <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold items-center justify-center shrink-0 uppercase" style={{ display: 'none' }}>
-                {tool.name?.charAt(0) || '?'}
-              </span>
-            </>
-          ) : (
-            <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold flex items-center justify-center shrink-0 uppercase">
-              {tool.name?.charAt(0) || '?'}
-            </span>
-          )}
+          <ToolIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} size={22} />
           <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>
