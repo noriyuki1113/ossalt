@@ -23,6 +23,7 @@ const footerSections = [
     links: [
       { to: "/contact", label: "お問い合わせ" },
       { to: "/savings", label: "節約計算" },
+      { to: "/advertise", label: "広告掲載" },
     ],
   },
 ];

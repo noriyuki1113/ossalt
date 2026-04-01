@@ -94,7 +94,7 @@ export default function Advertise() {
   const [error, setError] = useState("");
 
   const scrollToForm = () => {
-    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -239,7 +239,7 @@ export default function Advertise() {
       </section>
 
       {/* Contact Form */}
-      <section id="contact-form" className="py-16 md:py-20 border-t border-border/50">
+      <section id="contact" className="py-16 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-lg">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-8">
             掲載を申し込む・お問い合わせ
