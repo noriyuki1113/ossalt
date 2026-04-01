@@ -182,7 +182,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       {/* CTAs */}
       <div className="flex items-center gap-2 pt-3 border-t border-border/40">
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:text-primary/80 transition-colors">
-          詳細を見る
+          詳しく見る
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
         </span>
         <div className="ml-auto flex items-center gap-1">

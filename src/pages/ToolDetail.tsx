@@ -488,8 +488,23 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        <div className="pb-12 flex justify-center">
-          <Button variant="outline" size="lg" className="gap-2 rounded-xl border-border/60" asChild>
+        {/* CTA: 他の代替も見る */}
+        <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
+          {tool.parent_category_ja && (
+            <Button
+              size="lg"
+              className="w-full sm:w-auto gap-2 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold shadow-lg shadow-primary/20"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              asChild
+            >
+              <Link to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
+                他の代替も見る <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          )}
+          <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2 rounded-xl border-border/60" asChild>
             <Link to="/">
               全てのツールを見る <ArrowRight className="h-4 w-4" />
             </Link>
