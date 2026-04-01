@@ -261,17 +261,7 @@ export default function ToolDetailPage() {
         {/* ① Header */}
         <section>
           <div className="flex items-start gap-4 mb-4">
-            {favicon ? (
-              <img
-                src={favicon} alt="" width={56} height={56}
-                className="rounded-xl shrink-0 border border-border/60"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-              />
-            ) : (
-              <span className="h-14 w-14 rounded-xl bg-secondary text-muted-foreground text-xl font-bold flex items-center justify-center shrink-0 uppercase border border-border/60">
-                {tool.name?.charAt(0) || "?"}
-              </span>
-            )}
+            <DetailIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} />
             <div className="min-w-0 flex-1">
               <h1 className="text-2xl md:text-3xl font-black tracking-tight">{tool.name}</h1>
               <div className="flex flex-wrap items-center gap-2 mt-1.5">
