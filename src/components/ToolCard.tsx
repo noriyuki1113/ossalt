@@ -37,6 +37,15 @@ function getFaviconUrl(url: string | null): string | null {
   }
 }
 
+function getGithubAvatarUrl(githubUrl: string | null): string | null {
+  if (!githubUrl) return null;
+  try {
+    const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
+    if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=64`;
+  } catch {}
+  return null;
+}
+
 const LANG_COLORS: Record<string, string> = {
   Python: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   TypeScript: "bg-teal-500/10 text-teal-400 border-teal-500/20",
