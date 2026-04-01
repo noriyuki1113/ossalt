@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { StatsBar } from "@/components/StatsBar";
 import { ValueProps } from "@/components/home/ValueProps";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const POPULAR_CATEGORIES = [
@@ -19,6 +20,11 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSectionProps) {
+  const scrollToCatalog = () => {
+    const el = document.getElementById("catalog-section");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className="relative overflow-hidden">
       {/* Background effects */}
@@ -27,25 +33,29 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         <div className="absolute top-20 right-1/4 w-[400px] h-[300px] bg-accent/4 rounded-full blur-[100px]" />
       </div>
 
-      <div className="container relative py-20 md:py-28 text-center">
+      <div className="container relative py-16 md:py-24 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/50 px-4 py-1.5 text-xs text-muted-foreground mb-6 animate-fade-in">
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
           680+ のOSSツールを日本語で検索
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.1] animate-fade-in" style={{ animationDelay: '100ms' }}>
-          <span className="text-gradient">有料SaaS</span>
-          <span className="text-foreground">の代わりを</span>
+        <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.15] animate-fade-in" style={{ animationDelay: '100ms' }}>
+          <span className="text-gradient">Notion・Zapier・ChatGPT</span>
           <br />
-          <span className="text-foreground">見つけよう</span>
+          <span className="text-foreground">の代替を探せるOSS比較サイト</span>
         </h1>
 
-        <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          日本語で探せる、OSS代替ツールの比較サイト
+        <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+          有料SaaSの代わりに使えるOSSを、日本語で分かりやすく紹介
         </p>
 
+        {/* Value Props */}
+        <div className="mt-6 animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
+          <ValueProps />
+        </div>
+
         {/* Search */}
-        <div className="mt-10 max-w-xl mx-auto relative animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
+        <div className="mt-8 max-w-xl mx-auto relative animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
             placeholder="ツール名やカテゴリで検索…"
@@ -55,8 +65,27 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
           />
         </div>
 
+        {/* CTA Buttons */}
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'both' }}>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto rounded-xl px-8 text-base shadow-lg shadow-primary/20"
+            onClick={scrollToCatalog}
+          >
+            ツールを探す
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full sm:w-auto rounded-xl px-8 text-base border-border/60"
+            onClick={() => onCategorySelect("すべて")}
+          >
+            人気のツールを見る
+          </Button>
+        </div>
+
         {/* Popular category chips */}
-        <div className="mt-6 flex flex-wrap justify-center gap-2 animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
+        <div className="mt-6 flex flex-wrap justify-center gap-2 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
           <span className="text-xs text-muted-foreground mr-1 self-center">人気:</span>
           {POPULAR_CATEGORIES.map((cat) => (
             <button
@@ -69,13 +98,8 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
           ))}
         </div>
 
-        {/* Value Props */}
-        <div className="mt-8 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'both' }}>
-          <ValueProps />
-        </div>
-
         {/* Stats */}
-        <div className="mt-8 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
+        <div className="mt-8 animate-fade-in" style={{ animationDelay: '700ms', animationFillMode: 'both' }}>
           <StatsBar />
         </div>
       </div>

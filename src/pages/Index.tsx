@@ -162,6 +162,7 @@ export default function IndexPage() {
       ) : (
         /* Homepage sections */
         <>
+          <div id="catalog-section" />
           <PopularAlternatives />
           <FeaturedTools />
           <NewToolsSection />
