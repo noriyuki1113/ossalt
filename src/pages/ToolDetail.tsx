@@ -34,6 +34,15 @@ function getFaviconUrl(url: string | null, size = 64): string | null {
   }
 }
 
+function getGithubAvatarUrl(githubUrl: string | null): string | null {
+  if (!githubUrl) return null;
+  try {
+    const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
+    if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=128`;
+  } catch {}
+  return null;
+}
+
 /** Generate "who this is for" based on category */
 function getTargetUsers(tool: Tool, competitor: string | null): string[] {
   const cat = (tool.parent_category_ja || "").toLowerCase();
