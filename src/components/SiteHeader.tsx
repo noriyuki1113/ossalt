@@ -17,9 +17,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/70 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-black text-sm">
-            O
-          </div>
+          <img src="/logo.png" alt="OSSアルタナティブ" className="h-8 w-8 rounded-lg" width={32} height={32} />
           <span className="font-bold text-lg tracking-tight text-foreground">
             OSSアルタナティブ
           </span>
