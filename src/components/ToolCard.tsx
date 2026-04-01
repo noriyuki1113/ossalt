@@ -76,6 +76,7 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
 
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const favicon = getFaviconUrl(tool.url);
+  const ghAvatar = getGithubAvatarUrl(tool.github_url);
   const competitor = tool.primary_competitor_ja || tool.primary_competitor;
   const highlightLabel = getHighlightLabel(tool);
 
