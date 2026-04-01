@@ -40,8 +40,8 @@ export function SiteFooter() {
               </div>
               <span className="font-bold text-lg tracking-tight">OSSアルタナティブ</span>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-[240px]">
-              有料SaaSの代わりに使えるオープンソースツールを日本語で紹介する比較メディア
+            <p className="text-sm text-muted-foreground leading-relaxed break-keep">
+              日本語で探せる、OSS代替ツールの比較サイト
             </p>
           </div>
 
