@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, Star, ArrowRight, GitFork, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +38,39 @@ function getFaviconUrl(url: string | null): string | null {
   }
 }
 
+function getGithubAvatarUrl(githubUrl: string | null): string | null {
+  if (!githubUrl) return null;
+  try {
+    const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
+    if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=64`;
+  } catch {}
+  return null;
+}
+
+function ToolIcon({ favicon, ghAvatar, name, size = 22 }: { favicon: string | null; ghAvatar: string | null; name: string | null; size?: number }) {
+  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
+  const s = `${size}px`;
+
+  if (!src) {
+    return (
+      <span className="rounded-md bg-secondary text-muted-foreground font-bold flex items-center justify-center shrink-0 uppercase" style={{ width: s, height: s, fontSize: `${Math.round(size * 0.45)}px` }}>
+        {name?.charAt(0) || "?"}
+      </span>
+    );
+  }
+
+  return (
+    <>
+      <img src={src} alt="" width={size} height={size} className="rounded-md shrink-0 bg-secondary" loading="lazy"
+        onError={() => {
+          if (src === favicon && ghAvatar) setSrc(ghAvatar);
+          else setSrc(null);
+        }}
+      />
+    </>
+  );
+}
+
 const LANG_COLORS: Record<string, string> = {
   Python: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   TypeScript: "bg-teal-500/10 text-teal-400 border-teal-500/20",
@@ -67,6 +101,7 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
 
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const favicon = getFaviconUrl(tool.url);
+  const ghAvatar = getGithubAvatarUrl(tool.github_url);
   const competitor = tool.primary_competitor_ja || tool.primary_competitor;
   const highlightLabel = getHighlightLabel(tool);
 
@@ -95,19 +130,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       {/* Header: icon + name + stars */}
       <div className="flex items-start gap-3 mb-2 min-w-0">
         <div className="flex-1 min-w-0 flex items-center gap-2.5">
-          {favicon ? (
-            <>
-              <img src={favicon} alt="" width={22} height={22} className="rounded-md shrink-0" loading="lazy"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; const f = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if (f) f.style.display = 'flex'; }} />
-              <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold items-center justify-center shrink-0 uppercase" style={{ display: 'none' }}>
-                {tool.name?.charAt(0) || '?'}
-              </span>
-            </>
-          ) : (
-            <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold flex items-center justify-center shrink-0 uppercase">
-              {tool.name?.charAt(0) || '?'}
-            </span>
-          )}
+          <ToolIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} size={22} />
           <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>

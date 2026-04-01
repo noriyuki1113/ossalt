@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -34,7 +35,38 @@ function getFaviconUrl(url: string | null, size = 64): string | null {
   }
 }
 
-/** Generate "who this is for" based on category */
+function getGithubAvatarUrl(githubUrl: string | null): string | null {
+  if (!githubUrl) return null;
+  try {
+    const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
+    if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=128`;
+  } catch {}
+  return null;
+}
+
+function DetailIcon({ favicon, ghAvatar, name }: { favicon: string | null; ghAvatar: string | null; name: string | null }) {
+  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
+
+  if (!src) {
+    return (
+      <span className="h-14 w-14 rounded-xl bg-secondary text-muted-foreground text-xl font-bold flex items-center justify-center shrink-0 uppercase border border-border/60">
+        {name?.charAt(0) || "?"}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={src} alt="" width={56} height={56}
+      className="rounded-xl shrink-0 border border-border/60 bg-secondary"
+      onError={() => {
+        if (src === favicon && ghAvatar) setSrc(ghAvatar);
+        else setSrc(null);
+      }}
+    />
+  );
+}
+
 function getTargetUsers(tool: Tool, competitor: string | null): string[] {
   const cat = (tool.parent_category_ja || "").toLowerCase();
   const results: string[] = [];
@@ -218,6 +250,7 @@ export default function ToolDetailPage() {
   }
 
   const favicon = getFaviconUrl(tool.url, 64);
+  const ghAvatar = getGithubAvatarUrl(tool.github_url);
   const shareUrl = `https://ossalt.jp/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
@@ -251,17 +284,7 @@ export default function ToolDetailPage() {
         {/* ① Header */}
         <section>
           <div className="flex items-start gap-4 mb-4">
-            {favicon ? (
-              <img
-                src={favicon} alt="" width={56} height={56}
-                className="rounded-xl shrink-0 border border-border/60"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-              />
-            ) : (
-              <span className="h-14 w-14 rounded-xl bg-secondary text-muted-foreground text-xl font-bold flex items-center justify-center shrink-0 uppercase border border-border/60">
-                {tool.name?.charAt(0) || "?"}
-              </span>
-            )}
+            <DetailIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} />
             <div className="min-w-0 flex-1">
               <h1 className="text-2xl md:text-3xl font-black tracking-tight">{tool.name}</h1>
               <div className="flex flex-wrap items-center gap-2 mt-1.5">
