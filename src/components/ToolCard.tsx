@@ -49,8 +49,8 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       style={{ animationDelay: `${Math.min(index * 40, 500)}ms`, animationFillMode: "both" }}
     >
       {/* Header: icon + name + stars */}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-start gap-3 mb-3 min-w-0">
+        <div className="flex-1 min-w-0 flex items-center gap-3">
           {favicon ? (
             <>
               <img
@@ -78,7 +78,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
               {tool.name?.charAt(0) || '?'}
             </span>
           )}
-          <h3 className="font-bold text-base text-foreground leading-tight truncate">
+          <h3 className="font-bold text-base text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>
         </div>
