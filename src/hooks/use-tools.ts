@@ -63,7 +63,8 @@ export function useTools(options?: UseToolsOptions) {
       query = query.range(page * pageSize, (page + 1) * pageSize - 1);
 
       if (options?.category && options.category !== "すべて") {
-        query = query.eq("parent_category_ja", options.category);
+        const dbCategory = CATEGORY_MAP[options.category] || options.category;
+        query = query.eq("parent_category_ja", dbCategory);
       }
 
       if (options?.search) {
