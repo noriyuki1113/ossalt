@@ -69,10 +69,10 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'both' }}>
           <Button
             size="lg"
-            className="w-full sm:w-auto rounded-xl px-8 text-base shadow-lg shadow-primary/20"
+            className="w-full sm:w-auto rounded-xl px-8 text-base shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold"
             onClick={scrollToCatalog}
           >
-            ツールを探す
+            無料でOSSを探す
           </Button>
           <Button
             variant="outline"
@@ -80,9 +80,12 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
             className="w-full sm:w-auto rounded-xl px-8 text-base border-border/60"
             onClick={() => onCategorySelect("すべて")}
           >
-            人気のツールを見る
+            代替ツールを見つける
           </Button>
         </div>
+        <p className="mt-2 text-xs text-muted-foreground/60 animate-fade-in" style={{ animationDelay: '550ms', animationFillMode: 'both' }}>
+          ログイン不要・無料
+        </p>
 
         {/* Popular category chips */}
         <div className="mt-6 flex flex-wrap justify-center gap-2 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
