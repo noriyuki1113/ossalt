@@ -39,7 +39,7 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
           680+ のOSSツールを日本語で検索
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.15] animate-fade-in" style={{ animationDelay: '100ms' }}>
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight leading-[1.15] whitespace-nowrap animate-fade-in" style={{ animationDelay: '100ms' }}>
           <span className="text-gradient">有料SaaS、もういらない。</span>
         </h1>
 
