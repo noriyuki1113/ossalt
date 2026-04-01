@@ -48,7 +48,7 @@ export function UseCaseSection() {
           用途から<span className="text-gradient">探す</span>
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          やりたいことから最適なOSSツールを見つけましょう
+          目的に合ったOSSツールを探す
         </p>
       </div>
 

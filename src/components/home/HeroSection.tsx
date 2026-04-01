@@ -47,7 +47,7 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         <div className="mt-10 max-w-xl mx-auto relative animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="ツール名、代替元、カテゴリで検索…"
+            placeholder="ツール名やカテゴリで検索…"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             className="h-14 pl-12 pr-4 rounded-xl text-base border-border/60 bg-card/80 backdrop-blur-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-muted-foreground/60"

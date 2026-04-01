@@ -54,7 +54,7 @@ export function PopularAlternatives() {
           よく比較される<span className="text-gradient">代替サービス</span>
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          人気の有料SaaSに対するOSS代替ツール
+          人気SaaSに対するOSS代替ツール
         </p>
       </div>
 
