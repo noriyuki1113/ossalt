@@ -94,7 +94,7 @@ export default function Advertise() {
   const [error, setError] = useState("");
 
   const scrollToForm = () => {
-    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
