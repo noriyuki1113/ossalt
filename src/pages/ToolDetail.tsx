@@ -227,6 +227,7 @@ export default function ToolDetailPage() {
   }
 
   const favicon = getFaviconUrl(tool.url, 64);
+  const ghAvatar = getGithubAvatarUrl(tool.github_url);
   const shareUrl = `https://ossalt.jp/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
