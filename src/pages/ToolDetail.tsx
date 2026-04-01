@@ -44,7 +44,29 @@ function getGithubAvatarUrl(githubUrl: string | null): string | null {
   return null;
 }
 
-/** Generate "who this is for" based on category */
+function DetailIcon({ favicon, ghAvatar, name }: { favicon: string | null; ghAvatar: string | null; name: string | null }) {
+  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
+
+  if (!src) {
+    return (
+      <span className="h-14 w-14 rounded-xl bg-secondary text-muted-foreground text-xl font-bold flex items-center justify-center shrink-0 uppercase border border-border/60">
+        {name?.charAt(0) || "?"}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={src} alt="" width={56} height={56}
+      className="rounded-xl shrink-0 border border-border/60 bg-secondary"
+      onError={() => {
+        if (src === favicon && ghAvatar) setSrc(ghAvatar);
+        else setSrc(null);
+      }}
+    />
+  );
+}
+
 function getTargetUsers(tool: Tool, competitor: string | null): string[] {
   const cat = (tool.parent_category_ja || "").toLowerCase();
   const results: string[] = [];
