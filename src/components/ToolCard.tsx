@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, Star, ArrowRight, GitFork, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
