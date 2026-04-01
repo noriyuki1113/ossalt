@@ -45,10 +45,10 @@ export function FAQSection() {
               value={`faq-${i}`}
               className="rounded-xl border border-border/60 bg-card px-6 data-[state=open]:border-primary/20"
             >
-              <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5">
+              <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-5 break-keep text-left">
                 {item.q}
               </AccordionTrigger>
-              <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">
+              <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5 break-keep">
                 {item.a}
               </AccordionContent>
             </AccordionItem>
