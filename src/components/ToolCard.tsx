@@ -63,59 +63,52 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group flex flex-col rounded-xl border border-border/60 bg-card p-6 transition-all card-glow hover:-translate-y-0.5 animate-fade-in"
+      className="group flex flex-col rounded-xl border border-border/60 bg-card p-5 transition-all card-glow hover:-translate-y-0.5 animate-fade-in relative"
       style={{ animationDelay: `${Math.min(index * 40, 500)}ms`, animationFillMode: "both" }}
     >
+      {/* Highlight label */}
+      {highlightLabel && (
+        <span className={`absolute -top-2.5 right-4 text-[10px] font-bold px-2 py-0.5 rounded-full ${highlightLabel.cls}`}>
+          {highlightLabel.text}
+        </span>
+      )}
+
+      {/* Alternative badge */}
+      {competitor && competitor !== "有料SaaS" && (
+        <div className="mb-2">
+          <span className="inline-flex items-center text-[11px] font-medium text-accent bg-accent/10 border border-accent/15 rounded-md px-2 py-0.5">
+            {competitor} の代替
+          </span>
+        </div>
+      )}
+
       {/* Header: icon + name + stars */}
-      <div className="flex items-start gap-3 mb-3 min-w-0">
-        <div className="flex-1 min-w-0 flex items-center gap-3">
+      <div className="flex items-start gap-3 mb-2 min-w-0">
+        <div className="flex-1 min-w-0 flex items-center gap-2.5">
           {favicon ? (
             <>
-              <img
-                src={favicon}
-                alt=""
-                width={24}
-                height={24}
-                className="rounded-md shrink-0"
-                loading="lazy"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  const fallback = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement;
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-              />
-              <span
-                className="h-6 w-6 rounded-md bg-secondary text-muted-foreground text-xs font-bold items-center justify-center shrink-0 uppercase"
-                style={{ display: 'none' }}
-              >
+              <img src={favicon} alt="" width={22} height={22} className="rounded-md shrink-0" loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; const f = (e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if (f) f.style.display = 'flex'; }} />
+              <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold items-center justify-center shrink-0 uppercase" style={{ display: 'none' }}>
                 {tool.name?.charAt(0) || '?'}
               </span>
             </>
           ) : (
-            <span className="h-6 w-6 rounded-md bg-secondary text-muted-foreground text-xs font-bold flex items-center justify-center shrink-0 uppercase">
+            <span className="h-[22px] w-[22px] rounded-md bg-secondary text-muted-foreground text-[10px] font-bold flex items-center justify-center shrink-0 uppercase">
               {tool.name?.charAt(0) || '?'}
             </span>
           )}
-          <h3 className="font-bold text-base text-foreground leading-tight line-clamp-1 break-all">
+          <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>
         </div>
         {tool.stars_num && tool.stars_num > 0 ? (
           <span className="shrink-0 flex items-center gap-1 text-xs text-badge-amber font-medium">
             <Star className="h-3 w-3 fill-current" />
-            {formatCount(tool.stars_num)}
+            {formatCount(tool.stars_num)} stars
           </span>
         ) : null}
       </div>
-
-      {/* Alternative badge */}
-      {competitor && competitor !== "有料SaaS" && (
-        <div className="mb-3">
-          <span className="inline-flex items-center text-xs font-medium text-accent bg-accent/10 border border-accent/15 rounded-md px-2 py-0.5">
-            {competitor} の代替
-          </span>
-        </div>
-      )}
 
       {/* Feature tags */}
       <div className="flex flex-wrap items-center gap-1.5 mb-3">
