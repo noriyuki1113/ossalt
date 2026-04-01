@@ -20,10 +20,6 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSectionProps) {
-  const scrollToCatalog = () => {
-    const el = document.getElementById("catalog-section");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="relative overflow-hidden">
