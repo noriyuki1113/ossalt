@@ -40,13 +40,11 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         </div>
 
         <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.15] animate-fade-in" style={{ animationDelay: '100ms' }}>
-          <span className="text-gradient">Notion・Zapier・ChatGPT</span>
-          <br />
-          <span className="text-foreground">の代替を探せるOSS比較サイト</span>
+          <span className="text-gradient">有料SaaS、もういらない。</span>
         </h1>
 
         <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-md mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          有料SaaSの代わりに使えるOSSを、日本語で分かりやすく紹介
+          OSSで代替できるツールを見つけよう
         </p>
 
         {/* Value Props */}
