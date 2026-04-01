@@ -51,7 +51,7 @@ export function SelfHostSection() {
               to={`/tools/${tool.id}`}
               className="group flex items-center gap-3 rounded-lg border border-border/40 bg-background/50 p-3 hover:border-primary/20 transition-all"
             >
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0 flex-1 overflow-hidden">
                 <p className="font-medium text-sm text-foreground truncate group-hover:text-primary transition-colors">
                   {tool.name}
                 </p>
