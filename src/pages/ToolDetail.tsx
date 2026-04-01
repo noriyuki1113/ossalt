@@ -426,7 +426,7 @@ export default function ToolDetailPage() {
                 <p className="text-sm font-medium flex items-center gap-1.5"><Code2 className="h-3.5 w-3.5" />{tool.language}</p>
               </div>
             )}
-            {tool.license && (
+            {tool.license && tool.license !== "NOASSERTION" && (
               <div>
                 <p className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1">ライセンス</p>
                 <p className="text-sm font-medium flex items-center gap-1.5"><Scale className="h-3.5 w-3.5" />{tool.license}</p>

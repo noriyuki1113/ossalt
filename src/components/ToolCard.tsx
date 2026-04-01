@@ -151,7 +151,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
             {tool.parent_category_ja}
           </Badge>
         )}
-        {tool.license && (
+        {tool.license && tool.license !== "NOASSERTION" && (
           <Badge variant="outline" className="text-[11px] font-normal px-2 py-0 h-5">
             {tool.license}
           </Badge>
