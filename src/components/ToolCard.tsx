@@ -120,25 +120,8 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         ) : null}
       </div>
 
-      {/* Feature tags */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-3">
-        <Badge className="text-[11px] font-normal border px-2 py-0 h-5 bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-          OSS
-        </Badge>
-        {tool.github_url && (
-          <Badge className="text-[11px] font-normal border px-2 py-0 h-5 bg-violet-500/10 text-violet-400 border-violet-500/20">
-            Self-host可
-          </Badge>
-        )}
-        {tool.url && (
-          <Badge className="text-[11px] font-normal border px-2 py-0 h-5 bg-sky-500/10 text-sky-400 border-sky-500/20">
-            公式サイトあり
-          </Badge>
-        )}
-      </div>
-
       {/* Description */}
-      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-4 flex-1 break-words">
+      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1 break-words">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
