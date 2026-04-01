@@ -56,9 +56,19 @@ function getLanguageBadgeClass(lang: string): string {
   return LANG_COLORS[lang] || "bg-muted text-muted-foreground border-border";
 }
 
+function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
+  if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-500/20 text-orange-400 border border-orange-500/30" };
+  if (tool.created_at) {
+    const days = Math.floor((Date.now() - new Date(tool.created_at).getTime()) / 86400000);
+    if (days <= 30) return { text: "🆕 新着", cls: "bg-green-500/20 text-green-400 border border-green-500/30" };
+  }
+  return null;
+}
+
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const favicon = getFaviconUrl(tool.url);
   const competitor = tool.primary_competitor_ja || tool.primary_competitor;
+  const highlightLabel = getHighlightLabel(tool);
 
   return (
     <Link
