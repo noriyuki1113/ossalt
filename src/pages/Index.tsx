@@ -164,9 +164,12 @@ export default function IndexPage() {
         <>
           <PopularAlternatives />
           <FeaturedTools />
+          <NewToolsSection />
           <UseCaseSection />
           <SelfHostSection />
           <FAQSection />
+          <FAQBottomLinks onCategorySelect={handleCategoryChange} />
+          <BottomCTA />
         </>
       )}
     </SiteLayout>

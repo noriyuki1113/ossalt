@@ -69,8 +69,13 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
           ))}
         </div>
 
+        {/* Value Props */}
+        <div className="mt-8 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'both' }}>
+          <ValueProps />
+        </div>
+
         {/* Stats */}
-        <div className="mt-12 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'both' }}>
+        <div className="mt-8 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'both' }}>
           <StatsBar />
         </div>
       </div>
