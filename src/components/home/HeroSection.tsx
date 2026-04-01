@@ -40,8 +40,7 @@ export function HeroSection({ search, onSearchChange, onCategorySelect }: HeroSe
         </h1>
 
         <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          Notion、Slack、Figma…あなたが使っている有料ツールの<br className="hidden md:inline" />
-          オープンソース代替を日本語で探せます
+          日本語で探せる、OSS代替ツールの比較サイト
         </p>
 
         {/* Search */}
