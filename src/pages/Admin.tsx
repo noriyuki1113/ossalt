@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
