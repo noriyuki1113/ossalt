@@ -197,7 +197,7 @@ export default function ToolDetailPage() {
     ? competitor && competitor !== "有料SaaS"
       ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
       : `${tool.name} — OSSアルタナティブ`
-    : "読み込み中…";
+    : "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集";
   const seoDescription = tool
     ? competitor && competitor !== "有料SaaS"
       ? `${tool.name}は${competitor}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
