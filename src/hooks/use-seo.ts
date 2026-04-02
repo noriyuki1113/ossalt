@@ -42,6 +42,15 @@ export function useSeo({ title, description, canonical, ogType = "website", ogIm
     if (description) setMeta("twitter:description", description);
     setMeta("twitter:image", ogImage || DEFAULT_OG_IMAGE);
 
+    // robots noindex
+    if (noindex) {
+      setMeta("robots", "noindex, nofollow");
+    } else {
+      const existingRobots = document.querySelector('meta[name="robots"]');
+      if (existingRobots) existingRobots.remove();
+    }
+
+    // canonical: always use clean pathname without query params
     const canonicalUrl = canonical || `${BASE_URL}${window.location.pathname}`;
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!link) {
