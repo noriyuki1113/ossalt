@@ -39,6 +39,7 @@ const SLUG_MAP: Record<string, string> = {
   pinecone: "Pinecone",
   bitly: "Bitly",
   canny: "Canny",
+  zendesk: "Zendesk",
 };
 
 // Reverse map: competitor name → slug
