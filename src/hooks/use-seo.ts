@@ -14,7 +14,7 @@ const SITE_NAME = "OSSアルタナティブ";
 const BASE_URL = "https://ossalt.jp";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
-export function useSeo({ title, description, canonical, ogType = "website", ogImage, jsonLd }: SeoProps) {
+export function useSeo({ title, description, canonical, ogType = "website", ogImage, noindex = false, jsonLd }: SeoProps) {
   useEffect(() => {
     const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
     document.title = fullTitle;
