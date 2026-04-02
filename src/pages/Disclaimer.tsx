@@ -6,6 +6,7 @@ export default function DisclaimerPage() {
   useSeo({
     title: "免責事項",
     description: "OSSアルタナティブの免責事項です。",
+    canonical: "https://ossalt.jp/disclaimer",
   });
 
   return (

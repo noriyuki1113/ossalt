@@ -8,6 +8,7 @@ export default function AboutPage() {
   useSeo({
     title: "サイトについて",
     description: "OSSアルタナティブは、有料SaaSの代わりに使えるオープンソースツールを日本語で検索・比較できるディレクトリサイトです。",
+    canonical: "https://ossalt.jp/about",
   });
 
   const features = [

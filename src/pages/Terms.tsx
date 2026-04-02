@@ -6,6 +6,7 @@ export default function TermsPage() {
   useSeo({
     title: "利用規約",
     description: "OSSアルタナティブの利用規約です。",
+    canonical: "https://ossalt.jp/terms",
   });
 
   return (
