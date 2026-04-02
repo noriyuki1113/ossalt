@@ -16,21 +16,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "prerender": {
-    "enabled": true,
-    "paths": [
-      "/",
-      "/about",
-      "/ranking",
-      "/news",
-      "/quiz",
-      "/savings",
-      "/advertise",
-      "/contact",
-      "/privacy",
-      "/terms",
-      "/disclaimer"
-    ]
-  }
+  ]
 }
