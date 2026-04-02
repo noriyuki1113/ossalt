@@ -25,6 +25,11 @@ interface RefineResult {
 }
 
 export default function AdminPage() {
+  useSeo({
+    title: "管理画面",
+    noindex: true,
+  });
+
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SyncResult | null>(null);
   const [error, setError] = useState<string | null>(null);

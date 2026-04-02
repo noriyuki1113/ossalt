@@ -83,6 +83,12 @@ const faqs = [
 ];
 
 export default function Advertise() {
+  useSeo({
+    title: "広告掲載・スポンサー",
+    description: "ossalt.jpに広告を掲載して、日本のエンジニアにあなたのOSSプロダクトを届けましょう。",
+    canonical: "https://ossalt.jp/advertise",
+  });
+
   const [formState, setFormState] = useState({
     name: "",
     email: "",

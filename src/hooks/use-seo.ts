@@ -79,5 +79,5 @@ export function useSeo({ title, description, canonical, ogType = "website", ogIm
       document.title = `${SITE_NAME} — 有料SaaSの代わりに使えるオープンソースツール集`;
       if (scriptEl) scriptEl.remove();
     };
-  }, [title, description, canonical, ogType, ogImage, jsonLd]);
+  }, [title, description, canonical, ogType, ogImage, noindex, jsonLd]);
 }
