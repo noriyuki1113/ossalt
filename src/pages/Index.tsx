@@ -37,7 +37,7 @@ export default function IndexPage() {
 
   useSeo({
     title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
-    description: "有料SaaSの代替を、オープンソースで見つける。AIツール・開発ツールなど680件以上のOSSを日本語で比較できます。",
+    description: "Notion・Slack・Figmaなどの有料SaaSの代替となるオープンソースツールを日本語で検索・比較できるサイトです。無料で使えるOSSを簡単に見つけられます。",
     canonical: "https://ossalt.jp/",
   });
 
