@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /search
+Disallow: /api
+Disallow: /*?search=
+Disallow: /*?category=
+
 Sitemap: https://ossalt.jp/sitemap.xml

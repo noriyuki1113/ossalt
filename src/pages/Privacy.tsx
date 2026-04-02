@@ -7,6 +7,7 @@ export default function PrivacyPage() {
   useSeo({
     title: "プライバシーポリシー",
     description: "OSSアルタナティブのプライバシーポリシーです。",
+    canonical: "https://ossalt.jp/privacy",
   });
 
   return (

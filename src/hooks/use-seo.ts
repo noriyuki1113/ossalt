@@ -6,6 +6,7 @@ interface SeoProps {
   canonical?: string;
   ogType?: string;
   ogImage?: string;
+  noindex?: boolean;
   jsonLd?: Record<string, unknown>;
 }
 
@@ -13,7 +14,7 @@ const SITE_NAME = "OSSアルタナティブ";
 const BASE_URL = "https://ossalt.jp";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
-export function useSeo({ title, description, canonical, ogType = "website", ogImage, jsonLd }: SeoProps) {
+export function useSeo({ title, description, canonical, ogType = "website", ogImage, noindex = false, jsonLd }: SeoProps) {
   useEffect(() => {
     const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
     document.title = fullTitle;
@@ -41,6 +42,15 @@ export function useSeo({ title, description, canonical, ogType = "website", ogIm
     if (description) setMeta("twitter:description", description);
     setMeta("twitter:image", ogImage || DEFAULT_OG_IMAGE);
 
+    // robots noindex
+    if (noindex) {
+      setMeta("robots", "noindex, nofollow");
+    } else {
+      const existingRobots = document.querySelector('meta[name="robots"]');
+      if (existingRobots) existingRobots.remove();
+    }
+
+    // canonical: always use clean pathname without query params
     const canonicalUrl = canonical || `${BASE_URL}${window.location.pathname}`;
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!link) {
@@ -69,5 +79,5 @@ export function useSeo({ title, description, canonical, ogType = "website", ogIm
       document.title = `${SITE_NAME} — 有料SaaSの代わりに使えるオープンソースツール集`;
       if (scriptEl) scriptEl.remove();
     };
-  }, [title, description, canonical, ogType, ogImage, jsonLd]);
+  }, [title, description, canonical, ogType, ogImage, noindex, jsonLd]);
 }
