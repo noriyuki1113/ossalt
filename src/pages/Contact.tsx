@@ -30,7 +30,8 @@ const CATEGORIES = ["掲載内容の誤り", "ツールの追加リクエスト"
 export default function ContactPage() {
   useSeo({
     title: "お問い合わせ",
-    description: "OSSアルタナティブへのお問い合わせはこちらから。",
+    description: "OSSアルタナティブへのお問い合わせはこちらから。掲載内容の誤り報告やツール追加リクエストを受け付けています。",
+    canonical: "https://ossalt.jp/contact",
   });
 
   const [form, setForm] = useState({ name: "", email: "", category: "その他", message: "" });

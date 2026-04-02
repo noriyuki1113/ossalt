@@ -76,7 +76,8 @@ export function useSeo({ title, description, canonical, ogType = "website", ogIm
     }
 
     return () => {
-      document.title = `${SITE_NAME} — 有料SaaSの代わりに使えるオープンソースツール集`;
+      // Don't reset title on unmount — let the next page set its own title
+      // This prevents brief "default title" flashes during navigation
       if (scriptEl) scriptEl.remove();
     };
   }, [title, description, canonical, ogType, ogImage, noindex, jsonLd]);
