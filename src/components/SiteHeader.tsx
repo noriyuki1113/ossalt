@@ -28,7 +28,7 @@ export function SiteHeader() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img src="/logo.png" alt="OSSアルタナティブ" className="h-7 w-7 rounded-lg" width={28} height={28} />
-          <span className="font-bold text-base tracking-tight text-foreground hidden sm:inline">
+          <span className="font-semibold text-sm sm:text-base tracking-tight text-foreground">
             OSSアルタナティブ
           </span>
         </Link>

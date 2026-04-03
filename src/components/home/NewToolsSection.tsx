@@ -51,7 +51,8 @@ function NewToolCard({ tool }: { tool: Tool }) {
       </span>
 
       <div className="flex items-center gap-2 mb-1">
-        <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-1">
+        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} />
+        <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-1 flex-1 min-w-0">
           {tool.name}
         </h3>
         <StarCount count={tool.stars_num} size="sm" />
