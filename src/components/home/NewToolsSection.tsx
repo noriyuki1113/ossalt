@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { ToolIcon } from "@/components/ToolIcon";
 import { formatRelativeDate } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
 
