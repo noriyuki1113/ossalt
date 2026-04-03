@@ -435,7 +435,9 @@ export default function ToolDetailPage() {
                 )}
                 {tool.github_url && (
                   <Button variant="outline" className="w-full gap-2 rounded-lg h-10 border-border" asChild>
-                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                      onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
+                    >
                       <Github className="h-4 w-4" /> GitHubリポジトリ
                     </a>
                   </Button>
