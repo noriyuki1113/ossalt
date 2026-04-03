@@ -644,6 +644,12 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        {/* ── Ad slot before related tools ── */}
+        <div className="border-t border-border/60" />
+        <div className="py-6">
+          <AdSlot slotId="detail-before-related" format="horizontal" />
+        </div>
+
         {/* ── 9. Related tools ── */}
         {relatedTools && relatedTools.length > 0 && (
           <>
