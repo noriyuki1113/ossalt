@@ -15,6 +15,7 @@ import { NewToolsSection } from "@/components/home/NewToolsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { BottomCTA } from "@/components/home/BottomCTA";
 import { StatsBar } from "@/components/StatsBar";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
