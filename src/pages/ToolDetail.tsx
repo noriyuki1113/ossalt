@@ -31,47 +31,51 @@ function getTargetUsers(tool: Tool, competitor: string | null): { text: string; 
   const results: { text: string; icon: typeof Users }[] = [];
 
   if (competitor && competitor !== "有料SaaS") {
-    results.push({ text: `${competitor}のコストや制約に不満がある`, icon: Zap });
+    results.push({ text: `${competitor}のコストや制約に不満がある方`, icon: Zap });
   } else {
-    results.push({ text: "有料SaaSのコストを削減したい", icon: Zap });
+    results.push({ text: "有料SaaSのコストを削減したい方", icon: Zap });
   }
 
   if (cat.includes("ai")) {
-    results.push({ text: "AIツールを自社サーバーで運用したい", icon: Server });
-    results.push({ text: "プライベートデータを外部に出したくない", icon: Shield });
+    results.push({ text: "AIツールを自社サーバーで運用したい方", icon: Server });
+    results.push({ text: "プライベートデータを外部に出したくない方", icon: Shield });
   } else if (cat.includes("開発")) {
-    results.push({ text: "開発環境を自由にカスタマイズしたい", icon: Settings });
-    results.push({ text: "チーム開発の効率を上げたい", icon: Users });
+    results.push({ text: "開発環境を自由にカスタマイズしたい方", icon: Settings });
+    results.push({ text: "チーム開発の効率を上げたい方", icon: Users });
   } else if (cat.includes("インフラ")) {
-    results.push({ text: "インフラを自社で管理・運用したい", icon: HardDrive });
-    results.push({ text: "特定ベンダーに依存したくない", icon: Shield });
+    results.push({ text: "インフラを自社で管理・運用したい方", icon: HardDrive });
+    results.push({ text: "特定ベンダーに依存したくない方", icon: Shield });
   } else if (cat.includes("ビジネス") || cat.includes("生産性")) {
-    results.push({ text: "チームの生産性ツールを内製化したい", icon: Users });
-    results.push({ text: "ワークフローを自由にカスタマイズしたい", icon: Settings });
+    results.push({ text: "チームの生産性ツールを内製化したい方", icon: Users });
+    results.push({ text: "ワークフローを自由にカスタマイズしたい方", icon: Settings });
   } else if (cat.includes("データ")) {
-    results.push({ text: "データを自社で完全管理したい", icon: HardDrive });
-    results.push({ text: "ダッシュボードを自由に構築したい", icon: Settings });
+    results.push({ text: "データを自社で完全管理したい方", icon: HardDrive });
+    results.push({ text: "ダッシュボードを自由に構築したい方", icon: Settings });
   } else if (cat.includes("セキュリティ")) {
-    results.push({ text: "セキュリティを自社管理したい", icon: Shield });
-    results.push({ text: "コンプライアンス対応が必要", icon: CheckCircle2 });
+    results.push({ text: "セキュリティを自社管理したい方", icon: Shield });
+    results.push({ text: "コンプライアンス対応が必要な方", icon: CheckCircle2 });
   } else if (cat.includes("コミュニティ")) {
-    results.push({ text: "社内コミュニケーション基盤を自前で持ちたい", icon: MessageSquare });
-    results.push({ text: "データの外部共有を最小限にしたい", icon: Shield });
+    results.push({ text: "社内コミュニケーション基盤を自前で持ちたい方", icon: MessageSquare });
+    results.push({ text: "データの外部共有を最小限にしたい方", icon: Shield });
   } else {
-    results.push({ text: "自分のサーバーでツールを運用したい", icon: Server });
-    results.push({ text: "ツールを自由にカスタマイズしたい", icon: Settings });
+    results.push({ text: "自分のサーバーでツールを運用したい方", icon: Server });
+    results.push({ text: "ツールを自由にカスタマイズしたい方", icon: Settings });
   }
 
   return results.slice(0, 3);
 }
 
-function getNotGoodFor(tool: Tool): string[] {
-  const results: string[] = [];
-  results.push("サーバー運用の知識がない方には導入ハードルが高い場合があります");
-  if ((tool.stars_num || 0) < 5000) {
-    results.push("コミュニティが小さく、日本語情報が少ない場合があります");
+function getNotGoodFor(tool: Tool): { text: string; icon: typeof XCircle }[] {
+  const stars = tool.stars_num || 0;
+  const results: { text: string; icon: typeof XCircle }[] = [];
+  results.push({ text: "サーバー運用の知識がない方には導入ハードルが高い場合があります", icon: XCircle });
+  if (stars < 5000) {
+    results.push({ text: "コミュニティが小さく、日本語情報が少ない場合があります", icon: XCircle });
   }
-  return results.slice(0, 2);
+  if (stars < 1000) {
+    results.push({ text: "開発が停滞するリスクがあります。GitHubの更新頻度を確認してください", icon: XCircle });
+  }
+  return results.slice(0, 3);
 }
 
 function getBenefits(tool: Tool): { title: string; desc: string }[] {
@@ -93,6 +97,8 @@ function getBenefits(tool: Tool): { title: string; desc: string }[] {
     benefits.push({ title: "活発なコミュニティ", desc: `${(tool.forks_num || 0) > 1000 ? formatCount(tool.forks_num!) + "以上のフォークと" : ""}多くの開発者が継続的に改善中` });
   }
 
+  benefits.push({ title: "透明性と安全性", desc: "ソースコードが公開されており、セキュリティ監査や独自の修正が可能" });
+
   return benefits;
 }
 
@@ -104,6 +110,7 @@ function getComparisonRows(tool: Tool, competitor: string): [string, string, str
     ["導入難易度", "サーバー構築が必要", "アカウント登録のみ", false],
     ["運用責任", "自社で保守・更新", "ベンダーが対応", false],
     ["セルフホスト", "対応", "非対応", true],
+    ["ベンダーロックイン", "なし", "あり", true],
   ];
 }
 
@@ -111,21 +118,34 @@ function getDifficultyInfo(tool: Tool) {
   const stars = tool.stars_num || 0;
   const hasForks = (tool.forks_num || 0) > 500;
   
-  let level: "easy" | "medium" | "hard" = "medium";
-  let label = "中程度";
-  let desc = "Docker等の基本的なインフラ知識があれば導入可能";
+  let setupLevel: "easy" | "medium" | "hard" = "medium";
+  let setupLabel = "中程度";
+  let setupDesc = "Docker等の基本的なインフラ知識があれば導入可能";
   
+  let selfHostLevel: "easy" | "medium" | "hard" = "medium";
+  let selfHostLabel = "中程度";
+  let selfHostDesc = "サーバーの用意とDockerの基本操作が必要";
+
   if (stars > 50000 && hasForks) {
-    level = "easy";
-    label = "比較的かんたん";
-    desc = "公式ドキュメントが充実しており、Docker Composeで手軽に始められます";
+    setupLevel = "easy";
+    setupLabel = "比較的かんたん";
+    setupDesc = "公式ドキュメントが充実しており、Docker Composeで手軽に始められます";
+    selfHostLevel = "easy";
+    selfHostLabel = "比較的かんたん";
+    selfHostDesc = "ワンクリックデプロイや公式Helmチャートが用意されている可能性が高い";
+  } else if (stars > 10000) {
+    setupDesc = "公式ドキュメントに沿って進めれば、30分〜1時間程度で導入可能";
+    selfHostDesc = "Docker Composeでの運用が一般的。バックアップ設計は自前で必要";
   } else if (stars < 3000) {
-    level = "hard";
-    label = "やや高め";
-    desc = "ドキュメントや日本語情報が限られるため、技術力が求められます";
+    setupLevel = "hard";
+    setupLabel = "やや高め";
+    setupDesc = "ドキュメントや日本語情報が限られるため、技術力が求められます";
+    selfHostLevel = "hard";
+    selfHostLabel = "やや高め";
+    selfHostDesc = "手動でのビルド・設定が必要な場合があり、運用経験が求められます";
   }
 
-  return { level, label, desc };
+  return { setupLevel, setupLabel, setupDesc, selfHostLevel, selfHostLabel, selfHostDesc };
 }
 
 /* ── Related card (reuses shared components) ── */
