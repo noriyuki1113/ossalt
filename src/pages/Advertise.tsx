@@ -77,6 +77,22 @@ export default function Advertise() {
     });
     setSubmitting(false);
     if (dbError) { setError("送信に失敗しました。もう一度お試しください。"); return; }
+
+    // Send email notification (fire-and-forget, DB save already succeeded)
+    supabase.functions.invoke("send-contact-email", {
+      body: {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        message: form.message.trim() || `広告掲載の相談: ${form.product_name.trim()}`,
+        inquiry_type: "advertise",
+        product_name: form.product_name.trim(),
+        plan: form.plan || "undecided",
+      },
+    }).then(({ data, error: fnErr }) => {
+      if (fnErr) console.error("Advertise email failed:", fnErr);
+      else console.log("Advertise email result:", data);
+    });
+
     setSubmitted(true);
   };
 
