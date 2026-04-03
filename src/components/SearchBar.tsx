@@ -21,7 +21,7 @@ export function SearchBar({
 
   return (
     <div className="relative flex items-center rounded-xl border border-border bg-card shadow-sm focus-within:shadow-md focus-within:border-primary/40 transition-all duration-200 mx-1 md:mx-0">
-      <Search className={`absolute ${isHero ? "left-5" : "left-4"} h-5 w-5 text-muted-foreground/50`} />
+      <Search className={`absolute ${isHero ? "left-4 md:left-5" : "left-3.5 md:left-4"} h-4 w-4 md:h-5 md:w-5 text-muted-foreground/50`} />
       <input
         type="text"
         placeholder={placeholder}
