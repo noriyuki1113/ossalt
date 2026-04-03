@@ -330,11 +330,14 @@ export default function Advertise() {
       <section className="py-14 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">相性の良い掲載主</h2>
-          <div className="space-y-3 max-w-lg mx-auto">
-            {GOOD_FIT.map((text) => (
-              <div key={text} className="flex items-center gap-3">
-                <Check className="h-4 w-4 text-primary shrink-0" />
-                <p className="text-sm text-foreground">{text}</p>
+          <div className="space-y-4 max-w-lg mx-auto">
+            {GOOD_FIT.map((item) => (
+              <div key={item.text} className="flex items-start gap-3">
+                <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">{item.text}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{item.example}</p>
+                </div>
               </div>
             ))}
           </div>
