@@ -20,6 +20,7 @@ import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
+import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
@@ -331,7 +332,7 @@ export default function ToolDetailPage() {
           {tool.parent_category_ja && (
             <>
               <Link
-                to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}
+                to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
                 {tool.parent_category_ja}
@@ -472,87 +473,113 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 4. Who it's for ── */}
-        <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">こんな人におすすめ</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {targetUsers.map((item, i) => (
-              <div key={i} className="card-unified p-4 flex items-start gap-3">
-                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                  <item.icon className="h-4 w-4 text-primary" />
+        {/* ── 4. Quick Decision Summary ── */}
+        <section className="py-8">
+          <h2 className="text-lg font-bold text-foreground mb-4">導入判断サマリー</h2>
+          <div className="card-unified p-4 sm:p-5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div>
+                <p className="text-[10px] text-muted-foreground mb-1.5">導入難易度</p>
+                <div className="flex items-center gap-2">
+                  <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                    difficulty.setupLevel === "easy" ? "bg-emerald-500" :
+                    difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+                  }`} />
+                  <p className="text-xs font-semibold text-foreground">{difficulty.setupLabel}</p>
                 </div>
-                <p className="text-sm text-foreground leading-relaxed">{item.text}</p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── 4b. Quick Decision Summary ── */}
-        <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">導入判断サマリー</h2>
-          <div className="card-unified p-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className={`h-3 w-3 rounded-full mx-auto mb-2 ${
-                difficulty.setupLevel === "easy" ? "bg-emerald-500" :
-                difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-              }`} />
-              <p className="text-[10px] text-muted-foreground mb-0.5">導入難易度</p>
-              <p className="text-xs font-semibold text-foreground">{difficulty.setupLabel}</p>
+              <div>
+                <p className="text-[10px] text-muted-foreground mb-1.5">セルフホスト</p>
+                <div className="flex items-center gap-2">
+                  <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                    difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
+                    difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+                  }`} />
+                  <p className="text-xs font-semibold text-foreground">{difficulty.selfHostLabel}</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] text-muted-foreground mb-1.5">対象ユーザー</p>
+                <p className="text-xs font-semibold text-foreground">
+                  {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] text-muted-foreground mb-1.5">チーム規模</p>
+                <p className="text-xs font-semibold text-foreground">
+                  {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
+                </p>
+              </div>
             </div>
-            <div className="text-center">
-              <div className={`h-3 w-3 rounded-full mx-auto mb-2 ${
-                difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
-                difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-              }`} />
-              <p className="text-[10px] text-muted-foreground mb-0.5">セルフホスト</p>
-              <p className="text-xs font-semibold text-foreground">{difficulty.selfHostLabel}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-[10px] text-muted-foreground mb-0.5 mt-[14px]">対象ユーザー</p>
-              <p className="text-xs font-semibold text-foreground">
-                {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
-              </p>
-            </div>
-            <div className="text-center">
-              <p className="text-[10px] text-muted-foreground mb-0.5 mt-[14px]">チーム規模</p>
-              <p className="text-xs font-semibold text-foreground">
-                {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
-              </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-border/40">
+              <div>
+                <p className="text-[11px] font-medium text-foreground mb-1">導入について</p>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.setupDesc}</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
+              </div>
             </div>
           </div>
         </section>
 
         <div className="border-t border-border/60" />
 
-        {/* ── 5. Benefits ── */}
-        <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">主なメリット</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {benefits.map((b, i) => (
-              <div key={i} className="card-unified p-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                  <p className="font-semibold text-sm text-foreground">{b.title}</p>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">{b.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Not good for */}
-          {notGoodFor.length > 0 && (
-            <div className="mt-5 card-unified p-5 bg-muted/30">
-              <p className="text-xs font-semibold text-foreground mb-3">⚠️ 注意点</p>
+        {/* ── 5. Who it's for + Not good for ── */}
+        <section className="py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-primary" />
+                こんな人におすすめ
+              </h2>
               <div className="space-y-2.5">
-                {notGoodFor.map((item, i) => (
+                {targetUsers.map((item, i) => (
                   <div key={i} className="flex items-start gap-2.5">
-                    <item.icon className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
-                    <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
+                    <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <item.icon className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <p className="text-sm text-foreground leading-relaxed pt-1">{item.text}</p>
                   </div>
                 ))}
               </div>
             </div>
-          )}
+            <div>
+              <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+                <XCircle className="h-4 w-4 text-muted-foreground" />
+                注意すべきケース
+              </h2>
+              <div className="space-y-2.5">
+                {notGoodFor.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <div className="h-7 w-7 rounded-md bg-muted flex items-center justify-center shrink-0 mt-0.5">
+                      <item.icon className="h-3.5 w-3.5 text-muted-foreground" />
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed pt-1">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="border-t border-border/60" />
+
+        {/* ── 6. Benefits ── */}
+        <section className="py-8">
+          <h2 className="text-lg font-bold text-foreground mb-4">主なメリット</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {benefits.map((b, i) => (
+              <div key={i} className="card-unified p-4">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" />
+                  <p className="font-semibold text-sm text-foreground">{b.title}</p>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed pl-[22px]">{b.desc}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* ── 6. Comparison table ── */}
@@ -609,33 +636,10 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 7. Difficulty / Deployment ── */}
-        <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">導入・運用について</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="card-unified p-5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className={`h-3 w-3 rounded-full ${
-                  difficulty.setupLevel === "easy" ? "bg-emerald-500" :
-                  difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                }`} />
-                <span className="font-semibold text-sm text-foreground">導入難易度: {difficulty.setupLabel}</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.setupDesc}</p>
-            </div>
-            <div className="card-unified p-5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className={`h-3 w-3 rounded-full ${
-                  difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
-                  difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                }`} />
-                <span className="font-semibold text-sm text-foreground">セルフホスト: {difficulty.selfHostLabel}</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+        {/* ── 7. Deployment details (compact, no duplication) ── */}
+        <section className="py-8">
+          <h2 className="text-lg font-bold text-foreground mb-4">導入環境</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="card-unified p-3 text-center">
               <p className="text-[10px] text-muted-foreground mb-1">Docker対応</p>
               <p className="text-xs font-medium text-foreground">
@@ -803,7 +807,7 @@ export default function ToolDetailPage() {
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
+              <Link to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
                 {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
