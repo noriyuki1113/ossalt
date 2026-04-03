@@ -67,10 +67,10 @@ export function PopularAlternatives() {
   if (!groups || groups.length === 0) return null;
 
   return (
-    <section id="popular-alternatives" className="container py-16 md:py-20">
+    <section id="popular-alternatives" className="container py-12 md:py-20 px-4 md:px-8">
       <SectionHeader title="人気の乗り換え候補" />
 
-      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide max-w-6xl mx-auto">
+      <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 scrollbar-hide max-w-6xl mx-auto snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0">
         {groups.map((g) => {
           const meta = SAAS_META[g.competitor];
           return (
