@@ -12,8 +12,8 @@ const USE_CASES = [
 
 export function UseCaseSection() {
   return (
-    <section id="use-cases" className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
+    <section id="use-cases" className="container py-12 md:py-20">
+      <h2 className="section-title text-center mb-8 md:mb-10">
         用途から探す
       </h2>
 
