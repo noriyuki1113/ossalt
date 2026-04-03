@@ -12,8 +12,8 @@ interface CTASectionProps {
 
 export function CTASection({ title, subtitle, note, buttonText, buttonTo }: CTASectionProps) {
   return (
-    <section className="container py-16 md:py-20">
-      <div className="card-unified p-8 md:p-14 text-center">
+    <section className="container py-12 md:py-20 px-4">
+      <div className="card-unified p-6 md:p-14 text-center">
         <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-3">
           {title}
         </h2>

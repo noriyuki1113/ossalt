@@ -77,7 +77,7 @@ export function PopularAlternatives() {
             <Link
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
-              className="group card-unified-hover p-5 min-w-[220px] flex-1 flex flex-col"
+              className="group card-unified-hover p-4 md:p-5 min-w-[200px] md:min-w-[220px] flex-1 flex flex-col snap-start"
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">{meta?.icon ?? "🔄"}</span>

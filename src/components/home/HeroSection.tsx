@@ -27,7 +27,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
           データ主権とコスト削減の両立へ、最適な選択肢を見つけよう。
         </p>
 
-        <div className="mt-10 md:mt-12 max-w-[640px] mx-auto">
+        <div className="mt-8 md:mt-12 max-w-[640px] mx-auto">
           <SearchBar
             value={search}
             onChange={onSearchChange}

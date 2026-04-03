@@ -31,7 +31,7 @@ export function SearchBar({
       />
       <Button
         size="sm"
-        className={`absolute right-2 rounded-lg font-semibold ${isHero ? "px-6 md:px-8 h-10 md:h-11 text-sm" : "px-5 h-9 text-xs"}`}
+        className={`absolute right-1.5 md:right-2 rounded-lg font-semibold ${isHero ? "px-4 md:px-8 h-9 md:h-11 text-xs md:text-sm" : "px-4 md:px-5 h-8 md:h-9 text-xs"}`}
         onClick={onSubmit}
       >
         検索

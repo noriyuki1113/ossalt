@@ -23,10 +23,10 @@ export function NewToolsSection() {
   });
 
   return (
-    <section className="container py-16 md:py-20">
+    <section className="container py-12 md:py-20">
       <SectionHeader title="最近追加されたツール" subtitle="新しく掲載されたOSSツール" />
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <NewToolSkeleton key={i} />)
           : tools?.map((tool) => <NewToolCard key={tool.id} tool={tool} />)

@@ -16,7 +16,7 @@ const FAQ_ITEMS = [
 
 export function FAQSection() {
   return (
-    <section className="container py-16 md:py-20">
+    <section className="container py-12 md:py-20">
       <div className="max-w-2xl mx-auto">
         <SectionHeader title="よくある質問" />
 

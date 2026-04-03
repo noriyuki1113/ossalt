@@ -16,10 +16,10 @@ export function StatsBar() {
     <section className="container py-10 md:py-20">
       <div className="grid grid-cols-3 gap-2.5 md:gap-4 max-w-2xl mx-auto">
         {stats.map(({ icon: Icon, value, suffix, label, formatter }) => (
-          <div key={label} className="text-center card-unified p-5">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <Icon className="h-4 w-4 text-primary" />
-              <span className="font-bold text-xl md:text-2xl text-foreground tabular-nums">
+          <div key={label} className="text-center card-unified p-3 md:p-5">
+            <div className="flex items-center justify-center gap-1.5 md:gap-2 mb-1">
+              <Icon className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+              <span className="font-bold text-lg md:text-2xl text-foreground tabular-nums">
                 {value != null ? (
                   formatter ? <CountUp end={value} formatter={formatter} /> : <><CountUp end={value} />{suffix}</>
                 ) : "—"}
