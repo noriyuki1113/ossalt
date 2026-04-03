@@ -27,7 +27,7 @@ export function SearchBar({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`${isHero ? "h-14 md:h-16 pl-14 pr-[7rem] text-sm md:text-base" : "h-12 pl-12 pr-[5.5rem] text-sm"} w-full bg-transparent text-foreground placeholder:text-muted-foreground/40 focus:outline-none rounded-xl`}
+        className={`${isHero ? "h-12 md:h-16 pl-12 md:pl-14 pr-[5.5rem] md:pr-[7rem] text-sm md:text-base" : "h-11 md:h-12 pl-11 md:pl-12 pr-[5rem] md:pr-[5.5rem] text-sm"} w-full bg-transparent text-foreground placeholder:text-muted-foreground/40 focus:outline-none rounded-xl`}
       />
       <Button
         size="sm"
