@@ -178,9 +178,12 @@ export default function Advertise() {
             <br className="hidden sm:block" />
             自然に届けませんか。
           </h1>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 max-w-2xl mx-auto">
             OSSアルタナティブは、有料SaaSの代替となるオープンソースツールを日本語で探せる比較サイトです。
             導入を検討している開発者、技術責任者、スタートアップに向けて、自然な形で認知を広げられます。
+          </p>
+          <p className="text-xs text-muted-foreground/80 mb-8 max-w-xl mx-auto">
+            すでに680+のOSSツールを掲載。比較検討中の高意図ユーザーが訪れるため、通常の広告よりも高い関心度でリーチできます。
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="rounded-xl px-8 text-sm font-semibold" onClick={scrollToForm}>
