@@ -25,6 +25,66 @@ interface RefineResult {
   timestamp: string;
 }
 
+function AdminMetrics() {
+  const { data: toolCount } = useQuery({
+    queryKey: ["admin-tool-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("tools").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: subscriberCount } = useQuery({
+    queryKey: ["admin-subscriber-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("newsletter_subscribers" as any).select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: listingCount } = useQuery({
+    queryKey: ["admin-listing-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("listing_requests").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: leadCount } = useQuery({
+    queryKey: ["admin-lead-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("monetization_leads").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+
+  const metrics = [
+    { label: "掲載ツール数", value: toolCount ?? "—" },
+    { label: "ニュースレター登録", value: subscriberCount ?? "—" },
+    { label: "掲載申請", value: listingCount ?? "—" },
+    { label: "収益化リード", value: leadCount ?? "—" },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5" />
+          サイト概要
+        </CardTitle>
+        <CardDescription>主要指標の現在値</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {metrics.map((m) => (
+            <div key={m.label} className="text-center p-3 rounded-lg bg-secondary/50">
+              <div className="text-2xl font-bold text-foreground">{m.value}</div>
+              <div className="text-xs text-muted-foreground mt-1">{m.label}</div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function AdminPage() {
   useSeo({
     title: "管理画面",
