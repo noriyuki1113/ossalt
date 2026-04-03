@@ -10,11 +10,11 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { FeaturedTools } from "@/components/home/FeaturedTools";
 import { PopularAlternatives } from "@/components/home/PopularAlternatives";
 import { UseCaseSection } from "@/components/home/UseCaseSection";
-import { SelfHostSection } from "@/components/home/SelfHostSection";
+import { WhyOSSSection } from "@/components/home/WhyOSSSection";
 import { NewToolsSection } from "@/components/home/NewToolsSection";
 import { FAQSection } from "@/components/home/FAQSection";
-import { FAQBottomLinks } from "@/components/home/FAQBottomLinks";
 import { BottomCTA } from "@/components/home/BottomCTA";
+import { StatsBar } from "@/components/StatsBar";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
@@ -32,7 +32,6 @@ export default function IndexPage() {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
   const prevSearchRef = useRef(search);
 
-  // Show full catalog when search or category is active
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
 
   useSeo({
@@ -100,7 +99,7 @@ export default function IndexPage() {
       />
 
       {/* Category Filter - Sticky */}
-      <section className="sticky top-16 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50 py-3">
+      <section className="sticky top-14 z-40 bg-background/80 backdrop-blur-xl border-b border-border py-2.5">
         <div className="container">
           <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
         </div>
@@ -110,7 +109,7 @@ export default function IndexPage() {
         /* Full catalog / search results */
         <section className="container pb-16 pt-8">
           {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {Array.from({ length: 12 }).map((_, i) => (
                 <ToolCardSkeleton key={i} />
               ))}
@@ -122,7 +121,7 @@ export default function IndexPage() {
                   {data?.totalCount ?? 0} 件のツール
                 </p>
                 <Select value={sort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border/60">
+                  <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border">
                     <ArrowUpDown className="h-3.5 w-3.5" />
                     <SelectValue />
                   </SelectTrigger>
@@ -134,7 +133,7 @@ export default function IndexPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {allTools.map((tool, i) => (
                   <ToolCard key={tool.id} tool={tool} index={i} />
                 ))}
@@ -143,7 +142,7 @@ export default function IndexPage() {
                 <div className="mt-10 text-center">
                   <Button
                     variant="outline"
-                    className="rounded-xl px-8 border-border/60"
+                    className="rounded-xl px-8 border-border"
                     onClick={() => setPage((p) => p + 1)}
                     disabled={isLoading}
                   >
@@ -162,14 +161,13 @@ export default function IndexPage() {
       ) : (
         /* Homepage sections */
         <>
-          <div id="catalog-section" />
+          <StatsBar />
           <PopularAlternatives />
-          <FeaturedTools />
-          <NewToolsSection />
           <UseCaseSection />
-          <SelfHostSection />
+          <FeaturedTools />
+          <WhyOSSSection />
+          <NewToolsSection />
           <FAQSection />
-          <FAQBottomLinks onCategorySelect={handleCategoryChange} />
           <BottomCTA />
         </>
       )}

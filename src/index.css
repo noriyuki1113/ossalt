@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 220 20% 14%;
 
     --card: 0 0% 100%;
@@ -18,10 +18,10 @@
     --primary: 173 58% 39%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 20% 96%;
+    --secondary: 210 18% 95%;
     --secondary-foreground: 220 20% 14%;
 
-    --muted: 210 20% 96%;
+    --muted: 210 18% 95%;
     --muted-foreground: 215 14% 46%;
 
     --accent: 210 100% 52%;
@@ -30,8 +30,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
     --ring: 173 58% 39%;
 
     --radius: 0.75rem;
@@ -40,20 +40,19 @@
     --sidebar-foreground: 215 14% 46%;
     --sidebar-primary: 173 58% 39%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent: 210 18% 95%;
     --sidebar-accent-foreground: 220 20% 14%;
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 220 13% 90%;
     --sidebar-ring: 173 58% 39%;
 
-    /* Custom tokens */
     --surface: 210 20% 98%;
     --surface-elevated: 0 0% 100%;
     --hero-gradient: linear-gradient(135deg, hsl(173 58% 39%), hsl(210 100% 52%));
     --card-glow: 173 58% 39%;
-    --badge-green: 160 60% 40%;
+    --badge-green: 160 60% 38%;
     --badge-green-foreground: 0 0% 100%;
     --badge-amber: 38 92% 50%;
-    --badge-amber-foreground: 0 0% 100%;
+    --badge-amber-foreground: 220 20% 14%;
     --text-tertiary: 215 14% 60%;
     --accent-2: 210 100% 52%;
   }
@@ -86,12 +85,12 @@
   }
 
   .card-glow {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .card-glow:hover {
-    border-color: hsl(var(--card-glow) / 0.3);
-    box-shadow: 0 4px 20px -4px hsl(var(--card-glow) / 0.1);
+    border-color: hsl(var(--card-glow) / 0.25);
+    box-shadow: 0 4px 24px -6px hsl(var(--card-glow) / 0.08);
   }
 
   .scrollbar-hide {

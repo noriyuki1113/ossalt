@@ -18,17 +18,17 @@ export function NewToolsSection() {
   });
 
   return (
-    <section className="container py-16">
-      <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-          🆕 最近追加された<span className="text-gradient">ツール</span>
+    <section className="container py-14">
+      <div className="text-center mb-8">
+        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+          最近追加されたツール
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           新しく掲載されたOSSツール
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <ToolCardSkeleton key={i} />)
           : tools?.map((tool, i) => <ToolCard key={tool.id} tool={tool} index={i} />)
