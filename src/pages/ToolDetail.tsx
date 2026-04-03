@@ -211,9 +211,11 @@ export default function ToolDetailPage() {
     enabled: !!tool,
   });
 
-  const competitor = tool?.primary_competitor_ja || tool?.primary_competitor || null;
+  const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
-  const hasCompetitor = competitor && competitor !== "有料SaaS";
+  // Use English name for short display; it's always a clean name like "Notion", "Zapier"
+  const competitorDisplay = competitorEn || competitorJa || null;
+  const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
 
   const seoTitle = tool
     ? hasCompetitor
