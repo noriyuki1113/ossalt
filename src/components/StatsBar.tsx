@@ -18,10 +18,10 @@ export function StatsBar() {
   ];
 
   return (
-    <section className="container py-12">
+    <section className="container py-16 md:py-20">
       <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
         {stats.map(({ icon: Icon, value, suffix, label, formatter }) => (
-          <div key={label} className="text-center rounded-xl border border-border bg-card p-5">
+          <div key={label} className="text-center card-unified p-5">
             <div className="flex items-center justify-center gap-2 mb-1">
               <Icon className="h-4 w-4 text-primary" />
               <span className="font-bold text-xl md:text-2xl text-foreground tabular-nums">
@@ -34,7 +34,7 @@ export function StatsBar() {
           </div>
         ))}
       </div>
-      <p className="text-center text-[11px] text-muted-foreground/60 mt-3">
+      <p className="text-center text-[11px] text-muted-foreground/50 mt-3">
         GitHubデータをもとに集計
       </p>
     </section>

@@ -38,19 +38,15 @@ export function FeaturedTools() {
   return (
     <section className="container py-16 md:py-20">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 text-primary bg-primary/10 rounded-full px-3 py-1 text-xs font-medium mb-4">
+        <div className="section-badge-primary">
           <Trophy className="h-3.5 w-3.5" />
           注目プロジェクト
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
-          注目のOSSプロジェクト
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          GitHubスター数が多く、実績のあるOSS
-        </p>
+        <h2 className="section-title">注目のOSSプロジェクト</h2>
+        <p className="section-subtitle">GitHubスター数が多く、実績のあるOSS</p>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <FeaturedSkeleton key={i} />)
           : tools?.map((tool, i) => <FeaturedCard key={tool.id} tool={tool} rank={i + 1} />)
@@ -67,16 +63,15 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group flex flex-col rounded-xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 relative"
+      className="group card-unified-hover p-5 relative flex flex-col"
     >
-      {/* Rank badge */}
+      {/* Rank */}
       <span className="absolute -top-2.5 left-4 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
         #{rank}
       </span>
 
-      {/* Stars prominently */}
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold text-base text-foreground group-hover:text-primary transition-colors line-clamp-1">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors line-clamp-1">
           {tool.name}
         </h3>
         {tool.stars_num && tool.stars_num > 0 && (
@@ -87,20 +82,17 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
         )}
       </div>
 
-      {/* Alternative badge */}
       {competitor && competitor !== "有料SaaS" && (
-        <span className="inline-flex items-center self-start text-[11px] font-medium text-primary bg-primary/8 border border-primary/15 rounded-md px-2 py-0.5 mb-2">
+        <span className="inline-flex items-center self-start text-[11px] font-medium text-primary bg-primary/10 rounded-md px-2 py-0.5 mb-2">
           {competitor} の代替
         </span>
       )}
 
-      {/* Description */}
-      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-4 flex-1">
+      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
-      {/* Meta tags */}
-      <div className="flex flex-wrap items-center gap-1.5 mb-4">
+      <div className="flex flex-wrap items-center gap-1.5 mb-3">
         {tool.language && langClass && (
           <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 ${langClass}`}>
             {tool.language}
@@ -117,14 +109,8 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
             {formatCount(tool.forks_num)}
           </Badge>
         )}
-        {tool.license && tool.license !== "NOASSERTION" && (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5">
-            {tool.license}
-          </Badge>
-        )}
       </div>
 
-      {/* CTA */}
       <div className="pt-3 border-t border-border/60">
         <span className="inline-flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">
           詳しく見る
@@ -137,15 +123,15 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
 
 function FeaturedSkeleton() {
   return (
-    <div className="rounded-xl border border-border bg-card p-6 animate-pulse">
+    <div className="card-unified p-5 animate-pulse">
       <div className="flex items-center justify-between mb-3">
         <div className="h-5 w-32 bg-secondary rounded" />
         <div className="h-5 w-14 bg-secondary rounded" />
       </div>
       <div className="h-4 w-24 bg-secondary rounded mb-2" />
       <div className="h-4 w-full bg-secondary rounded mb-1" />
-      <div className="h-4 w-3/4 bg-secondary rounded mb-4" />
-      <div className="flex gap-1.5 mb-4">
+      <div className="h-4 w-3/4 bg-secondary rounded mb-3" />
+      <div className="flex gap-1.5 mb-3">
         <div className="h-5 w-16 bg-secondary rounded-md" />
         <div className="h-5 w-20 bg-secondary rounded-md" />
       </div>
