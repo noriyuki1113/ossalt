@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles } from "lucide-react";
+import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3 } from "lucide-react";
 
 interface SyncResult {
   message: string;
@@ -22,6 +23,66 @@ interface RefineResult {
   errors: number;
   updated_samples: string[];
   timestamp: string;
+}
+
+function AdminMetrics() {
+  const { data: toolCount } = useQuery({
+    queryKey: ["admin-tool-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("tools").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: subscriberCount } = useQuery({
+    queryKey: ["admin-subscriber-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("newsletter_subscribers" as any).select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: listingCount } = useQuery({
+    queryKey: ["admin-listing-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("listing_requests").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+  const { data: leadCount } = useQuery({
+    queryKey: ["admin-lead-count"],
+    queryFn: async () => {
+      const { count } = await supabase.from("monetization_leads").select("*", { count: "exact", head: true });
+      return count || 0;
+    },
+  });
+
+  const metrics = [
+    { label: "掲載ツール数", value: toolCount ?? "—" },
+    { label: "ニュースレター登録", value: subscriberCount ?? "—" },
+    { label: "掲載申請", value: listingCount ?? "—" },
+    { label: "収益化リード", value: leadCount ?? "—" },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <BarChart3 className="h-5 w-5" />
+          サイト概要
+        </CardTitle>
+        <CardDescription>主要指標の現在値</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {metrics.map((m) => (
+            <div key={m.label} className="text-center p-3 rounded-lg bg-secondary/50">
+              <div className="text-2xl font-bold text-foreground">{m.value}</div>
+              <div className="text-xs text-muted-foreground mt-1">{m.label}</div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function AdminPage() {
@@ -70,8 +131,10 @@ export default function AdminPage() {
 
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 py-12 space-y-6">
+      <div className="max-w-3xl mx-auto px-4 py-12 space-y-6">
         <h1 className="text-3xl font-bold mb-8">管理画面</h1>
+
+        <AdminMetrics />
 
         <Card>
           <CardHeader>

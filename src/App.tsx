@@ -23,6 +23,7 @@ const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
+const GuidePage = lazy(() => import("./pages/GuidePage"));
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/category/:slug" element={<Index />} />
             <Route path="/tools/:id" element={<ToolDetail />} />
+            <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

@@ -83,11 +83,11 @@ const PLANS = [
 ];
 
 const GOOD_FIT = [
-  "OSSプロジェクト（ホスティング・マネージド版の告知）",
-  "開発者向けSaaS・クラウドサービス",
-  "OSS導入支援・コンサルティング会社",
-  "ホスティング・インフラプロバイダー",
-  "開発者向けツール・サービス",
+  { text: "OSSプロジェクト（ホスティング・マネージド版の告知）", example: "例: Supabase, GitLab, Mattermost" },
+  { text: "開発者向けSaaS・クラウドサービス", example: "例: CI/CDツール, モニタリングサービス" },
+  { text: "OSS導入支援・コンサルティング会社", example: "例: セルフホスト構築支援, 移行コンサル" },
+  { text: "ホスティング・インフラプロバイダー", example: "例: VPS, マネージドDB, CDN" },
+  { text: "開発者向けツール・サービス", example: "例: IDE, API管理, テストツール" },
 ];
 
 const STEPS = [
@@ -178,9 +178,12 @@ export default function Advertise() {
             <br className="hidden sm:block" />
             自然に届けませんか。
           </h1>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4 max-w-2xl mx-auto">
             OSSアルタナティブは、有料SaaSの代替となるオープンソースツールを日本語で探せる比較サイトです。
             導入を検討している開発者、技術責任者、スタートアップに向けて、自然な形で認知を広げられます。
+          </p>
+          <p className="text-xs text-muted-foreground/80 mb-8 max-w-xl mx-auto">
+            すでに680+のOSSツールを掲載。比較検討中の高意図ユーザーが訪れるため、通常の広告よりも高い関心度でリーチできます。
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="rounded-xl px-8 text-sm font-semibold" onClick={scrollToForm}>
@@ -330,11 +333,14 @@ export default function Advertise() {
       <section className="py-14 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">相性の良い掲載主</h2>
-          <div className="space-y-3 max-w-lg mx-auto">
-            {GOOD_FIT.map((text) => (
-              <div key={text} className="flex items-center gap-3">
-                <Check className="h-4 w-4 text-primary shrink-0" />
-                <p className="text-sm text-foreground">{text}</p>
+          <div className="space-y-4 max-w-lg mx-auto">
+            {GOOD_FIT.map((item) => (
+              <div key={item.text} className="flex items-start gap-3">
+                <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">{item.text}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{item.example}</p>
+                </div>
               </div>
             ))}
           </div>

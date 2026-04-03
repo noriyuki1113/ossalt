@@ -4,9 +4,9 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 const SITE_LINKS = [
   { to: "/about", label: "OSSアルタナティブについて" },
   { to: "/ranking", label: "人気ランキング" },
-  { to: "/news", label: "OSSニュース" },
+  { to: "/guides/notion-alternatives", label: "Notion代替ガイド" },
+  { to: "/guides/self-hosting", label: "セルフホストガイド" },
   { to: "/savings", label: "コスト削減シミュレーター" },
-  { to: "/quiz", label: "OSS診断" },
 ];
 
 const ACTION_LINKS = [
