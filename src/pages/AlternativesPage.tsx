@@ -207,6 +207,7 @@ export default function AlternativesPage() {
                       key={tool.id}
                       to={`/tools/${tool.id}`}
                       className="group card-unified p-4 sm:p-5 flex flex-col relative hover:border-primary/30 transition-all"
+                      onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "top_pick" })}
                     >
                       {/* Rank badge */}
                       <span className="absolute -top-2 -left-1 text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
