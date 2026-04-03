@@ -307,6 +307,26 @@ export default function IndexPage() {
               <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
             </div>
           )}
+
+          {/* Related category links for internal linking */}
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mt-12 pt-8 border-t border-border">
+              <h2 className="text-sm font-semibold text-foreground mb-3">他のカテゴリも見る</h2>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(CATEGORY_SLUG_MAP)
+                  .filter(([, label]) => label !== selectedCategory)
+                  .map(([slug, label]) => (
+                    <Link
+                      key={slug}
+                      to={`/category/${slug}`}
+                      className="text-xs px-3 py-1.5 rounded-lg bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          )}
         </section>
       ) : (
         <>
