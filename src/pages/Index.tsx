@@ -130,10 +130,35 @@ export default function IndexPage() {
     ? `https://ossalt.jp/category/${categoryCanonicalSlug}`
     : "https://ossalt.jp/";
 
+  // JSON-LD for category pages
+  const jsonLd = useMemo(() => {
+    if (!categorySeo || selectedCategory === "すべて") return undefined;
+    return {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: categorySeo.title,
+      description: categorySeo.description,
+      url: seoCanonical,
+      isPartOf: {
+        "@type": "WebSite",
+        name: "OSSアルタナティブ",
+        url: "https://ossalt.jp",
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          { "@type": "ListItem", position: 2, name: categorySeo.title, item: seoCanonical },
+        ],
+      },
+    };
+  }, [categorySeo, selectedCategory, seoCanonical]);
+
   useSeo({
     title: seoTitle,
     description: seoDescription,
     canonical: seoCanonical,
+    jsonLd,
   });
 
   const { data, isLoading } = useTools({
