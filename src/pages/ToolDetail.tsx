@@ -486,17 +486,39 @@ export default function ToolDetailPage() {
             ))}
           </div>
 
-          {/* Not good for */}
-          {notGoodFor.length > 0 && (
-            <div className="mt-4 space-y-2">
-              {notGoodFor.map((text, i) => (
-                <div key={i} className="flex items-start gap-2.5 px-1">
-                  <XCircle className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0 mt-0.5" />
-                  <p className="text-xs text-muted-foreground">{text}</p>
-                </div>
-              ))}
+        {/* ── 4b. Quick Decision Summary ── */}
+        <section className="py-10">
+          <h2 className="text-lg font-bold text-foreground mb-5">導入判断サマリー</h2>
+          <div className="card-unified p-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className={`h-3 w-3 rounded-full mx-auto mb-2 ${
+                difficulty.setupLevel === "easy" ? "bg-emerald-500" :
+                difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+              }`} />
+              <p className="text-[10px] text-muted-foreground mb-0.5">導入難易度</p>
+              <p className="text-xs font-semibold text-foreground">{difficulty.setupLabel}</p>
             </div>
-          )}
+            <div className="text-center">
+              <div className={`h-3 w-3 rounded-full mx-auto mb-2 ${
+                difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
+                difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+              }`} />
+              <p className="text-[10px] text-muted-foreground mb-0.5">セルフホスト</p>
+              <p className="text-xs font-semibold text-foreground">{difficulty.selfHostLabel}</p>
+            </div>
+            <div className="text-center">
+              <p className="text-[10px] text-muted-foreground mb-0.5 mt-[14px]">対象ユーザー</p>
+              <p className="text-xs font-semibold text-foreground">
+                {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-[10px] text-muted-foreground mb-0.5 mt-[14px]">チーム規模</p>
+              <p className="text-xs font-semibold text-foreground">
+                {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
+              </p>
+            </div>
+          </div>
         </section>
 
         <div className="border-t border-border/60" />
@@ -504,7 +526,7 @@ export default function ToolDetailPage() {
         {/* ── 5. Benefits ── */}
         <section className="py-10">
           <h2 className="text-lg font-bold text-foreground mb-5">主なメリット</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {benefits.map((b, i) => (
               <div key={i} className="card-unified p-5">
                 <div className="flex items-center gap-2 mb-2">
@@ -515,6 +537,21 @@ export default function ToolDetailPage() {
               </div>
             ))}
           </div>
+
+          {/* Not good for */}
+          {notGoodFor.length > 0 && (
+            <div className="mt-5 card-unified p-5 bg-muted/30">
+              <p className="text-xs font-semibold text-foreground mb-3">⚠️ 注意点</p>
+              <div className="space-y-2.5">
+                {notGoodFor.map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <item.icon className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
+                    <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ── 6. Comparison table ── */}
@@ -525,16 +562,16 @@ export default function ToolDetailPage() {
               <h2 className="text-lg font-bold text-foreground mb-5">
                 {tool.name} vs {competitorDisplay}
               </h2>
-              <div className="card-unified overflow-hidden">
-                <table className="w-full text-sm">
+              <div className="card-unified overflow-hidden overflow-x-auto">
+                <table className="w-full text-sm min-w-[400px]">
                   <thead>
                     <tr className="border-b border-border/60">
-                      <th className="text-left p-4 font-medium text-muted-foreground text-xs w-[30%]">比較項目</th>
-                      <th className="text-left p-4 font-medium text-primary text-xs">
+                      <th className="text-left p-3 md:p-4 font-medium text-muted-foreground text-xs w-[28%]">比較項目</th>
+                      <th className="text-left p-3 md:p-4 font-medium text-primary text-xs">
                         {tool.name}
                         <span className="text-[10px] text-muted-foreground font-normal ml-1">(OSS)</span>
                       </th>
-                      <th className="text-left p-4 font-medium text-muted-foreground text-xs">
+                      <th className="text-left p-3 md:p-4 font-medium text-muted-foreground text-xs">
                         {competitorEn || competitorDisplay}
                         <span className="text-[10px] text-muted-foreground/50 font-normal ml-1">(SaaS)</span>
                       </th>
@@ -543,11 +580,11 @@ export default function ToolDetailPage() {
                   <tbody>
                     {comparisonRows.map(([label, oss, saas, ossWins]) => (
                       <tr key={label} className="border-b border-border/30 last:border-0">
-                        <td className="p-4 text-muted-foreground text-xs">{label}</td>
-                        <td className={`p-4 text-xs font-medium ${ossWins ? "text-foreground" : "text-muted-foreground"}`}>
+                        <td className="p-3 md:p-4 text-muted-foreground text-xs">{label}</td>
+                        <td className={`p-3 md:p-4 text-xs font-medium ${ossWins ? "text-foreground" : "text-muted-foreground"}`}>
                           {oss}
                         </td>
-                        <td className={`p-4 text-xs font-medium ${!ossWins ? "text-foreground" : "text-muted-foreground"}`}>
+                        <td className={`p-3 md:p-4 text-xs font-medium ${!ossWins ? "text-foreground" : "text-muted-foreground"}`}>
                           {saas}
                         </td>
                       </tr>
@@ -573,40 +610,52 @@ export default function ToolDetailPage() {
 
         {/* ── 7. Difficulty / Deployment ── */}
         <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">導入のしやすさ</h2>
-          <div className="card-unified p-5">
-            <div className="flex items-center gap-3 mb-3">
-              <div className={`h-3 w-3 rounded-full ${
-                difficulty.level === "easy" ? "bg-emerald-500" :
-                difficulty.level === "medium" ? "bg-amber-500" : "bg-red-400"
-              }`} />
-              <span className="font-semibold text-sm text-foreground">{difficulty.label}</span>
+          <h2 className="text-lg font-bold text-foreground mb-5">導入・運用について</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="card-unified p-5">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className={`h-3 w-3 rounded-full ${
+                  difficulty.setupLevel === "easy" ? "bg-emerald-500" :
+                  difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+                }`} />
+                <span className="font-semibold text-sm text-foreground">導入難易度: {difficulty.setupLabel}</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.setupDesc}</p>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-4">{difficulty.desc}</p>
+            <div className="card-unified p-5">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className={`h-3 w-3 rounded-full ${
+                  difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
+                  difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
+                }`} />
+                <span className="font-semibold text-sm text-foreground">セルフホスト: {difficulty.selfHostLabel}</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
+            </div>
+          </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-border/60">
-              <div>
-                <p className="text-[10px] text-muted-foreground mb-1">対象ユーザー</p>
-                <p className="text-xs font-medium text-foreground">
-                  {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
-                </p>
-              </div>
-              <div>
-                <p className="text-[10px] text-muted-foreground mb-1">Docker対応</p>
-                <p className="text-xs font-medium text-foreground">
-                  {(tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
-                </p>
-              </div>
-              <div>
-                <p className="text-[10px] text-muted-foreground mb-1">セルフホスト</p>
-                <p className="text-xs font-medium text-foreground">可能</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-muted-foreground mb-1">チーム規模</p>
-                <p className="text-xs font-medium text-foreground">
-                  {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
-                </p>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+            <div className="card-unified p-3 text-center">
+              <p className="text-[10px] text-muted-foreground mb-1">Docker対応</p>
+              <p className="text-xs font-medium text-foreground">
+                {(tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
+              </p>
+            </div>
+            <div className="card-unified p-3 text-center">
+              <p className="text-[10px] text-muted-foreground mb-1">セルフホスト</p>
+              <p className="text-xs font-medium text-foreground">可能</p>
+            </div>
+            <div className="card-unified p-3 text-center">
+              <p className="text-[10px] text-muted-foreground mb-1">対象ユーザー</p>
+              <p className="text-xs font-medium text-foreground">
+                {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
+              </p>
+            </div>
+            <div className="card-unified p-3 text-center">
+              <p className="text-[10px] text-muted-foreground mb-1">チーム規模</p>
+              <p className="text-xs font-medium text-foreground">
+                {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
+              </p>
             </div>
           </div>
         </section>
