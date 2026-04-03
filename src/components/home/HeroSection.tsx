@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { SearchBar } from "@/components/SearchBar";
 
 interface HeroSectionProps {
@@ -5,6 +6,15 @@ interface HeroSectionProps {
   onSearchChange: (value: string) => void;
   onCategorySelect: (category: string) => void;
 }
+
+const QUICK_CHIPS = [
+  { label: "Notion", search: "Notion" },
+  { label: "Slack", search: "Slack" },
+  { label: "Zapier", search: "Zapier" },
+  { label: "Google Analytics", search: "Google Analytics" },
+  { label: "Figma", search: "Figma" },
+  { label: "Jira", search: "Jira" },
+];
 
 export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
   return (
@@ -15,28 +25,40 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         <div className="absolute bottom-0 right-10 w-[250px] h-[250px] bg-primary/[0.02] rounded-full blur-[80px]" />
       </div>
 
-      <div className="container relative pt-14 pb-12 md:pt-28 md:pb-24 text-center px-5">
-        <h1 className="text-[1.65rem] sm:text-[2.75rem] md:text-5xl font-black leading-[1.2] text-foreground">
+      <div className="container relative pt-10 pb-8 md:pt-28 md:pb-24 text-center px-5">
+        <h1 className="text-[1.65rem] sm:text-[2.75rem] md:text-5xl font-black leading-[1.2] text-foreground whitespace-nowrap">
           有料SaaS、もういらない。
         </h1>
 
-        <p className="mt-4 md:mt-6 text-[13px] md:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          680以上の高品質なOSSツールを、日本語で簡単に検索。データ主権とコスト削減の両立へ、最適な選択肢を見つけよう。
+        <p className="mt-3 md:mt-6 text-[13px] md:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
+          680以上の高品質なOSSツールを、日本語で簡単に検索・比較。
         </p>
 
-        <div className="mt-8 md:mt-12 max-w-[640px] mx-auto">
+        <div className="mt-6 md:mt-12 max-w-[640px] mx-auto">
           <SearchBar
             value={search}
             onChange={onSearchChange}
+            placeholder="Notion の代替を探す…"
             size="hero"
             onSubmit={() => {
               const el = document.getElementById("popular-alternatives");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
           />
-          <p className="mt-3 text-xs text-muted-foreground/50">
-            例: Notion、Slack、Jira、Google Analytics など
-          </p>
+
+          {/* Quick chips */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 md:gap-2">
+            <span className="text-[11px] text-muted-foreground/50 mr-0.5">人気:</span>
+            {QUICK_CHIPS.map((chip) => (
+              <button
+                key={chip.label}
+                onClick={() => onSearchChange(chip.search)}
+                className="text-[11px] md:text-xs px-2.5 py-1 rounded-full border border-border bg-card text-muted-foreground hover:text-primary hover:border-primary/30 transition-all"
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
