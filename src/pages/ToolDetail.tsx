@@ -25,6 +25,10 @@ import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 import { PartnerCTA } from "@/components/ads/PartnerCTA";
+import { EditorialInsightCard } from "@/components/EditorialInsightCard";
+import { RelatedGuideCard } from "@/components/RelatedGuideCard";
+import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
