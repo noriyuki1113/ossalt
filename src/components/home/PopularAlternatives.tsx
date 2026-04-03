@@ -3,26 +3,49 @@ import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "@/components/SectionHeader";
+import { useState } from "react";
 
-const SAAS_META: Record<string, { icon: string; shortJa: string }> = {
-  Zapier:             { icon: "⚡", shortJa: "Zapier" },
-  Notion:             { icon: "📝", shortJa: "Notion" },
-  "Google Analytics": { icon: "📊", shortJa: "Google Analytics" },
-  Shopify:            { icon: "🛒", shortJa: "Shopify" },
-  Asana:              { icon: "✅", shortJa: "Asana" },
-  Datadog:            { icon: "🐶", shortJa: "Datadog" },
-  Slack:              { icon: "💬", shortJa: "Slack" },
-  Figma:              { icon: "🎨", shortJa: "Figma" },
-  Zendesk:            { icon: "🎧", shortJa: "Zendesk" },
-  Jira:               { icon: "📋", shortJa: "Jira" },
-  "Google Workspace": { icon: "📧", shortJa: "Google Workspace" },
-  "Auth0":            { icon: "🔐", shortJa: "Auth0" },
-  "Okta":             { icon: "🔑", shortJa: "Okta" },
-  "Bubble":           { icon: "🫧", shortJa: "Bubble" },
-  "Claude Code":      { icon: "🤖", shortJa: "Claude Code" },
+const SAAS_META: Record<string, { domain: string; shortJa: string }> = {
+  Zapier:             { domain: "zapier.com", shortJa: "Zapier" },
+  Notion:             { domain: "notion.so", shortJa: "Notion" },
+  "Google Analytics": { domain: "analytics.google.com", shortJa: "Google Analytics" },
+  Shopify:            { domain: "shopify.com", shortJa: "Shopify" },
+  Asana:              { domain: "asana.com", shortJa: "Asana" },
+  Datadog:            { domain: "datadoghq.com", shortJa: "Datadog" },
+  Slack:              { domain: "slack.com", shortJa: "Slack" },
+  Figma:              { domain: "figma.com", shortJa: "Figma" },
+  Zendesk:            { domain: "zendesk.com", shortJa: "Zendesk" },
+  Jira:               { domain: "atlassian.com", shortJa: "Jira" },
+  "Google Workspace": { domain: "workspace.google.com", shortJa: "Google Workspace" },
+  Auth0:              { domain: "auth0.com", shortJa: "Auth0" },
+  Okta:               { domain: "okta.com", shortJa: "Okta" },
+  Bubble:             { domain: "bubble.io", shortJa: "Bubble" },
+  "Claude Code":      { domain: "anthropic.com", shortJa: "Claude Code" },
 };
 
 const PRIORITY = ["Notion", "Slack", "Google Analytics", "Zapier", "Datadog"];
+
+function SaaSLogo({ domain, name }: { domain?: string; name: string }) {
+  const [failed, setFailed] = useState(false);
+  const src = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : null;
+
+  if (!src || failed) {
+    return (
+      <span className="flex items-center justify-center h-5 w-5 rounded bg-secondary text-[10px] font-bold text-muted-foreground uppercase shrink-0">
+        {name.charAt(0)}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={src} alt="" width={20} height={20}
+      className="h-5 w-5 rounded shrink-0 bg-secondary"
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export function PopularAlternatives() {
   const { data: groups } = useQuery({
@@ -84,16 +107,20 @@ export function PopularAlternatives() {
               to={`/tools/${g.topToolId}`}
               className="group card-unified-hover p-4 md:p-5 min-w-[180px] md:min-w-[210px] flex-1 flex flex-col snap-start"
             >
-              {/* SaaS name */}
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-base">{meta?.icon ?? "🔄"}</span>
-                <span className="font-semibold text-sm text-foreground">{displayName}</span>
+              {/* SaaS logo + name */}
+              <div className="flex items-center gap-2 mb-3">
+                <SaaSLogo domain={meta?.domain} name={displayName} />
+                <span className="font-semibold text-[13px] text-foreground leading-tight">
+                  {displayName}
+                </span>
               </div>
 
-              {/* Arrow + top OSS */}
-              <div className="flex items-center gap-1.5 mb-3">
+              {/* Arrow + top OSS name */}
+              <div className="flex items-center gap-1.5 mb-1">
                 <ArrowRight className="h-3 w-3 text-primary shrink-0" />
-                <span className="text-sm text-primary font-medium truncate">{g.topTool}</span>
+                <span className="text-sm font-medium text-primary truncate">
+                  {g.topTool}
+                </span>
               </div>
 
               {/* Count */}
