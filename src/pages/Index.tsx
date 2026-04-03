@@ -309,9 +309,16 @@ export default function IndexPage() {
             </div>
           )}
 
+          {/* Category sponsor CTA */}
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mt-8">
+              <CategorySponsorCTA category={selectedCategory} />
+            </div>
+          )}
+
           {/* Related category links for internal linking */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
-            <div className="mt-12 pt-8 border-t border-border">
+            <div className="mt-8 pt-8 border-t border-border">
               <h2 className="text-sm font-semibold text-foreground mb-3">他のカテゴリも見る</h2>
               <div className="flex flex-wrap gap-2">
                 {Object.entries(CATEGORY_SLUG_MAP)
