@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Bot, BarChart3, Shield, Code2, MessageSquare, FolderKanban } from "lucide-react";
 
 const USE_CASES = [
-  { icon: Bot, title: "AI・ML", desc: "LLM基盤やMLOpsを自前で構築", examples: "Ollama, LangChain", category: "AI・ML" },
-  { icon: Code2, title: "開発ツール", desc: "エディタからCI/CDまで開発環境を整備", examples: "VS Code, Gitea", category: "開発ツール" },
-  { icon: Shield, title: "セキュリティ", desc: "認証・監視・脆弱性管理を内製化", examples: "Keycloak, Wazuh", category: "セキュリティ" },
-  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク・スプリント管理をチームに最適化", examples: "Plane, Taiga", category: "業務ソフト" },
-  { icon: BarChart3, title: "データ分析", desc: "BIダッシュボードを自社データで運用", examples: "Metabase, Superset", category: "データ・分析" },
-  { icon: MessageSquare, title: "コミュニケーション", desc: "社内チャットやビデオ会議を自社運用", examples: "Rocket.Chat, Jitsi", category: "コミュニティ" },
+  { icon: Bot, title: "AI・ML", desc: "LLM基盤やMLOpsを自前で構築", examples: "Ollama, LangChain", slug: "ai-ml" },
+  { icon: Code2, title: "開発ツール", desc: "エディタからCI/CDまで開発環境を整備", examples: "VS Code, Gitea", slug: "developer-tools" },
+  { icon: Shield, title: "セキュリティ", desc: "認証・監視・脆弱性管理を内製化", examples: "Keycloak, Wazuh", slug: "security" },
+  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク・スプリント管理をチームに最適化", examples: "Plane, Taiga", slug: "business" },
+  { icon: BarChart3, title: "データ分析", desc: "BIダッシュボードを自社データで運用", examples: "Metabase, Superset", slug: "data-analytics" },
+  { icon: MessageSquare, title: "コミュニケーション", desc: "社内チャットやビデオ会議を自社運用", examples: "Rocket.Chat, Jitsi", slug: "community" },
 ];
 
 export function UseCaseSection() {
@@ -21,7 +21,7 @@ export function UseCaseSection() {
         {USE_CASES.map((uc) => (
           <Link
             key={uc.title}
-            to={`/?category=${encodeURIComponent(uc.category)}`}
+            to={`/category/${uc.slug}`}
             className="group card-unified-hover p-4 md:p-5"
           >
             <div className="flex items-center gap-3 mb-2.5">

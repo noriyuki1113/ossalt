@@ -35,6 +35,7 @@ const App = () => (
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/category/:slug" element={<Index />} />
             <Route path="/tools/:id" element={<ToolDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
