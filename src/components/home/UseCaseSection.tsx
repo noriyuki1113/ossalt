@@ -1,28 +1,23 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Bot, BarChart3, Shield, Code2, MessageSquare, FolderKanban, Compass } from "lucide-react";
+import { ArrowRight, Bot, BarChart3, Shield, Code2, MessageSquare, FolderKanban } from "lucide-react";
 
 const USE_CASES = [
   { icon: Bot, title: "AI・ML", desc: "AIアシスタント・MLパイプライン", examples: "LangChain, Ollama", category: "AI・ML" },
   { icon: Code2, title: "開発ツール", desc: "IDE・API開発・CI/CD", examples: "VS Code, Hoppscotch", category: "開発ツール" },
   { icon: Shield, title: "セキュリティ", desc: "SIEM・脆弱性スキャン・認証", examples: "Wazuh, Keycloak", category: "セキュリティ" },
-  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク管理・カンバン・チケット", examples: "Plane, Focalboard", category: "業務ソフト" },
-  { icon: BarChart3, title: "データ分析", desc: "BI・ダッシュボード・ETL", examples: "Metabase, Superset", category: "データ・分析" },
-  { icon: MessageSquare, title: "コミュニケーション", desc: "チャット・ビデオ・フォーラム", examples: "Rocket.Chat, Jitsi", category: "コミュニティ" },
+  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク管理・カンバン", examples: "Plane, Focalboard", category: "業務ソフト" },
+  { icon: BarChart3, title: "データ分析", desc: "BI・ダッシュボード", examples: "Metabase, Superset", category: "データ・分析" },
+  { icon: MessageSquare, title: "コミュニケーション", desc: "チャット・ビデオ通話", examples: "Rocket.Chat, Jitsi", category: "コミュニティ" },
 ];
 
 export function UseCaseSection() {
   return (
     <section id="use-cases" className="container py-16 md:py-20">
-      <div className="text-center mb-10">
-        <div className="section-badge-primary">
-          <Compass className="h-3.5 w-3.5" />
-          カテゴリ
-        </div>
-        <h2 className="section-title">用途から探す</h2>
-        <p className="section-subtitle">やりたいことからOSSツールを見つける</p>
-      </div>
+      <h2 className="section-title text-center mb-10">
+        用途から探す
+      </h2>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
         {USE_CASES.map((uc) => (
           <Link
             key={uc.title}
@@ -39,7 +34,7 @@ export function UseCaseSection() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed mb-2">{uc.desc}</p>
-            <p className="text-[11px] text-muted-foreground/70 mb-3 line-clamp-1">例: {uc.examples}</p>
+            <p className="text-[11px] text-muted-foreground/60 mb-3">例: {uc.examples}</p>
 
             <span className="inline-flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">
               ツールを見る

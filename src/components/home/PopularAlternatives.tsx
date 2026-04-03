@@ -1,22 +1,24 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Repeat2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const SAAS_META: Record<string, { desc: string; icon: string }> = {
-  Zapier:            { desc: "ノーコード自動化ツール",       icon: "⚡" },
-  Notion:            { desc: "オールインワン ワークスペース", icon: "📝" },
-  "Google Analytics":{ desc: "Webアクセス解析",            icon: "📊" },
-  Shopify:           { desc: "ECプラットフォーム",           icon: "🛒" },
-  Asana:             { desc: "プロジェクト管理",             icon: "✅" },
-  Datadog:           { desc: "インフラ監視・モニタリング",     icon: "🐶" },
-  Slack:             { desc: "チームチャット",               icon: "💬" },
-  Figma:             { desc: "UIデザインツール",             icon: "🎨" },
-  Zendesk:           { desc: "カスタマーサポート",            icon: "🎧" },
-  Jira:              { desc: "課題管理・チケット管理",         icon: "📋" },
+/** Map competitor key to display info */
+const SAAS_META: Record<string, { icon: string }> = {
+  Zapier:             { icon: "⚡" },
+  Notion:             { icon: "📝" },
+  "Google Analytics": { icon: "📊" },
+  Shopify:            { icon: "🛒" },
+  Asana:              { icon: "✅" },
+  Datadog:            { icon: "🐶" },
+  Slack:              { icon: "💬" },
+  Figma:              { icon: "🎨" },
+  Zendesk:            { icon: "🎧" },
+  Jira:               { icon: "📋" },
+  "Google Workspace": { icon: "📧" },
 };
 
-const PRIORITY = ["Zapier", "Notion", "Google Analytics", "Shopify", "Asana", "Datadog"];
+const PRIORITY = ["Notion", "Slack", "Google Analytics", "Zapier", "Datadog"];
 
 export function PopularAlternatives() {
   const { data: groups } = useQuery({
@@ -32,7 +34,7 @@ export function PopularAlternatives() {
 
       const map = new Map<string, {
         count: number; topTool: string; topToolId: number;
-        label: string; key: string; secondTool?: string; thirdTool?: string;
+        label: string; key: string; secondTool?: string;
       }>();
 
       for (const t of data || []) {
@@ -46,7 +48,6 @@ export function PopularAlternatives() {
         } else {
           existing.count++;
           if (!existing.secondTool) existing.secondTool = t.name || "";
-          else if (!existing.thirdTool) existing.thirdTool = t.name || "";
         }
       }
 
@@ -59,10 +60,10 @@ export function PopularAlternatives() {
         return b.count - a.count;
       });
 
-      return sorted.slice(0, 6).map((v) => ({
+      return sorted.slice(0, 5).map((v) => ({
         competitor: v.key, competitorJa: v.label, count: v.count,
         topTool: v.topTool, topToolId: v.topToolId,
-        secondTool: v.secondTool, thirdTool: v.thirdTool,
+        secondTool: v.secondTool,
       }));
     },
   });
@@ -71,60 +72,42 @@ export function PopularAlternatives() {
 
   return (
     <section id="popular-alternatives" className="container py-16 md:py-20">
-      <div className="text-center mb-10">
-        <div className="section-badge-primary">
-          <Repeat2 className="h-3.5 w-3.5" />
-          人気の比較
-        </div>
-        <h2 className="section-title">よく比較される代替サービス</h2>
-        <p className="section-subtitle">人気SaaSに対するOSS代替ツール</p>
-      </div>
+      <h2 className="section-title text-center mb-10">
+        人気の乗り換え候補
+      </h2>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+      {/* Horizontal scrollable row matching mockup's "SaaS → OSS" cards */}
+      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide max-w-6xl mx-auto">
         {groups.map((g) => {
           const meta = SAAS_META[g.competitor];
-          const tools = [g.topTool, g.secondTool, g.thirdTool].filter(Boolean);
 
           return (
             <Link
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
-              className="group card-unified-hover p-5"
+              className="group card-unified-hover p-5 min-w-[220px] flex-1 flex flex-col"
             >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-xl leading-none">{meta?.icon ?? "🔄"}</span>
-                  <div>
-                    <h3 className="font-semibold text-[15px] text-foreground leading-tight">
-                      {g.competitorJa}
-                    </h3>
-                    {meta && (
-                      <p className="text-[11px] text-muted-foreground mt-0.5">{meta.desc}</p>
-                    )}
-                  </div>
-                </div>
-                <span className="shrink-0 text-[11px] font-medium text-primary bg-primary/10 rounded-full px-2 py-0.5">
-                  {g.count}件
+              {/* SaaS → OSS */}
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-lg">{meta?.icon ?? "🔄"}</span>
+                <span className="font-semibold text-sm text-foreground">
+                  {g.competitorJa}
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0" />
+                <span className="text-sm text-primary font-medium truncate">
+                  {g.topTool}
                 </span>
               </div>
 
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {tools.slice(0, 3).map((name) => (
-                  <span key={name} className="inline-block text-[11px] bg-secondary text-secondary-foreground rounded-md px-2 py-0.5">
-                    {name}
-                  </span>
-                ))}
-                {g.count > 3 && (
-                  <span className="inline-block text-[11px] text-muted-foreground px-1.5 py-0.5">+{g.count - 3}</span>
-                )}
-              </div>
+              {/* Description */}
+              <p className="text-xs text-muted-foreground mb-4 flex-1">
+                {g.topTool}{g.secondTool ? `、${g.secondTool}` : ""}など{g.count}件のOSS代替
+              </p>
 
-              <div className="mt-4 pt-3 border-t border-border/60">
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">
-                  代替ツールを見る
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
-              </div>
+              {/* CTA */}
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground border border-border rounded-lg px-4 py-2 justify-center group-hover:text-primary group-hover:border-primary/30 transition-all">
+                詳細
+              </span>
             </Link>
           );
         })}

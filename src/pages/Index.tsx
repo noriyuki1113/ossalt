@@ -106,7 +106,6 @@ export default function IndexPage() {
       </section>
 
       {isBrowsing ? (
-        /* Full catalog / search results */
         <section className="container pb-16 pt-8">
           {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -159,13 +158,11 @@ export default function IndexPage() {
           )}
         </section>
       ) : (
-        /* Homepage sections */
         <>
-          <StatsBar />
           <PopularAlternatives />
+          <WhyOSSSection />
           <UseCaseSection />
           <FeaturedTools />
-          <WhyOSSSection />
           <NewToolsSection />
           <FAQSection />
           <BottomCTA />
