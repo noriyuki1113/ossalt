@@ -806,6 +806,11 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        {/* ── Partner CTA ── */}
+        <div className="pb-4">
+          <PartnerCTA toolName={tool.name || undefined} />
+        </div>
+
         {/* ── Consultation CTA ── */}
         <div className="pb-4">
           <ConsultationCTA toolName={tool.name || undefined} />
