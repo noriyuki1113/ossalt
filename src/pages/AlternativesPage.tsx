@@ -367,9 +367,9 @@ export default function AlternativesPage() {
           </section>
         )}
 
-        {/* Advertise CTA */}
+        {/* Alternative Sponsor CTA */}
         <div className="mt-8">
-          <AdvertiseCTA variant="card" />
+          <AlternativeSponsorCTA competitor={competitor} />
         </div>
       </div>
 
