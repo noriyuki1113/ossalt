@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap } from "lucide-react";
+import { track } from "@/lib/track";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
