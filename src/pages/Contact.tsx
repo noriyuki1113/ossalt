@@ -68,15 +68,19 @@ export default function ContactPage() {
       return;
     }
 
-    // Send email notification (fire-and-forget)
+    // Send email notification (fire-and-forget, DB save already succeeded)
     supabase.functions.invoke("send-contact-email", {
       body: {
         name: form.name || null,
         email: form.email,
         category: form.category,
         message: form.message,
+        inquiry_type: "contact",
       },
-    }).catch((err) => console.error("Email notification failed:", err));
+    }).then(({ data, error: fnErr }) => {
+      if (fnErr) console.error("Email notification failed:", fnErr);
+      else console.log("Email notification result:", data);
+    });
 
     setSubmitted(true);
     toast.success("お問い合わせを送信しました。");
