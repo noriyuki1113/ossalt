@@ -159,6 +159,7 @@ export default function IndexPage() {
         </section>
       ) : (
         <>
+          <StatsBar />
           <PopularAlternatives />
           <WhyOSSSection />
           <UseCaseSection />

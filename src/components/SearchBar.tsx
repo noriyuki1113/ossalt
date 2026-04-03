@@ -13,7 +13,7 @@ interface SearchBarProps {
 export function SearchBar({
   value,
   onChange,
-  placeholder = "Notion, Zapier, Google Analytics, 認証, プロジェクト管理",
+  placeholder = "ツール名やカテゴリで検索…",
   onSubmit,
   size = "default",
 }: SearchBarProps) {
