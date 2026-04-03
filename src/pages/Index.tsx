@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { useSearchParams, useParams, useNavigate } from "react-router-dom";
-import { ArrowUpDown } from "lucide-react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
+import { ArrowUpDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -130,10 +130,35 @@ export default function IndexPage() {
     ? `https://ossalt.jp/category/${categoryCanonicalSlug}`
     : "https://ossalt.jp/";
 
+  // JSON-LD for category pages
+  const jsonLd = useMemo(() => {
+    if (!categorySeo || selectedCategory === "すべて") return undefined;
+    return {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: categorySeo.title,
+      description: categorySeo.description,
+      url: seoCanonical,
+      isPartOf: {
+        "@type": "WebSite",
+        name: "OSSアルタナティブ",
+        url: "https://ossalt.jp",
+      },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          { "@type": "ListItem", position: 2, name: categorySeo.title, item: seoCanonical },
+        ],
+      },
+    };
+  }, [categorySeo, selectedCategory, seoCanonical]);
+
   useSeo({
     title: seoTitle,
     description: seoDescription,
     canonical: seoCanonical,
+    jsonLd,
   });
 
   const { data, isLoading } = useTools({
@@ -212,14 +237,23 @@ export default function IndexPage() {
 
       {isBrowsing ? (
         <section className="container pb-16 pt-8">
-          {/* Category page heading for SEO */}
+          {/* Breadcrumb + Category heading for SEO */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
+              {/* Breadcrumb */}
+              <nav aria-label="パンくずリスト" className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
+                <Link to="/" className="hover:text-foreground transition-colors">ホーム</Link>
+                <ChevronRight className="h-3 w-3" />
+                <span className="text-foreground font-medium">
+                  {categorySeo?.title || `${selectedCategory}のOSSツール`}
+                </span>
+              </nav>
+              {/* h1 for category pages — important for SEO */}
+              <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
                 {categorySeo?.title || `${selectedCategory}のOSSツール`}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {categorySeo?.description?.slice(0, 80) || ""}
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+                {categorySeo?.description || ""}
               </p>
             </div>
           )}
@@ -271,6 +305,26 @@ export default function IndexPage() {
             <div className="text-center py-20">
               <p className="text-muted-foreground">ツールが見つかりませんでした</p>
               <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
+            </div>
+          )}
+
+          {/* Related category links for internal linking */}
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mt-12 pt-8 border-t border-border">
+              <h2 className="text-sm font-semibold text-foreground mb-3">他のカテゴリも見る</h2>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(CATEGORY_SLUG_MAP)
+                  .filter(([, label]) => label !== selectedCategory)
+                  .map(([slug, label]) => (
+                    <Link
+                      key={slug}
+                      to={`/category/${slug}`}
+                      className="text-xs px-3 py-1.5 rounded-lg bg-secondary/60 text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+                    >
+                      {label}
+                    </Link>
+                  ))}
+              </div>
             </div>
           )}
         </section>
