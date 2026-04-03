@@ -48,6 +48,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
             placeholder="Notion の代替を探す…"
             size="hero"
             onSubmit={() => {
+              track("hero_search", { keyword: search });
               const el = document.getElementById("popular-alternatives");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
