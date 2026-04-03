@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 interface ConsultationCTAProps {
   className?: string;
