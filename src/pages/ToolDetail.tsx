@@ -219,12 +219,12 @@ export default function ToolDetailPage() {
 
   const seoTitle = tool
     ? hasCompetitor
-      ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
+      ? `${tool.name}は${competitorDisplay}の代替？特徴と違いを解説`
       : `${tool.name} — OSSアルタナティブ`
     : "OSSアルタナティブ";
   const seoDescription = tool
     ? hasCompetitor
-      ? `${tool.name}は${competitor}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
+      ? `${tool.name}は${competitorDisplay}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
       : tool.description_ja || tool.description_en || ""
     : "";
   const jsonLd = tool ? {
@@ -282,10 +282,10 @@ export default function ToolDetailPage() {
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   const altSlug = COMPETITOR_TO_SLUG[competitorEn];
-  const targetUsers = getTargetUsers(tool, competitor);
+  const targetUsers = getTargetUsers(tool, competitorDisplay);
   const notGoodFor = getNotGoodFor(tool);
   const benefits = getBenefits(tool);
-  const comparisonRows = hasCompetitor ? getComparisonRows(tool, competitor!) : [];
+  const comparisonRows = hasCompetitor ? getComparisonRows(tool, competitorDisplay!) : [];
   const difficulty = getDifficultyInfo(tool);
   const langClass = tool.language ? getLanguageBadgeClass(tool.language) : null;
 
@@ -336,7 +336,7 @@ export default function ToolDetailPage() {
 
               {hasCompetitor && (
                 <div className="mb-3">
-                  <AlternativeBadge competitor={competitor!} />
+                  <AlternativeBadge competitor={competitorDisplay!} />
                 </div>
               )}
 
@@ -495,7 +495,7 @@ export default function ToolDetailPage() {
             <div className="border-t border-border/60" />
             <section className="py-10">
               <h2 className="text-lg font-bold text-foreground mb-5">
-                {tool.name} vs {competitor}
+                {tool.name} vs {competitorDisplay}
               </h2>
               <div className="card-unified overflow-hidden">
                 <table className="w-full text-sm">
@@ -507,7 +507,7 @@ export default function ToolDetailPage() {
                         <span className="text-[10px] text-muted-foreground font-normal ml-1">(OSS)</span>
                       </th>
                       <th className="text-left p-4 font-medium text-muted-foreground text-xs">
-                        {competitorEn || competitor}
+                        {competitorEn || competitorDisplay}
                         <span className="text-[10px] text-muted-foreground/50 font-normal ml-1">(SaaS)</span>
                       </th>
                     </tr>
@@ -642,7 +642,7 @@ export default function ToolDetailPage() {
             <div className="border-t border-border/60" />
             <section className="py-10">
               <h2 className="text-lg font-bold text-foreground mb-5">
-                {hasCompetitor ? `${competitor}の他のOSS代替` : "関連するOSSツール"}
+                {hasCompetitor ? `${competitorDisplay}の他のOSS代替` : "関連するOSSツール"}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {relatedTools.slice(0, 6).map((t) => (
