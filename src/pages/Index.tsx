@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate } from "react-router-dom";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
-import { CategoryFilter } from "@/components/CategoryFilter";
+import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
 import { FeaturedTools } from "@/components/home/FeaturedTools";
@@ -20,10 +20,91 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
+/* ── Category slug mapping for /category/:slug URLs ── */
+
+const CATEGORY_SLUG_MAP: Record<string, string> = {
+  "ai-ml": "AI・ML",
+  "business": "業務ソフト",
+  "developer-tools": "開発ツール",
+  "infrastructure": "インフラ・運用",
+  "data-analytics": "データ・分析",
+  "content": "コンテンツ",
+  "productivity": "生産性・便利ツール",
+  "security": "セキュリティ",
+  "community": "コミュニティ",
+  "other": "その他",
+};
+
+// Reverse: Japanese label → slug
+const CATEGORY_TO_SLUG: Record<string, string> = {};
+for (const [slug, label] of Object.entries(CATEGORY_SLUG_MAP)) {
+  CATEGORY_TO_SLUG[label] = slug;
+}
+
+export { CATEGORY_SLUG_MAP, CATEGORY_TO_SLUG };
+
+/* ── Category SEO descriptions ── */
+
+const CATEGORY_SEO: Record<string, { title: string; description: string }> = {
+  "AI・ML": {
+    title: "AI・機械学習のOSS代替ツール一覧",
+    description: "ChatGPT・Copilotなどの有料AIサービスの代替となるオープンソースのAI・機械学習ツールを比較。無料・セルフホスト可能。",
+  },
+  "業務ソフト": {
+    title: "業務ソフトのOSS代替ツール一覧",
+    description: "Notion・Asana・Jiraなどの有料業務ソフトの代替となるオープンソースツールを比較。無料・セルフホスト可能。",
+  },
+  "開発ツール": {
+    title: "開発ツールのOSS代替一覧",
+    description: "GitHub Copilot・Postmanなどの有料開発ツールの代替となるオープンソースツールを比較。無料・セルフホスト可能。",
+  },
+  "インフラ・運用": {
+    title: "インフラ・運用のOSS代替ツール一覧",
+    description: "Datadog・PagerDutyなどのインフラ監視・運用ツールの代替OSSを比較。無料・セルフホスト可能。",
+  },
+  "データ・分析": {
+    title: "データ分析のOSS代替ツール一覧",
+    description: "Tableau・Google Analyticsなどのデータ分析ツールの代替OSSを比較。無料・セルフホスト可能。",
+  },
+  "コンテンツ": {
+    title: "コンテンツ管理のOSS代替ツール一覧",
+    description: "WordPress・Contentfulなどの有料CMSの代替となるオープンソースツールを比較。無料・セルフホスト可能。",
+  },
+  "生産性・便利ツール": {
+    title: "生産性ツールのOSS代替一覧",
+    description: "Evernote・Zapierなどの生産性ツールの代替となるオープンソースツールを比較。無料・セルフホスト可能。",
+  },
+  "セキュリティ": {
+    title: "セキュリティのOSS代替ツール一覧",
+    description: "Auth0・Oktaなどの認証・セキュリティツールの代替OSSを比較。無料・セルフホスト可能。",
+  },
+  "コミュニティ": {
+    title: "コミュニティツールのOSS代替一覧",
+    description: "Slack・Intercomなどのコミュニケーションツールの代替OSSを比較。無料・セルフホスト可能。",
+  },
+  "その他": {
+    title: "その他のOSS代替ツール一覧",
+    description: "さまざまなカテゴリの有料SaaSの代替となるオープンソースツールを比較。",
+  },
+};
+
 export default function IndexPage() {
+  const { slug: categorySlug } = useParams<{ slug?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const urlCategory = searchParams.get("category") || "すべて";
+  const navigate = useNavigate();
+
+  // Resolve category from URL slug or query param
+  const slugCategory = categorySlug ? CATEGORY_SLUG_MAP[categorySlug] : null;
+  const urlCategory = slugCategory || searchParams.get("category") || "すべて";
   const urlSearch = searchParams.get("search") || "";
+
+  // Redirect legacy ?category= to /category/:slug if we have a slug mapping
+  useEffect(() => {
+    const qCat = searchParams.get("category");
+    if (qCat && !categorySlug && CATEGORY_TO_SLUG[qCat]) {
+      navigate(`/category/${CATEGORY_TO_SLUG[qCat]}`, { replace: true });
+    }
+  }, [searchParams, categorySlug, navigate]);
 
   const [search, setSearch] = useState(urlSearch);
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
@@ -37,20 +118,22 @@ export default function IndexPage() {
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
 
   // Category-aware SEO
-  const categoryTitle = selectedCategory !== "すべて" ? selectedCategory : null;
-  const seoTitle = categoryTitle
-    ? `${categoryTitle}のOSS代替ツール一覧 | OSSアルタナティブ`
+  const categorySeo = selectedCategory !== "すべて" ? CATEGORY_SEO[selectedCategory] : null;
+  const seoTitle = categorySeo
+    ? `${categorySeo.title} | OSSアルタナティブ`
     : "OSSアルタナティブ | 有料SaaSの代替OSSを日本語で検索・比較";
-  const seoDescription = categoryTitle
-    ? `${categoryTitle}カテゴリの有料SaaS代替となるオープンソースツールを一覧で比較。無料・セルフホスト可能なOSSを見つけよう。`
+  const seoDescription = categorySeo
+    ? categorySeo.description
     : "Notion・Slack・Figma・Zapierなどの有料SaaSの代替となるオープンソースツールを、日本語で検索・比較できるサイトです。無料・セルフホスト可能なOSSを簡単に見つけられます。";
+  const categoryCanonicalSlug = CATEGORY_TO_SLUG[selectedCategory];
+  const seoCanonical = categoryCanonicalSlug
+    ? `https://ossalt.jp/category/${categoryCanonicalSlug}`
+    : "https://ossalt.jp/";
 
   useSeo({
     title: seoTitle,
     description: seoDescription,
-    canonical: categoryTitle
-      ? `https://ossalt.jp/?category=${encodeURIComponent(categoryTitle)}`
-      : "https://ossalt.jp/",
+    canonical: seoCanonical,
   });
 
   const { data, isLoading } = useTools({
@@ -72,11 +155,13 @@ export default function IndexPage() {
   }, [search]);
 
   useEffect(() => {
+    // Only update query params when not using /category/:slug route
+    if (categorySlug) return;
     const params = new URLSearchParams();
     if (selectedCategory !== "すべて") params.set("category", selectedCategory);
     if (debouncedSearch) params.set("search", debouncedSearch);
     setSearchParams(params, { replace: true });
-  }, [selectedCategory, debouncedSearch, setSearchParams]);
+  }, [selectedCategory, debouncedSearch, setSearchParams, categorySlug]);
 
   useEffect(() => {
     if (data?.tools) {
@@ -92,7 +177,14 @@ export default function IndexPage() {
     setSelectedCategory(cat);
     setPage(0);
     setAllTools([]);
-  }, []);
+    // Navigate to /category/:slug for SEO-friendly URLs
+    const slug = CATEGORY_TO_SLUG[cat];
+    if (slug) {
+      navigate(`/category/${slug}`);
+    } else {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleSortChange = useCallback((value: string) => {
     setSort(value as SortOption);
@@ -120,6 +212,18 @@ export default function IndexPage() {
 
       {isBrowsing ? (
         <section className="container pb-16 pt-8">
+          {/* Category page heading for SEO */}
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mb-6">
+              <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
+                {categorySeo?.title || `${selectedCategory}のOSSツール`}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {categorySeo?.description?.slice(0, 80) || ""}
+              </p>
+            </div>
+          )}
+
           {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {Array.from({ length: 12 }).map((_, i) => (
