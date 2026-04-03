@@ -57,6 +57,29 @@ export function getPrerenderRoutes() {
     });
   }
 
+  // Category pages
+  const CATEGORIES = {
+    "ai-ml": { title: "AI・機械学習のOSS代替ツール一覧", desc: "ChatGPT・Copilotなどの有料AIサービスの代替となるオープンソースのAI・機械学習ツールを比較。" },
+    "business": { title: "業務ソフトのOSS代替ツール一覧", desc: "Notion・Asana・Jiraなどの有料業務ソフトの代替となるオープンソースツールを比較。" },
+    "developer-tools": { title: "開発ツールのOSS代替一覧", desc: "GitHub Copilot・Postmanなどの有料開発ツールの代替となるOSSを比較。" },
+    "infrastructure": { title: "インフラ・運用のOSS代替ツール一覧", desc: "Datadog・PagerDutyなどのインフラ監視・運用ツールの代替OSSを比較。" },
+    "data-analytics": { title: "データ分析のOSS代替ツール一覧", desc: "Tableau・Google Analyticsなどのデータ分析ツールの代替OSSを比較。" },
+    "content": { title: "コンテンツ管理のOSS代替ツール一覧", desc: "WordPress・Contentfulなどの有料CMSの代替となるOSSを比較。" },
+    "productivity": { title: "生産性ツールのOSS代替一覧", desc: "Evernote・Zapierなどの生産性ツールの代替OSSを比較。" },
+    "security": { title: "セキュリティのOSS代替ツール一覧", desc: "Auth0・Oktaなどの認証・セキュリティツールの代替OSSを比較。" },
+    "community": { title: "コミュニティツールのOSS代替一覧", desc: "Slack・Intercomなどのコミュニケーションツールの代替OSSを比較。" },
+    "other": { title: "その他のOSS代替ツール一覧", desc: "さまざまなカテゴリの有料SaaSの代替となるOSSを比較。" },
+  };
+
+  for (const [slug, meta] of Object.entries(CATEGORIES)) {
+    routes.push({
+      path: `/category/${slug}`,
+      title: `${meta.title} | ${SITE_NAME}`,
+      description: meta.desc,
+      canonical: `${BASE_URL}/category/${slug}`,
+    });
+  }
+
   // Static pages (already have useSeo, but prerender for initial HTML)
   const staticPages = [
     {
