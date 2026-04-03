@@ -9,8 +9,8 @@ const REASONS = [
 
 export function WhyOSSSection() {
   return (
-    <section className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
+    <section className="container py-12 md:py-20">
+      <h2 className="section-title text-center mb-8 md:mb-10">
         なぜOSS？
       </h2>
 
