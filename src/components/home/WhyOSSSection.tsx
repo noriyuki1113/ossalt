@@ -14,7 +14,7 @@ export function WhyOSSSection() {
         なぜOSS？
       </h2>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
         {REASONS.map((r) => (
           <div key={r.title} className="text-center">
             <div className="h-12 w-12 rounded-xl border border-primary/20 flex items-center justify-center mx-auto mb-4">
