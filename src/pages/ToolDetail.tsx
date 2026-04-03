@@ -303,7 +303,7 @@ export default function ToolDetailPage() {
       <div className="container max-w-4xl mx-auto px-4 md:px-8">
 
         {/* ── 2. Breadcrumb ── */}
-        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground pt-6 pb-8 overflow-x-auto">
+        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground pt-6 pb-6 overflow-x-auto">
           <Link to="/" className="hover:text-foreground transition-colors shrink-0">ホーム</Link>
           <ChevronRight className="h-3 w-3 shrink-0" />
           {tool.parent_category_ja && (
@@ -322,106 +322,112 @@ export default function ToolDetailPage() {
 
         {/* ── 3. Hero ── */}
         <section className="pb-10">
-          <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
-            {/* Left */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-3">
-                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={48} />
-                <div className="min-w-0">
-                  <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground">
-                    {tool.name}
-                  </h1>
-                </div>
-              </div>
+          <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
 
+            {/* Left: Identity */}
+            <div className="flex-1 min-w-0">
+              {/* Competitor context — always first */}
               {hasCompetitor && (
                 <div className="mb-3">
                   <AlternativeBadge competitor={competitorDisplay!} />
                 </div>
               )}
 
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
+              {/* Tool name + icon */}
+              <div className="flex items-center gap-3.5 mb-3">
+                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={44} />
+                <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground leading-tight">
+                  {tool.name}
+                </h1>
+              </div>
+
+              {/* One-line summary */}
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5 max-w-xl">
                 {tool.description_ja || tool.description_en || `${tool.name}は${tool.category_ja || tool.parent_category_ja || "多用途"}のオープンソースツールです。`}
               </p>
+
+              {/* Metadata row */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground mb-5">
+                {tool.stars_num && (
+                  <span className="inline-flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+                    <span className="font-semibold text-foreground tabular-nums">{formatCount(tool.stars_num)}</span>
+                    <span>stars</span>
+                  </span>
+                )}
+                {tool.forks_num && tool.forks_num > 0 && (
+                  <span className="inline-flex items-center gap-1">
+                    <GitFork className="h-3.5 w-3.5" />
+                    <span className="font-medium text-foreground tabular-nums">{formatCount(tool.forks_num)}</span>
+                  </span>
+                )}
+                {lastCommitText && (
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3.5 w-3.5" />
+                    <span>{lastCommitText}</span>
+                  </span>
+                )}
+              </div>
 
               {/* Tags */}
               <div className="flex flex-wrap items-center gap-1.5">
                 {tool.language && langClass && (
-                  <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 ${langClass}`}>
+                  <Badge className={`text-[11px] font-normal border px-2.5 py-0.5 h-6 ${langClass}`}>
+                    <Code2 className="h-3 w-3 mr-1" />
                     {tool.language}
                   </Badge>
                 )}
                 {tool.category_ja && (
-                  <Badge variant="secondary" className="text-[10px] font-normal px-2 py-0 h-5">
+                  <Badge variant="secondary" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
                     {tool.category_ja}
                   </Badge>
                 )}
                 {tool.parent_category_ja && tool.parent_category_ja !== tool.category_ja && (
-                  <Badge variant="secondary" className="text-[10px] font-normal px-2 py-0 h-5">
+                  <Badge variant="secondary" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
                     {tool.parent_category_ja}
                   </Badge>
                 )}
                 {tool.license && tool.license !== "NOASSERTION" && (
-                  <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5">
+                  <Badge variant="outline" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
+                    <Scale className="h-3 w-3 mr-1" />
                     {tool.license}
                   </Badge>
                 )}
               </div>
             </div>
 
-            {/* Right: Stats + CTAs */}
-            <div className="md:w-[280px] shrink-0">
-              <div className="card-unified p-5 space-y-4">
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-amber-500 mb-0.5">
-                      <Star className="h-4 w-4 fill-current" />
-                    </div>
-                    <p className="font-bold text-lg text-foreground tabular-nums">
-                      {tool.stars_num ? formatCount(tool.stars_num) : "—"}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">スター</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-muted-foreground mb-0.5">
-                      <GitFork className="h-4 w-4" />
-                    </div>
-                    <p className="font-bold text-lg text-foreground tabular-nums">
-                      {tool.forks_num ? formatCount(tool.forks_num) : "—"}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">フォーク</p>
-                  </div>
-                </div>
-
-                {lastCommitText && (
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground border-t border-border/60 pt-3">
-                    <Clock className="h-3.5 w-3.5 shrink-0" />
-                    <span>最終更新: {lastCommitText}</span>
-                  </div>
+            {/* Right: CTAs */}
+            <div className="lg:w-[260px] shrink-0">
+              <div className="card-unified p-5 space-y-3">
+                {/* Primary CTA */}
+                {tool.url && (
+                  <Button className="w-full gap-2 rounded-lg h-10" asChild>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                      公式サイトを見る <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </Button>
+                )}
+                {tool.github_url && (
+                  <Button variant="outline" className="w-full gap-2 rounded-lg h-10 border-border" asChild>
+                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+                      <Github className="h-4 w-4" /> GitHubリポジトリ
+                    </a>
+                  </Button>
                 )}
 
-                {/* CTA buttons */}
-                <div className="space-y-2 pt-1">
-                  {tool.url && (
-                    <Button className="w-full gap-2 rounded-lg" asChild>
-                      <a href={tool.url} target="_blank" rel="noopener noreferrer">
-                        公式サイト <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </Button>
-                  )}
-                  {tool.github_url && (
-                    <Button variant="outline" className="w-full gap-2 rounded-lg border-border" asChild>
-                      <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-3.5 w-3.5" /> GitHub を見る
-                      </a>
-                    </Button>
-                  )}
-                </div>
+                {/* Alternative link */}
+                {altSlug && (
+                  <Link
+                    to={`/alternatives/${altSlug}`}
+                    className="flex items-center justify-center gap-1.5 text-xs font-medium text-primary hover:underline pt-1"
+                  >
+                    {competitorDisplay}の代替を比較 <ArrowRight className="h-3 w-3" />
+                  </Link>
+                )}
 
-                {/* Share */}
-                <div className="flex items-center gap-2 pt-1 border-t border-border/60">
-                  <span className="text-[10px] text-muted-foreground">共有:</span>
+                {/* Share row */}
+                <div className="flex items-center gap-2 pt-2 border-t border-border/60">
+                  <span className="text-[10px] text-muted-foreground mr-auto">共有</span>
                   <button
                     onClick={copyLink}
                     className="h-7 w-7 rounded-md border border-border/60 flex items-center justify-center hover:bg-secondary transition-colors"
