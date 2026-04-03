@@ -20,7 +20,7 @@ export function SearchBar({
   const isHero = size === "hero";
 
   return (
-    <div className="relative flex items-center rounded-xl border border-border bg-card shadow-sm focus-within:shadow-md focus-within:border-primary/40 transition-all duration-200">
+    <div className="relative flex items-center rounded-xl border border-border bg-card shadow-sm focus-within:shadow-md focus-within:border-primary/40 transition-all duration-200 mx-1 md:mx-0">
       <Search className={`absolute ${isHero ? "left-5" : "left-4"} h-5 w-5 text-muted-foreground/50`} />
       <input
         type="text"
