@@ -129,7 +129,7 @@ function getDifficultyInfo(tool: Tool) {
 /* ── Related card (reuses shared components) ── */
 
 function RelatedToolCard({ tool }: { tool: Tool }) {
-  const competitor = tool.primary_competitor_ja || tool.primary_competitor;
+  const competitor = tool.primary_competitor || tool.primary_competitor_ja;
   return (
     <Link
       to={`/tools/${tool.id}`}
