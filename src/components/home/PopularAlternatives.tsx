@@ -107,6 +107,7 @@ export function PopularAlternatives() {
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
               className="group card-unified-hover p-4 md:p-5 min-w-[180px] md:min-w-[210px] flex-1 flex flex-col snap-start"
+              onClick={() => track("popular_alt_click", { competitor: g.competitor, tool: g.topTool })}
             >
               {/* SaaS logo + name */}
               <div className="flex items-center gap-2 mb-3">

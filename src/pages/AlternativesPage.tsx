@@ -278,6 +278,7 @@ export default function AlternativesPage() {
                             <Link
                               to={`/tools/${tool.id}`}
                               className="text-[11px] text-primary hover:underline font-medium whitespace-nowrap"
+                              onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "table" })}
                             >
                               詳細 →
                             </Link>

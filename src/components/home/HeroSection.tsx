@@ -63,7 +63,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
             {QUICK_CHIPS.map((chip) => (
               <button
                 key={chip.label}
-                onClick={() => onSearchChange(chip.search)}
+                onClick={() => { track("quick_chip_click", { chip: chip.label }); onSearchChange(chip.search); }}
                 className="text-[11px] md:text-xs px-2.5 py-1 rounded-full border border-border bg-card text-muted-foreground hover:text-primary hover:border-primary/30 transition-all"
               >
                 {chip.label}
