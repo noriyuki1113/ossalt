@@ -4,18 +4,22 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "@/components/SectionHeader";
 
-const SAAS_META: Record<string, { icon: string }> = {
-  Zapier:             { icon: "⚡" },
-  Notion:             { icon: "📝" },
-  "Google Analytics": { icon: "📊" },
-  Shopify:            { icon: "🛒" },
-  Asana:              { icon: "✅" },
-  Datadog:            { icon: "🐶" },
-  Slack:              { icon: "💬" },
-  Figma:              { icon: "🎨" },
-  Zendesk:            { icon: "🎧" },
-  Jira:               { icon: "📋" },
-  "Google Workspace": { icon: "📧" },
+const SAAS_META: Record<string, { icon: string; shortJa: string }> = {
+  Zapier:             { icon: "⚡", shortJa: "Zapier" },
+  Notion:             { icon: "📝", shortJa: "Notion" },
+  "Google Analytics": { icon: "📊", shortJa: "Google Analytics" },
+  Shopify:            { icon: "🛒", shortJa: "Shopify" },
+  Asana:              { icon: "✅", shortJa: "Asana" },
+  Datadog:            { icon: "🐶", shortJa: "Datadog" },
+  Slack:              { icon: "💬", shortJa: "Slack" },
+  Figma:              { icon: "🎨", shortJa: "Figma" },
+  Zendesk:            { icon: "🎧", shortJa: "Zendesk" },
+  Jira:               { icon: "📋", shortJa: "Jira" },
+  "Google Workspace": { icon: "📧", shortJa: "Google Workspace" },
+  "Auth0":            { icon: "🔐", shortJa: "Auth0" },
+  "Okta":             { icon: "🔑", shortJa: "Okta" },
+  "Bubble":           { icon: "🫧", shortJa: "Bubble" },
+  "Claude Code":      { icon: "🤖", shortJa: "Claude Code" },
 };
 
 const PRIORITY = ["Notion", "Slack", "Google Analytics", "Zapier", "Datadog"];
@@ -34,14 +38,14 @@ export function PopularAlternatives() {
 
       const map = new Map<string, {
         count: number; topTool: string; topToolId: number;
-        label: string; key: string; secondTool?: string;
+        key: string; secondTool?: string;
       }>();
 
       for (const t of data || []) {
         const key = t.primary_competitor!;
         const existing = map.get(key);
         if (!existing) {
-          map.set(key, { count: 1, topTool: t.name || "", topToolId: t.id, label: t.primary_competitor_ja || key, key });
+          map.set(key, { count: 1, topTool: t.name || "", topToolId: t.id, key });
         } else {
           existing.count++;
           if (!existing.secondTool) existing.secondTool = t.name || "";
@@ -58,7 +62,7 @@ export function PopularAlternatives() {
       });
 
       return sorted.slice(0, 5).map((v) => ({
-        competitor: v.key, competitorJa: v.label, count: v.count,
+        competitor: v.key, count: v.count,
         topTool: v.topTool, topToolId: v.topToolId, secondTool: v.secondTool,
       }));
     },
@@ -73,23 +77,32 @@ export function PopularAlternatives() {
       <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 scrollbar-hide max-w-6xl mx-auto snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0">
         {groups.map((g) => {
           const meta = SAAS_META[g.competitor];
+          const displayName = meta?.shortJa ?? g.competitor;
           return (
             <Link
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
-              className="group card-unified-hover p-4 md:p-5 min-w-[200px] md:min-w-[220px] flex-1 flex flex-col snap-start"
+              className="group card-unified-hover p-4 md:p-5 min-w-[180px] md:min-w-[210px] flex-1 flex flex-col snap-start"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-lg">{meta?.icon ?? "🔄"}</span>
-                <span className="font-semibold text-sm text-foreground">{g.competitorJa}</span>
-                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0" />
+              {/* SaaS name */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-base">{meta?.icon ?? "🔄"}</span>
+                <span className="font-semibold text-sm text-foreground">{displayName}</span>
+              </div>
+
+              {/* Arrow + top OSS */}
+              <div className="flex items-center gap-1.5 mb-3">
+                <ArrowRight className="h-3 w-3 text-primary shrink-0" />
                 <span className="text-sm text-primary font-medium truncate">{g.topTool}</span>
               </div>
-              <p className="text-xs text-muted-foreground mb-4 flex-1">
-                {g.topTool}{g.secondTool ? `、${g.secondTool}` : ""}など{g.count}件のOSS代替
+
+              {/* Count */}
+              <p className="text-[11px] text-muted-foreground mb-4 flex-1">
+                {g.count}件のOSS代替あり
               </p>
+
               <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground border border-border rounded-lg px-4 py-2 justify-center group-hover:text-primary group-hover:border-primary/30 transition-all">
-                詳細
+                詳細を見る
               </span>
             </Link>
           );

@@ -21,10 +21,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         </h1>
 
         <p className="mt-4 md:mt-6 text-[13px] md:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
-          680以上の高品質なOSSツールを、日本語で簡単に検索。
-          <span className="hidden sm:inline"><br /></span>
-          <span className="sm:hidden">　</span>
-          データ主権とコスト削減の両立へ、最適な選択肢を見つけよう。
+          680以上の高品質なOSSツールを、日本語で簡単に検索。データ主権とコスト削減の両立へ、最適な選択肢を見つけよう。
         </p>
 
         <div className="mt-8 md:mt-12 max-w-[640px] mx-auto">
