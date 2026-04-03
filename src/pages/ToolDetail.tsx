@@ -24,6 +24,7 @@ import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
+import { track } from "@/lib/track";
 
 /* ── helpers ── */
 
@@ -425,14 +426,18 @@ export default function ToolDetailPage() {
                 {/* Primary CTA */}
                 {tool.url && (
                   <Button className="w-full gap-2 rounded-lg h-10" asChild>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                      onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                    >
                       公式サイトを見る <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   </Button>
                 )}
                 {tool.github_url && (
                   <Button variant="outline" className="w-full gap-2 rounded-lg h-10 border-border" asChild>
-                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer">
+                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                      onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
+                    >
                       <Github className="h-4 w-4" /> GitHubリポジトリ
                     </a>
                   </Button>
@@ -750,6 +755,7 @@ export default function ToolDetailPage() {
               <a
                 href={tool.url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
+                onClick={() => track("external_link_click", { tool: tool.name, target: "official_bottom", url: tool.url })}
               >
                 <ExternalLink className="h-4 w-4 text-primary" />
                 公式サイト
@@ -759,6 +765,7 @@ export default function ToolDetailPage() {
               <a
                 href={tool.github_url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
+                onClick={() => track("external_link_click", { tool: tool.name, target: "github_bottom", url: tool.github_url })}
               >
                 <Github className="h-4 w-4" />
                 GitHub リポジトリ

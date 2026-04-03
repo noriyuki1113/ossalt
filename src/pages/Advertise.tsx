@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track } from "@/lib/track";
 import { SiteLayout } from "@/components/SiteLayout";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 import { useSeo } from "@/hooks/use-seo";
@@ -94,6 +95,7 @@ export default function Advertise() {
       else console.log("Advertise email result:", data);
     });
 
+    track("form_submit", { form: "advertise", plan: form.plan || "undecided", referrer: document.referrer });
     setSubmitted(true);
   };
 

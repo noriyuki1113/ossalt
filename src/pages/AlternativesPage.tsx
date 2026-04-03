@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap } from "lucide-react";
+import { track } from "@/lib/track";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -206,6 +207,7 @@ export default function AlternativesPage() {
                       key={tool.id}
                       to={`/tools/${tool.id}`}
                       className="group card-unified p-4 sm:p-5 flex flex-col relative hover:border-primary/30 transition-all"
+                      onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "top_pick" })}
                     >
                       {/* Rank badge */}
                       <span className="absolute -top-2 -left-1 text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
@@ -276,6 +278,7 @@ export default function AlternativesPage() {
                             <Link
                               to={`/tools/${tool.id}`}
                               className="text-[11px] text-primary hover:underline font-medium whitespace-nowrap"
+                              onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "table" })}
                             >
                               詳細 →
                             </Link>

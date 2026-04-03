@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useState } from "react";
+import { track } from "@/lib/track";
 
 const SAAS_META: Record<string, { domain: string; shortJa: string }> = {
   Zapier:             { domain: "zapier.com", shortJa: "Zapier" },
@@ -106,6 +107,7 @@ export function PopularAlternatives() {
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
               className="group card-unified-hover p-4 md:p-5 min-w-[180px] md:min-w-[210px] flex-1 flex flex-col snap-start"
+              onClick={() => track("popular_alt_click", { competitor: g.competitor, tool: g.topTool })}
             >
               {/* SaaS logo + name */}
               <div className="flex items-center gap-2 mb-3">

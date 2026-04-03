@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 interface ConsultationCTAProps {
   className?: string;
@@ -27,6 +28,7 @@ export function ConsultationCTA({ className, toolName }: ConsultationCTAProps) {
       </p>
       <Link
         to="/contact"
+        onClick={() => track("revenue_cta_click", { cta: "consultation", tool: toolName || null })}
         className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
       >
         お問い合わせ →

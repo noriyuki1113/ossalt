@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
+import { track } from "@/lib/track";
 
 const contactSchema = z.object({
   name: z.string().max(100).optional(),
@@ -84,6 +85,7 @@ export default function ContactPage() {
     });
 
     setSubmitted(true);
+    track("form_submit", { form: "contact", category: form.category });
     toast.success("お問い合わせを送信しました。");
   };
 

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 interface AdvertiseCTAProps {
   className?: string;
@@ -16,6 +17,7 @@ export function AdvertiseCTA({ className, variant = "inline" }: AdvertiseCTAProp
     return (
       <Link
         to="/advertise"
+        onClick={() => track("revenue_cta_click", { cta: "advertise_inline" })}
         className={cn(
           "text-xs text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap",
           className,
@@ -29,6 +31,7 @@ export function AdvertiseCTA({ className, variant = "inline" }: AdvertiseCTAProp
   return (
     <Link
       to="/advertise"
+      onClick={() => track("revenue_cta_click", { cta: "advertise_card" })}
       className={cn(
         "card-unified p-5 flex items-center gap-4 hover:border-primary/30 transition-colors group",
         className,

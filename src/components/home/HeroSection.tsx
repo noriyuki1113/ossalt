@@ -1,5 +1,6 @@
 import { SearchBar } from "@/components/SearchBar";
 import { Search } from "lucide-react";
+import { track } from "@/lib/track";
 
 interface HeroSectionProps {
   search: string;
@@ -47,6 +48,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
             placeholder="Notion の代替を探す…"
             size="hero"
             onSubmit={() => {
+              track("hero_search", { keyword: search });
               const el = document.getElementById("popular-alternatives");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
@@ -61,7 +63,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
             {QUICK_CHIPS.map((chip) => (
               <button
                 key={chip.label}
-                onClick={() => onSearchChange(chip.search)}
+                onClick={() => { track("quick_chip_click", { chip: chip.label }); onSearchChange(chip.search); }}
                 className="text-[11px] md:text-xs px-2.5 py-1 rounded-full border border-border bg-card text-muted-foreground hover:text-primary hover:border-primary/30 transition-all"
               >
                 {chip.label}
