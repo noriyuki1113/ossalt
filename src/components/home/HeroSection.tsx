@@ -1,5 +1,6 @@
 import { SearchBar } from "@/components/SearchBar";
 import { Search } from "lucide-react";
+import { track } from "@/lib/track";
 
 interface HeroSectionProps {
   search: string;
