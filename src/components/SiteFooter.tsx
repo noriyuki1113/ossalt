@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 
-const FOOTER_LINKS = [
+const SITE_LINKS = [
   { to: "/about", label: "OSSアルタナティブについて" },
   { to: "/terms", label: "掲載ポリシー" },
   { to: "/privacy", label: "プライバシーポリシー" },
   { to: "/contact", label: "お問い合わせ" },
-  { to: "/advertise", label: "広告掲載について" },
+];
+
+const ACTION_LINKS = [
+  { to: "/submit", label: "OSSを掲載する（無料）" },
+  { to: "/advertise", label: "広告掲載・スポンサー" },
+  { to: "/contact", label: "情報修正リクエスト" },
+  { to: "/contact", label: "ツール追加リクエスト" },
 ];
 
 export function SiteFooter() {
@@ -34,9 +40,9 @@ export function SiteFooter() {
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-10">
             <nav className="space-y-2">
               <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">サイト</p>
-              {FOOTER_LINKS.slice(0, 3).map((l) => (
+              {SITE_LINKS.map((l) => (
                 <Link
-                  key={l.to}
+                  key={l.to + l.label}
                   to={l.to}
                   className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
                 >
@@ -46,27 +52,15 @@ export function SiteFooter() {
             </nav>
             <nav className="space-y-2">
               <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">参加する</p>
-              {FOOTER_LINKS.slice(3).map((l) => (
+              {ACTION_LINKS.map((l, i) => (
                 <Link
-                  key={l.to}
+                  key={`${l.to}-${i}`}
                   to={l.to}
                   className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {l.label}
                 </Link>
               ))}
-              <Link
-                to="/contact"
-                className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                ツール追加リクエスト
-              </Link>
-              <Link
-                to="/contact"
-                className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                情報修正リクエスト
-              </Link>
             </nav>
           </div>
         </div>
