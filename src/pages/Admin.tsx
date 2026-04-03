@@ -71,8 +71,10 @@ export default function AdminPage() {
 
   return (
     <SiteLayout>
-      <div className="max-w-2xl mx-auto px-4 py-12 space-y-6">
+      <div className="max-w-3xl mx-auto px-4 py-12 space-y-6">
         <h1 className="text-3xl font-bold mb-8">管理画面</h1>
+
+        <AdminMetrics />
 
         <Card>
           <CardHeader>
