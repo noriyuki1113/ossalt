@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/SectionHeader";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
 
@@ -51,9 +52,12 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
       </span>
 
       <div className="flex items-center justify-between mb-2">
-        <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors line-clamp-1">
-          {tool.name}
-        </h3>
+        <div className="flex items-center gap-2.5 min-w-0">
+          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} />
+          <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors line-clamp-1">
+            {tool.name}
+          </h3>
+        </div>
         <StarCount count={tool.stars_num} />
       </div>
 
