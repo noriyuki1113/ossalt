@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SectionHeader } from "@/components/SectionHeader";
 
 const FAQ_ITEMS = [
   { q: "OSSアルタナティブとは何ですか？", a: "有料SaaSの代替になるOSSを、日本語で探せる比較サイトです。680件以上のツールを掲載しています。" },
@@ -17,9 +18,7 @@ export function FAQSection() {
   return (
     <section className="container py-16 md:py-20">
       <div className="max-w-2xl mx-auto">
-        <h2 className="section-title text-center mb-10">
-          よくある質問
-        </h2>
+        <SectionHeader title="よくある質問" />
 
         <Accordion type="single" collapsible className="space-y-2">
           {FAQ_ITEMS.map((item, i) => (

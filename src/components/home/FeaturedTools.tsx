@@ -1,25 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, GitFork, Trophy } from "lucide-react";
+import { ArrowRight, GitFork } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { SectionHeader } from "@/components/SectionHeader";
+import { StarCount } from "@/components/StarCount";
+import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
-
-function formatCount(num: number | null): string {
-  if (!num) return "0";
-  if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
-  return String(num);
-}
-
-const LANG_COLORS: Record<string, string> = {
-  Python: "bg-blue-50 text-blue-600 border-blue-200",
-  TypeScript: "bg-teal-50 text-teal-600 border-teal-200",
-  JavaScript: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  Go: "bg-cyan-50 text-cyan-600 border-cyan-200",
-  Rust: "bg-orange-50 text-orange-600 border-orange-200",
-  Ruby: "bg-red-50 text-red-600 border-red-200",
-  Java: "bg-amber-50 text-amber-700 border-amber-200",
-};
 
 export function FeaturedTools() {
   const { data: tools, isLoading } = useQuery({
@@ -37,12 +25,7 @@ export function FeaturedTools() {
 
   return (
     <section className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
-        注目のOSSプロジェクト
-      </h2>
-      <p className="section-subtitle text-center -mt-8 mb-10">
-        GitHubスター数が多く、実績のあるOSS
-      </p>
+      <SectionHeader title="注目のOSSプロジェクト" subtitle="GitHubスター数が多く、実績のあるOSS" />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {isLoading
@@ -56,7 +39,7 @@ export function FeaturedTools() {
 
 function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
   const competitor = tool.primary_competitor_ja || tool.primary_competitor;
-  const langClass = tool.language ? (LANG_COLORS[tool.language] || "bg-secondary text-muted-foreground border-border") : null;
+  const langClass = tool.language ? getLanguageBadgeClass(tool.language) : null;
 
   return (
     <Link
@@ -71,18 +54,13 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
         <h3 className="font-bold text-[15px] text-foreground group-hover:text-primary transition-colors line-clamp-1">
           {tool.name}
         </h3>
-        {tool.stars_num && tool.stars_num > 0 && (
-          <span className="shrink-0 flex items-center gap-1 text-sm font-semibold text-amber-600">
-            <Star className="h-3.5 w-3.5 fill-current" />
-            {formatCount(tool.stars_num)}
-          </span>
-        )}
+        <StarCount count={tool.stars_num} />
       </div>
 
-      {competitor && competitor !== "有料SaaS" && (
-        <span className="inline-flex items-center self-start text-[11px] font-medium text-primary bg-primary/10 rounded-md px-2 py-0.5 mb-2">
-          {competitor} の代替
-        </span>
+      {competitor && (
+        <div className="mb-2">
+          <AlternativeBadge competitor={competitor} />
+        </div>
       )}
 
       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1">
