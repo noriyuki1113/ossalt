@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
