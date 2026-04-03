@@ -635,33 +635,10 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 7. Difficulty / Deployment ── */}
-        <section className="py-10">
-          <h2 className="text-lg font-bold text-foreground mb-5">導入・運用について</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="card-unified p-5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className={`h-3 w-3 rounded-full ${
-                  difficulty.setupLevel === "easy" ? "bg-emerald-500" :
-                  difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                }`} />
-                <span className="font-semibold text-sm text-foreground">導入難易度: {difficulty.setupLabel}</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.setupDesc}</p>
-            </div>
-            <div className="card-unified p-5">
-              <div className="flex items-center gap-2.5 mb-3">
-                <div className={`h-3 w-3 rounded-full ${
-                  difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
-                  difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                }`} />
-                <span className="font-semibold text-sm text-foreground">セルフホスト: {difficulty.selfHostLabel}</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
+        {/* ── 7. Deployment details (compact, no duplication) ── */}
+        <section className="py-8">
+          <h2 className="text-lg font-bold text-foreground mb-4">導入環境</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="card-unified p-3 text-center">
               <p className="text-[10px] text-muted-foreground mb-1">Docker対応</p>
               <p className="text-xs font-medium text-foreground">
