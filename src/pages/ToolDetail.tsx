@@ -755,6 +755,7 @@ export default function ToolDetailPage() {
               <a
                 href={tool.url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
+                onClick={() => track("external_link_click", { tool: tool.name, target: "official_bottom", url: tool.url })}
               >
                 <ExternalLink className="h-4 w-4 text-primary" />
                 公式サイト
