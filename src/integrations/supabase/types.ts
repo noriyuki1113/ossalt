@@ -226,6 +226,51 @@ export type Database = {
         }
         Relationships: []
       }
+      category_pickups: {
+        Row: {
+          category_ja: string
+          id: string
+          rank_order: number | null
+          tool_description_ja: string | null
+          tool_github_url: string | null
+          tool_id: number
+          tool_language: string | null
+          tool_name: string | null
+          tool_primary_competitor_ja: string | null
+          tool_stars_num: number | null
+          tool_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          category_ja: string
+          id?: string
+          rank_order?: number | null
+          tool_description_ja?: string | null
+          tool_github_url?: string | null
+          tool_id: number
+          tool_language?: string | null
+          tool_name?: string | null
+          tool_primary_competitor_ja?: string | null
+          tool_stars_num?: number | null
+          tool_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category_ja?: string
+          id?: string
+          rank_order?: number | null
+          tool_description_ja?: string | null
+          tool_github_url?: string | null
+          tool_id?: number
+          tool_language?: string | null
+          tool_name?: string | null
+          tool_primary_competitor_ja?: string | null
+          tool_stars_num?: number | null
+          tool_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           category: string

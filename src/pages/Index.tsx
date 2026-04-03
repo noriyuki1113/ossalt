@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowUpDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,19 +7,21 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
-import { FeaturedTools } from "@/components/home/FeaturedTools";
 import { PopularAlternatives } from "@/components/home/PopularAlternatives";
-import { UseCaseSection } from "@/components/home/UseCaseSection";
-import { WhyOSSSection } from "@/components/home/WhyOSSSection";
-import { NewToolsSection } from "@/components/home/NewToolsSection";
-import { FAQSection } from "@/components/home/FAQSection";
-import { BottomCTA } from "@/components/home/BottomCTA";
-import { TrustSection } from "@/components/home/TrustSection";
 import { StatsBar } from "@/components/StatsBar";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
+
+// Lazy load below-fold sections
+const UseCaseSection = lazy(() => import("@/components/home/UseCaseSection").then(m => ({ default: m.UseCaseSection })));
+const WhyOSSSection = lazy(() => import("@/components/home/WhyOSSSection").then(m => ({ default: m.WhyOSSSection })));
+const FeaturedTools = lazy(() => import("@/components/home/FeaturedTools").then(m => ({ default: m.FeaturedTools })));
+const NewToolsSection = lazy(() => import("@/components/home/NewToolsSection").then(m => ({ default: m.NewToolsSection })));
+const TrustSection = lazy(() => import("@/components/home/TrustSection").then(m => ({ default: m.TrustSection })));
+const FAQSection = lazy(() => import("@/components/home/FAQSection").then(m => ({ default: m.FAQSection })));
+const BottomCTA = lazy(() => import("@/components/home/BottomCTA").then(m => ({ default: m.BottomCTA })));
 
 /* ── Category slug mapping for /category/:slug URLs ── */
 
@@ -89,17 +91,19 @@ const CATEGORY_SEO: Record<string, { title: string; description: string }> = {
   },
 };
 
+function SectionFallback() {
+  return <div className="h-32" />;
+}
+
 export default function IndexPage() {
   const { slug: categorySlug } = useParams<{ slug?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Resolve category from URL slug or query param
   const slugCategory = categorySlug ? CATEGORY_SLUG_MAP[categorySlug] : null;
   const urlCategory = slugCategory || searchParams.get("category") || "すべて";
   const urlSearch = searchParams.get("search") || "";
 
-  // Redirect legacy ?category= to /category/:slug if we have a slug mapping
   useEffect(() => {
     const qCat = searchParams.get("category");
     if (qCat && !categorySlug && CATEGORY_TO_SLUG[qCat]) {
@@ -118,7 +122,6 @@ export default function IndexPage() {
 
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
 
-  // Category-aware SEO
   const categorySeo = selectedCategory !== "すべて" ? CATEGORY_SEO[selectedCategory] : null;
   const seoTitle = categorySeo
     ? `${categorySeo.title} | OSSアルタナティブ`
@@ -131,7 +134,6 @@ export default function IndexPage() {
     ? `https://ossalt.jp/category/${categoryCanonicalSlug}`
     : "https://ossalt.jp/";
 
-  // JSON-LD for category pages
   const jsonLd = useMemo(() => {
     if (!categorySeo || selectedCategory === "すべて") return undefined;
     return {
@@ -181,7 +183,6 @@ export default function IndexPage() {
   }, [search]);
 
   useEffect(() => {
-    // Only update query params when not using /category/:slug route
     if (categorySlug) return;
     const params = new URLSearchParams();
     if (selectedCategory !== "すべて") params.set("category", selectedCategory);
@@ -203,7 +204,6 @@ export default function IndexPage() {
     setSelectedCategory(cat);
     setPage(0);
     setAllTools([]);
-    // Navigate to /category/:slug for SEO-friendly URLs
     const slug = CATEGORY_TO_SLUG[cat];
     if (slug) {
       navigate(`/category/${slug}`);
@@ -222,14 +222,12 @@ export default function IndexPage() {
 
   return (
     <SiteLayout>
-      {/* Hero */}
       <HeroSection
         search={search}
         onSearchChange={setSearch}
         onCategorySelect={handleCategoryChange}
       />
 
-      {/* Category Filter - Sticky */}
       <section className="sticky top-14 z-40 bg-background/80 backdrop-blur-xl border-b border-border py-2.5">
         <div className="container">
           <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
@@ -238,10 +236,8 @@ export default function IndexPage() {
 
       {isBrowsing ? (
         <section className="container pb-16 pt-8">
-          {/* Breadcrumb + Category heading for SEO */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mb-6">
-              {/* Breadcrumb */}
               <nav aria-label="パンくずリスト" className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
                 <Link to="/" className="hover:text-foreground transition-colors">ホーム</Link>
                 <ChevronRight className="h-3 w-3" />
@@ -249,7 +245,6 @@ export default function IndexPage() {
                   {categorySeo?.title || `${selectedCategory}のOSSツール`}
                 </span>
               </nav>
-              {/* h1 for category pages — important for SEO */}
               <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
                 {categorySeo?.title || `${selectedCategory}のOSSツール`}
               </h1>
@@ -309,14 +304,12 @@ export default function IndexPage() {
             </div>
           )}
 
-          {/* Category sponsor CTA */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mt-8">
               <CategorySponsorCTA category={selectedCategory} />
             </div>
           )}
 
-          {/* Related category links for internal linking */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mt-8 pt-8 border-t border-border">
               <h2 className="text-sm font-semibold text-foreground mb-3">他のカテゴリも見る</h2>
@@ -340,19 +333,27 @@ export default function IndexPage() {
         <>
           <StatsBar />
           <PopularAlternatives />
-          <div className="container py-6 px-4 md:px-8">
-            <AdSlot slotId="top-after-popular" format="horizontal" />
-          </div>
-          <UseCaseSection />
-          <WhyOSSSection />
-          <div className="container py-6 px-4 md:px-8">
-            <AdSlot slotId="top-after-usecase" format="horizontal" />
-          </div>
-          <FeaturedTools />
-          <NewToolsSection />
-          <TrustSection />
-          <FAQSection />
-          <BottomCTA />
+          <Suspense fallback={<SectionFallback />}>
+            <UseCaseSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <WhyOSSSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <FeaturedTools />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <NewToolsSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <TrustSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <FAQSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <BottomCTA />
+          </Suspense>
         </>
       )}
     </SiteLayout>
