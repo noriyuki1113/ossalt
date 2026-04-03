@@ -13,8 +13,8 @@ export function StatsBar() {
   ];
 
   return (
-    <section className="container py-16 md:py-20">
-      <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+    <section className="container py-10 md:py-20">
+      <div className="grid grid-cols-3 gap-2.5 md:gap-4 max-w-2xl mx-auto">
         {stats.map(({ icon: Icon, value, suffix, label, formatter }) => (
           <div key={label} className="text-center card-unified p-5">
             <div className="flex items-center justify-center gap-2 mb-1">
