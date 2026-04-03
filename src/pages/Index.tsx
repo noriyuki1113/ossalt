@@ -17,6 +17,7 @@ import { BottomCTA } from "@/components/home/BottomCTA";
 import { TrustSection } from "@/components/home/TrustSection";
 import { StatsBar } from "@/components/StatsBar";
 import { AdSlot } from "@/components/ads/AdSlot";
+import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
