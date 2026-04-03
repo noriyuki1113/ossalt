@@ -37,14 +37,12 @@ export function FeaturedTools() {
 
   return (
     <section className="container py-16 md:py-20">
-      <div className="text-center mb-10">
-        <div className="section-badge-primary">
-          <Trophy className="h-3.5 w-3.5" />
-          注目プロジェクト
-        </div>
-        <h2 className="section-title">注目のOSSプロジェクト</h2>
-        <p className="section-subtitle">GitHubスター数が多く、実績のあるOSS</p>
-      </div>
+      <h2 className="section-title text-center mb-10">
+        注目のOSSプロジェクト
+      </h2>
+      <p className="section-subtitle text-center -mt-8 mb-10">
+        GitHubスター数が多く、実績のあるOSS
+      </p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {isLoading
@@ -65,7 +63,6 @@ function FeaturedCard({ tool, rank }: { tool: Tool; rank: number }) {
       to={`/tools/${tool.id}`}
       className="group card-unified-hover p-5 relative flex flex-col"
     >
-      {/* Rank */}
       <span className="absolute -top-2.5 left-4 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
         #{rank}
       </span>
