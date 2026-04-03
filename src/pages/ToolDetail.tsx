@@ -426,7 +426,9 @@ export default function ToolDetailPage() {
                 {/* Primary CTA */}
                 {tool.url && (
                   <Button className="w-full gap-2 rounded-lg h-10" asChild>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                      onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                    >
                       公式サイトを見る <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   </Button>
