@@ -1,28 +1,13 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, MessageSquarePlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CTASection } from "@/components/CTASection";
 
 export function BottomCTA() {
   return (
-    <section className="container py-16 md:py-20">
-      <div className="card-unified p-8 md:p-14 text-center">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-3">
-          探しているOSSが見つかりませんか？
-        </h2>
-        <p className="text-sm text-muted-foreground mb-2 max-w-md mx-auto leading-relaxed">
-          ツール掲載リクエストを受け付けています。
-        </p>
-        <p className="text-xs text-muted-foreground/50 mb-8 max-w-md mx-auto">
-          ユーザーの提案でデータベースは日々成長しています
-        </p>
-
-        <Button asChild size="lg" className="rounded-xl px-8">
-          <Link to="/contact">
-            掲載をリクエストする
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Link>
-        </Button>
-      </div>
-    </section>
+    <CTASection
+      title="探しているOSSが見つかりませんか？"
+      subtitle="ツール掲載リクエストを受け付けています。"
+      note="ユーザーの提案でデータベースは日々成長しています"
+      buttonText="掲載をリクエストする"
+      buttonTo="/contact"
+    />
   );
 }

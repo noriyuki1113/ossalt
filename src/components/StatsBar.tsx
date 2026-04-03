@@ -1,12 +1,7 @@
 import { Package, Tags, Star } from "lucide-react";
 import { useToolStats } from "@/hooks/use-tools";
 import { CountUp } from "@/components/CountUp";
-
-function formatNumber(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}M+`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(0).replace(/\.0$/, "")}K+`;
-  return String(n);
-}
+import { formatLargeNumber } from "@/lib/format";
 
 export function StatsBar() {
   const { data } = useToolStats();
@@ -14,7 +9,7 @@ export function StatsBar() {
   const stats = [
     { icon: Package, value: data?.toolCount, suffix: "件", label: "ツール数", formatter: undefined },
     { icon: Tags, value: data?.categoryCount, suffix: "", label: "カテゴリ", formatter: undefined },
-    { icon: Star, value: data?.totalStars, suffix: "", label: "総スター数", formatter: formatNumber },
+    { icon: Star, value: data?.totalStars, suffix: "", label: "総スター数", formatter: formatLargeNumber },
   ];
 
   return (

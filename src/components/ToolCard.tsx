@@ -1,82 +1,11 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink, Github, Star, ArrowRight, GitFork, Clock } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, GitFork, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ToolIcon } from "@/components/ToolIcon";
+import { StarCount } from "@/components/StarCount";
+import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
-
-function formatCount(num: number | null): string {
-  if (!num) return "0";
-  if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
-  return String(num);
-}
-
-function formatRelativeDate(dateStr: string | null): string | null {
-  if (!dateStr) return null;
-  try {
-    const date = new Date(dateStr);
-    const diffDays = Math.floor((Date.now() - date.getTime()) / 86400000);
-    if (diffDays < 1) return "今日";
-    if (diffDays < 30) return `${diffDays}日前`;
-    const diffMonths = Math.floor(diffDays / 30);
-    if (diffMonths < 12) return `${diffMonths}ヶ月前`;
-    return `${Math.floor(diffMonths / 12)}年前`;
-  } catch { return null; }
-}
-
-function getFaviconUrl(url: string | null): string | null {
-  if (!url) return null;
-  try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=32`; }
-  catch { return null; }
-}
-
-function getGithubAvatarUrl(githubUrl: string | null): string | null {
-  if (!githubUrl) return null;
-  try {
-    const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
-    if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=64`;
-  } catch {}
-  return null;
-}
-
-function ToolIcon({ favicon, ghAvatar, name, size = 22 }: { favicon: string | null; ghAvatar: string | null; name: string | null; size?: number }) {
-  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
-  const s = `${size}px`;
-
-  if (!src) {
-    return (
-      <span className="rounded-md bg-secondary text-muted-foreground font-bold flex items-center justify-center shrink-0 uppercase"
-        style={{ width: s, height: s, fontSize: `${Math.round(size * 0.45)}px` }}>
-        {name?.charAt(0) || "?"}
-      </span>
-    );
-  }
-
-  return (
-    <img src={src} alt="" width={size} height={size}
-      className="rounded-md shrink-0 bg-secondary" loading="lazy"
-      onError={() => { if (src === favicon && ghAvatar) setSrc(ghAvatar); else setSrc(null); }}
-    />
-  );
-}
-
-const LANG_COLORS: Record<string, string> = {
-  Python: "bg-blue-50 text-blue-600 border-blue-200",
-  TypeScript: "bg-teal-50 text-teal-600 border-teal-200",
-  JavaScript: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  Go: "bg-cyan-50 text-cyan-600 border-cyan-200",
-  Rust: "bg-orange-50 text-orange-600 border-orange-200",
-  Ruby: "bg-red-50 text-red-600 border-red-200",
-  Java: "bg-amber-50 text-amber-700 border-amber-200",
-  Kotlin: "bg-purple-50 text-purple-600 border-purple-200",
-  Swift: "bg-orange-50 text-orange-500 border-orange-200",
-  "C++": "bg-pink-50 text-pink-600 border-pink-200",
-  C: "bg-gray-50 text-gray-600 border-gray-200",
-  PHP: "bg-indigo-50 text-indigo-600 border-indigo-200",
-};
-
-function getLanguageBadgeClass(lang: string): string {
-  return LANG_COLORS[lang] || "bg-secondary text-muted-foreground border-border";
-}
 
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
   if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-50 text-orange-600 border border-orange-200" };
@@ -88,8 +17,6 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
 }
 
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
-  const favicon = getFaviconUrl(tool.url);
-  const ghAvatar = getGithubAvatarUrl(tool.github_url);
   const competitor = tool.primary_competitor_ja || tool.primary_competitor;
   const highlightLabel = getHighlightLabel(tool);
 
@@ -105,27 +32,20 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         </span>
       )}
 
-      {competitor && competitor !== "有料SaaS" && (
+      {competitor && (
         <div className="mb-2">
-          <span className="inline-flex items-center text-[11px] font-medium text-primary bg-primary/10 border border-primary/15 rounded-md px-2 py-0.5">
-            {competitor} の代替
-          </span>
+          <AlternativeBadge competitor={competitor} />
         </div>
       )}
 
       <div className="flex items-start gap-3 mb-2 min-w-0">
         <div className="flex-1 min-w-0 flex items-center gap-2.5">
-          <ToolIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} size={22} />
+          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={22} />
           <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>
         </div>
-        {tool.stars_num && tool.stars_num > 0 ? (
-          <span className="shrink-0 flex items-center gap-1 text-xs text-amber-600 font-medium">
-            <Star className="h-3 w-3 fill-current" />
-            {formatCount(tool.stars_num)}
-          </span>
-        ) : null}
+        <StarCount count={tool.stars_num} size="sm" />
       </div>
 
       <p className="text-xs text-muted-foreground line-clamp-1 leading-relaxed mb-3 flex-1 break-words">

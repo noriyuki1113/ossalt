@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { SectionHeader } from "@/components/SectionHeader";
 
-/** Map competitor key to display info */
 const SAAS_META: Record<string, { icon: string }> = {
   Zapier:             { icon: "⚡" },
   Notion:             { icon: "📝" },
@@ -41,10 +41,7 @@ export function PopularAlternatives() {
         const key = t.primary_competitor!;
         const existing = map.get(key);
         if (!existing) {
-          map.set(key, {
-            count: 1, topTool: t.name || "", topToolId: t.id,
-            label: t.primary_competitor_ja || key, key,
-          });
+          map.set(key, { count: 1, topTool: t.name || "", topToolId: t.id, label: t.primary_competitor_ja || key, key });
         } else {
           existing.count++;
           if (!existing.secondTool) existing.secondTool = t.name || "";
@@ -62,8 +59,7 @@ export function PopularAlternatives() {
 
       return sorted.slice(0, 5).map((v) => ({
         competitor: v.key, competitorJa: v.label, count: v.count,
-        topTool: v.topTool, topToolId: v.topToolId,
-        secondTool: v.secondTool,
+        topTool: v.topTool, topToolId: v.topToolId, secondTool: v.secondTool,
       }));
     },
   });
@@ -72,39 +68,26 @@ export function PopularAlternatives() {
 
   return (
     <section id="popular-alternatives" className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
-        人気の乗り換え候補
-      </h2>
+      <SectionHeader title="人気の乗り換え候補" />
 
-      {/* Horizontal scrollable row matching mockup's "SaaS → OSS" cards */}
       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide max-w-6xl mx-auto">
         {groups.map((g) => {
           const meta = SAAS_META[g.competitor];
-
           return (
             <Link
               key={g.competitor}
               to={`/tools/${g.topToolId}`}
               className="group card-unified-hover p-5 min-w-[220px] flex-1 flex flex-col"
             >
-              {/* SaaS → OSS */}
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">{meta?.icon ?? "🔄"}</span>
-                <span className="font-semibold text-sm text-foreground">
-                  {g.competitorJa}
-                </span>
+                <span className="font-semibold text-sm text-foreground">{g.competitorJa}</span>
                 <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/50 shrink-0" />
-                <span className="text-sm text-primary font-medium truncate">
-                  {g.topTool}
-                </span>
+                <span className="text-sm text-primary font-medium truncate">{g.topTool}</span>
               </div>
-
-              {/* Description */}
               <p className="text-xs text-muted-foreground mb-4 flex-1">
                 {g.topTool}{g.secondTool ? `、${g.secondTool}` : ""}など{g.count}件のOSS代替
               </p>
-
-              {/* CTA */}
               <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground border border-border rounded-lg px-4 py-2 justify-center group-hover:text-primary group-hover:border-primary/30 transition-all">
                 詳細
               </span>
