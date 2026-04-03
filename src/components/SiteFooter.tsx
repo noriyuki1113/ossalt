@@ -23,20 +23,52 @@ export function SiteFooter() {
             <p className="text-xs text-muted-foreground leading-relaxed">
               有料SaaSの代替となるオープンソースツールを、日本語で検索・比較できるサイトです。
             </p>
+            {/* Data freshness indicator */}
+            <div className="mt-3 flex items-center gap-1.5 text-[10px] text-muted-foreground/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              GitHubデータ: 毎日自動更新
+            </div>
           </div>
 
           {/* Links */}
-          <nav className="flex flex-wrap gap-x-6 gap-y-2">
-            {FOOTER_LINKS.map((l) => (
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-10">
+            <nav className="space-y-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">サイト</p>
+              {FOOTER_LINKS.slice(0, 3).map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+            <nav className="space-y-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">参加する</p>
+              {FOOTER_LINKS.slice(3).map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {l.label}
+                </Link>
+              ))}
               <Link
-                key={l.to}
-                to={l.to}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+                to="/contact"
+                className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
-                {l.label}
+                ツール追加リクエスト
               </Link>
-            ))}
-          </nav>
+              <Link
+                to="/contact"
+                className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                情報修正リクエスト
+              </Link>
+            </nav>
+          </div>
         </div>
 
         {/* Bottom bar */}
@@ -45,7 +77,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()} OSSアルタナティブ. All rights reserved.
           </p>
           <p className="text-[11px] text-muted-foreground/50">
-            すべてのOSSに感謝。
+            データソース: openalternative.co (CC0) + GitHub API · すべてのOSSに感謝。
           </p>
         </div>
       </div>
