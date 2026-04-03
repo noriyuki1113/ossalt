@@ -256,6 +256,129 @@ export type Database = {
         }
         Relationships: []
       }
+      listing_requests: {
+        Row: {
+          agreed_policy: boolean
+          category: string | null
+          contact_email: string
+          contact_name: string
+          created_at: string
+          description: string | null
+          github_url: string | null
+          id: string
+          message: string | null
+          name: string
+          status: string
+          website_url: string
+        }
+        Insert: {
+          agreed_policy?: boolean
+          category?: string | null
+          contact_email: string
+          contact_name: string
+          created_at?: string
+          description?: string | null
+          github_url?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          status?: string
+          website_url: string
+        }
+        Update: {
+          agreed_policy?: boolean
+          category?: string | null
+          contact_email?: string
+          contact_name?: string
+          created_at?: string
+          description?: string | null
+          github_url?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          status?: string
+          website_url?: string
+        }
+        Relationships: []
+      }
+      monetization_leads: {
+        Row: {
+          company_name: string | null
+          contact_name: string | null
+          created_at: string
+          email: string | null
+          id: string
+          lead_type: string
+          note: string | null
+          source_page: string | null
+          source_page_type: string | null
+        }
+        Insert: {
+          company_name?: string | null
+          contact_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          lead_type?: string
+          note?: string | null
+          source_page?: string | null
+          source_page_type?: string | null
+        }
+        Update: {
+          company_name?: string | null
+          contact_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          lead_type?: string
+          note?: string | null
+          source_page?: string | null
+          source_page_type?: string | null
+        }
+        Relationships: []
+      }
+      partner_cards: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          id: string
+          label: string
+          logo_url: string | null
+          partner_name: string
+          partner_type: string
+          priority: number
+          tool_slug_or_category: string | null
+          url: string | null
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          label?: string
+          logo_url?: string | null
+          partner_name: string
+          partner_type?: string
+          priority?: number
+          tool_slug_or_category?: string | null
+          url?: string | null
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          label?: string
+          logo_url?: string | null
+          partner_name?: string
+          partner_type?: string
+          priority?: number
+          tool_slug_or_category?: string | null
+          url?: string | null
+        }
+        Relationships: []
+      }
       product_categories: {
         Row: {
           category_id: string
@@ -494,6 +617,57 @@ export type Database = {
           meta?: Json | null
           source?: string
           started_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      sponsor_slots: {
+        Row: {
+          category: string | null
+          created_at: string
+          cta_text: string | null
+          cta_url: string | null
+          end_at: string | null
+          id: string
+          label: string
+          page_type: string
+          slot_name: string
+          sponsor_description: string | null
+          sponsor_logo_url: string | null
+          sponsor_name: string | null
+          start_at: string | null
+          status: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          cta_text?: string | null
+          cta_url?: string | null
+          end_at?: string | null
+          id?: string
+          label?: string
+          page_type: string
+          slot_name: string
+          sponsor_description?: string | null
+          sponsor_logo_url?: string | null
+          sponsor_name?: string | null
+          start_at?: string | null
+          status?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          cta_text?: string | null
+          cta_url?: string | null
+          end_at?: string | null
+          id?: string
+          label?: string
+          page_type?: string
+          slot_name?: string
+          sponsor_description?: string | null
+          sponsor_logo_url?: string | null
+          sponsor_name?: string | null
+          start_at?: string | null
           status?: string
         }
         Relationships: []
