@@ -25,38 +25,38 @@ interface HeroSectionProps {
 export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden bg-card border-b border-border">
-      {/* Subtle bg accents */}
+      {/* Subtle bg accent */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px]" />
       </div>
 
       <div className="container relative pt-14 pb-12 md:pt-20 md:pb-16 text-center">
         {/* Headline */}
-        <h1 className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-black tracking-tight leading-[1.2] text-foreground whitespace-nowrap">
+        <h1 className="text-[1.75rem] sm:text-4xl md:text-[2.75rem] font-black leading-[1.2] text-foreground whitespace-nowrap">
           有料SaaS、もういらない。
         </h1>
 
         {/* Subtitle */}
         <p className="mt-4 text-[13px] sm:text-sm md:text-base text-muted-foreground leading-relaxed max-w-lg mx-auto">
           680以上の高品質なOSSツールを、日本語で簡単に検索。
-          <br />
+          <br className="hidden sm:block" />
           データ主権とコスト削減の両立へ、最適な選択肢を見つけよう。
         </p>
 
-        {/* ─── Search bar ─── */}
+        {/* Search bar */}
         <div className="mt-8 md:mt-10 max-w-2xl mx-auto px-1">
-          <div className="relative flex items-center rounded-2xl border border-border bg-background shadow-sm ring-1 ring-transparent focus-within:ring-primary/20 focus-within:border-primary/40 transition-all">
-            <Search className="absolute left-4 md:left-5 h-5 w-5 text-muted-foreground/60" />
+          <div className="relative flex items-center rounded-xl border border-border bg-background shadow-sm ring-1 ring-transparent focus-within:ring-primary/20 focus-within:border-primary/40 transition-all">
+            <Search className="absolute left-4 md:left-5 h-5 w-5 text-muted-foreground/50" />
             <input
               type="text"
               placeholder="Notion, Zapier, Google Analytics, 認証, プロジェクト管理"
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="h-14 md:h-[3.75rem] w-full rounded-2xl bg-transparent pl-12 md:pl-14 pr-[5.5rem] text-sm md:text-[15px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none"
+              className="h-14 md:h-[3.75rem] w-full rounded-xl bg-transparent pl-12 md:pl-14 pr-[5.5rem] text-sm md:text-[15px] text-foreground placeholder:text-muted-foreground/40 focus:outline-none"
             />
             <Button
               size="sm"
-              className="absolute right-2 rounded-xl px-5 md:px-6 h-10 text-sm font-semibold shadow-sm"
+              className="absolute right-2 rounded-lg px-5 md:px-6 h-10 text-sm font-semibold"
               onClick={() => {
                 const el = document.getElementById("popular-alternatives");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -65,14 +65,9 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
               検索
             </Button>
           </div>
-
-          {/* Example hint */}
-          <p className="mt-2.5 text-[11px] text-muted-foreground/50">
-            Examples: Notion, Zapier, Google Analytics
-          </p>
         </div>
 
-        {/* ─── Quick chips ─── */}
+        {/* Quick chips */}
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           {QUICK_CHIPS.map((chip) => (
             <button
@@ -85,10 +80,10 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
           ))}
         </div>
 
-        {/* ─── Value badges ─── */}
+        {/* Value badges */}
         <div className="mt-8 flex items-center justify-center gap-x-5 gap-y-2 flex-wrap">
           {VALUE_BADGES.map((badge) => (
-            <span key={badge} className="text-xs text-muted-foreground tracking-wide">
+            <span key={badge} className="text-xs text-muted-foreground/70 tracking-wide">
               {badge}
             </span>
           ))}

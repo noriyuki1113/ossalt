@@ -14,28 +14,19 @@ function formatRelativeDate(dateStr: string | null): string | null {
   if (!dateStr) return null;
   try {
     const date = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor((Date.now() - date.getTime()) / 86400000);
     if (diffDays < 1) return "今日";
     if (diffDays < 30) return `${diffDays}日前`;
     const diffMonths = Math.floor(diffDays / 30);
     if (diffMonths < 12) return `${diffMonths}ヶ月前`;
-    const diffYears = Math.floor(diffMonths / 12);
-    return `${diffYears}年前`;
-  } catch {
-    return null;
-  }
+    return `${Math.floor(diffMonths / 12)}年前`;
+  } catch { return null; }
 }
 
 function getFaviconUrl(url: string | null): string | null {
   if (!url) return null;
-  try {
-    const domain = new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
-  } catch {
-    return null;
-  }
+  try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=32`; }
+  catch { return null; }
 }
 
 function getGithubAvatarUrl(githubUrl: string | null): string | null {
@@ -53,18 +44,17 @@ function ToolIcon({ favicon, ghAvatar, name, size = 22 }: { favicon: string | nu
 
   if (!src) {
     return (
-      <span className="rounded-md bg-secondary text-muted-foreground font-bold flex items-center justify-center shrink-0 uppercase" style={{ width: s, height: s, fontSize: `${Math.round(size * 0.45)}px` }}>
+      <span className="rounded-md bg-secondary text-muted-foreground font-bold flex items-center justify-center shrink-0 uppercase"
+        style={{ width: s, height: s, fontSize: `${Math.round(size * 0.45)}px` }}>
         {name?.charAt(0) || "?"}
       </span>
     );
   }
 
   return (
-    <img src={src} alt="" width={size} height={size} className="rounded-md shrink-0 bg-secondary" loading="lazy"
-      onError={() => {
-        if (src === favicon && ghAvatar) setSrc(ghAvatar);
-        else setSrc(null);
-      }}
+    <img src={src} alt="" width={size} height={size}
+      className="rounded-md shrink-0 bg-secondary" loading="lazy"
+      onError={() => { if (src === favicon && ghAvatar) setSrc(ghAvatar); else setSrc(null); }}
     />
   );
 }
@@ -106,26 +96,23 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group flex flex-col rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/30 hover:shadow-sm relative"
+      className="group card-unified-hover p-5 flex flex-col relative"
       style={{ animationDelay: `${Math.min(index * 40, 500)}ms`, animationFillMode: "both" }}
     >
-      {/* Highlight label */}
       {highlightLabel && (
         <span className={`absolute -top-2.5 right-4 text-[10px] font-bold px-2 py-0.5 rounded-full ${highlightLabel.cls}`}>
           {highlightLabel.text}
         </span>
       )}
 
-      {/* Alternative badge */}
       {competitor && competitor !== "有料SaaS" && (
         <div className="mb-2">
-          <span className="inline-flex items-center text-[11px] font-medium text-primary bg-primary/8 border border-primary/15 rounded-md px-2 py-0.5">
+          <span className="inline-flex items-center text-[11px] font-medium text-primary bg-primary/10 border border-primary/15 rounded-md px-2 py-0.5">
             {competitor} の代替
           </span>
         </div>
       )}
 
-      {/* Header: icon + name + stars */}
       <div className="flex items-start gap-3 mb-2 min-w-0">
         <div className="flex-1 min-w-0 flex items-center gap-2.5">
           <ToolIcon favicon={favicon} ghAvatar={ghAvatar} name={tool.name} size={22} />
@@ -141,12 +128,10 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         ) : null}
       </div>
 
-      {/* Description */}
       <p className="text-xs text-muted-foreground line-clamp-1 leading-relaxed mb-3 flex-1 break-words">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
-      {/* Tags row */}
       <div className="flex flex-wrap items-center gap-1.5 mb-3">
         {tool.language && (
           <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 ${getLanguageBadgeClass(tool.language)}`}>
@@ -177,29 +162,24 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         )}
       </div>
 
-      {/* CTAs */}
-      <div className="flex items-center gap-2 pt-3 border-t border-border">
-        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all">
+      <div className="flex items-center gap-2 pt-3 border-t border-border/60">
+        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">
           詳しく見る
           <ArrowRight className="h-3 w-3" />
         </span>
         <div className="ml-auto flex items-center gap-1">
           {tool.url && (
-            <span
-              role="link"
+            <span role="link"
               className="inline-flex items-center h-7 px-2.5 text-[11px] gap-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.url!, "_blank", "noopener,noreferrer"); }}
-            >
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.url!, "_blank", "noopener,noreferrer"); }}>
               <ExternalLink className="h-3 w-3" />
               サイト
             </span>
           )}
           {tool.github_url && (
-            <span
-              role="link"
+            <span role="link"
               className="inline-flex items-center h-7 px-2.5 text-[11px] gap-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.github_url!, "_blank", "noopener,noreferrer"); }}
-            >
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.github_url!, "_blank", "noopener,noreferrer"); }}>
               <Github className="h-3 w-3" />
             </span>
           )}
@@ -211,7 +191,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
 
 export function ToolCardSkeleton() {
   return (
-    <div className="rounded-xl border border-border bg-card p-5 animate-pulse">
+    <div className="card-unified p-5 animate-pulse">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className="h-6 w-6 bg-secondary rounded-md" />

@@ -39,16 +39,12 @@ export function NewToolsSection() {
   return (
     <section className="container py-16 md:py-20">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 text-emerald-600 bg-emerald-50 rounded-full px-3 py-1 text-xs font-medium mb-4">
+        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium mb-4 text-emerald-600 bg-emerald-50">
           <Sparkles className="h-3.5 w-3.5" />
           新着
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
-          最近追加されたツール
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          新しく掲載されたOSSツール
-        </p>
+        <h2 className="section-title">最近追加されたツール</h2>
+        <p className="section-subtitle">新しく掲載されたOSSツール</p>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
@@ -68,46 +64,42 @@ function NewToolCard({ tool }: { tool: Tool }) {
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group flex items-start gap-3.5 rounded-xl border border-border bg-card px-4 py-3.5 transition-all duration-200 hover:border-primary/30 hover:shadow-sm hover:-translate-y-0.5 relative"
+      className="group card-unified-hover px-4 py-3.5 relative"
     >
-      {/* New badge */}
       <span className="absolute -top-2 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200">
         🆕 新着
       </span>
 
-      {/* Content */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1">
-          <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-1">
-            {tool.name}
-          </h3>
-          {tool.stars_num && tool.stars_num > 0 && (
-            <span className="shrink-0 flex items-center gap-0.5 text-[11px] text-amber-600 font-medium">
-              <Star className="h-3 w-3 fill-current" />
-              {formatCount(tool.stars_num)}
-            </span>
-          )}
-        </div>
-
-        {competitor && competitor !== "有料SaaS" && (
-          <span className="inline-block text-[10px] font-medium text-primary bg-primary/8 rounded px-1.5 py-0.5 mb-1">
-            {competitor} の代替
+      <div className="flex items-center gap-2 mb-1">
+        <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors line-clamp-1">
+          {tool.name}
+        </h3>
+        {tool.stars_num && tool.stars_num > 0 && (
+          <span className="shrink-0 flex items-center gap-0.5 text-[11px] text-amber-600 font-medium">
+            <Star className="h-3 w-3 fill-current" />
+            {formatCount(tool.stars_num)}
           </span>
         )}
+      </div>
 
-        <p className="text-[11px] text-muted-foreground line-clamp-1 leading-relaxed mb-2">
-          {tool.description_ja || tool.description_en || "説明なし"}
-        </p>
+      {competitor && competitor !== "有料SaaS" && (
+        <span className="inline-block text-[10px] font-medium text-primary bg-primary/10 rounded px-1.5 py-0.5 mb-1">
+          {competitor} の代替
+        </span>
+      )}
 
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] text-muted-foreground/70">
-            {addedDate ? `${addedDate}に追加` : ""}
-          </span>
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all duration-200">
-            詳細
-            <ArrowRight className="h-3 w-3" />
-          </span>
-        </div>
+      <p className="text-[11px] text-muted-foreground line-clamp-1 leading-relaxed mb-2">
+        {tool.description_ja || tool.description_en || "説明なし"}
+      </p>
+
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] text-muted-foreground/60">
+          {addedDate ? `${addedDate}に追加` : ""}
+        </span>
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all duration-200">
+          詳細
+          <ArrowRight className="h-3 w-3" />
+        </span>
       </div>
     </Link>
   );
@@ -115,12 +107,10 @@ function NewToolCard({ tool }: { tool: Tool }) {
 
 function NewToolSkeleton() {
   return (
-    <div className="flex items-start gap-3.5 rounded-xl border border-border bg-card px-4 py-3.5 animate-pulse">
-      <div className="flex-1">
-        <div className="h-4 w-28 bg-secondary rounded mb-2" />
-        <div className="h-3 w-full bg-secondary rounded mb-2" />
-        <div className="h-3 w-16 bg-secondary rounded" />
-      </div>
+    <div className="card-unified px-4 py-3.5 animate-pulse">
+      <div className="h-4 w-28 bg-secondary rounded mb-2" />
+      <div className="h-3 w-full bg-secondary rounded mb-2" />
+      <div className="h-3 w-16 bg-secondary rounded" />
     </div>
   );
 }
