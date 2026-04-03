@@ -83,11 +83,11 @@ const PLANS = [
 ];
 
 const GOOD_FIT = [
-  "OSSプロジェクト（ホスティング・マネージド版の告知）",
-  "開発者向けSaaS・クラウドサービス",
-  "OSS導入支援・コンサルティング会社",
-  "ホスティング・インフラプロバイダー",
-  "開発者向けツール・サービス",
+  { text: "OSSプロジェクト（ホスティング・マネージド版の告知）", example: "例: Supabase, GitLab, Mattermost" },
+  { text: "開発者向けSaaS・クラウドサービス", example: "例: CI/CDツール, モニタリングサービス" },
+  { text: "OSS導入支援・コンサルティング会社", example: "例: セルフホスト構築支援, 移行コンサル" },
+  { text: "ホスティング・インフラプロバイダー", example: "例: VPS, マネージドDB, CDN" },
+  { text: "開発者向けツール・サービス", example: "例: IDE, API管理, テストツール" },
 ];
 
 const STEPS = [

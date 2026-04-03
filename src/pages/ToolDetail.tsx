@@ -802,12 +802,14 @@ export default function ToolDetailPage() {
                 {
                   title: `${competitorDisplay}代替を選ぶときのポイント`,
                   description: `${competitorDisplay}の代わりに使えるOSSを比較・選定するための観点を解説`,
-                  href: `/alternatives/${altSlug}`,
+                  href: competitorDisplay === "Notion" ? "/guides/notion-alternatives"
+                    : competitorDisplay === "Slack" ? "/guides/slack-alternatives"
+                    : `/alternatives/${altSlug}`,
                 },
                 {
                   title: "セルフホスト前提で見るべき観点",
                   description: "サーバー運用・バックアップ・セキュリティの基本を確認",
-                  href: "/about",
+                  href: "/guides/self-hosting",
                 },
                 {
                   title: "OSS導入でコストを削減する方法",
