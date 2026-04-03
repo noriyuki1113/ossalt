@@ -17,6 +17,7 @@ export function AdvertiseCTA({ className, variant = "inline" }: AdvertiseCTAProp
     return (
       <Link
         to="/advertise"
+        onClick={() => track("revenue_cta_click", { cta: "advertise_inline" })}
         className={cn(
           "text-xs text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap",
           className,
