@@ -36,8 +36,8 @@ export default function IndexPage() {
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
 
   useSeo({
-    title: "OSSアルタナティブ - 有料SaaSの代わりに使えるオープンソースツール集",
-    description: "Notion・Slack・Figmaなどの有料SaaSの代替となるオープンソースツールを日本語で検索・比較できるサイトです。無料で使えるOSSを簡単に見つけられます。",
+    title: "OSSアルタナティブ | 有料SaaSの代替OSSを日本語で検索・比較",
+    description: "Notion・Slack・Figma・Zapierなどの有料SaaSの代替となるオープンソースツールを、日本語で検索・比較できるサイトです。無料・セルフホスト可能なOSSを簡単に見つけられます。",
     canonical: "https://ossalt.jp/",
   });
 
