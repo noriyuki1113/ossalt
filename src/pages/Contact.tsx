@@ -17,6 +17,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
+import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 
 const contactSchema = z.object({
   name: z.string().max(100).optional(),
@@ -89,14 +90,8 @@ export default function ContactPage() {
   if (submitted) {
     return (
       <SiteLayout>
-        <div className="container max-w-xl mx-auto py-20 px-4 text-center animate-fade-in">
-          <div className="rounded-2xl border bg-card p-10 space-y-4">
-            <div className="text-4xl">✉️</div>
-            <h1 className="text-2xl font-bold">送信完了</h1>
-            <p className="text-muted-foreground">
-              お問い合わせありがとうございます。内容を確認の上、必要に応じてご連絡いたします。
-            </p>
-          </div>
+        <div className="container max-w-xl mx-auto py-20 px-4">
+          <InquirySuccessMessage type="contact" />
         </div>
       </SiteLayout>
     );
@@ -124,7 +119,7 @@ export default function ContactPage() {
 
           <div className="space-y-2">
             <Label htmlFor="email">
-              メールアドレス <span className="text-red-400">*</span>
+              メールアドレス <span className="text-destructive">*</span>
             </Label>
             <Input
               id="email"
@@ -135,7 +130,7 @@ export default function ContactPage() {
               placeholder="email@example.com"
               maxLength={320}
             />
-            {errors.email && <p className="text-sm text-red-400">{errors.email}</p>}
+            {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -159,7 +154,7 @@ export default function ContactPage() {
 
           <div className="space-y-2">
             <Label htmlFor="message">
-              メッセージ <span className="text-red-400">*</span>
+              メッセージ <span className="text-destructive">*</span>
             </Label>
             <Textarea
               id="message"
@@ -170,7 +165,7 @@ export default function ContactPage() {
               placeholder="お問い合わせ内容をご記入ください"
               maxLength={5000}
             />
-            {errors.message && <p className="text-sm text-red-400">{errors.message}</p>}
+            {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
 
           <Button type="submit" size="lg" className="w-full gap-2 rounded-xl" disabled={submitting}>

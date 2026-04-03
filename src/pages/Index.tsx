@@ -14,6 +14,7 @@ import { WhyOSSSection } from "@/components/home/WhyOSSSection";
 import { NewToolsSection } from "@/components/home/NewToolsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { BottomCTA } from "@/components/home/BottomCTA";
+import { TrustSection } from "@/components/home/TrustSection";
 import { StatsBar } from "@/components/StatsBar";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
@@ -35,10 +36,21 @@ export default function IndexPage() {
 
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
 
+  // Category-aware SEO
+  const categoryTitle = selectedCategory !== "すべて" ? selectedCategory : null;
+  const seoTitle = categoryTitle
+    ? `${categoryTitle}のOSS代替ツール一覧 | OSSアルタナティブ`
+    : "OSSアルタナティブ | 有料SaaSの代替OSSを日本語で検索・比較";
+  const seoDescription = categoryTitle
+    ? `${categoryTitle}カテゴリの有料SaaS代替となるオープンソースツールを一覧で比較。無料・セルフホスト可能なOSSを見つけよう。`
+    : "Notion・Slack・Figma・Zapierなどの有料SaaSの代替となるオープンソースツールを、日本語で検索・比較できるサイトです。無料・セルフホスト可能なOSSを簡単に見つけられます。";
+
   useSeo({
-    title: "OSSアルタナティブ | 有料SaaSの代替OSSを日本語で検索・比較",
-    description: "Notion・Slack・Figma・Zapierなどの有料SaaSの代替となるオープンソースツールを、日本語で検索・比較できるサイトです。無料・セルフホスト可能なOSSを簡単に見つけられます。",
-    canonical: "https://ossalt.jp/",
+    title: seoTitle,
+    description: seoDescription,
+    canonical: categoryTitle
+      ? `https://ossalt.jp/?category=${encodeURIComponent(categoryTitle)}`
+      : "https://ossalt.jp/",
   });
 
   const { data, isLoading } = useTools({
@@ -165,13 +177,14 @@ export default function IndexPage() {
           <div className="container py-6 px-4 md:px-8">
             <AdSlot slotId="top-after-popular" format="horizontal" />
           </div>
-          <WhyOSSSection />
           <UseCaseSection />
+          <WhyOSSSection />
           <div className="container py-6 px-4 md:px-8">
             <AdSlot slotId="top-after-usecase" format="horizontal" />
           </div>
           <FeaturedTools />
           <NewToolsSection />
+          <TrustSection />
           <FAQSection />
           <BottomCTA />
         </>

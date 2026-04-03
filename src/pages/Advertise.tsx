@@ -234,11 +234,7 @@ export default function Advertise() {
           <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">お問い合わせ</h2>
 
           {submitted ? (
-            <div className="text-center p-8 rounded-xl border border-primary/30 bg-primary/5">
-              <Check className="h-10 w-10 text-primary mx-auto mb-3" />
-              <p className="text-foreground font-medium">お問い合わせありがとうございます。</p>
-              <p className="text-muted-foreground text-sm mt-1">2〜3営業日以内にご連絡します。</p>
-            </div>
+            <InquirySuccessMessage type="advertise" />
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
