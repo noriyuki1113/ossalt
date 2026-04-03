@@ -373,6 +373,16 @@ export default function AlternativesPage() {
         <div className="mt-8">
           <AlternativeSponsorCTA competitor={competitor} />
         </div>
+
+        {/* Community Participation */}
+        <div className="mt-6">
+          <CommunityParticipationCTA context="alternatives" />
+        </div>
+
+        {/* Newsletter */}
+        <div className="mt-6">
+          <NewsletterSignup />
+        </div>
       </div>
 
       {/* Bottom back button */}
