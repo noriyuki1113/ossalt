@@ -10,6 +10,7 @@ import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
+import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { useSeo } from "@/hooks/use-seo";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
