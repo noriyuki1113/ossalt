@@ -237,14 +237,23 @@ export default function IndexPage() {
 
       {isBrowsing ? (
         <section className="container pb-16 pt-8">
-          {/* Category page heading for SEO */}
+          {/* Breadcrumb + Category heading for SEO */}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mb-6">
-              <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
+              {/* Breadcrumb */}
+              <nav aria-label="パンくずリスト" className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
+                <Link to="/" className="hover:text-foreground transition-colors">ホーム</Link>
+                <ChevronRight className="h-3 w-3" />
+                <span className="text-foreground font-medium">
+                  {categorySeo?.title || `${selectedCategory}のOSSツール`}
+                </span>
+              </nav>
+              {/* h1 for category pages — important for SEO */}
+              <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
                 {categorySeo?.title || `${selectedCategory}のOSSツール`}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {categorySeo?.description?.slice(0, 80) || ""}
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+                {categorySeo?.description || ""}
               </p>
             </div>
           )}
