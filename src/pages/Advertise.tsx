@@ -6,255 +6,220 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
-import { Eye, LayoutGrid, FolderOpen, Check, Star, Zap, Crown, Users, Building, Globe } from "lucide-react";
+import {
+  Check, Users, Code2, Building, Globe, Search,
+  LayoutGrid, FileText, Shield, ArrowRight, Megaphone,
+  Eye, FolderOpen,
+} from "lucide-react";
 
-const plans = [
-  {
-    name: "Starter",
-    price: "¥4,900",
-    period: "/月",
-    icon: Zap,
-    recommended: false,
-    features: [
-      "ランキングページ上部に表示",
-      "クリック数レポート（月次）",
-    ],
-  },
-  {
-    name: "Standard",
-    price: "¥9,800",
-    period: "/月",
-    icon: Star,
-    recommended: true,
-    features: [
-      "トップページ・ランキング・カテゴリページに表示",
-      "クリック＋表示数レポート（月次）",
-      'プロダクトページに「Featured」バッジ',
-    ],
-  },
-  {
-    name: "Premium",
-    price: "¥19,800",
-    period: "/月",
-    icon: Crown,
-    recommended: false,
-    features: [
-      "全ページに表示（表示頻度2倍）",
-      "トップページにロゴ固定表示",
-      "「おすすめ」バッジ",
-      "月次詳細レポート",
-      "掲載内容の編集サポート",
-    ],
-  },
+/* ── Data ── */
+
+const AUDIENCES = [
+  { icon: Code2, title: "エンジニア・開発者", desc: "SaaSからOSSへの移行を検討している技術者" },
+  { icon: Building, title: "技術責任者・CTO", desc: "コスト削減やデータ主権を重視する意思決定者" },
+  { icon: Users, title: "スタートアップ", desc: "低コストで高品質なツールを探しているチーム" },
+  { icon: Globe, title: "運用・インフラ担当", desc: "セルフホスト環境を構築・運用する担当者" },
 ];
 
-const audiences = [
-  { icon: Users, text: "OSSプロジェクトのメンテナー" },
-  { icon: Building, text: "開発者向けSaaSを提供している企業" },
-  { icon: Globe, text: "日本市場に参入したい海外OSSチーム" },
+const PLACEMENTS = [
+  { icon: LayoutGrid, title: "トップページ", desc: "セクション間の自然な広告枠。最も多くのユーザーが目にします。" },
+  { icon: FileText, title: "ツール詳細ページ", desc: "特定ツールを検討中のユーザーに、関連ソリューションとして表示。" },
+  { icon: Search, title: "カテゴリ・検索結果", desc: "特定カテゴリを閲覧中のユーザーにリーチ。" },
+  { icon: Megaphone, title: "スポンサー枠", desc: "「スポンサー」ラベル付きのプレミアム掲載枠。" },
 ];
 
-const faqs = [
-  {
-    q: "掲載開始までどのくらいかかりますか？",
-    a: "お申し込み確認後、通常2〜3営業日以内に掲載開始します。",
-  },
-  {
-    q: "契約期間の縛りはありますか？",
-    a: "月単位の契約です。いつでもキャンセル可能です。",
-  },
-  {
-    q: "効果測定はできますか？",
-    a: "クリック数・表示数のレポートを毎月メールでお送りします。",
-  },
+const GOOD_FIT = [
+  "OSSプロジェクト（ホスティング・マネージド版の告知）",
+  "開発者向けSaaS・クラウドサービス",
+  "OSS導入支援・コンサルティング会社",
+  "ホスティング・インフラプロバイダー",
+  "開発者向けツール・サービス",
+];
+
+const STEPS = [
+  { step: "01", title: "お問い合わせ", desc: "下記フォームからご連絡ください。" },
+  { step: "02", title: "ヒアリング", desc: "掲載目的・ご予算に合わせたプランをご提案します。" },
+  { step: "03", title: "クリエイティブ確認", desc: "掲載内容を確認・調整します。" },
+  { step: "04", title: "掲載開始", desc: "通常2〜3営業日で掲載を開始します。" },
 ];
 
 export default function Advertise() {
   useSeo({
-    title: "広告掲載・スポンサー",
-    description: "ossalt.jpに広告を掲載して、日本のエンジニアにあなたのOSSプロダクトを届けましょう。",
+    title: "広告掲載・スポンサー | OSSアルタナティブ",
+    description: "OSSアルタナティブは、有料SaaSの代替OSSを探すユーザーに自然にリーチできる掲載プラットフォームです。",
     canonical: "https://ossalt.jp/advertise",
   });
 
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    product_name: "",
-    plan: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", product_name: "", plan: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  const scrollToForm = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToForm = () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!formState.name.trim() || !formState.email.trim() || !formState.product_name.trim()) {
+    if (!form.name.trim() || !form.email.trim() || !form.product_name.trim()) {
       setError("必須項目を入力してください。");
       return;
     }
     setSubmitting(true);
     const { error: dbError } = await supabase.from("advertise_inquiries").insert({
-      name: formState.name.trim(),
-      email: formState.email.trim(),
-      product_name: formState.product_name.trim(),
-      plan: formState.plan || "undecided",
-      message: formState.message.trim() || null,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      product_name: form.product_name.trim(),
+      plan: form.plan || "undecided",
+      message: form.message.trim() || null,
     });
     setSubmitting(false);
-    if (dbError) {
-      setError("送信に失敗しました。もう一度お試しください。");
-      return;
-    }
+    if (dbError) { setError("送信に失敗しました。もう一度お試しください。"); return; }
     setSubmitted(true);
   };
 
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
-            日本のエンジニアにリーチしよう
+      <section className="relative overflow-hidden py-16 md:py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-transparent to-transparent pointer-events-none" />
+        <div className="container mx-auto px-4 text-center relative z-10 max-w-3xl">
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground mb-4 leading-tight">
+            OSSを探しているユーザーに、
+            <br className="hidden sm:block" />
+            自然に届けませんか。
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg leading-relaxed mb-8">
-            ossalt.jpは日本語圏唯一のOSS代替ツールディレクトリです。
-            OSSを積極的に探しているエンジニア・IT担当者に、あなたのプロダクトを届けましょう。
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+            OSSアルタナティブは、有料SaaSの代替となるオープンソースツールを日本語で探せる比較サイトです。
+            導入を検討している開発者、技術責任者、スタートアップに向けて、自然な形で認知を広げられます。
           </p>
           <Button
             size="lg"
-            className="rounded-xl px-8 text-base shadow-lg shadow-primary/20 bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold"
+            className="rounded-xl px-8 text-sm font-semibold"
             onClick={scrollToForm}
           >
-            掲載を申し込む
+            掲載について相談する <ArrowRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-12 border-y border-border/50">
-        <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <section className="border-y border-border/50 py-10">
+        <div className="container mx-auto px-4 grid grid-cols-3 gap-6 text-center max-w-2xl">
           {[
-            { icon: Eye, label: "月間ページビュー", value: "準備中" },
-            { icon: LayoutGrid, label: "掲載ツール数", value: "680+" },
-            { icon: FolderOpen, label: "カテゴリ数", value: "50+" },
+            { icon: Eye, value: "5,000+", label: "月間ページビュー" },
+            { icon: LayoutGrid, value: "680+", label: "掲載ツール数" },
+            { icon: FolderOpen, value: "50+", label: "カテゴリ数" },
           ].map((s) => (
-            <div key={s.label} className="flex flex-col items-center gap-2">
-              <s.icon className="h-8 w-8 text-primary" />
-              <span className="text-2xl md:text-3xl font-bold text-foreground">{s.value}</span>
-              <span className="text-sm text-muted-foreground">{s.label}</span>
+            <div key={s.label} className="flex flex-col items-center gap-1.5">
+              <s.icon className="h-5 w-5 text-primary" />
+              <span className="text-xl md:text-2xl font-bold text-foreground">{s.value}</span>
+              <span className="text-[11px] text-muted-foreground">{s.label}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Plans */}
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-10">掲載プラン</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-xl border p-6 flex flex-col ${
-                  plan.recommended
-                    ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
-                    : "border-border bg-card"
-                }`}
-              >
-                {plan.recommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                    おすすめ
-                  </span>
-                )}
-                <div className="flex items-center gap-2 mb-4">
-                  <plan.icon className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
+      {/* Audiences */}
+      <section className="py-14 md:py-20">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">届けられる読者像</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {AUDIENCES.map((a) => (
+              <div key={a.title} className="card-unified p-5 flex items-start gap-4">
+                <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <a.icon className="h-4 w-4 text-primary" />
                 </div>
-                <div className="mb-6">
-                  <span className="text-3xl font-bold text-foreground">{plan.price}</span>
-                  <span className="text-muted-foreground text-sm">{plan.period}</span>
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-0.5">{a.title}</p>
+                  <p className="text-xs text-muted-foreground">{a.desc}</p>
                 </div>
-                <ul className="flex-1 space-y-3 mb-6">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  variant={plan.recommended ? "default" : "outline"}
-                  className="w-full rounded-lg"
-                  onClick={scrollToForm}
-                >
-                  申し込む
-                </Button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Target audience */}
-      <section className="py-12 md:py-16 border-t border-border/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-8">こんな方におすすめ</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {audiences.map((a) => (
-              <div key={a.text} className="flex flex-col items-center text-center gap-3 p-6 rounded-xl border border-border bg-card">
-                <a.icon className="h-8 w-8 text-primary" />
-                <span className="text-sm text-muted-foreground">{a.text}</span>
+      {/* Placements */}
+      <section className="py-14 md:py-20 border-t border-border/50">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">掲載できる場所</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {PLACEMENTS.map((p) => (
+              <div key={p.title} className="card-unified p-5 flex items-start gap-4">
+                <div className="h-9 w-9 rounded-lg bg-secondary flex items-center justify-center shrink-0">
+                  <p.icon className="h-4 w-4 text-foreground" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground mb-0.5">{p.title}</p>
+                  <p className="text-xs text-muted-foreground">{p.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-12 md:py-16 border-t border-border/50">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-8">よくある質問</h2>
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`}>
-                <AccordionTrigger className="text-left text-foreground">{faq.q}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">{faq.a}</AccordionContent>
-              </AccordionItem>
+      {/* Policy */}
+      <section className="py-14 md:py-20 border-t border-border/50">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">掲載ポリシー</h2>
+          <div className="card-unified p-6 md:p-8 space-y-4">
+            {[
+              { icon: Shield, text: "広告・スポンサーであることを必ず明示します" },
+              { icon: Search, text: "自然な検索順位やランキングとは完全に分離します" },
+              { icon: Users, text: "ユーザーの比較体験を損なう掲載はお断りします" },
+            ].map((item) => (
+              <div key={item.text} className="flex items-start gap-3">
+                <item.icon className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <p className="text-sm text-foreground">{item.text}</p>
+              </div>
             ))}
-          </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Good fit */}
+      <section className="py-14 md:py-20 border-t border-border/50">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">相性の良い掲載主</h2>
+          <div className="space-y-3 max-w-lg mx-auto">
+            {GOOD_FIT.map((text) => (
+              <div key={text} className="flex items-center gap-3">
+                <Check className="h-4 w-4 text-primary shrink-0" />
+                <p className="text-sm text-foreground">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Steps */}
+      <section className="py-14 md:py-20 border-t border-border/50">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">掲載までの流れ</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {STEPS.map((s) => (
+              <div key={s.step} className="card-unified p-5 text-center">
+                <span className="text-2xl font-bold text-primary/30">{s.step}</span>
+                <p className="text-sm font-semibold text-foreground mt-2 mb-1">{s.title}</p>
+                <p className="text-xs text-muted-foreground">{s.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Contact Form */}
-      <section id="contact" className="py-16 md:py-20 border-t border-border/50">
+      <section id="contact" className="py-14 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-lg">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-8">
-            掲載を申し込む・お問い合わせ
-          </h2>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">お問い合わせ</h2>
 
           {submitted ? (
             <div className="text-center p-8 rounded-xl border border-primary/30 bg-primary/5">
-              <Check className="h-12 w-12 text-primary mx-auto mb-4" />
+              <Check className="h-10 w-10 text-primary mx-auto mb-3" />
               <p className="text-foreground font-medium">お問い合わせありがとうございます。</p>
               <p className="text-muted-foreground text-sm mt-1">2〜3営業日以内にご連絡します。</p>
             </div>
@@ -262,61 +227,31 @@ export default function Advertise() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="adv-name">お名前 <span className="text-destructive">*</span></Label>
-                <Input
-                  id="adv-name"
-                  required
-                  maxLength={200}
-                  value={formState.name}
-                  onChange={(e) => setFormState((p) => ({ ...p, name: e.target.value }))}
-                />
+                <Input id="adv-name" required maxLength={200} value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="adv-email">メールアドレス <span className="text-destructive">*</span></Label>
-                <Input
-                  id="adv-email"
-                  type="email"
-                  required
-                  maxLength={320}
-                  value={formState.email}
-                  onChange={(e) => setFormState((p) => ({ ...p, email: e.target.value }))}
-                />
+                <Input id="adv-email" type="email" required maxLength={320} value={form.email} onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="adv-product">プロダクト名 <span className="text-destructive">*</span></Label>
-                <Input
-                  id="adv-product"
-                  required
-                  maxLength={200}
-                  value={formState.product_name}
-                  onChange={(e) => setFormState((p) => ({ ...p, product_name: e.target.value }))}
-                />
+                <Label htmlFor="adv-product">プロダクト / サービス名 <span className="text-destructive">*</span></Label>
+                <Input id="adv-product" required maxLength={200} value={form.product_name} onChange={(e) => setForm((p) => ({ ...p, product_name: e.target.value }))} />
               </div>
               <div className="space-y-2">
-                <Label>ご希望のプラン</Label>
-                <Select
-                  value={formState.plan}
-                  onValueChange={(v) => setFormState((p) => ({ ...p, plan: v }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選択してください" />
-                  </SelectTrigger>
+                <Label>ご興味のある掲載形式</Label>
+                <Select value={form.plan} onValueChange={(v) => setForm((p) => ({ ...p, plan: v }))}>
+                  <SelectTrigger><SelectValue placeholder="選択してください" /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="starter">Starter</SelectItem>
-                    <SelectItem value="standard">Standard</SelectItem>
-                    <SelectItem value="premium">Premium</SelectItem>
+                    <SelectItem value="ad-slot">広告枠（AdSense型）</SelectItem>
+                    <SelectItem value="sponsor">スポンサー掲載</SelectItem>
+                    <SelectItem value="featured">フィーチャー掲載</SelectItem>
                     <SelectItem value="undecided">まだ決めていない</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="adv-message">メッセージ（任意）</Label>
-                <Textarea
-                  id="adv-message"
-                  maxLength={5000}
-                  rows={4}
-                  value={formState.message}
-                  onChange={(e) => setFormState((p) => ({ ...p, message: e.target.value }))}
-                />
+                <Textarea id="adv-message" maxLength={5000} rows={4} value={form.message} onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))} />
               </div>
               {error && <p className="text-destructive text-sm">{error}</p>}
               <Button type="submit" className="w-full rounded-lg" disabled={submitting}>

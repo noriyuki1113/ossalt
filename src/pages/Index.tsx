@@ -15,6 +15,7 @@ import { NewToolsSection } from "@/components/home/NewToolsSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { BottomCTA } from "@/components/home/BottomCTA";
 import { StatsBar } from "@/components/StatsBar";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
@@ -161,8 +162,14 @@ export default function IndexPage() {
         <>
           <StatsBar />
           <PopularAlternatives />
+          <div className="container py-6 px-4 md:px-8">
+            <AdSlot slotId="top-after-popular" format="horizontal" />
+          </div>
           <WhyOSSSection />
           <UseCaseSection />
+          <div className="container py-6 px-4 md:px-8">
+            <AdSlot slotId="top-after-usecase" format="horizontal" />
+          </div>
           <FeaturedTools />
           <NewToolsSection />
           <FAQSection />

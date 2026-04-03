@@ -21,6 +21,8 @@ import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 import { toast } from "sonner";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 
 /* ── helpers ── */
 
@@ -642,6 +644,12 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        {/* ── Ad slot before related tools ── */}
+        <div className="border-t border-border/60" />
+        <div className="py-6">
+          <AdSlot slotId="detail-before-related" format="horizontal" />
+        </div>
+
         {/* ── 9. Related tools ── */}
         {relatedTools && relatedTools.length > 0 && (
           <>
@@ -715,6 +723,11 @@ export default function ToolDetailPage() {
             </div>
           </div>
         </section>
+
+        {/* ── Consultation CTA ── */}
+        <div className="pb-4">
+          <ConsultationCTA toolName={tool.name || undefined} />
+        </div>
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
