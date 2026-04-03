@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track } from "@/lib/track";
 import { SiteLayout } from "@/components/SiteLayout";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 import { useSeo } from "@/hooks/use-seo";
