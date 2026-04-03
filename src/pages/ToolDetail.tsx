@@ -332,7 +332,7 @@ export default function ToolDetailPage() {
           {tool.parent_category_ja && (
             <>
               <Link
-                to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}
+                to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
                 {tool.parent_category_ja}
