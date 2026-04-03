@@ -94,6 +94,7 @@ export default function Advertise() {
       else console.log("Advertise email result:", data);
     });
 
+    track("form_submit", { form: "advertise", plan: form.plan || "undecided", referrer: document.referrer });
     setSubmitted(true);
   };
 

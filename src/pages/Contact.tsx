@@ -85,6 +85,7 @@ export default function ContactPage() {
     });
 
     setSubmitted(true);
+    track("form_submit", { form: "contact", category: form.category });
     toast.success("お問い合わせを送信しました。");
   };
 
