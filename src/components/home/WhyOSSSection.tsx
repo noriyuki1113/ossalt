@@ -9,16 +9,16 @@ const REASONS = [
 
 export function WhyOSSSection() {
   return (
-    <section className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
+    <section className="container py-12 md:py-20">
+      <h2 className="section-title text-center mb-8 md:mb-10">
         なぜOSS？
       </h2>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
         {REASONS.map((r) => (
           <div key={r.title} className="text-center">
-            <div className="h-12 w-12 rounded-xl border border-primary/20 flex items-center justify-center mx-auto mb-4">
-              <r.icon className="h-6 w-6 text-primary" strokeWidth={1.5} />
+            <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl border border-primary/20 flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <r.icon className="h-5 w-5 md:h-6 md:w-6 text-primary" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-sm text-foreground mb-1.5">{r.title}</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">{r.description}</p>

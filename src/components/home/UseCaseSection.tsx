@@ -12,17 +12,17 @@ const USE_CASES = [
 
 export function UseCaseSection() {
   return (
-    <section id="use-cases" className="container py-16 md:py-20">
-      <h2 className="section-title text-center mb-10">
+    <section id="use-cases" className="container py-12 md:py-20">
+      <h2 className="section-title text-center mb-8 md:mb-10">
         用途から探す
       </h2>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
         {USE_CASES.map((uc) => (
           <Link
             key={uc.title}
             to={`/?category=${encodeURIComponent(uc.category)}`}
-            className="group card-unified-hover p-5"
+            className="group card-unified-hover p-4 md:p-5"
           >
             <div className="flex items-center gap-3 mb-2.5">
               <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">

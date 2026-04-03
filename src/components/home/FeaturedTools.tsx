@@ -24,10 +24,10 @@ export function FeaturedTools() {
   });
 
   return (
-    <section className="container py-16 md:py-20">
+    <section className="container py-12 md:py-20">
       <SectionHeader title="注目のOSSプロジェクト" subtitle="GitHubスター数が多く、実績のあるOSS" />
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <FeaturedSkeleton key={i} />)
           : tools?.map((tool, i) => <FeaturedCard key={tool.id} tool={tool} rank={i + 1} />)

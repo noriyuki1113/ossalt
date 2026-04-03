@@ -30,7 +30,7 @@ export function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {
             key={cat}
             onClick={() => onSelect(cat)}
             className={cn(
-              "shrink-0 rounded-lg px-4 py-2 text-sm font-medium transition-all",
+              "shrink-0 rounded-lg px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm font-medium transition-all",
               selected === cat
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
