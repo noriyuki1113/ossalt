@@ -5,6 +5,7 @@ const FOOTER_LINKS = [
   { to: "/terms", label: "掲載ポリシー" },
   { to: "/privacy", label: "プライバシーポリシー" },
   { to: "/contact", label: "お問い合わせ" },
+  { to: "/advertise", label: "広告掲載について" },
 ];
 
 export function SiteFooter() {

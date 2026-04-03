@@ -724,6 +724,11 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        {/* ── Consultation CTA ── */}
+        <div className="pb-4">
+          <ConsultationCTA toolName={tool.name || undefined} />
+        </div>
+
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
