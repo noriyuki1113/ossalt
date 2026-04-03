@@ -31,6 +31,7 @@ export function AdvertiseCTA({ className, variant = "inline" }: AdvertiseCTAProp
   return (
     <Link
       to="/advertise"
+      onClick={() => track("revenue_cta_click", { cta: "advertise_card" })}
       className={cn(
         "card-unified p-5 flex items-center gap-4 hover:border-primary/30 transition-colors group",
         className,
