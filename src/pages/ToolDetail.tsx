@@ -807,7 +807,7 @@ export default function ToolDetailPage() {
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={`/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
+              <Link to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
                 {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
