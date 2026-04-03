@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles } from "lucide-react";
+import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3 } from "lucide-react";
 
 interface SyncResult {
   message: string;
