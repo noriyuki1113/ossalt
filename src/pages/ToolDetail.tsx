@@ -21,6 +21,8 @@ import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 import { toast } from "sonner";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 
 /* ── helpers ── */
 
