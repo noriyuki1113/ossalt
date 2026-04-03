@@ -765,6 +765,7 @@ export default function ToolDetailPage() {
               <a
                 href={tool.github_url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
+                onClick={() => track("external_link_click", { tool: tool.name, target: "github_bottom", url: tool.github_url })}
               >
                 <Github className="h-4 w-4" />
                 GitHub リポジトリ
