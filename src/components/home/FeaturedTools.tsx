@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/SectionHeader";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
 
