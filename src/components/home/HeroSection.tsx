@@ -37,7 +37,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
             }}
           />
           <p className="mt-3 text-xs text-muted-foreground/50">
-            Examples: Notion, Zapier, Google Analytics
+            例: Notion、Slack、Jira、Google Analytics など
           </p>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import { DollarSign, Database, Unlock, Globe } from "lucide-react";
 
 const REASONS = [
-  { icon: DollarSign, title: "コスト削減", description: "コスト削減。コードがつぎつ足て切で削減します。" },
-  { icon: Database, title: "データ主権", description: "データを自社管理し、プライバシーとセキュリティを確保。" },
-  { icon: Unlock, title: "ベンダーロックイン回避", description: "特定ベンダーに依存せず、自由に移行・拡張できます。" },
-  { icon: Globe, title: "日本語対応", description: "日本語の情報と説明で、導入ハードルを下げます。" },
+  { icon: DollarSign, title: "コスト削減", description: "ライセンス費用ゼロ。チーム規模が増えても追加課金なし。" },
+  { icon: Database, title: "データ主権", description: "自社サーバーで運用し、顧客データを外部に渡さない。" },
+  { icon: Unlock, title: "ベンダーロックイン回避", description: "いつでも移行・カスタマイズ可能。特定企業に依存しない。" },
+  { icon: Globe, title: "日本語で探せる", description: "海外OSSの情報を日本語で整理。導入判断がスムーズに。" },
 ];
 
 export function WhyOSSSection() {

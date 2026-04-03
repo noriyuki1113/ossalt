@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Bot, BarChart3, Shield, Code2, MessageSquare, FolderKanban } from "lucide-react";
 
 const USE_CASES = [
-  { icon: Bot, title: "AI・ML", desc: "AIアシスタント・MLパイプライン", examples: "LangChain, Ollama", category: "AI・ML" },
-  { icon: Code2, title: "開発ツール", desc: "IDE・API開発・CI/CD", examples: "VS Code, Hoppscotch", category: "開発ツール" },
-  { icon: Shield, title: "セキュリティ", desc: "SIEM・脆弱性スキャン・認証", examples: "Wazuh, Keycloak", category: "セキュリティ" },
-  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク管理・カンバン", examples: "Plane, Focalboard", category: "業務ソフト" },
-  { icon: BarChart3, title: "データ分析", desc: "BI・ダッシュボード", examples: "Metabase, Superset", category: "データ・分析" },
-  { icon: MessageSquare, title: "コミュニケーション", desc: "チャット・ビデオ通話", examples: "Rocket.Chat, Jitsi", category: "コミュニティ" },
+  { icon: Bot, title: "AI・ML", desc: "LLM基盤やMLOpsを自前で構築", examples: "Ollama, LangChain", category: "AI・ML" },
+  { icon: Code2, title: "開発ツール", desc: "エディタからCI/CDまで開発環境を整備", examples: "VS Code, Gitea", category: "開発ツール" },
+  { icon: Shield, title: "セキュリティ", desc: "認証・監視・脆弱性管理を内製化", examples: "Keycloak, Wazuh", category: "セキュリティ" },
+  { icon: FolderKanban, title: "プロジェクト管理", desc: "タスク・スプリント管理をチームに最適化", examples: "Plane, Taiga", category: "業務ソフト" },
+  { icon: BarChart3, title: "データ分析", desc: "BIダッシュボードを自社データで運用", examples: "Metabase, Superset", category: "データ・分析" },
+  { icon: MessageSquare, title: "コミュニケーション", desc: "社内チャットやビデオ会議を自社運用", examples: "Rocket.Chat, Jitsi", category: "コミュニティ" },
 ];
 
 export function UseCaseSection() {
