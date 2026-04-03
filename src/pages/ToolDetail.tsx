@@ -485,6 +485,7 @@ export default function ToolDetailPage() {
               </div>
             ))}
           </div>
+        </section>
 
         {/* ── 4b. Quick Decision Summary ── */}
         <section className="py-10">
