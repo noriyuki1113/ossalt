@@ -22,6 +22,7 @@ const NewsPage = lazy(() => import("./pages/News"));
 const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
+const SubmitPage = lazy(() => import("./pages/Submit"));
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/savings" element={<SavingsPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />
+            <Route path="/submit" element={<SubmitPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

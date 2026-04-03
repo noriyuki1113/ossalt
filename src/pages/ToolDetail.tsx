@@ -24,6 +24,7 @@ import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
+import { PartnerCTA } from "@/components/ads/PartnerCTA";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
@@ -804,6 +805,11 @@ export default function ToolDetailPage() {
             </div>
           </div>
         </section>
+
+        {/* ── Partner CTA ── */}
+        <div className="pb-4">
+          <PartnerCTA toolName={tool.name || undefined} />
+        </div>
 
         {/* ── Consultation CTA ── */}
         <div className="pb-4">
