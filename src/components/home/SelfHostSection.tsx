@@ -1,22 +1,26 @@
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Server, ArrowRight } from "lucide-react";
+import { Server } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { ToolCardCompact, ToolCardCompactSkeleton } from "@/components/ToolCardCompact";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
-function formatStars(num: number | null): string {
-  if (!num) return "0";
-  if (num >= 1000) return `${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
-  return String(num);
-}
-
 export function SelfHostSection() {
-  const { data: tools } = useQuery({
+  const isMobile = useIsMobile();
+  const initialCount = isMobile ? 3 : 4;
+  const [expanded, setExpanded] = useState(false);
+  const tracked = useRef(false);
+
+  const { data: tools, isLoading } = useQuery({
     queryKey: ["self-host-tools"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tools")
-        .select("*")
+        .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, primary_competitor_ja, stars_num, language")
         .not("primary_competitor", "is", null)
         .order("stars_num", { ascending: false, nullsFirst: false })
         .limit(8);
@@ -25,11 +29,21 @@ export function SelfHostSection() {
     },
   });
 
-  if (!tools || tools.length === 0) return null;
+  useEffect(() => {
+    if (tools && tools.length > 0 && !tracked.current) {
+      tracked.current = true;
+      track("pickup_view", { section: "self_host", count: tools.length });
+    }
+  }, [tools]);
+
+  if (!isLoading && (!tools || tools.length === 0)) return null;
+
+  const visible = expanded ? tools : tools?.slice(0, initialCount);
+  const hasMore = tools && tools.length > initialCount && !expanded;
 
   return (
     <section className="container py-16">
-      <div className="rounded-2xl border border-border/60 bg-card/50 p-8 md:p-12">
+      <div className="rounded-2xl border border-border/60 bg-card/50 p-6 md:p-10">
         <div className="flex items-center gap-3 mb-6">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <Server className="h-5 w-5 text-primary" />
@@ -45,28 +59,28 @@ export function SelfHostSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {tools.map((tool) => (
-            <Link
-              key={tool.id}
-              to={`/tools/${tool.id}`}
-              className="group flex min-w-0 w-full items-center gap-3 overflow-hidden rounded-lg border border-border/40 bg-background/50 p-3 hover:border-primary/20 transition-all"
-            >
-              <div className="min-w-0 flex-1 overflow-hidden">
-                <p className="font-medium text-sm text-foreground truncate group-hover:text-primary transition-colors">
-                  {tool.name}
-                </p>
-                {tool.primary_competitor_ja && (
-                  <p className="text-[11px] text-muted-foreground truncate">
-                    {tool.primary_competitor_ja} の代替
-                  </p>
-                )}
-              </div>
-              <span className="text-xs text-badge-amber shrink-0">
-                ⭐ {formatStars(tool.stars_num)}
-              </span>
-            </Link>
-          ))}
+          {isLoading
+            ? Array.from({ length: initialCount }).map((_, i) => <ToolCardCompactSkeleton key={i} />)
+            : visible?.map((tool) => (
+                <ToolCardCompact key={tool.id} tool={tool} trackSource="self_host" />
+              ))}
         </div>
+
+        {hasMore && (
+          <div className="mt-4 text-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-muted-foreground hover:text-primary"
+              onClick={() => {
+                setExpanded(true);
+                track("pickup_show_more", { section: "self_host" });
+              }}
+            >
+              もっと見る（+{tools!.length - initialCount}件）
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
