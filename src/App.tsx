@@ -22,6 +22,7 @@ const NewsPage = lazy(() => import("./pages/News"));
 const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
+const SubmitPage = lazy(() => import("./pages/Submit"));
 
 const queryClient = new QueryClient();
 
