@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useState } from "react";
+import { track } from "@/lib/track";
 
 const SAAS_META: Record<string, { domain: string; shortJa: string }> = {
   Zapier:             { domain: "zapier.com", shortJa: "Zapier" },
