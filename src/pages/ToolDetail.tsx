@@ -24,6 +24,7 @@ import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
+import { PartnerCTA } from "@/components/ads/PartnerCTA";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
