@@ -11,6 +11,8 @@ import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
 import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
+import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { useSeo } from "@/hooks/use-seo";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
@@ -370,6 +372,16 @@ export default function AlternativesPage() {
         {/* Alternative Sponsor CTA */}
         <div className="mt-8">
           <AlternativeSponsorCTA competitor={competitor} />
+        </div>
+
+        {/* Community Participation */}
+        <div className="mt-6">
+          <CommunityParticipationCTA context="alternatives" />
+        </div>
+
+        {/* Newsletter */}
+        <div className="mt-6">
+          <NewsletterSignup />
         </div>
       </div>
 

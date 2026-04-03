@@ -25,6 +25,10 @@ import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 import { PartnerCTA } from "@/components/ads/PartnerCTA";
+import { EditorialInsightCard } from "@/components/EditorialInsightCard";
+import { RelatedGuideCard } from "@/components/RelatedGuideCard";
+import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
@@ -784,26 +788,46 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── 11. Feedback ── */}
+        {/* ── 11. Editorial Insight ── */}
         <div className="border-t border-border/60" />
-        <section className="py-10">
-          <div className="card-unified p-6 text-center">
-            <p className="text-sm text-muted-foreground mb-3">
-              この情報は正確ですか？修正や追加があればお知らせください。
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button variant="outline" className="rounded-lg gap-2 border-border" asChild>
-                <Link to="/contact">
-                  情報の修正を提案する
-                </Link>
-              </Button>
-              <Button variant="outline" className="rounded-lg gap-2 border-border" asChild>
-                <Link to="/contact">
-                  他の代替候補を提案する
-                </Link>
-              </Button>
-            </div>
-          </div>
+        <section className="py-8">
+          <EditorialInsightCard tool={tool} />
+        </section>
+
+        {/* ── 12. Related Guides ── */}
+        {hasCompetitor && altSlug && (
+          <section className="pb-8">
+            <RelatedGuideCard
+              guides={[
+                {
+                  title: `${competitorDisplay}代替を選ぶときのポイント`,
+                  description: `${competitorDisplay}の代わりに使えるOSSを比較・選定するための観点を解説`,
+                  href: `/alternatives/${altSlug}`,
+                },
+                {
+                  title: "セルフホスト前提で見るべき観点",
+                  description: "サーバー運用・バックアップ・セキュリティの基本を確認",
+                  href: "/about",
+                },
+                {
+                  title: "OSS導入でコストを削減する方法",
+                  description: "SaaSからOSSへの移行で期待できるコスト削減シミュレーション",
+                  href: "/savings",
+                },
+              ]}
+            />
+          </section>
+        )}
+
+        {/* ── 13. Community Participation ── */}
+        <div className="border-t border-border/60" />
+        <section className="py-8">
+          <CommunityParticipationCTA toolName={tool.name || undefined} context="detail" />
+        </section>
+
+        {/* ── 14. Newsletter ── */}
+        <section className="pb-8">
+          <NewsletterSignup />
         </section>
 
         {/* ── Partner CTA ── */}
