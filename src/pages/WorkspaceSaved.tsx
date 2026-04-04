@@ -1,13 +1,13 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Search, Trash2, GitCompareArrows, ChevronRight } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowLeft, Search, Trash2, GitCompareArrows, ChevronRight, AlertCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { StatusBadge, StatusSelect } from "@/components/workspace/StatusBadge";
-import { useSavedTools, type ToolStatus, STATUS_LABELS } from "@/hooks/use-workspace";
+import { useSavedTools, useComparisonLists, type ToolStatus, STATUS_LABELS } from "@/hooks/use-workspace";
 import { supabase } from "@/integrations/supabase/client";
 import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
@@ -16,9 +16,13 @@ import type { Tool } from "@/hooks/use-tools";
 
 export default function WorkspaceSavedPage() {
   const { savedTools, removeTool, updateStatus } = useSavedTools();
-  const [filter, setFilter] = useState<ToolStatus | "all">("all");
+  const { lists, createList } = useComparisonLists();
+  const [searchParams] = useSearchParams();
+  const initialStatus = searchParams.get("status") as ToolStatus | null;
+  const [filter, setFilter] = useState<ToolStatus | "all">(initialStatus || "all");
   const [search, setSearch] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
   useSeo({
     title: "保存済みツール | ワークスペース | OSSアルタナティブ",
@@ -40,6 +44,24 @@ export default function WorkspaceSavedPage() {
     enabled: toolIds.length > 0,
   });
 
+  // Get compared tool IDs
+  const allListIds = lists.map((l) => l.id);
+  const { data: compItems } = useQuery({
+    queryKey: ["all-comparison-items-saved", allListIds],
+    queryFn: async () => {
+      if (allListIds.length === 0) return [];
+      const { data, error } = await supabase
+        .from("comparison_list_items")
+        .select("tool_id")
+        .in("comparison_list_id", allListIds);
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: allListIds.length > 0,
+  });
+
+  const comparedToolIds = useMemo(() => new Set((compItems || []).map((i) => i.tool_id)), [compItems]);
+
   const toolsMap = useMemo(() => {
     const m = new Map<number, Tool>();
     toolsData?.forEach((t) => m.set(t.id, t));
@@ -59,6 +81,33 @@ export default function WorkspaceSavedPage() {
     return items;
   }, [savedTools, filter, search, toolsMap]);
 
+  const toggleSelect = (toolId: number) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(toolId)) next.delete(toolId);
+      else if (next.size < 5) next.add(toolId);
+      return next;
+    });
+  };
+
+  const handleCompareSelected = async () => {
+    if (selectedIds.size < 2) {
+      toast.error("2件以上選択してください");
+      return;
+    }
+    const result = await createList.mutateAsync("保存済みからの比較");
+    const inserts = Array.from(selectedIds).map((toolId, i) => ({
+      comparison_list_id: result.id,
+      tool_id: toolId,
+      position: i,
+    }));
+    await supabase.from("comparison_list_items").insert(inserts);
+    track("comparison_created_from_saved", { count: selectedIds.size });
+    window.location.href = `/workspace/compare/${result.id}`;
+  };
+
+  const neverCompared = savedTools.filter((s) => !comparedToolIds.has(s.tool_id));
+
   return (
     <SiteLayout>
       <div className="container max-w-3xl mx-auto px-4 py-8">
@@ -72,6 +121,32 @@ export default function WorkspaceSavedPage() {
           <h1 className="text-xl font-bold text-foreground">保存済みツール</h1>
           <span className="text-sm text-muted-foreground">{savedTools.length}件</span>
         </div>
+
+        {/* Nudge for never-compared tools */}
+        {neverCompared.length > 0 && neverCompared.length < savedTools.length && (
+          <div className="card-unified p-3 mb-4 bg-accent/30 border-accent flex items-center gap-2.5">
+            <AlertCircle className="h-4 w-4 text-primary shrink-0" />
+            <p className="text-xs text-muted-foreground">
+              <span className="font-medium text-foreground">{neverCompared.length}件</span>の保存ツールがまだどの比較にも追加されていません
+            </p>
+          </div>
+        )}
+
+        {/* Multi-select compare bar */}
+        {selectedIds.size > 0 && (
+          <div className="sticky top-16 z-30 card-unified p-3 mb-4 flex items-center justify-between bg-card/95 backdrop-blur-sm shadow-md">
+            <span className="text-sm text-foreground font-medium">{selectedIds.size}件選択中</span>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" onClick={() => setSelectedIds(new Set())} className="text-xs">
+                解除
+              </Button>
+              <Button size="sm" onClick={handleCompareSelected} className="gap-1.5 rounded-xl text-xs">
+                <GitCompareArrows className="h-3.5 w-3.5" />
+                比較を作成
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
@@ -121,9 +196,29 @@ export default function WorkspaceSavedPage() {
             {filtered.map((saved) => {
               const tool = toolsMap.get(saved.tool_id);
               const isExpanded = expandedId === saved.id;
+              const isSelected = selectedIds.has(saved.tool_id);
+              const isNeverCompared = !comparedToolIds.has(saved.tool_id);
               return (
-                <div key={saved.id} className="card-unified p-4">
+                <div
+                  key={saved.id}
+                  className={`card-unified p-4 transition-colors ${isSelected ? "ring-1 ring-primary/40 bg-primary/[0.03]" : ""}`}
+                >
                   <div className="flex items-start gap-3">
+                    {/* Selection checkbox */}
+                    <button
+                      onClick={() => toggleSelect(saved.tool_id)}
+                      className={`h-5 w-5 mt-0.5 rounded border-2 shrink-0 flex items-center justify-center transition-colors ${
+                        isSelected
+                          ? "bg-primary border-primary text-primary-foreground"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      {isSelected && (
+                        <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none">
+                          <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
+                    </button>
                     <Link to={`/tools/${saved.tool_id}`} className="shrink-0 mt-0.5">
                       <ToolIcon url={tool?.url} githubUrl={tool?.github_url} name={tool?.name} size={28} />
                     </Link>
@@ -135,6 +230,9 @@ export default function WorkspaceSavedPage() {
                         <button onClick={() => setExpandedId(isExpanded ? null : saved.id)}>
                           <StatusBadge status={saved.status as ToolStatus} className="cursor-pointer hover:opacity-80" />
                         </button>
+                        {isNeverCompared && (
+                          <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">未比較</span>
+                        )}
                       </div>
                       <p className="text-xs text-muted-foreground line-clamp-1 mb-2">
                         {tool?.description_ja || tool?.description_en || ""}
@@ -156,7 +254,6 @@ export default function WorkspaceSavedPage() {
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
-                  {/* Expanded status selector */}
                   {isExpanded && (
                     <div className="mt-3 pt-3 border-t border-border/40">
                       <p className="text-[10px] text-muted-foreground mb-2">ステータスを変更</p>
