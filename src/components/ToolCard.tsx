@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
 
@@ -46,6 +47,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           </h3>
         </div>
         <StarCount count={tool.stars_num} size="sm" />
+        <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} variant="icon" source="tool_card" />
       </div>
 
       <p className="text-xs text-muted-foreground line-clamp-1 leading-relaxed mb-3 flex-1 break-words">

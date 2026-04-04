@@ -13,6 +13,7 @@ import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
 import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { useSeo } from "@/hooks/use-seo";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
@@ -226,6 +227,7 @@ export default function AlternativesPage() {
                           <StarCount count={tool.stars_num} size="sm" />
                         </div>
                       </div>
+                      <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} variant="icon" source="alternatives_top" />
 
                       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1">
                         {tool.description_ja || tool.description_en || ""}

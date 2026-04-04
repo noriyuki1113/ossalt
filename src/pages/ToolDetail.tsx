@@ -29,6 +29,8 @@ import { EditorialInsightCard } from "@/components/EditorialInsightCard";
 import { RelatedGuideCard } from "@/components/RelatedGuideCard";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
+import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
@@ -447,6 +449,12 @@ export default function ToolDetailPage() {
                     </a>
                   </Button>
                 )}
+
+                {/* Workspace actions */}
+                <div className="flex items-center gap-2 pt-2 border-t border-border/60">
+                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
+                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
+                </div>
 
                 {/* Alternative link */}
                 {altSlug && (
