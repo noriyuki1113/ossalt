@@ -11,10 +11,10 @@ export function EmptyWorkspaceState() {
         <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-primary/10 mb-4">
           <Bookmark className="h-7 w-7 text-primary" />
         </div>
-        <h2 className="text-lg font-bold text-foreground mb-2">ワークスペースへようこそ</h2>
+        <h2 className="text-lg font-bold text-foreground mb-2">まだ候補はありません</h2>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
-          OSSツールを保存して、候補を並べて比較・検討できます。
-          チームへの共有もワンクリックで。
+          ossalt.jp で気になるOSSを保存すると、ここに追加されます。
+          まずは 2〜3件選んで、比較を始めてみましょう。
         </p>
       </div>
 
@@ -23,10 +23,10 @@ export function EmptyWorkspaceState() {
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">使い方</h3>
         <div className="space-y-3">
           {[
-            { icon: Bookmark, label: "保存する", desc: "ツール詳細ページで「保存する」をクリック" },
-            { icon: GitCompareArrows, label: "比較する", desc: "保存した候補を2〜5件選んで横並び比較" },
-            { icon: Sparkles, label: "メモを残す", desc: "各ツールに検討メモやステータスを設定" },
-            { icon: Share2, label: "共有する", desc: "比較結果をURLでチームに共有" },
+            { icon: Bookmark, label: "候補を保存する", desc: "詳細ページや比較ページから追加してみましょう" },
+            { icon: GitCompareArrows, label: "並べて比較する", desc: "保存した候補を2〜5件選んで横並び比較" },
+            { icon: Sparkles, label: "メモして共有する", desc: "各ツールに検討メモやステータスを設定" },
+            { icon: Share2, label: "チームに共有する", desc: "比較結果をURLでチームに共有" },
           ].map((item) => (
             <div key={item.label} className="flex items-start gap-3">
               <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
@@ -51,7 +51,7 @@ export function EmptyWorkspaceState() {
         <Button asChild className="gap-2 rounded-xl">
           <Link to="/">
             <Search className="h-4 w-4" />
-            ツールを探す
+            候補を探す
           </Link>
         </Button>
         <Button variant="outline" asChild className="gap-2 rounded-xl">

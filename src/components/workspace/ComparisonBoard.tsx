@@ -63,7 +63,6 @@ function ScoreSelect({ value, onChange }: { value: number | null; onChange: (v: 
   );
 }
 
-/* Compact tool label for sticky scroll context */
 function StickyToolLabels({ items, tools, topScorerId }: { items: ComparisonListItem[]; tools: Map<number, Tool>; topScorerId: string | null }) {
   return (
     <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/40 -mx-1 px-1 py-2 mb-1">
@@ -97,8 +96,8 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
     return (
       <div className="card-unified p-8 text-center">
         <GitCompareArrowsPlaceholder className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
-        <p className="text-sm text-muted-foreground mb-1">比較するツールがまだありません</p>
-        <p className="text-xs text-muted-foreground/60">ツール詳細ページから「比較に追加」で候補を追加できます</p>
+        <p className="text-sm text-muted-foreground mb-1">比較する候補を追加しましょう</p>
+        <p className="text-xs text-muted-foreground/60">保存した候補を2〜3件選ぶと、違いを見比べやすくなります。</p>
       </div>
     );
   }
@@ -156,11 +155,9 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                   </Link>
                 </div>
               </div>
-              {/* Description - shorter on mobile */}
               <p className="text-xs text-muted-foreground line-clamp-1 sm:line-clamp-2 leading-relaxed mb-2">
                 {tool?.description_ja || tool?.description_en || "—"}
               </p>
-              {/* Key stats - compact */}
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-muted-foreground">
                 {tool?.stars_num && (
                   <span className="inline-flex items-center gap-0.5">
@@ -187,13 +184,12 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                   </span>
                 )}
               </div>
-              {/* Links - hidden on mobile to save space */}
               {!isMobile && (
                 <div className="flex items-center gap-2 mt-2 pt-2 border-t border-border/40">
                   {tool?.url && (
                     <a href={tool.url} target="_blank" rel="noopener noreferrer"
                       className="text-[10px] text-muted-foreground hover:text-foreground inline-flex items-center gap-1 transition-colors">
-                      <ExternalLink className="h-3 w-3" /> 公式
+                      <ExternalLink className="h-3 w-3" /> 公式サイト
                     </a>
                   )}
                   {tool?.github_url && (
@@ -209,12 +205,13 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
         })}
       </div>
 
-      {/* Sticky tool labels - visible when scrolling past header cards */}
+      {/* Sticky tool labels */}
       <StickyToolLabels items={items} tools={tools} topScorerId={topScorerId} />
 
-      {/* Evaluation section - compact */}
+      {/* Evaluation section */}
       <div className="mt-2">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">重要項目</h3>
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">評価 — 重要項目</h3>
+        <p className="text-[10px] text-muted-foreground/60 mb-2">まずは重要な項目だけ確認して、必要に応じて詳細を開いてください。</p>
         <div className="card-unified overflow-hidden">
           <table className="w-full text-sm">
             <tbody>
@@ -245,7 +242,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
           </table>
         </div>
 
-        {/* Expandable detailed evaluation placeholder */}
+        {/* Expandable detailed evaluation */}
         {isMobile && (
           <button
             onClick={() => {
@@ -255,11 +252,10 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
             className="w-full mt-2 py-2 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 transition-colors"
           >
             <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", showDetails && "rotate-180")} />
-            {showDetails ? "閉じる" : "詳細メタ情報を見る"}
+            {showDetails ? "詳細評価を閉じる" : "詳細評価を見る"}
           </button>
         )}
 
-        {/* Expanded detail: show language, last commit, links on mobile */}
         {(showDetails || !isMobile) && isMobile && (
           <div className="card-unified overflow-hidden mt-1">
             <table className="w-full text-sm">
@@ -286,10 +282,10 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                       <td key={item.id} className="p-2 text-center">
                         <div className="flex items-center justify-center gap-2">
                           {tool?.url && (
-                            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary">公式</a>
+                            <a href={tool.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary">公式サイト</a>
                           )}
                           {tool?.github_url && (
-                            <a href={tool.github_url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary">GH</a>
+                            <a href={tool.github_url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary">GitHub</a>
                           )}
                         </div>
                       </td>
@@ -302,9 +298,10 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
         )}
       </div>
 
-      {/* Notes section - combined into unified area */}
+      {/* Notes section */}
       <div className="mt-4">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">検討メモ</h3>
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">メモ</h3>
+        <p className="text-[10px] text-muted-foreground/60 mb-2">短くても残しておくと、あとで見返しやすくなります。</p>
         <div className="grid gap-2 sm:gap-3" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
           {items.map((item) => {
             const tool = tools.get(item.tool_id);
@@ -313,7 +310,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                 <p className="text-[10px] font-medium text-muted-foreground mb-1.5">{tool?.name || `Tool #${item.tool_id}`}</p>
                 {readOnly ? (
                   <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                    {item.decision_note || "メモなし"}
+                    {item.decision_note || "メモはまだありません"}
                   </p>
                 ) : editingNote === item.id ? (
                   <div className="space-y-1.5">
@@ -322,7 +319,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                       onChange={(e) => setNoteValue(e.target.value)}
                       className="w-full text-xs p-2 border border-border rounded-lg bg-background resize-none focus:outline-none focus:ring-1 focus:ring-primary/40"
                       rows={3}
-                      placeholder="良い点、懸念点…"
+                      placeholder="気になった点、向いている用途、懸念点などを残しておきましょう"
                       autoFocus
                     />
                     <div className="flex gap-1 justify-end">

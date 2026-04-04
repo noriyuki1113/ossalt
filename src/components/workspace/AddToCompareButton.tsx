@@ -30,15 +30,12 @@ export function AddToCompareButton({
       let listId: string;
 
       if (lists.length > 0) {
-        // Add to most recent list
         listId = lists[0].id;
       } else {
-        // Create a new list
         const result = await createList.mutateAsync("無題の比較");
         listId = result.id;
       }
 
-      // Add item to list
       const { error } = await (await import("@/integrations/supabase/client")).supabase
         .from("comparison_list_items")
         .insert({
@@ -54,9 +51,10 @@ export function AddToCompareButton({
           throw error;
         }
       } else {
-        toast.success(`${toolName || "ツール"}を比較に追加しました`, {
+        toast.success("比較に追加しました", {
+          description: "候補を並べて違いを確認できます",
           action: {
-            label: "比較を見る",
+            label: "比較を開く",
             onClick: () => navigate(`/workspace/compare/${listId}`),
           },
         });

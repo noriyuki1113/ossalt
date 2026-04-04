@@ -33,13 +33,17 @@ export function SaveToWorkspaceButton({
     } else {
       saveTool.mutate(toolId, {
         onSuccess: () => {
-          toast.success(`${toolName || "ツール"}を保存しました`, {
+          toast.success("1件保存しました", {
+            description: "あとで比較できるようになりました",
             action: {
               label: "保存済みを見る",
               onClick: () => (window.location.href = "/workspace/saved"),
             },
           });
           track("workspace_save", { tool_id: toolId, tool_name: toolName || "", source });
+        },
+        onError: () => {
+          toast.error("保存に失敗しました。時間をおいてもう一度お試しください。");
         },
       });
     }

@@ -44,7 +44,6 @@ export default function WorkspaceSavedPage() {
     enabled: toolIds.length > 0,
   });
 
-  // Get compared tool IDs
   const allListIds = lists.map((l) => l.id);
   const { data: compItems } = useQuery({
     queryKey: ["all-comparison-items-saved", allListIds],
@@ -92,7 +91,7 @@ export default function WorkspaceSavedPage() {
 
   const handleCompareSelected = async () => {
     if (selectedIds.size < 2) {
-      toast.error("2件以上選択してください");
+      toast.error("比較するには候補を2件以上追加してください。");
       return;
     }
     const result = await createList.mutateAsync("保存済みからの比較");
@@ -114,12 +113,12 @@ export default function WorkspaceSavedPage() {
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
           <Link to="/workspace" className="hover:text-foreground transition-colors">ワークスペース</Link>
           <ChevronRight className="h-3 w-3" />
-          <span className="text-foreground font-medium">保存済みツール</span>
+          <span className="text-foreground font-medium">保存済み</span>
         </nav>
 
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-xl font-bold text-foreground">保存済みツール</h1>
-          <span className="text-sm text-muted-foreground">{savedTools.length}件</span>
+          <span className="text-sm text-muted-foreground">保存済み {savedTools.length}件</span>
         </div>
 
         {/* Nudge for never-compared tools */}
@@ -127,7 +126,7 @@ export default function WorkspaceSavedPage() {
           <div className="card-unified p-3 mb-4 bg-accent/30 border-accent flex items-center gap-2.5">
             <AlertCircle className="h-4 w-4 text-primary shrink-0" />
             <p className="text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">{neverCompared.length}件</span>の保存ツールがまだどの比較にも追加されていません
+              まだ比較していない候補が<span className="font-medium text-foreground">{neverCompared.length}件</span>あります
             </p>
           </div>
         )}
@@ -182,13 +181,23 @@ export default function WorkspaceSavedPage() {
         {/* Tool list */}
         {filtered.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-sm text-muted-foreground">
-              {savedTools.length === 0 ? "まだツールが保存されていません" : "条件に一致するツールがありません"}
+            <p className="text-sm font-medium text-foreground mb-1">
+              {savedTools.length === 0 ? "保存した候補がまだありません" : "条件に一致するツールがありません"}
+            </p>
+            <p className="text-xs text-muted-foreground mb-4">
+              {savedTools.length === 0
+                ? "気になるツールを保存しておくと、あとで並べて比較できます。詳細ページや比較ページから追加してみましょう。"
+                : "フィルターや検索条件を変えてみてください。"}
             </p>
             {savedTools.length === 0 && (
-              <Button variant="outline" size="sm" asChild className="mt-4 gap-2 rounded-xl">
-                <Link to="/">ツールを探す</Link>
-              </Button>
+              <div className="flex items-center justify-center gap-3">
+                <Button size="sm" asChild className="gap-2 rounded-xl">
+                  <Link to="/">ツールを探す</Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="gap-2 rounded-xl">
+                  <Link to="/workspace">ワークスペースに戻る</Link>
+                </Button>
+              </div>
             )}
           </div>
         ) : (
