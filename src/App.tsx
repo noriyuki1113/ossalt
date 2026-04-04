@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { StickyCompareTray } from "@/components/workspace/StickyCompareTray";
 import Index from "./pages/Index";
 
 const ToolDetail = lazy(() => import("./pages/ToolDetail"));
