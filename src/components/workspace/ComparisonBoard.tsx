@@ -36,7 +36,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
   if (items.length === 0) {
     return (
       <div className="card-unified p-8 text-center">
-        <GitCompareArrows className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
+        <GitCompareArrowsPlaceholder className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
         <p className="text-sm text-muted-foreground mb-1">比較するツールがまだありません</p>
         <p className="text-xs text-muted-foreground/60">ツール詳細ページから「比較に追加」で候補を追加できます</p>
       </div>
