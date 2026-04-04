@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Share2, Plus, ChevronRight, Trash2, Edit3, Check } from "lucide-react";
+import { ArrowLeft, Share2, Plus, ChevronRight, Trash2, Edit3, Check, FileText } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -37,10 +37,7 @@ export default function WorkspaceComparePage() {
     queryKey: ["tools-by-ids", toolIds],
     queryFn: async () => {
       if (toolIds.length === 0) return [];
-      const { data, error } = await supabase
-        .from("tools")
-        .select("*")
-        .in("id", toolIds);
+      const { data, error } = await supabase.from("tools").select("*").in("id", toolIds);
       if (error) throw error;
       return (data || []) as Tool[];
     },
@@ -53,17 +50,37 @@ export default function WorkspaceComparePage() {
     return m;
   }, [toolsData]);
 
-  // Tools that can be added (saved but not in comparison)
-  const addableTools = useMemo(() => {
+  // Saved tools not yet in comparison
+  const addableToolIds = useMemo(() => {
     const inComparison = new Set(items.map((i) => i.tool_id));
     return savedTools.filter((s) => !inComparison.has(s.tool_id));
   }, [savedTools, items]);
+
+  // Fetch names for addable tools
+  const addableIds = addableToolIds.map((s) => s.tool_id);
+  const { data: addableToolsData } = useQuery({
+    queryKey: ["tools-by-ids-addable", addableIds],
+    queryFn: async () => {
+      if (addableIds.length === 0) return [];
+      const { data, error } = await supabase.from("tools").select("id, name, url, github_url").in("id", addableIds);
+      if (error) throw error;
+      return (data || []) as Tool[];
+    },
+    enabled: addableIds.length > 0,
+  });
+
+  const addableToolsMap = useMemo(() => {
+    const m = new Map<number, Tool>();
+    addableToolsData?.forEach((t) => m.set(t.id, t));
+    return m;
+  }, [addableToolsData]);
 
   const handleShare = async () => {
     if (!id) return;
     const token = await generateShareToken.mutateAsync(id);
     const url = `${window.location.origin}/workspace/shared/${token}`;
     await navigator.clipboard.writeText(url);
+    track("share_link_created", { list_id: id });
     toast.success("共有リンクをコピーしました", { description: "チームメンバーにこのURLを共有できます" });
   };
 
@@ -83,6 +100,9 @@ export default function WorkspaceComparePage() {
     if (id) updateList.mutate({ id, title: titleValue });
     setEditingTitle(false);
   };
+
+  // Parse summary into structured sections
+  const parsedSummary = list?.summary_note || "";
 
   return (
     <SiteLayout>
@@ -106,9 +126,7 @@ export default function WorkspaceComparePage() {
                   autoFocus
                   onKeyDown={(e) => e.key === "Enter" && saveTitle()}
                 />
-                <button onClick={saveTitle} className="text-primary">
-                  <Check className="h-4 w-4" />
-                </button>
+                <button onClick={saveTitle} className="text-primary"><Check className="h-4 w-4" /></button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -138,30 +156,31 @@ export default function WorkspaceComparePage() {
         {showAddTool && (
           <div className="card-unified p-4 mb-6">
             <p className="text-xs font-medium text-muted-foreground mb-3">保存済みツールから追加（最大5件）</p>
-            {addableTools.length === 0 ? (
+            {addableToolIds.length === 0 ? (
               <p className="text-xs text-muted-foreground">
                 追加できる保存済みツールがありません。
                 <Link to="/" className="text-primary hover:underline ml-1">ツールを探す</Link>
               </p>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {addableTools.map((saved) => (
-                  <button
-                    key={saved.tool_id}
-                    onClick={() => {
-                      if (items.length >= 5) {
-                        toast.error("比較は最大5件までです");
-                        return;
-                      }
-                      addItem.mutate({ toolId: saved.tool_id });
-                      toast.success("追加しました");
-                    }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
-                  >
-                    <Plus className="h-3 w-3" />
-                    Tool #{saved.tool_id}
-                  </button>
-                ))}
+                {addableToolIds.map((saved) => {
+                  const t = addableToolsMap.get(saved.tool_id);
+                  return (
+                    <button
+                      key={saved.tool_id}
+                      onClick={() => {
+                        if (items.length >= 5) { toast.error("比較は最大5件までです"); return; }
+                        addItem.mutate({ toolId: saved.tool_id });
+                        track("comparison_item_added", { list_id: id || "", tool_id: saved.tool_id });
+                        toast.success("追加しました");
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
+                    >
+                      <Plus className="h-3 w-3" />
+                      {t?.name || `Tool #${saved.tool_id}`}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -180,22 +199,28 @@ export default function WorkspaceComparePage() {
           }}
         />
 
-        {/* Summary note */}
-        <div className="mt-6">
-          <h2 className="text-sm font-semibold text-foreground mb-2">比較メモ</h2>
+        {/* Decision Summary — structured */}
+        <div className="mt-8">
+          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
+            <FileText className="h-4 w-4 text-primary" />
+            比較サマリー・意思決定メモ
+          </h2>
           {editingSummary ? (
-            <div>
+            <div className="card-unified p-4">
               <textarea
                 value={summaryValue}
                 onChange={(e) => setSummaryValue(e.target.value)}
                 className="w-full text-sm p-3 border border-border rounded-xl bg-background resize-none focus:outline-none focus:ring-1 focus:ring-primary/40"
-                rows={4}
-                placeholder="比較の結論や検討メモを記録…"
+                rows={6}
+                placeholder={`例:\n\n■ 最終候補: ToolA\n■ 懸念点: 日本語ドキュメントが少ない\n■ 次の確認事項: 実際にDockerで立ち上げて検証\n■ 決定理由: スター数が多く、コミュニティが活発`}
                 autoFocus
               />
               <div className="flex gap-2 mt-2">
                 <Button size="sm" onClick={() => {
-                  if (id) updateList.mutate({ id, summaryNote: summaryValue });
+                  if (id) {
+                    updateList.mutate({ id, summaryNote: summaryValue });
+                    track("comparison_summary_saved", { list_id: id });
+                  }
                   setEditingSummary(false);
                 }} className="rounded-lg">保存</Button>
                 <Button variant="ghost" size="sm" onClick={() => setEditingSummary(false)}>キャンセル</Button>
@@ -207,9 +232,16 @@ export default function WorkspaceComparePage() {
                 setSummaryValue(list?.summary_note || "");
                 setEditingSummary(true);
               }}
-              className="card-unified p-4 w-full text-left text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="card-unified p-5 w-full text-left hover:border-primary/20 transition-colors"
             >
-              {list?.summary_note || "クリックして比較メモを追加…"}
+              {parsedSummary ? (
+                <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{parsedSummary}</p>
+              ) : (
+                <div className="text-center py-2">
+                  <p className="text-sm text-muted-foreground">クリックして比較サマリーを記録</p>
+                  <p className="text-xs text-muted-foreground/60 mt-1">最終候補、懸念点、次の確認事項などを残しましょう</p>
+                </div>
+              )}
             </button>
           )}
         </div>
@@ -217,10 +249,7 @@ export default function WorkspaceComparePage() {
         {/* Back */}
         <div className="mt-8 pt-6 border-t border-border flex justify-center">
           <Button variant="outline" size="sm" asChild className="gap-2 rounded-xl">
-            <Link to="/workspace">
-              <ArrowLeft className="h-3.5 w-3.5" />
-              ワークスペースに戻る
-            </Link>
+            <Link to="/workspace"><ArrowLeft className="h-3.5 w-3.5" />ワークスペースに戻る</Link>
           </Button>
         </div>
       </div>
