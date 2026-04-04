@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount, formatRelativeDate } from "@/lib/format";
+import { normalizeText } from "@/lib/normalize-text";
 import type { ComparisonListItem } from "@/hooks/use-workspace";
 import type { Tool } from "@/hooks/use-tools";
 import { cn } from "@/lib/utils";
@@ -156,7 +157,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                 </div>
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1 sm:line-clamp-2 leading-relaxed mb-2">
-                {tool?.description_ja || tool?.description_en || "—"}
+                {normalizeText(tool?.description_ja || tool?.description_en) || "—"}
               </p>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-muted-foreground">
                 {tool?.stars_num && (
@@ -310,7 +311,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                 <p className="text-[10px] font-medium text-muted-foreground mb-1.5">{tool?.name || `Tool #${item.tool_id}`}</p>
                 {readOnly ? (
                   <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                    {item.decision_note || "メモはまだありません"}
+                    {normalizeText(item.decision_note) || "メモはまだありません"}
                   </p>
                 ) : editingNote === item.id ? (
                   <div className="space-y-1.5">
@@ -332,7 +333,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                     onClick={() => startEditNote(item.id, item.decision_note)}
                     className="text-xs text-left text-muted-foreground hover:text-foreground transition-colors w-full min-h-[1.5rem]"
                   >
-                    {item.decision_note || (
+                    {normalizeText(item.decision_note) || (
                       <span className="inline-flex items-center gap-1 text-muted-foreground/50 text-[10px]">
                         <MessageSquare className="h-3 w-3" /> メモを追加
                       </span>

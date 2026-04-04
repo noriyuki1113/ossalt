@@ -8,6 +8,7 @@ import { ComparisonBoard } from "@/components/workspace/ComparisonBoard";
 import { useSharedComparison } from "@/hooks/use-workspace";
 import { supabase } from "@/integrations/supabase/client";
 import { useSeo } from "@/hooks/use-seo";
+import { normalizeText } from "@/lib/normalize-text";
 import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
@@ -115,7 +116,7 @@ export default function WorkspaceSharedPage() {
               📋 比較概要
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-              {data.list.summary_note}
+              {normalizeText(data.list.summary_note)}
             </p>
             <p className="text-[10px] text-muted-foreground/50 mt-3">
               比較サマリーがあると、相手にも判断の意図が伝わりやすくなります。
