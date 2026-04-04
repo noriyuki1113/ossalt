@@ -34,7 +34,7 @@ export function AddToCompareButton({
         listId = lists[0].id;
       } else {
         // Create a new list
-        const result = await createList.mutateAsync();
+        const result = await createList.mutateAsync("無題の比較");
         listId = result.id;
       }
 

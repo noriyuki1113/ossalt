@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Star, ExternalLink, Github, X, MessageSquare, ChevronDown } from "lucide-react";
+import { Star, ExternalLink, Github, X, MessageSquare, GitCompareArrows as GitCompareArrowsPlaceholder } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount } from "@/lib/format";
