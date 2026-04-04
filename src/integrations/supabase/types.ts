@@ -271,6 +271,83 @@ export type Database = {
         }
         Relationships: []
       }
+      comparison_list_items: {
+        Row: {
+          comparison_list_id: string
+          created_at: string
+          custom_note: string | null
+          decision_note: string | null
+          id: string
+          learning_curve_score: number | null
+          position: number
+          self_hosting_score: number | null
+          team_fit_score: number | null
+          tool_id: number
+        }
+        Insert: {
+          comparison_list_id: string
+          created_at?: string
+          custom_note?: string | null
+          decision_note?: string | null
+          id?: string
+          learning_curve_score?: number | null
+          position?: number
+          self_hosting_score?: number | null
+          team_fit_score?: number | null
+          tool_id: number
+        }
+        Update: {
+          comparison_list_id?: string
+          created_at?: string
+          custom_note?: string | null
+          decision_note?: string | null
+          id?: string
+          learning_curve_score?: number | null
+          position?: number
+          self_hosting_score?: number | null
+          team_fit_score?: number | null
+          tool_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comparison_list_items_comparison_list_id_fkey"
+            columns: ["comparison_list_id"]
+            isOneToOne: false
+            referencedRelation: "comparison_lists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comparison_lists: {
+        Row: {
+          created_at: string
+          id: string
+          session_key: string
+          share_token: string | null
+          summary_note: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          session_key: string
+          share_token?: string | null
+          summary_note?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          session_key?: string
+          share_token?: string | null
+          summary_note?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           category: string
@@ -651,6 +728,36 @@ export type Database = {
           target_audience?: string | null
           updated_at?: string
           website_url?: string | null
+        }
+        Relationships: []
+      }
+      saved_tools: {
+        Row: {
+          created_at: string
+          id: string
+          personal_note: string | null
+          session_key: string
+          status: string
+          tool_id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          personal_note?: string | null
+          session_key: string
+          status?: string
+          tool_id: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          personal_note?: string | null
+          session_key?: string
+          status?: string
+          tool_id?: number
+          updated_at?: string
         }
         Relationships: []
       }
