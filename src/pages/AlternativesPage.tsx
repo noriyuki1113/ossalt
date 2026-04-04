@@ -14,6 +14,7 @@ import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
+import { AlternativesCompareEntrypoint } from "@/components/workspace/AlternativesCompareEntrypoint";
 import { useSeo } from "@/hooks/use-seo";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
