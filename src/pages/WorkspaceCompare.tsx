@@ -108,7 +108,7 @@ export default function WorkspaceComparePage() {
     setEditingTitle(false);
   };
 
-  const parsedSummary = list?.summary_note || "";
+  const parsedSummary = normalizeText(list?.summary_note);
 
   return (
     <SiteLayout>
