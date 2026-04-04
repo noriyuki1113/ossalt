@@ -11,6 +11,7 @@ import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
 import { track } from "@/lib/track";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { normalizeText } from "@/lib/normalize-text";
 import type { Tool } from "@/hooks/use-tools";
 
 export default function WorkspaceComparePage() {
