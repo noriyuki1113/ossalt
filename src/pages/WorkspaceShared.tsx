@@ -8,6 +8,7 @@ import { ComparisonBoard } from "@/components/workspace/ComparisonBoard";
 import { useSharedComparison } from "@/hooks/use-workspace";
 import { supabase } from "@/integrations/supabase/client";
 import { useSeo } from "@/hooks/use-seo";
+import { normalizeText } from "@/lib/normalize-text";
 import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
