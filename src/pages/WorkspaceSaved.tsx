@@ -6,24 +6,25 @@ import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
-import { StatusBadge } from "@/components/workspace/StatusBadge";
+import { StatusBadge, StatusSelect } from "@/components/workspace/StatusBadge";
 import { useSavedTools, type ToolStatus, STATUS_LABELS } from "@/hooks/use-workspace";
 import { supabase } from "@/integrations/supabase/client";
 import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 export default function WorkspaceSavedPage() {
   const { savedTools, removeTool, updateStatus } = useSavedTools();
   const [filter, setFilter] = useState<ToolStatus | "all">("all");
   const [search, setSearch] = useState("");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useSeo({
     title: "保存済みツール | ワークスペース | OSSアルタナティブ",
     description: "保存したOSSツールの一覧",
   });
 
-  // Fetch tool data for saved tool IDs
   const toolIds = savedTools.map((s) => s.tool_id);
   const { data: toolsData } = useQuery({
     queryKey: ["tools-by-ids", toolIds],
@@ -47,9 +48,7 @@ export default function WorkspaceSavedPage() {
 
   const filtered = useMemo(() => {
     let items = savedTools;
-    if (filter !== "all") {
-      items = items.filter((s) => s.status === filter);
-    }
+    if (filter !== "all") items = items.filter((s) => s.status === filter);
     if (search) {
       const q = search.toLowerCase();
       items = items.filter((s) => {
@@ -63,7 +62,6 @@ export default function WorkspaceSavedPage() {
   return (
     <SiteLayout>
       <div className="container max-w-3xl mx-auto px-4 py-8">
-        {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground mb-6">
           <Link to="/workspace" className="hover:text-foreground transition-colors">ワークスペース</Link>
           <ChevronRight className="h-3 w-3" />
@@ -122,66 +120,65 @@ export default function WorkspaceSavedPage() {
           <div className="space-y-2">
             {filtered.map((saved) => {
               const tool = toolsMap.get(saved.tool_id);
+              const isExpanded = expandedId === saved.id;
               return (
-                <div key={saved.id} className="card-unified p-4 flex items-start gap-3">
-                  <Link to={`/tools/${saved.tool_id}`} className="shrink-0 mt-0.5">
-                    <ToolIcon url={tool?.url} githubUrl={tool?.github_url} name={tool?.name} size={28} />
-                  </Link>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Link to={`/tools/${saved.tool_id}`} className="text-sm font-semibold text-foreground hover:text-primary transition-colors truncate">
-                        {tool?.name || `Tool #${saved.tool_id}`}
-                      </Link>
-                      <StatusBadge status={saved.status as ToolStatus} />
-                    </div>
-                    <p className="text-xs text-muted-foreground line-clamp-1 mb-2">
-                      {tool?.description_ja || tool?.description_en || ""}
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <StarCount count={tool?.stars_num} size="sm" />
-                      {tool?.parent_category_ja && (
-                        <span className="text-[10px] text-muted-foreground">{tool.parent_category_ja}</span>
-                      )}
-                    </div>
-                    {saved.personal_note && (
-                      <p className="text-xs text-muted-foreground mt-2 bg-secondary/40 rounded px-2 py-1">
-                        {saved.personal_note}
+                <div key={saved.id} className="card-unified p-4">
+                  <div className="flex items-start gap-3">
+                    <Link to={`/tools/${saved.tool_id}`} className="shrink-0 mt-0.5">
+                      <ToolIcon url={tool?.url} githubUrl={tool?.github_url} name={tool?.name} size={28} />
+                    </Link>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Link to={`/tools/${saved.tool_id}`} className="text-sm font-semibold text-foreground hover:text-primary transition-colors truncate">
+                          {tool?.name || `Tool #${saved.tool_id}`}
+                        </Link>
+                        <button onClick={() => setExpandedId(isExpanded ? null : saved.id)}>
+                          <StatusBadge status={saved.status as ToolStatus} className="cursor-pointer hover:opacity-80" />
+                        </button>
+                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-1 mb-2">
+                        {tool?.description_ja || tool?.description_en || ""}
                       </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <select
-                      value={saved.status}
-                      onChange={(e) => updateStatus.mutate({ toolId: saved.tool_id, status: e.target.value as ToolStatus })}
-                      className="text-[11px] bg-transparent border border-border/60 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-primary/40 cursor-pointer"
-                    >
-                      {(Object.entries(STATUS_LABELS) as [ToolStatus, string][]).map(([key, label]) => (
-                        <option key={key} value={key}>{label}</option>
-                      ))}
-                    </select>
+                      <div className="flex items-center gap-3">
+                        <StarCount count={tool?.stars_num} size="sm" />
+                        {tool?.parent_category_ja && (
+                          <span className="text-[10px] text-muted-foreground">{tool.parent_category_ja}</span>
+                        )}
+                      </div>
+                    </div>
                     <button
                       onClick={() => {
                         removeTool.mutate(saved.tool_id);
                         toast("保存を解除しました");
                       }}
-                      className="h-7 w-7 flex items-center justify-center rounded text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                      className="h-7 w-7 flex items-center justify-center rounded text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors shrink-0"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
+                  {/* Expanded status selector */}
+                  {isExpanded && (
+                    <div className="mt-3 pt-3 border-t border-border/40">
+                      <p className="text-[10px] text-muted-foreground mb-2">ステータスを変更</p>
+                      <StatusSelect
+                        value={saved.status as ToolStatus}
+                        onChange={(status) => {
+                          updateStatus.mutate({ toolId: saved.tool_id, status });
+                          track("status_changed", { tool_id: saved.tool_id, new_status: status, source: "saved_page" });
+                          setExpandedId(null);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* Back */}
         <div className="mt-8 pt-6 border-t border-border flex justify-center">
           <Button variant="outline" size="sm" asChild className="gap-2 rounded-xl">
-            <Link to="/workspace">
-              <ArrowLeft className="h-3.5 w-3.5" />
-              ワークスペースに戻る
-            </Link>
+            <Link to="/workspace"><ArrowLeft className="h-3.5 w-3.5" />ワークスペースに戻る</Link>
           </Button>
         </div>
       </div>
