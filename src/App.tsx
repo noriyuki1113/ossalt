@@ -66,6 +66,7 @@ const App = () => (
           </Routes>
         </Suspense>
         <CookieBanner />
+        <StickyCompareTray />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
