@@ -24,6 +24,10 @@ const AdminPage = lazy(() => import("./pages/Admin"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
+const WorkspacePage = lazy(() => import("./pages/Workspace"));
+const WorkspaceSavedPage = lazy(() => import("./pages/WorkspaceSaved"));
+const WorkspaceComparePage = lazy(() => import("./pages/WorkspaceCompare"));
+const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
 
 const queryClient = new QueryClient();
 
