@@ -5,6 +5,7 @@ import { useState } from "react";
 const navLinks = [
   { to: "/#popular-alternatives", label: "人気代替", hash: true },
   { to: "/#use-cases", label: "用途から探す", hash: true },
+  { to: "/workspace", label: "ワークスペース" },
   { to: "/ranking", label: "新着" },
   { to: "/contact", label: "掲載依頼" },
 ];

@@ -57,6 +57,10 @@ const App = () => (
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />
             <Route path="/submit" element={<SubmitPage />} />
+            <Route path="/workspace" element={<WorkspacePage />} />
+            <Route path="/workspace/saved" element={<WorkspaceSavedPage />} />
+            <Route path="/workspace/compare/:id" element={<WorkspaceComparePage />} />
+            <Route path="/workspace/shared/:token" element={<WorkspaceSharedPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
