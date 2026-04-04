@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Inter"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
-        display: ['"Inter"', '"Noto Sans JP"', 'system-ui', 'sans-serif'],
-        jp: ['"Noto Sans JP"', '"Inter"', 'system-ui', 'sans-serif'],
+        sans: ['"Inter"', '"Noto Sans JP"', '-apple-system', 'BlinkMacSystemFont', '"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', 'system-ui', 'sans-serif'],
+        display: ['"Inter"', '"Noto Sans JP"', '-apple-system', 'BlinkMacSystemFont', '"Hiragino Sans"', 'system-ui', 'sans-serif'],
+        jp: ['"Noto Sans JP"', '"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', '-apple-system', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
