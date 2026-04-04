@@ -311,7 +311,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                 <p className="text-[10px] font-medium text-muted-foreground mb-1.5">{tool?.name || `Tool #${item.tool_id}`}</p>
                 {readOnly ? (
                   <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                    {item.decision_note || "メモはまだありません"}
+                    {normalizeText(item.decision_note) || "メモはまだありません"}
                   </p>
                 ) : editingNote === item.id ? (
                   <div className="space-y-1.5">
