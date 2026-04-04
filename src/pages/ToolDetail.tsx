@@ -29,6 +29,8 @@ import { EditorialInsightCard } from "@/components/EditorialInsightCard";
 import { RelatedGuideCard } from "@/components/RelatedGuideCard";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
+import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 
 /* ── helpers ── */
