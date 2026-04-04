@@ -333,7 +333,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                     onClick={() => startEditNote(item.id, item.decision_note)}
                     className="text-xs text-left text-muted-foreground hover:text-foreground transition-colors w-full min-h-[1.5rem]"
                   >
-                    {item.decision_note || (
+                    {normalizeText(item.decision_note) || (
                       <span className="inline-flex items-center gap-1 text-muted-foreground/50 text-[10px]">
                         <MessageSquare className="h-3 w-3" /> メモを追加
                       </span>
