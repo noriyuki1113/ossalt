@@ -157,7 +157,7 @@ export function ComparisonBoard({ items, tools, onRemoveItem, onUpdateItem, read
                 </div>
               </div>
               <p className="text-xs text-muted-foreground line-clamp-1 sm:line-clamp-2 leading-relaxed mb-2">
-                {tool?.description_ja || tool?.description_en || "—"}
+                {normalizeText(tool?.description_ja || tool?.description_en) || "—"}
               </p>
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-muted-foreground">
                 {tool?.stars_num && (
