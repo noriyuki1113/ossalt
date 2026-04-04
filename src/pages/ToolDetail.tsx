@@ -430,9 +430,16 @@ export default function ToolDetailPage() {
             {/* Right: CTAs */}
             <div className="lg:w-[260px] shrink-0">
               <div className="card-unified p-5 space-y-3">
-                {/* Primary CTA */}
+                {/* Workspace actions — primary placement */}
+                <div className="space-y-2">
+                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                </div>
+
+                <div className="border-t border-border/60 pt-3 space-y-2">
+                {/* External links */}
                 {tool.url && (
-                  <Button className="w-full gap-2 rounded-lg h-10" asChild>
+                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
                     <a href={tool.url} target="_blank" rel="noopener noreferrer"
                       onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
                     >
@@ -441,19 +448,14 @@ export default function ToolDetailPage() {
                   </Button>
                 )}
                 {tool.github_url && (
-                  <Button variant="outline" className="w-full gap-2 rounded-lg h-10 border-border" asChild>
+                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
                     <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
                       onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
                     >
-                      <Github className="h-4 w-4" /> GitHubリポジトリ
+                      <Github className="h-3.5 w-3.5" /> GitHubリポジトリ
                     </a>
                   </Button>
                 )}
-
-                {/* Workspace actions */}
-                <div className="flex items-center gap-2 pt-2 border-t border-border/60">
-                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
-                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
                 </div>
 
                 {/* Alternative link */}

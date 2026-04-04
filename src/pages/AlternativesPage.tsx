@@ -199,6 +199,9 @@ export default function AlternativesPage() {
           <p className="text-muted-foreground py-12 text-center">該当するツールが見つかりませんでした</p>
         ) : (
           <>
+            {/* ── Workspace: Compare all entry point ── */}
+            <AlternativesCompareEntrypoint competitor={competitor} tools={tools} />
+
             {/* ── 2. Top Picks (featured cards) ── */}
             {topPicks.length > 0 && (
               <section className="mb-10">

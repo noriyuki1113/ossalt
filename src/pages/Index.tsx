@@ -306,7 +306,13 @@ export default function IndexPage() {
           )}
 
           {selectedCategory !== "すべて" && !debouncedSearch && (
-            <div className="mt-8">
+            <div className="mt-6">
+              <CategoryCompareEntrypoint category={selectedCategory} />
+            </div>
+          )}
+
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mt-4">
               <CategorySponsorCTA category={selectedCategory} />
             </div>
           )}

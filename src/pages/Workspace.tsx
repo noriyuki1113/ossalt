@@ -120,6 +120,13 @@ export default function WorkspacePage() {
           </div>
         )}
 
+        {/* Starter templates */}
+        {lists.length === 0 && (
+          <div className="mt-8">
+            <StarterTemplates />
+          </div>
+        )}
+
         {/* Quick actions */}
         <div className="mt-8 pt-8 border-t border-border">
           <div className="flex flex-wrap gap-3">
