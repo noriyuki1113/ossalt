@@ -136,7 +136,7 @@ export default function WorkspaceComparePage() {
               </div>
             ) : (
               <div className="flex items-center gap-1.5 min-w-0">
-                <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">{list?.title || "比較"}</h1>
+                <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">{normalizeText(list?.title) || "比較"}</h1>
                 <button onClick={startEditTitle} className="text-muted-foreground hover:text-foreground shrink-0">
                   <Edit3 className="h-3.5 w-3.5" />
                 </button>
