@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
+import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
 
