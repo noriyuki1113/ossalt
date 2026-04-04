@@ -227,6 +227,7 @@ export default function AlternativesPage() {
                           <StarCount count={tool.stars_num} size="sm" />
                         </div>
                       </div>
+                      <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} variant="icon" source="alternatives_top" />
 
                       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1">
                         {tool.description_ja || tool.description_en || ""}
