@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount, formatRelativeDate } from "@/lib/format";
+import { normalizeText } from "@/lib/normalize-text";
 import type { ComparisonListItem } from "@/hooks/use-workspace";
 import type { Tool } from "@/hooks/use-tools";
 import { cn } from "@/lib/utils";
