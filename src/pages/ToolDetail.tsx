@@ -450,6 +450,12 @@ export default function ToolDetailPage() {
                   </Button>
                 )}
 
+                {/* Workspace actions */}
+                <div className="flex items-center gap-2 pt-2 border-t border-border/60">
+                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
+                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="flex-1" />
+                </div>
+
                 {/* Alternative link */}
                 {altSlug && (
                   <Link
