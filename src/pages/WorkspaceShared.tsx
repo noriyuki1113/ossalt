@@ -22,7 +22,7 @@ export default function WorkspaceSharedPage() {
   }, [token, data]);
 
   useSeo({
-    title: data?.list ? `${data.list.title} | 共有比較 | OSSアルタナティブ` : "共有比較 | OSSアルタナティブ",
+    title: data?.list ? `${data.list.title} | 共有された比較 | OSSアルタナティブ` : "共有された比較 | OSSアルタナティブ",
     description: data?.list?.summary_note || "OSSツールの共有比較ボード",
   });
 
@@ -65,7 +65,7 @@ export default function WorkspaceSharedPage() {
     return (
       <SiteLayout>
         <div className="container max-w-3xl mx-auto px-4 py-16 text-center">
-          <p className="text-muted-foreground">この共有リンクは無効または期限切れです</p>
+          <p className="text-muted-foreground">比較の読み込みに失敗しました。再読み込みしてください。</p>
           <Button variant="outline" asChild className="mt-4 gap-2 rounded-xl">
             <Link to="/"><ArrowLeft className="h-4 w-4" />ホームに戻る</Link>
           </Button>
@@ -95,25 +95,35 @@ export default function WorkspaceSharedPage() {
         <div className="mb-8">
           <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
             <Share2 className="h-3.5 w-3.5" />
-            <span>共有された比較ボード</span>
+            <span>共有された比較</span>
             <span>·</span>
-            <span>{data.items.length}件のツールを比較</span>
+            <span>比較中の候補 {data.items.length}件</span>
           </div>
           <h1 className="text-2xl font-bold text-foreground">{data.list.title}</h1>
           <p className="text-xs text-muted-foreground mt-1">
             最終更新: {new Date(data.list.updated_at).toLocaleDateString("ja-JP")}
           </p>
+          <p className="text-[10px] text-muted-foreground/60 mt-2">
+            このページでは、共有された比較結果を確認できます。
+          </p>
         </div>
 
         {/* Summary note — prominent placement */}
-        {data.list.summary_note && (
+        {data.list.summary_note ? (
           <div className="card-unified p-5 mb-6 bg-primary/[0.02] border-primary/10">
             <h2 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-1.5">
-              📋 比較サマリー
+              📋 比較概要
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
               {data.list.summary_note}
             </p>
+            <p className="text-[10px] text-muted-foreground/50 mt-3">
+              比較サマリーがあると、相手にも判断の意図が伝わりやすくなります。
+            </p>
+          </div>
+        ) : (
+          <div className="card-unified p-4 mb-6 bg-muted/20">
+            <p className="text-xs text-muted-foreground">サマリーはまだありません</p>
           </div>
         )}
 
@@ -123,7 +133,7 @@ export default function WorkspaceSharedPage() {
             <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
             <div className="min-w-0">
               <p className="text-sm font-semibold text-foreground">
-                最高評価: {recommendedTool.name}
+                最終候補: {recommendedTool.name}
               </p>
               <p className="text-xs text-muted-foreground">
                 評価スコアに基づく上位候補です（平均 {recommendation!.avg.toFixed(1)}/5）
@@ -142,10 +152,10 @@ export default function WorkspaceSharedPage() {
           </p>
           <div className="flex items-center justify-center gap-3">
             <Button asChild className="gap-2 rounded-xl">
-              <Link to="/">ツールを探す</Link>
+              <Link to="/">候補を探す</Link>
             </Button>
             <Button variant="outline" asChild className="gap-2 rounded-xl">
-              <Link to="/workspace">ワークスペースを開く</Link>
+              <Link to="/workspace">ワークスペースを見る</Link>
             </Button>
           </div>
         </div>

@@ -77,16 +77,22 @@ export default function WorkspaceComparePage() {
 
   const handleShare = async () => {
     if (!id) return;
-    const token = await generateShareToken.mutateAsync(id);
-    const url = `${window.location.origin}/workspace/shared/${token}`;
-    await navigator.clipboard.writeText(url);
-    track("share_link_created", { list_id: id });
-    toast.success("共有リンクをコピーしました");
+    try {
+      const token = await generateShareToken.mutateAsync(id);
+      const url = `${window.location.origin}/workspace/shared/${token}`;
+      await navigator.clipboard.writeText(url);
+      track("share_link_created", { list_id: id });
+      toast.success("共有リンクを作成しました", {
+        description: "比較結果をそのまま共有できます",
+      });
+    } catch {
+      toast.error("共有リンクの作成に失敗しました。もう一度お試しください。");
+    }
   };
 
   const handleDelete = async () => {
     if (!id) return;
-    if (!confirm("この比較リストを削除しますか？")) return;
+    if (!confirm("この比較を削除しますか？\n削除すると元に戻せません。")) return;
     await deleteList.mutateAsync(id);
     navigate("/workspace");
   };
@@ -113,7 +119,7 @@ export default function WorkspaceComparePage() {
           <span className="text-foreground font-medium truncate">{list?.title || "比較"}</span>
         </nav>
 
-        {/* Header — simplified CTA hierarchy */}
+        {/* Header */}
         <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
           <div className="flex items-center gap-2 min-w-0 flex-1">
             {editingTitle ? (
@@ -141,7 +147,7 @@ export default function WorkspaceComparePage() {
           <div className="flex items-center gap-1.5 shrink-0">
             <Button variant="outline" size="sm" onClick={() => setShowAddTool(!showAddTool)} className="gap-1 rounded-lg text-xs h-8 px-2.5">
               <Plus className="h-3.5 w-3.5" />
-              {!isMobile && "追加"}
+              {!isMobile && "ツールを追加"}
             </Button>
             <Button variant="outline" size="sm" onClick={handleShare} className="gap-1 rounded-lg text-xs h-8 px-2.5">
               <Share2 className="h-3.5 w-3.5" />
@@ -169,6 +175,13 @@ export default function WorkspaceComparePage() {
           </div>
         </div>
 
+        {/* Page hint */}
+        {items.length > 0 && (
+          <p className="text-[10px] text-muted-foreground/60 mb-4">
+            まずは重要な比較項目を見て、最後に比較サマリーへ結論を書いておくのがおすすめです。
+          </p>
+        )}
+
         {/* Add tool panel */}
         {showAddTool && (
           <div className="card-unified p-3 sm:p-4 mb-4">
@@ -176,7 +189,7 @@ export default function WorkspaceComparePage() {
             {addableToolIds.length === 0 ? (
               <p className="text-xs text-muted-foreground">
                 追加できる保存済みツールがありません。
-                <Link to="/" className="text-primary hover:underline ml-1">ツールを探す</Link>
+                <Link to="/" className="text-primary hover:underline ml-1">候補を探す</Link>
               </p>
             ) : (
               <div className="flex flex-wrap gap-1.5">
@@ -186,10 +199,10 @@ export default function WorkspaceComparePage() {
                     <button
                       key={saved.tool_id}
                       onClick={() => {
-                        if (items.length >= 5) { toast.error("比較は最大5件までです"); return; }
+                        if (items.length >= 5) { toast.error("比較するには候補を2件以上追加してください。最大5件まで。"); return; }
                         addItem.mutate({ toolId: saved.tool_id });
                         track("comparison_item_added", { list_id: id || "", tool_id: saved.tool_id });
-                        toast.success("追加しました");
+                        toast.success("比較に追加しました");
                       }}
                       className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
                     >
@@ -216,7 +229,7 @@ export default function WorkspaceComparePage() {
           }}
         />
 
-        {/* Decision Summary — single unified card */}
+        {/* Decision Summary */}
         <div className="mt-6 sm:mt-8">
           <div className="card-unified overflow-hidden">
             <div className="px-4 py-3 border-b border-border/40 bg-muted/30">
@@ -224,6 +237,9 @@ export default function WorkspaceComparePage() {
                 <FileText className="h-4 w-4 text-primary" />
                 比較サマリー
               </h2>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                比較して分かったことを短く残しておきましょう。あとで見返すときも、共有するときも分かりやすくなります。
+              </p>
             </div>
             {editingSummary ? (
               <div className="p-3 sm:p-4">
@@ -232,7 +248,7 @@ export default function WorkspaceComparePage() {
                   onChange={(e) => setSummaryValue(e.target.value)}
                   className="w-full text-sm p-3 border border-border rounded-xl bg-background resize-none focus:outline-none focus:ring-1 focus:ring-primary/40"
                   rows={isMobile ? 5 : 6}
-                  placeholder={`■ 最有力候補: \n■ 採用理由: \n■ 懸念点: \n■ 次に確認すること: `}
+                  placeholder={`■ 最有力候補: 今の時点で最も有力な候補を書いてください\n■ 採用理由: なぜ有力だと思うかを短く書いてください\n■ 懸念点: 導入前に気になる点や不安な点を書いてください\n■ 次に確認すること: 追加で確認したいことや試したいことを書いてください`}
                   autoFocus
                 />
                 <div className="flex gap-2 mt-2">
@@ -258,7 +274,7 @@ export default function WorkspaceComparePage() {
                   <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{parsedSummary}</p>
                 ) : (
                   <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">クリックしてサマリーを記録</p>
+                    <p className="text-sm text-muted-foreground">サマリーはまだありません</p>
                     <div className="flex flex-wrap gap-2 text-[10px] text-muted-foreground/60">
                       <span className="bg-secondary/50 px-2 py-0.5 rounded">最有力候補</span>
                       <span className="bg-secondary/50 px-2 py-0.5 rounded">採用理由</span>
@@ -272,7 +288,7 @@ export default function WorkspaceComparePage() {
           </div>
         </div>
 
-        {/* Back — lightweight */}
+        {/* Back */}
         <div className="mt-6 sm:mt-8 flex justify-center">
           <Button variant="ghost" size="sm" asChild className="gap-1.5 text-xs text-muted-foreground hover:text-foreground">
             <Link to="/workspace">← ワークスペースに戻る</Link>

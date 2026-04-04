@@ -67,7 +67,7 @@ function UncomparedNudge({ savedTools, comparedToolIds }: { savedTools: any[]; c
         <AlertCircle className="h-4 w-4 text-primary mt-0.5 shrink-0" />
         <div>
           <p className="text-sm font-medium text-foreground">
-            {uncompared.length}件の候補がまだ比較されていません
+            まだ比較していない候補が{uncompared.length}件あります
           </p>
           <p className="text-xs text-muted-foreground mt-0.5">
             保存した候補を比較リストに追加して、検討を進めましょう
@@ -77,7 +77,7 @@ function UncomparedNudge({ savedTools, comparedToolIds }: { savedTools: any[]; c
             className="inline-flex items-center gap-1 text-xs text-primary hover:underline mt-2"
             onClick={() => track("nudge_uncompared_click")}
           >
-            保存済みを確認 <ArrowRight className="h-3 w-3" />
+            保存済みを見る <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
       </div>
@@ -93,7 +93,7 @@ function ResumeComparisons({ lists }: { lists: any[] }) {
     <section className="mb-6">
       <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
         <RotateCcw className="h-3.5 w-3.5 text-muted-foreground" />
-        比較途中のリストを再開
+        続きから再開
       </h2>
       <div className="space-y-1.5">
         {inProgress.map((list) => (
@@ -109,7 +109,7 @@ function ResumeComparisons({ lists }: { lists: any[] }) {
                 最終更新: {new Date(list.updated_at).toLocaleDateString("ja-JP")}
               </p>
             </div>
-            <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="text-[10px] text-primary shrink-0">この比較を再開</span>
           </Link>
         ))}
       </div>
@@ -171,7 +171,6 @@ export default function WorkspacePage() {
     description: "保存したOSSツールの管理、比較リストの作成・共有ができるワークスペース",
   });
 
-  // Fetch tool details for recent saves
   const toolIds = savedTools.map((s) => s.tool_id);
   const { data: toolsData } = useQuery({
     queryKey: ["tools-by-ids", toolIds],
@@ -193,7 +192,6 @@ export default function WorkspacePage() {
     return m;
   }, [toolsData]);
 
-  // Gather all tool IDs that are already in comparison lists
   const allListIds = lists.map((l) => l.id);
   const { data: allComparisonItems } = useQuery({
     queryKey: ["all-comparison-items", allListIds],
@@ -245,7 +243,7 @@ export default function WorkspacePage() {
           </div>
           <Button onClick={handleNewComparison} size="sm" className="gap-1.5 rounded-xl">
             <Plus className="h-3.5 w-3.5" />
-            新しい比較
+            新しく比較を作る
           </Button>
         </div>
 
@@ -261,7 +259,7 @@ export default function WorkspacePage() {
             </div>
             <div className="min-w-0">
               <p className="text-2xl font-bold text-foreground tabular-nums">{savedTools.length}</p>
-              <p className="text-xs text-muted-foreground">保存済みツール</p>
+              <p className="text-xs text-muted-foreground">保存済み</p>
             </div>
           </Link>
           <Link
@@ -290,7 +288,8 @@ export default function WorkspacePage() {
         {/* Status summary */}
         {Object.keys(statusCounts).length > 0 && (
           <section className="mb-6">
-            <h2 className="text-sm font-semibold text-foreground mb-3">ステータス別</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-3">ステータス</h2>
+            <p className="text-[10px] text-muted-foreground/60 mb-2">比較しながら候補の状態を整理できます</p>
             <div className="flex flex-wrap gap-2">
               {(Object.entries(statusCounts) as [ToolStatus, number][]).map(([status, count]) => (
                 <Link
@@ -343,9 +342,10 @@ export default function WorkspacePage() {
 
         {/* Quick actions */}
         <div className="pt-6 border-t border-border">
+          <p className="text-[10px] text-muted-foreground/60 mb-3">比較はあとで続きから再開できます</p>
           <div className="flex flex-wrap gap-3">
             <Button variant="outline" size="sm" asChild className="gap-1.5 rounded-xl">
-              <Link to="/">ツールを探す</Link>
+              <Link to="/">候補を探す</Link>
             </Button>
             <Button variant="outline" size="sm" asChild className="gap-1.5 rounded-xl">
               <Link to="/workspace/saved">保存済みを見る</Link>

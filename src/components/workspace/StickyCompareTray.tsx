@@ -21,7 +21,7 @@ export function StickyCompareTray() {
           className="inline-flex items-center gap-2 rounded-xl bg-card border border-border shadow-lg px-4 py-2.5 text-sm font-medium text-foreground hover:border-primary/30 hover:shadow-xl transition-all"
         >
           <Bookmark className="h-4 w-4 text-primary" />
-          <span>{savedCount}件保存済み</span>
+          <span>保存済み {savedCount}件</span>
         </Link>
       )}
       {compareCount > 0 && (
