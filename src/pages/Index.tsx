@@ -10,6 +10,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { PopularAlternatives } from "@/components/home/PopularAlternatives";
 import { StatsBar } from "@/components/StatsBar";
 import { AdSlot } from "@/components/ads/AdSlot";
+import { CategoryCompareEntrypoint } from "@/components/workspace/CategoryCompareEntrypoint";
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
@@ -305,7 +306,13 @@ export default function IndexPage() {
           )}
 
           {selectedCategory !== "すべて" && !debouncedSearch && (
-            <div className="mt-8">
+            <div className="mt-6">
+              <CategoryCompareEntrypoint category={selectedCategory} />
+            </div>
+          )}
+
+          {selectedCategory !== "すべて" && !debouncedSearch && (
+            <div className="mt-4">
               <CategorySponsorCTA category={selectedCategory} />
             </div>
           )}

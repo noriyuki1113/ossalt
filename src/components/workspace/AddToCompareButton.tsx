@@ -54,8 +54,7 @@ export function AddToCompareButton({
           throw error;
         }
       } else {
-        toast.success("比較に追加しました", {
-          description: toolName ? `${toolName}を比較リストに追加しました` : undefined,
+        toast.success(`${toolName || "ツール"}を比較に追加しました`, {
           action: {
             label: "比較を見る",
             onClick: () => navigate(`/workspace/compare/${listId}`),

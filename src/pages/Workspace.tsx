@@ -5,6 +5,7 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { useSavedTools, useComparisonLists } from "@/hooks/use-workspace";
 import { StatusBadge } from "@/components/workspace/StatusBadge";
 import { EmptyWorkspaceState } from "@/components/workspace/EmptyWorkspaceState";
+import { WorkspaceOnboarding, StarterTemplates } from "@/components/workspace/WorkspaceQuickActions";
 import { useSeo } from "@/hooks/use-seo";
 import { track } from "@/lib/track";
 import type { ToolStatus } from "@/hooks/use-workspace";
@@ -116,6 +117,13 @@ export default function WorkspacePage() {
                 </Link>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Starter templates */}
+        {lists.length === 0 && (
+          <div className="mt-8">
+            <StarterTemplates />
           </div>
         )}
 

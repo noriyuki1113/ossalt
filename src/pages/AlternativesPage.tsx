@@ -14,6 +14,7 @@ import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
+import { AlternativesCompareEntrypoint } from "@/components/workspace/AlternativesCompareEntrypoint";
 import { useSeo } from "@/hooks/use-seo";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
@@ -198,6 +199,9 @@ export default function AlternativesPage() {
           <p className="text-muted-foreground py-12 text-center">該当するツールが見つかりませんでした</p>
         ) : (
           <>
+            {/* ── Workspace: Compare all entry point ── */}
+            <AlternativesCompareEntrypoint competitor={competitor} tools={tools} />
+
             {/* ── 2. Top Picks (featured cards) ── */}
             {topPicks.length > 0 && (
               <section className="mb-10">
