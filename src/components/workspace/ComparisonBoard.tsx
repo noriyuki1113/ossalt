@@ -261,6 +261,3 @@ function ScoreSelect({ value, onChange }: { value: number | null; onChange: (v: 
   );
 }
 
-function GitCompareArrowsIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <GitCompareArrows {...props} />;
-}
