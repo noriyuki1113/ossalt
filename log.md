@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-05] ingest | tools×3作成（anytype / outline / affine）
+
+- 追加ソース: なし（notion.mdの言及・既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/tools/anytype.md, wiki/tools/outline.md, wiki/tools/affine.md
+- 所感: notion.mdのrelated_toolsに挙がっていた4ツールのエンティティページが揃った。anytypeはライセンス（Any Source Available License）の複雑さとオブジェクトモデルの学習コストが日本語圏での普及障壁になっていると推定。outlineはBSL 1.1ライセンスと「DB機能なし」の制約を明記することで推薦文脈を明確化。affineはMIT×ホワイトボード統合が差別化だが成熟度の懸念を注記。次の優先はwiki/comparisons/notion-vs-appflowy.mdとwiki/categories/knowledge-management.md。
+
 ## [2026-04-05] ingest | appflowy.md（新規作成）
 
 - 追加ソース: なし（notion.mdの言及・既存知識をベースに作成）
