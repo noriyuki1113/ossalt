@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-05 | ページ数: 9 | ソース数: 27
+最終更新: 2026-04-05 | ページ数: 13 | ソース数: 33
 
 -----
 
@@ -24,11 +24,13 @@
 
 ## カテゴリ分析（wiki/categories/）
 
-*未作成*
+- [[knowledge-management]] — PKM・Wiki系・ワークスペース系OSSのトレンド分析。Notion代替の主戦場 (confidence: medium, 更新: 2026-04-05)
 
 ## 判断軸（wiki/decision-axes/）
 
-*未作成*
+- [[local-first-offline]] — ローカルファースト性の比較軸。データ所有権・オフライン動作・セルフホストと連動 (更新: 2026-04-05)
+- [[collaboration-model]] — 協調モデルの比較軸。個人〜エンタープライズまでの4段階を整理 (更新: 2026-04-05)
+- [[migration-friction]] — 移行摩擦の比較軸。DB依存度・チーム規模・運用責任の移管を構造化 (更新: 2026-04-05)
 
 ## Synthesis（wiki/synthesis/）
 

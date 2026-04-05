@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-05] ingest | decision-axes×3 + categories×1作成
+
+- 追加ソース: なし（既存 wiki ページ・既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/decision-axes/local-first-offline.md, collaboration-model.md, migration-friction.md, wiki/categories/knowledge-management.md
+- 所感: notion.mdのsuggested related pagesがすべて揃った。local-first-offlineはグラデーション（完全ローカル→クラウド専用）の整理が有効。migration-frictionは「移行摩擦チェックリスト」をossalt.jpのUXに活用できる素材。次はraw/へのソース追加によるconfidence向上が優先。AppFlowy・AFFiNEのGitHubデータをingestすると星成長率の評価精度が上がる。
+
 ## [2026-04-05] ingest | comparisons×4作成（notion-vs-appflowy/anytype/affine/outline）
 
 - 追加ソース: なし（既存 wiki ページ・既存知識をベースに作成）
