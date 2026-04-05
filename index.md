@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-05 | ページ数: 1 | ソース数: 6
+最終更新: 2026-04-05 | ページ数: 2 | ソース数: 9
 
 -----
 
@@ -10,7 +10,7 @@
 
 ## OSSツール（wiki/tools/）
 
-*未作成*
+- [[appflowy]] — Notion代替の主要候補。self-host・ローカルファースト・Flutter製クロスプラットフォーム (confidence: medium, 更新: 2026-04-05)
 
 ## 比較記事（wiki/comparisons/）
 
