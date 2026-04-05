@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap, Shield, Settings, HelpCircle, ExternalLink } from "lucide-react";
 import { track } from "@/lib/track";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,9 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { AlternativesCompareEntrypoint } from "@/components/workspace/AlternativesCompareEntrypoint";
 import { useSeo } from "@/hooks/use-seo";
+import { useAlternativeContent } from "@/hooks/use-alternative-content";
 import { formatCount } from "@/lib/format";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { Tool } from "@/hooks/use-tools";
 
 const SLUG_MAP: Record<string, string> = {
@@ -60,6 +62,15 @@ for (const [slug, name] of Object.entries(SLUG_MAP)) {
 
 export { SLUG_MAP, COMPETITOR_TO_SLUG };
 
+/* ── Icon map for whySwitchReasons ── */
+const REASON_ICONS: Record<string, React.ElementType> = {
+  cost: Zap,
+  data: Server,
+  lockin: Users,
+  community: Users,
+  customization: Settings,
+};
+
 /* ── Helper: generate a short "best for" label from category ── */
 function getBestFor(tool: Tool): string {
   const cat = (tool.parent_category_ja || tool.category_ja || "").toLowerCase();
@@ -77,6 +88,9 @@ function getBestFor(tool: Tool): string {
 export default function AlternativesPage() {
   const { slug } = useParams<{ slug: string }>();
   const competitor = slug ? SLUG_MAP[slug] : undefined;
+
+  /* ── Editorial JSON (optional layer) ── */
+  const { content: editorial } = useAlternativeContent(slug);
 
   const { data, isLoading } = useQuery({
     queryKey: ["alternatives-page", competitor],
@@ -105,8 +119,8 @@ export default function AlternativesPage() {
   const jsonLd = competitor ? {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${competitor}の代替OSSツール一覧`,
-    description: `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。`,
+    name: editorial?.metaTitle || `${competitor}の代替OSSツール一覧`,
+    description: editorial?.metaDescription || `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。`,
     url: `https://ossalt.jp/alternatives/${slug}`,
     numberOfItems: count,
     mainEntity: {
@@ -118,15 +132,25 @@ export default function AlternativesPage() {
         url: `https://ossalt.jp/tools/${t.id}`,
       })),
     },
+    ...(editorial?.faq && editorial.faq.length > 0 ? {
+      mainEntity2: {
+        "@type": "FAQPage",
+        mainEntity: editorial.faq.map(f => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+    } : {}),
   } : undefined;
 
   useSeo({
-    title: competitor
+    title: editorial?.metaTitle || (competitor
       ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "一覧"} | OSSアルタナティブ`
-      : "代替ツール | OSSアルタナティブ",
-    description: competitor
+      : "代替ツール | OSSアルタナティブ"),
+    description: editorial?.metaDescription || (competitor
       ? `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。セルフホスト可能でライセンス費用ゼロのOSS代替を見つけよう。`
-      : "",
+      : ""),
     canonical: competitor
       ? `https://ossalt.jp/alternatives/${slug}`
       : undefined,
@@ -165,9 +189,13 @@ export default function AlternativesPage() {
             {competitor} の代替OSSツール{!isLoading && count > 0 ? `${count}選` : "一覧"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
-            {competitor}の月額コストやベンダーロックインに悩んでいませんか？
-            ここでは{competitor}の代わりに使える無料・オープンソースのツール{!isLoading ? `${count}件` : ""}を、
-            GitHubスター数順にランキング形式で比較できます。すべてセルフホスト可能で、ライセンス費用はゼロです。
+            {editorial?.heroDescription || (
+              <>
+                {competitor}の月額コストやベンダーロックインに悩んでいませんか？
+                ここでは{competitor}の代わりに使える無料・オープンソースのツール{!isLoading ? `${count}件` : ""}を、
+                GitHubスター数順にランキング形式で比較できます。すべてセルフホスト可能で、ライセンス費用はゼロです。
+              </>
+            )}
           </p>
 
           {/* Quick stats */}
@@ -300,41 +328,61 @@ export default function AlternativesPage() {
               </section>
             )}
 
-            {/* ── 4. Why switch section (SEO content) ── */}
+            {/* ── 4. Why switch section ── */}
+            {/* Uses editorial JSON reasons if available, otherwise generic fallback */}
             <section className="mb-10">
               <h2 className="text-base font-bold text-foreground mb-3">
                 なぜ{competitor}からOSSに乗り換えるのか？
               </h2>
               <div className="card-unified p-5">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-muted-foreground leading-relaxed">
-                  <div className="flex items-start gap-2.5">
-                    <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Zap className="h-3.5 w-3.5 text-primary" />
+                {editorial?.whySwitchReasons ? (
+                  <div className={`grid grid-cols-1 ${editorial.whySwitchReasons.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4 text-xs text-muted-foreground leading-relaxed`}>
+                    {editorial.whySwitchReasons.map((reason, i) => {
+                      const Icon = REASON_ICONS[reason.icon] || Zap;
+                      return (
+                        <div key={i} className="flex items-start gap-2.5">
+                          <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                            <Icon className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-foreground text-sm mb-1">{reason.title}</p>
+                            <p>{reason.description}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-muted-foreground leading-relaxed">
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Zap className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm mb-1">コスト削減</p>
+                        <p>{competitor}の月額・年額費用をゼロに。チーム規模が増えても追加コストなし。</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold text-foreground text-sm mb-1">コスト削減</p>
-                      <p>{competitor}の月額・年額費用をゼロに。チーム規模が増えても追加コストなし。</p>
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Server className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm mb-1">データの自社管理</p>
+                        <p>セルフホストにより、顧客データを外部に預けずに自社で完全管理。</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Users className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm mb-1">ロックイン回避</p>
+                        <p>特定ベンダーに依存せず、いつでも別ツールへ移行可能。</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Server className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground text-sm mb-1">データの自社管理</p>
-                      <p>セルフホストにより、顧客データを外部に預けずに自社で完全管理。</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Users className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground text-sm mb-1">ロックイン回避</p>
-                      <p>特定ベンダーに依存せず、いつでも別ツールへ移行可能。</p>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </section>
 
@@ -348,6 +396,70 @@ export default function AlternativesPage() {
                   {restTools.map((tool, i) => (
                     <ToolCard key={tool.id} tool={tool} index={i + 3} />
                   ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── 6. Editorial FAQ (only when JSON exists) ── */}
+            {editorial?.faq && editorial.faq.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
+                  <HelpCircle className="h-4 w-4 text-primary" />
+                  よくある質問
+                </h2>
+                <div className="card-unified p-4 sm:p-5">
+                  <Accordion type="single" collapsible className="w-full">
+                    {editorial.faq.map((item, i) => (
+                      <AccordionItem key={i} value={`faq-${i}`} className="border-border/40">
+                        <AccordionTrigger className="text-sm font-medium text-foreground hover:no-underline py-3">
+                          {item.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                          {item.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              </section>
+            )}
+
+            {/* ── 7. Related alternatives (only when JSON exists) ── */}
+            {editorial?.relatedSlugs && editorial.relatedSlugs.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-sm font-bold text-foreground mb-3">関連する代替ページ</h2>
+                <div className="flex flex-wrap gap-2">
+                  {editorial.relatedSlugs
+                    .filter(s => SLUG_MAP[s])
+                    .map(s => (
+                      <Link
+                        key={s}
+                        to={`/alternatives/${s}`}
+                        className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-all font-medium"
+                      >
+                        {SLUG_MAP[s]}の代替
+                      </Link>
+                    ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── 8. Competitor source link (only when JSON exists) ── */}
+            {editorial?.competitorUrl && (
+              <section className="mb-10">
+                <div className="card-unified p-4 flex items-center gap-3 text-xs text-muted-foreground">
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                  <span>
+                    {competitor}の公式サイト:
+                    <a
+                      href={editorial.competitorUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline ml-1"
+                    >
+                      {editorial.competitorUrl}
+                    </a>
+                  </span>
                 </div>
               </section>
             )}
