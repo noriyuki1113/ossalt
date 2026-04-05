@@ -1,0 +1,49 @@
+{
+  "slug": "google-analytics",
+  "competitor": "Google Analytics",
+  "competitorUrl": "https://analytics.google.com",
+  "metaTitle": "Google Analyticsの代替OSSツール一覧 | OSSアルタナティブ",
+  "metaDescription": "Google Analyticsの代わりに使える無料オープンソースのアクセス解析ツールを比較。プライバシー重視・セルフホスト可能なOSS代替を見つけよう。",
+  "heroDescription": "Google Analyticsのトラッキングやプライバシーの懸念に悩んでいませんか？ここではGoogle Analyticsの代わりに使える無料・オープンソースのアクセス解析ツールを、GitHubスター数順にランキング形式で比較できます。すべてセルフホスト可能で、ユーザーデータを自社で管理できます。",
+  "whySwitchReasons": [
+    {
+      "title": "プライバシー重視",
+      "description": "Cookie不要・GDPR準拠のツールが多く、ユーザーのプライバシーを守りながら正確な解析が可能。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "GA4の有料版（Analytics 360）は高額。OSSなら無制限のデータ保持とカスタマイズがゼロコストで実現。",
+      "icon": "cost"
+    },
+    {
+      "title": "データの完全管理",
+      "description": "セルフホストにより、アクセスデータをGoogleに送信せず自社サーバーで完全に管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ロックイン回避",
+      "description": "Google依存を減らし、いつでも別の解析ツールに移行可能。データのエクスポートも自由。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Google Analyticsの無料OSSの代替はありますか？",
+      "answer": "はい。Plausible、Umami、Matomo、PostHogなど、多数のオープンソースのアクセス解析ツールがあります。いずれもセルフホスト可能で、プライバシーに配慮した設計です。"
+    },
+    {
+      "question": "GA4から移行するのは難しいですか？",
+      "answer": "多くのOSS代替はスクリプトタグ1行で導入でき、GA4よりも軽量です。データ移行は必要ですが、新規データの収集はすぐに始められます。"
+    },
+    {
+      "question": "プライバシー重視のアクセス解析とは？",
+      "answer": "Cookie不要、IPアドレス非保存、GDPR/CCPA準拠を標準とする解析ツールです。Plausible、Umami、Fathomなどが代表的です。"
+    },
+    {
+      "question": "セルフホストとクラウド版はどちらがいいですか？",
+      "answer": "データの完全管理が必要ならセルフホスト、運用負荷を減らしたいならクラウド版がおすすめです。多くのOSSツールは両方を提供しています。"
+    }
+  ],
+  "relatedSlugs": ["datadog", "firebase", "tableau"]
+}
