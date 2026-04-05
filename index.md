@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-05 | ページ数: 5 | ソース数: 15
+最終更新: 2026-04-05 | ページ数: 9 | ソース数: 27
 
 -----
 
@@ -17,7 +17,10 @@
 
 ## 比較記事（wiki/comparisons/）
 
-*未作成*
+- [[notion-vs-appflowy]] — セルフホスト・オフライン・DB機能ギャップを軸に整理 (confidence: medium, 更新: 2026-04-05)
+- [[notion-vs-anytype]] — データ所有権・E2E暗号化・PKM用途での比較 (confidence: medium, 更新: 2026-04-05)
+- [[notion-vs-affine]] — ドキュメント×ホワイトボード統合とMITライセンスを軸に (confidence: medium, 更新: 2026-04-05)
+- [[notion-vs-outline]] — チームwiki特化・DB機能なしの制約を明示した比較 (confidence: medium, 更新: 2026-04-05)
 
 ## カテゴリ分析（wiki/categories/）
 

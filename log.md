@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-05] ingest | comparisons×4作成（notion-vs-appflowy/anytype/affine/outline）
+
+- 追加ソース: なし（既存 wiki ページ・既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/comparisons/notion-vs-appflowy.md, notion-vs-anytype.md, notion-vs-affine.md, notion-vs-outline.md
+- 所感: 4 比較記事を作成し、notion.md の suggested related pages がすべて比較記事レベルまで揃った。各記事で「DB 機能への依存度チェック」を移行判断の最重要軸として共通化した。次の優先は wiki/decision-axes/（local-first-offline / collaboration-model / migration-friction）と wiki/categories/knowledge-management.md。
+
 ## [2026-04-05] ingest | tools×3作成（anytype / outline / affine）
 
 - 追加ソース: なし（notion.mdの言及・既存知識をベースに作成）
