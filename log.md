@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-05] ingest | Slack・Figmaカテゴリ追加（saas×2 / tools×4 / comparisons×4 / categories×2）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/slack.md, wiki/saas/figma.md, wiki/tools/mattermost.md, wiki/tools/rocketchat.md, wiki/tools/zulip.md, wiki/tools/penpot.md, wiki/comparisons/slack-vs-mattermost.md, slack-vs-rocketchat.md, slack-vs-zulip.md, figma-vs-penpot.md, wiki/categories/team-communication.md, design-tools.md
+- 所感: Slackカテゴリは「Mattermost（近似移行）/ Rocket.Chat（オムニチャンネル）/ Zulip（非同期特化）」の3分岐が明確。Figmaカテゴリは Penpot が唯一の本格候補でありシンプルな比較構造。Variables / Auto Layout のギャップが Figma→Penpot移行の最大障壁。次の優先候補：GitHub代替（Gitea/Forgejo）、パスワード管理（Bitwarden）、プロジェクト管理（Plane/Jira代替）。
+
 ## [2026-04-05] ingest | decision-axes×3 + categories×1作成
 
 - 追加ソース: なし（既存 wiki ページ・既存知識をベースに作成）
