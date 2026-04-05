@@ -1,4 +1,4 @@
-/** Static content data for an alternatives page (supplements DB tool data) */
+/** Static editorial content that supplements DB tool data for an alternatives page */
 export interface AlternativePageContent {
   slug: string;
   competitor: string;
