@@ -1,0 +1,273 @@
+{
+  "type": "alternatives_page",
+  "version": 1,
+  "slug": "notion",
+  "name": "Notion",
+  "category": "workspace",
+  "status": "active",
+  "locale": "ja-JP",
+  "lastReviewed": "2026-04-05",
+  "confidence": "medium",
+  "title": "Notionの代替OSSツール一覧",
+  "seo": {
+    "title": "Notionの代替OSSを比較 | AppFlowy・Anytype・AFFiNE・Outline | OSSアルタナティブ",
+    "description": "Notionの代替となるオープンソースツールを日本語で比較。ローカルファースト、セルフホスト、チームWiki、ドキュメント管理の観点から AppFlowy・Anytype・AFFiNE・Outline を検討できます。"
+  },
+  "hero": {
+    "headline": "Notionの代替OSSを、用途別に比較できるようにする。",
+    "subheadline": "メモ、Wiki、プロジェクト、データベースを一つにまとめたい。ただし、月額コスト・ベンダーロックイン・データ所有権は見直したい。ossalt では Notion 代替を「個人知識管理」「チームWiki」「ローカルファースト」「セルフホスト運用」の観点で整理します。"
+  },
+  "intro": {
+    "short": "Notion代替は、見た目が似ているかよりも、誰が使うか・どこにデータを置くか・どこまで共同編集したいかで選ぶのが重要です。",
+    "long": "Notion は用途が広いため、単一の“完全互換”を探すよりも、目的ごとに候補を切り分けるほうが失敗しにくくなります。たとえば、個人中心ならローカルファースト、チーム文書なら共同編集と権限管理、セルフホスト重視なら運用負荷とデータ所有権が重要です。ossalt の Notion 代替ページでは、一覧性だけでなく、導入判断に必要な比較文脈を editorial layer で補います。"
+  },
+  "problemStatement": {
+    "painPoints": [
+      "monthly-cost",
+      "vendor-lock-in",
+      "data-ownership",
+      "offline-local-first",
+      "self-hosting"
+    ],
+    "positioning": "Notion 代替を選ぶときは、見た目の近さだけでなく、ローカルファーストか、セルフホスト前提か、チームWiki中心か、ドキュメント＋ホワイトボードまで必要かを先に決めると比較しやすくなります。"
+  },
+  "migrationReasons": [
+    {
+      "title": "月額コストと席課金を見直したい",
+      "description": "人数増加とともにコストが増える構成から離れ、無料または OSS ベースの構成を検討したいチーム向けです。"
+    },
+    {
+      "title": "データ所有権を取り戻したい",
+      "description": "SaaS に全面依存せず、自分たちの保存先・同期方法・バックアップ方針を持ちたい場合に Notion 代替を検討する価値があります。"
+    },
+    {
+      "title": "ローカルファーストやオフライン利用を重視したい",
+      "description": "常時オンライン前提ではなく、オフラインでも書けること、手元にデータがあることを優先したいケースです。"
+    },
+    {
+      "title": "用途ごとに最適なOSSを選びたい",
+      "description": "Notion 的な万能さを求めるのではなく、個人知識管理、チームWiki、docs＋whiteboard、セルフホスト運用などの目的に合わせて候補を絞り込みたい人向けです。"
+    }
+  ],
+  "decisionAxes": [
+    {
+      "key": "use-case-fit",
+      "label": "用途適合",
+      "description": "個人メモ中心か、チームWiki中心か、docs＋database＋whiteboard まで必要かを確認します。"
+    },
+    {
+      "key": "collaboration-model",
+      "label": "共同編集モデル",
+      "description": "リアルタイム共同編集、権限管理、公開共有、チーム向け運用のしやすさを見ます。"
+    },
+    {
+      "key": "local-first-offline",
+      "label": "ローカルファースト / オフライン",
+      "description": "常時クラウド前提ではなく、ローカル保存やオフライン作業をどこまで重視するかの軸です。"
+    },
+    {
+      "key": "self-host-difficulty",
+      "label": "セルフホスト難易度",
+      "description": "自前インフラで動かす場合の導入しやすさ、構成の重さ、初期セットアップの難しさを比較します。"
+    },
+    {
+      "key": "ops-burden",
+      "label": "運用負荷",
+      "description": "アップデート、バックアップ、障害対応、権限管理など、運用継続に必要な負担を確認します。"
+    },
+    {
+      "key": "migration-friction",
+      "label": "移行摩擦",
+      "description": "既存の Notion ページ構造、データベース、テンプレート、共同編集運用をどこまで置き換えやすいかを見ます。"
+    },
+    {
+      "key": "japanese-doc-availability",
+      "label": "日本語情報の見つけやすさ",
+      "description": "導入時に日本語の比較記事や解説が必要なチームでは重要です。"
+    }
+  ],
+  "quickGuide": {
+    "title": "Notion代替の選び方",
+    "steps": [
+      "まず、個人知識管理なのか、チームWikiなのか、オールインワンのワークスペースなのかを決める",
+      "次に、ローカルファースト・オフライン重視か、ブラウザ中心の共同編集重視かを選ぶ",
+      "セルフホストするなら、運用負荷とバックアップ責任を先に見積もる",
+      "最後に、見た目の近さではなく、移行摩擦と日常運用のしやすさで候補を絞る"
+    ]
+  },
+  "featuredCandidates": [
+    {
+      "name": "AppFlowy",
+      "summary": "Notion 代替を明確に打ち出すオープンソースのワークスペース。オフラインモード、セルフホスト、ネイティブモバイル / デスクトップを訴求しており、“Notionに近い体験をOSSで持ちたい”人に向きます。",
+      "bestFor": [
+        "Notionに近い操作感を求める",
+        "セルフホストしたい",
+        "オフライン利用も重視したい",
+        "モバイル / デスクトップのネイティブ体験を求める"
+      ],
+      "tradeoffs": [
+        "自前運用する場合はセットアップと保守の負荷がある",
+        "Notionの既存運用を完全にそのまま移せるとは限らない"
+      ],
+      "selfHostDifficulty": "medium",
+      "opsBurden": "medium",
+      "managedOption": true,
+      "privacyFocused": true,
+      "openSource": true,
+      "recommendedFor": "“OSS版Notion”に近い期待値で比較を始めたいチームや個人",
+      "links": {
+        "official": "https://appflowy.com/compare/notion-vs-appflowy",
+        "github": "https://github.com/appflowy-io/appflowy"
+      }
+    },
+    {
+      "name": "Anytype",
+      "summary": "ローカルファーストとプライバシー重視が強い知識管理ツール。端末上の暗号化、オフライン利用、ローカルネットワーク上の同期など、“自分のデータを自分で持つ”ことを重視する人に向いています。",
+      "bestFor": [
+        "個人知識管理",
+        "プライバシー重視",
+        "ローカルファースト",
+        "オフライン前提の作業"
+      ],
+      "tradeoffs": [
+        "チーム全体のWiki運用や公開ドキュメント用途とは重心が異なる",
+        "Notionのチーム向けワークスペース代替としては用途を見極める必要がある"
+      ],
+      "selfHostDifficulty": "low",
+      "opsBurden": "low",
+      "managedOption": false,
+      "privacyFocused": true,
+      "openSource": true,
+      "recommendedFor": "まずは個人用の Notion 代替を探したい人、ローカル保存を最優先したい人",
+      "links": {
+        "official": "https://anytype.io/",
+        "github": "https://github.com/anyproto/anytype-ts"
+      }
+    },
+    {
+      "name": "AFFiNE",
+      "summary": "docs・whiteboards・databases をまとめたオープンソースのワークスペース。Notion 的な文書整理に加えて、より視覚的・発想支援寄りの作業もまとめたいケースに相性があります。",
+      "bestFor": [
+        "ドキュメントとホワイトボードを横断したい",
+        "ローカルファーストを重視したい",
+        "創造的な情報整理をしたい",
+        "オールインワンの KnowledgeOS を探している"
+      ],
+      "tradeoffs": [
+        "チーム標準のWiki運用よりも、ワークスペース体験全体の好みが合うかを見たほうがよい",
+        "Notionの全機能をそのまま代替する前提では比較しないほうがよい"
+      ],
+      "selfHostDifficulty": "medium",
+      "opsBurden": "medium",
+      "managedOption": true,
+      "privacyFocused": true,
+      "openSource": true,
+      "recommendedFor": "文書だけでなく、図解や視覚的整理まで一体化したい人",
+      "links": {
+        "official": "https://affine.pro/",
+        "github": "https://github.com/toeverything/affine"
+      }
+    },
+    {
+      "name": "Outline",
+      "summary": "チーム knowledge base / wiki として非常に分かりやすい OSS。クラウド版と self-hosted の両方を選べ、共同編集、公開共有、権限管理など、チーム文書基盤としての用途に向いています。",
+      "bestFor": [
+        "チームWiki",
+        "社内ドキュメント管理",
+        "共同編集と権限管理",
+        "公開共有やドキュメント配布"
+      ],
+      "tradeoffs": [
+        "Notionの“何でも一つにまとめる”用途より、文書・知識共有に重心がある",
+        "個人の万能ワークスペース代替というよりチーム文書基盤寄り"
+      ],
+      "selfHostDifficulty": "medium",
+      "opsBurden": "medium",
+      "managedOption": true,
+      "privacyFocused": true,
+      "openSource": true,
+      "recommendedFor": "Notion をチームWiki / ドキュメント基盤として使っていた組織",
+      "links": {
+        "official": "https://www.getoutline.com/",
+        "github": "https://github.com/outline/outline"
+      }
+    }
+  ],
+  "comparisonEntryPoints": [],
+  "faq": [
+    {
+      "question": "Notionに一番近いOSSはどれですか？",
+      "answer": "“Notionに近い体験”という意味では AppFlowy や AFFiNE が比較の出発点になりやすいです。ただし、個人知識管理なら Anytype、チームWikiなら Outline のほうが用途に合う場合があります。"
+    },
+    {
+      "question": "個人利用ならどれから見るべきですか？",
+      "answer": "個人のメモや知識管理を重視するなら、まず Anytype を見るのが分かりやすいです。ローカルファーストやプライバシー重視との相性が高いからです。"
+    },
+    {
+      "question": "チーム利用ならどれが有力ですか？",
+      "answer": "チームWiki・社内ドキュメント用途なら Outline、Notionに近いオールインワン体験を OSS で探すなら AppFlowy や AFFiNE が有力です。"
+    },
+    {
+      "question": "セルフホスト前提なら何を気にすべきですか？",
+      "answer": "機能比較だけでなく、バックアップ、アップデート、権限管理、障害対応まで含めた運用負荷を見るべきです。見た目が近くても、運用の重さで定着しないことがあります。"
+    },
+    {
+      "question": "Notionの代替は“完全互換”で探すべきですか？",
+      "answer": "おすすめしません。Notion は用途が広いため、完全互換よりも『自分たちが実際に使っている中核用途は何か』を先に定義したほうが、移行の失敗が少なくなります。"
+    }
+  ],
+  "relatedPages": [
+    {
+      "title": "AnyType - Notion（ナレッジ管理）の代替",
+      "url": "https://ossalt.jp/tools/595"
+    },
+    {
+      "title": "Colanode - Notion（ワークスペース）の代替",
+      "url": "https://ossalt.jp/tools/186"
+    },
+    {
+      "title": "Vrite - Notion（コンテンツ作成）の代替",
+      "url": "https://ossalt.jp/tools/305"
+    }
+  ],
+  "officialLinks": [
+    {
+      "label": "Notion alternatives overview on ossalt",
+      "url": "https://ossalt.jp/alternatives/notion"
+    },
+    {
+      "label": "AppFlowy",
+      "url": "https://appflowy.com/compare/notion-vs-appflowy"
+    },
+    {
+      "label": "Anytype",
+      "url": "https://anytype.io/"
+    },
+    {
+      "label": "AFFiNE",
+      "url": "https://affine.pro/"
+    },
+    {
+      "label": "Outline",
+      "url": "https://www.getoutline.com/"
+    }
+  ],
+  "editorialNotes": {
+    "summary": "Notion 代替は“万能な一択”ではなく、個人知識管理、チームWiki、ローカルファースト、docs＋whiteboard のどこを重視するかで候補が変わります。このページでは一覧データの上に、導入判断のための文脈を editorial layer として重ねます。",
+    "sponsorSeparation": "スポンサー掲載がある場合でも、比較軸と編集判断は分離し、掲載有無が推薦順を自動的に決めないようにします。"
+  },
+  "sourceUrls": [
+    "https://ossalt.jp/alternatives/notion",
+    "https://ossalt.jp/tools/595",
+    "https://ossalt.jp/tools/186",
+    "https://ossalt.jp/tools/305",
+    "https://appflowy.com/compare/notion-vs-appflowy",
+    "https://github.com/appflowy-io/appflowy",
+    "https://anytype.io/",
+    "https://github.com/anyproto/anytype-ts",
+    "https://affine.pro/",
+    "https://github.com/toeverything/affine",
+    "https://www.getoutline.com/",
+    "https://github.com/outline/outline"
+  ]
+}
