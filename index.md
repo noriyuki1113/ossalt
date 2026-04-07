@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-07 | ページ数: 51 | ソース数: 76
+最終更新: 2026-04-07 | ページ数: 70 | ソース数: 94
 
 -----
 
@@ -13,6 +13,9 @@
 - [[github]] — コードホスティング。Microsoft傘下・Copilot問題・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[jira]] — プロジェクト管理。コスト・複雑さ・Atlassian依存・Server廃止が代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[tableau]] — BI・データ可視化。高額ライセンス・Salesforce依存・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[zoom]] — ビデオ会議。プライバシー懸念・AI学習利用規約・コストが代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[hubspot]] — CRM。フリーミアムトラップ・コスト急増・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[zendesk]] — カスタマーサポート。エージェントライセンス高額・機能過剰が代替動機 (confidence: medium, 更新: 2026-04-07)
 
 ## OSSツール（wiki/tools/）
 
@@ -34,6 +37,12 @@
 - [[metabase]] — ノーコードBI。クリック操作でダッシュボード作成。AGPL-3.0・スター4万 (confidence: medium, 更新: 2026-04-07)
 - [[superset]] — 技術者向け高機能BI。SQL Lab・Jinjaテンプレート・Apache-2.0・スター6.3万 (confidence: medium, 更新: 2026-04-07)
 - [[redash]] — SQLクエリ→ダッシュボード変換特化。BSD-2-Clause・軽量 (confidence: medium, 更新: 2026-04-07)
+- [[jitsi]] — WebRTCビデオ会議OSS。ブラウザのみ参加・セルフホスト対応 (confidence: medium, 更新: 2026-04-07)
+- [[bigbluebutton]] — 教育・ウェビナー特化ビデオ会議。LMS連携・ホワイトボード (confidence: medium, 更新: 2026-04-07)
+- [[twenty]] — 新世代OSS CRM。NotionライクUI・GraphQL API・急成長 (confidence: medium, 更新: 2026-04-07)
+- [[suitecrm]] — フル機能OSS CRM。HubSpot近似・メールキャンペーン・ワークフロー (confidence: medium, 更新: 2026-04-07)
+- [[chatwoot]] — オムニチャンネルOSSサポート。チャット+メール+SNS統合・MIT (confidence: medium, 更新: 2026-04-07)
+- [[zammad]] — メールベース本格ヘルプデスクOSS。SLA・エスカレーション対応 (confidence: medium, 更新: 2026-04-07)
 
 ## 比較記事（wiki/comparisons/）
 
@@ -53,6 +62,12 @@
 - [[jira-vs-taiga]] — スクラム特化の比較。Plane優先・Taigaは限定的推薦 (confidence: medium, 更新: 2026-04-07)
 - [[tableau-vs-metabase]] — Tableau代替の最有力。ノーコードBI・コスト削減を整理 (confidence: medium, 更新: 2026-04-07)
 - [[tableau-vs-superset]] — 技術者向けBI比較。SQL Lab・Apache-2.0が差別化 (confidence: medium, 更新: 2026-04-07)
+- [[zoom-vs-jitsi]] — 社内会議・プライバシー文脈での比較。ブラウザ参加・セルフホストが強み (confidence: medium, 更新: 2026-04-07)
+- [[zoom-vs-bigbluebutton]] — 教育・ウェビナー文脈での比較。LMS連携・ホワイトボードが強み (confidence: medium, 更新: 2026-04-07)
+- [[hubspot-vs-twenty]] — CRM基本機能の代替。フリーミアムトラップからの脱出 (confidence: medium, 更新: 2026-04-07)
+- [[hubspot-vs-suitecrm]] — フル機能CRMの代替。メールキャンペーン・ワークフロー維持 (confidence: medium, 更新: 2026-04-07)
+- [[zendesk-vs-chatwoot]] — オムニチャンネルサポートの代替。コスト削減・MIT (confidence: medium, 更新: 2026-04-07)
+- [[zendesk-vs-zammad]] — 本格ヘルプデスクの代替。SLA・GDPR対応 (confidence: medium, 更新: 2026-04-07)
 
 ## カテゴリ分析（wiki/categories/）
 
@@ -63,6 +78,9 @@
 - [[code-hosting]] — GitホスティングOSS。Gitea/Forgejo/GitLabの選び方を整理 (confidence: medium, 更新: 2026-04-07)
 - [[project-management]] — プロジェクト管理OSS。Plane/TaigaによるJira代替の選び方 (confidence: medium, 更新: 2026-04-07)
 - [[bi-analytics]] — BI・ダッシュボードOSS。Metabase/Superset/RedashによるTableau代替 (confidence: medium, 更新: 2026-04-07)
+- [[video-conferencing]] — ビデオ会議OSS。Jitsi/BigBlueButtonによるZoom代替 (confidence: medium, 更新: 2026-04-07)
+- [[crm]] — CRM OSS。Twenty/SuiteCRMによるHubSpot代替 (confidence: medium, 更新: 2026-04-07)
+- [[customer-support]] — カスタマーサポートOSS。Chatwoot/ZammadによるZendesk代替 (confidence: medium, 更新: 2026-04-07)
 
 ## 判断軸（wiki/decision-axes/）
 

@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-07] ingest | ビデオ会議・CRM・カスタマーサポートカテゴリ追加（saas×3 / tools×6 / comparisons×6 / categories×3）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/zoom.md, hubspot.md, zendesk.md, wiki/tools/jitsi.md, bigbluebutton.md, twenty.md, suitecrm.md, chatwoot.md, zammad.md, wiki/comparisons/zoom-vs-jitsi.md, zoom-vs-bigbluebutton.md, hubspot-vs-twenty.md, hubspot-vs-suitecrm.md, zendesk-vs-chatwoot.md, zendesk-vs-zammad.md, wiki/categories/video-conferencing.md, crm.md, customer-support.md
+- 所感: ビデオ会議は「外部との会議が多い」日本の商習慣から完全移行が難しく、社内限定 + Jitsi のハイブリッド運用が現実的。LINE 対応欠如が日本市場でのカスタマーサポート OSS 採用の最大障壁。CRM は Twenty（モダン・軽量）と SuiteCRM（フル機能）の二段構えで HubSpot の異なる需要層に対応できる。次の優先候補：メール（Mailcow/Mailu）、モニタリング（Grafana/Prometheus）、コンテナ管理（Portainer/Coolify）。
+
 ## [2026-04-07] ingest | プロジェクト管理・BIカテゴリ追加（saas×2 / tools×5 / comparisons×4 / categories×2）
 
 - 追加ソース: なし（既存知識をベースに作成）
