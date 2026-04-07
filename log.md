@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-07] ingest | プロジェクト管理・BIカテゴリ追加（saas×2 / tools×5 / comparisons×4 / categories×2）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/jira.md, wiki/saas/tableau.md, wiki/tools/plane.md, wiki/tools/taiga.md, wiki/tools/metabase.md, wiki/tools/superset.md, wiki/tools/redash.md, wiki/comparisons/jira-vs-plane.md, jira-vs-taiga.md, tableau-vs-metabase.md, tableau-vs-superset.md, wiki/categories/project-management.md, bi-analytics.md
+- 所感: BI カテゴリは「Tableau でできることの80%をMetabaseで無料実現する」という訴求が最も成立しやすいカテゴリ。Metabase（AGPL）vs Superset（Apache-2.0）のライセンス差がSaaS組み込み文脈での重要な選択軸になる。Redashは開発ペース低下が懸念で新規採用推薦は限定的。プロジェクト管理はPlaneが急成長中でJira代替の筆頭。Jira Server廃止（2024年）がOSS移行の構造的な追い風になっている。次の優先候補：メール（Mailcow/Mailu）、動画会議（Jitsi Meet/BigBlueButton）、CRM（Twenty/SuiteCRM）。
+
 ## [2026-04-07] ingest | パスワード管理・コードホスティングカテゴリ追加（saas×2 / tools×5 / comparisons×4 / categories×2）
 
 - 追加ソース: なし（既存知識をベースに作成）

@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-07 | ページ数: 38 | ソース数: 61
+最終更新: 2026-04-07 | ページ数: 51 | ソース数: 76
 
 -----
 
@@ -11,6 +11,8 @@
 - [[figma]] — UIデザイン。ベンダーロックイン・Adobe買収懸念が代替動機 (confidence: medium, 更新: 2026-04-05)
 - [[1password]] — パスワード管理。コスト・データ所有権・LastPass不信が代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[github]] — コードホスティング。Microsoft傘下・Copilot問題・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[jira]] — プロジェクト管理。コスト・複雑さ・Atlassian依存・Server廃止が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[tableau]] — BI・データ可視化。高額ライセンス・Salesforce依存・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
 
 ## OSSツール（wiki/tools/）
 
@@ -27,6 +29,11 @@
 - [[gitea]] — 軽量GitHub代替。MIT・シングルバイナリ・Gitea Actions対応 (confidence: medium, 更新: 2026-04-07)
 - [[forgejo]] — GitEaのコミュニティフォーク。GPL-3.0・Codeberg採用 (confidence: medium, 更新: 2026-04-07)
 - [[gitlab]] — フルDevOps OSS。CI/CD・Container Registry・Security内蔵 (confidence: medium, 更新: 2026-04-07)
+- [[plane]] — Jira代替OSS。モダンUI・Cycles/Modules/Pages・Docker対応 (confidence: medium, 更新: 2026-04-07)
+- [[taiga]] — スクラム/カンバン特化OSS。Epic→UserStory→Task階層・バーンダウン (confidence: medium, 更新: 2026-04-07)
+- [[metabase]] — ノーコードBI。クリック操作でダッシュボード作成。AGPL-3.0・スター4万 (confidence: medium, 更新: 2026-04-07)
+- [[superset]] — 技術者向け高機能BI。SQL Lab・Jinjaテンプレート・Apache-2.0・スター6.3万 (confidence: medium, 更新: 2026-04-07)
+- [[redash]] — SQLクエリ→ダッシュボード変換特化。BSD-2-Clause・軽量 (confidence: medium, 更新: 2026-04-07)
 
 ## 比較記事（wiki/comparisons/）
 
@@ -42,6 +49,10 @@
 - [[github-vs-gitea]] — 軽量・低コストなGitHub代替。Gitea Actionsの互換性を検証 (confidence: medium, 更新: 2026-04-07)
 - [[github-vs-forgejo]] — ガバナンス思想の差。機能はGiteaとほぼ同等 (confidence: medium, 更新: 2026-04-07)
 - [[github-vs-gitlab]] — フルDevOps移行。CI/CD書き直しコストと運用負荷を整理 (confidence: medium, 更新: 2026-04-07)
+- [[jira-vs-plane]] — Jira代替の最有力候補。モダンUI・コスト削減・セルフホストを整理 (confidence: medium, 更新: 2026-04-07)
+- [[jira-vs-taiga]] — スクラム特化の比較。Plane優先・Taigaは限定的推薦 (confidence: medium, 更新: 2026-04-07)
+- [[tableau-vs-metabase]] — Tableau代替の最有力。ノーコードBI・コスト削減を整理 (confidence: medium, 更新: 2026-04-07)
+- [[tableau-vs-superset]] — 技術者向けBI比較。SQL Lab・Apache-2.0が差別化 (confidence: medium, 更新: 2026-04-07)
 
 ## カテゴリ分析（wiki/categories/）
 
@@ -50,6 +61,8 @@
 - [[design-tools]] — デザインツールOSSのトレンド。Penpotが唯一の本格Figma代替 (confidence: medium, 更新: 2026-04-05)
 - [[password-management]] — パスワード管理OSS。LastPass漏洩後の移行需要にBitwardenで応える (confidence: medium, 更新: 2026-04-07)
 - [[code-hosting]] — GitホスティングOSS。Gitea/Forgejo/GitLabの選び方を整理 (confidence: medium, 更新: 2026-04-07)
+- [[project-management]] — プロジェクト管理OSS。Plane/TaigaによるJira代替の選び方 (confidence: medium, 更新: 2026-04-07)
+- [[bi-analytics]] — BI・ダッシュボードOSS。Metabase/Superset/RedashによるTableau代替 (confidence: medium, 更新: 2026-04-07)
 
 ## 判断軸（wiki/decision-axes/）
 
