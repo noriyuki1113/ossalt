@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-07] ingest | ストレージ・認証・メール配信カテゴリ追加（saas×3 / tools×6 / comparisons×6 / categories×3）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/dropbox.md, okta.md, mailchimp.md, wiki/tools/nextcloud.md, seafile.md, keycloak.md, authentik.md, listmonk.md, mautic.md, wiki/comparisons/dropbox-vs-nextcloud.md, dropbox-vs-seafile.md, okta-vs-keycloak.md, okta-vs-authentik.md, mailchimp-vs-listmonk.md, mailchimp-vs-mautic.md, wiki/categories/file-storage.md, auth-sso.md, email-marketing.md
+- 所感: メール配信（Listmonk+Amazon SES）はコスト削減効果が最も定量的に見えやすいカテゴリ。認証（Keycloak/Authentik）はセキュリティ責任が重く、推薦前の運用体制確認を必須とした。Nextcloud はファイル代替の枠を超えて「Google Workspace の部分代替」として機能するため、Google Workspace ページからの参照を追加すべき。wiki は 106 ページに到達。次の優先候補：CI/CD（Woodpecker CI）、コンテナレジストリ（Harbor）、またはwikiのlint実施。
+
 ## [2026-04-07] ingest | メール・モニタリング・PaaSカテゴリ追加（saas×3 / tools×7 / comparisons×3 / categories×3）
 
 - 追加ソース: なし（既存知識をベースに作成）

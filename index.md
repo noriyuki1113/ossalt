@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-07 | ページ数: 88 | ソース数: 112
+最終更新: 2026-04-07 | ページ数: 106 | ソース数: 130
 
 -----
 
@@ -19,6 +19,9 @@
 - [[google-workspace]] — ビジネスメール。コスト・データ所有権・Google依存が代替動機（難易度高） (confidence: medium, 更新: 2026-04-07)
 - [[datadog]] — モニタリング。請求書ショック・ホスト数課金・ベンダーロックインが代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[heroku]] — PaaS。無料プラン廃止・Salesforce依存・コスト増が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[dropbox]] — ファイルストレージ。コスト・データ所有権・ストレージ制限が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[okta]] — 認証・SSO。MAU課金急増・データ所有権が代替動機（セキュリティ注意） (confidence: medium, 更新: 2026-04-07)
+- [[mailchimp]] — メール配信。連絡先数課金急増・無料枠縮小が代替動機 (confidence: medium, 更新: 2026-04-07)
 
 ## OSSツール（wiki/tools/）
 
@@ -52,6 +55,12 @@
 - [[prometheus]] — Pull型メトリクス収集OSS。CNCF標準・PromQL・スター5.7万 (confidence: medium, 更新: 2026-04-07)
 - [[coolify]] — モダンセルフホストPaaS。Web UI・Docker・ワンクリックDB・スター3.6万 (confidence: medium, 更新: 2026-04-07)
 - [[dokku]] — CLI重視のHerokuライクPaaS OSS。git push デプロイ・軽量 (confidence: medium, 更新: 2026-04-07)
+- [[nextcloud]] — ファイル同期+カレンダー+ドキュメント統合OSS。AGPL-3.0・スター2.6万 (confidence: medium, 更新: 2026-04-07)
+- [[seafile]] — ファイル同期特化OSS。Delta sync高速・E2E暗号化・大量ファイル向け (confidence: medium, 更新: 2026-04-07)
+- [[keycloak]] — エンタープライズSSO OSS。Red Hat製・AD/LDAP統合成熟・CNCF (confidence: medium, 更新: 2026-04-07)
+- [[authentik]] — モダンOSS認証基盤。使いやすさ重視・MIT・スタートアップ向け (confidence: medium, 更新: 2026-04-07)
+- [[listmonk]] — 軽量ニュースレター配信OSS。Go製・AGPL-3.0・Amazon SES連携 (confidence: medium, 更新: 2026-04-07)
+- [[mautic]] — マーケティングオートメーションOSS。ドリップ・スコアリング・HubSpot近似 (confidence: medium, 更新: 2026-04-07)
 
 ## 比較記事（wiki/comparisons/）
 
@@ -80,6 +89,12 @@
 - [[google-workspace-vs-mailcow]] — メールセルフホストの現実的評価。リスク先行で推薦 (confidence: medium, 更新: 2026-04-07)
 - [[datadog-vs-grafana]] — モニタリング代替の最有力。段階的移行を推薦 (confidence: medium, 更新: 2026-04-07)
 - [[heroku-vs-coolify]] — PaaS代替。$5 VPSでHerokuライクな体験を実現 (confidence: medium, 更新: 2026-04-07)
+- [[dropbox-vs-nextcloud]] — ファイルストレージ代替。コスト削減+コラボ機能まで (confidence: medium, 更新: 2026-04-07)
+- [[dropbox-vs-seafile]] — ファイル同期特化の比較。速度・E2E暗号化・大量ファイル (confidence: medium, 更新: 2026-04-07)
+- [[okta-vs-keycloak]] — エンタープライズSSO代替。AD統合・MAU課金削減 (confidence: medium, 更新: 2026-04-07)
+- [[okta-vs-authentik]] — スタートアップ向けSSO代替。使いやすさ・Forward auth (confidence: medium, 更新: 2026-04-07)
+- [[mailchimp-vs-listmonk]] — ニュースレター配信代替。年間30万円削減・Amazon SES (confidence: medium, 更新: 2026-04-07)
+- [[mailchimp-vs-mautic]] — マーケティングオートメーション代替。ドリップ・スコアリング (confidence: medium, 更新: 2026-04-07)
 
 ## カテゴリ分析（wiki/categories/）
 
@@ -96,6 +111,9 @@
 - [[email-hosting]] — メールホスティングOSS。Mailcow/MailuによるGoogle Workspace代替（難易度高） (confidence: medium, 更新: 2026-04-07)
 - [[monitoring]] — モニタリングOSS。Grafana+PrometheusによるDatadog代替 (confidence: medium, 更新: 2026-04-07)
 - [[paas-deployment]] — PaaS OSS。Coolify/DokkuによるHeroku代替 (confidence: medium, 更新: 2026-04-07)
+- [[file-storage]] — ファイルストレージOSS。Nextcloud/SeafileによるDropbox代替 (confidence: medium, 更新: 2026-04-07)
+- [[auth-sso]] — 認証・SSO OSS。Keycloak/AuthentikによるOkta/Auth0代替 (confidence: medium, 更新: 2026-04-07)
+- [[email-marketing]] — メール配信OSS。Listmonk/MauticによるMailchimp代替 (confidence: medium, 更新: 2026-04-07)
 
 ## 判断軸（wiki/decision-axes/）
 
