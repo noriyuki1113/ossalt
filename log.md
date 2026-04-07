@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-07] ingest | パスワード管理・コードホスティングカテゴリ追加（saas×2 / tools×5 / comparisons×4 / categories×2）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/1password.md, wiki/saas/github.md, wiki/tools/bitwarden.md, wiki/tools/vaultwarden.md, wiki/tools/gitea.md, wiki/tools/forgejo.md, wiki/tools/gitlab.md, wiki/comparisons/1password-vs-bitwarden.md, github-vs-gitea.md, github-vs-forgejo.md, github-vs-gitlab.md, wiki/categories/password-management.md, code-hosting.md
+- 所感: パスワード管理は「移行摩擦最小カテゴリ」として訴求しやすい。Vaultwardenのスター4.1万は異常値で、セルフホスト需要の大きさを示している。コードホスティングはGitea Actions互換性とGitLab CEの運用負荷が判断の核。次の優先候補：プロジェクト管理（Plane/Jira代替）、BI分析（Metabase/Superset）、メール（Mailcow）。
+
 ## [2026-04-05] ingest | Slack・Figmaカテゴリ追加（saas×2 / tools×4 / comparisons×4 / categories×2）
 
 - 追加ソース: なし（既存知識をベースに作成）

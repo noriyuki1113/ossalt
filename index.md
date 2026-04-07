@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-05 | ページ数: 25 | ソース数: 47
+最終更新: 2026-04-07 | ページ数: 38 | ソース数: 61
 
 -----
 
@@ -9,6 +9,8 @@
 - [[notion]] — 統合ワークスペース。代替検討の最多起点 (confidence: medium, 更新: 2026-04-05)
 - [[slack]] — チームチャット。コスト・履歴制限・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-05)
 - [[figma]] — UIデザイン。ベンダーロックイン・Adobe買収懸念が代替動機 (confidence: medium, 更新: 2026-04-05)
+- [[1password]] — パスワード管理。コスト・データ所有権・LastPass不信が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[github]] — コードホスティング。Microsoft傘下・Copilot問題・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
 
 ## OSSツール（wiki/tools/）
 
@@ -20,6 +22,11 @@
 - [[rocketchat]] — 多機能チャット+オムニチャンネル統合。MIT (confidence: medium, 更新: 2026-04-05)
 - [[zulip]] — トピック必須の非同期特化チャット。Apache 2.0 (confidence: medium, 更新: 2026-04-05)
 - [[penpot]] — Figma代替OSS（実質唯一）。SVGオープンフォーマット。MPL-2.0 (confidence: medium, 更新: 2026-04-05)
+- [[bitwarden]] — 1Password近似のOSSパスワードマネージャー。個人無料・AGPL-3.0 (confidence: medium, 更新: 2026-04-07)
+- [[vaultwarden]] — Bitwarden互換の超軽量セルフホストサーバー。Rust製・スター4.1万 (confidence: medium, 更新: 2026-04-07)
+- [[gitea]] — 軽量GitHub代替。MIT・シングルバイナリ・Gitea Actions対応 (confidence: medium, 更新: 2026-04-07)
+- [[forgejo]] — GitEaのコミュニティフォーク。GPL-3.0・Codeberg採用 (confidence: medium, 更新: 2026-04-07)
+- [[gitlab]] — フルDevOps OSS。CI/CD・Container Registry・Security内蔵 (confidence: medium, 更新: 2026-04-07)
 
 ## 比較記事（wiki/comparisons/）
 
@@ -31,12 +38,18 @@
 - [[slack-vs-rocketchat]] — オムニチャンネル統合が差別化。純粋代替ならMattermost優先 (confidence: medium, 更新: 2026-04-05)
 - [[slack-vs-zulip]] — トピック構造の設計思想変革。非同期チーム向け (confidence: medium, 更新: 2026-04-05)
 - [[figma-vs-penpot]] — SVGオープン形式 vs .fig。Variables・Auto Layoutのギャップを整理 (confidence: medium, 更新: 2026-04-05)
+- [[1password-vs-bitwarden]] — 移行摩擦最小。コスト・データ所有権・セキュリティモデルを整理 (confidence: medium, 更新: 2026-04-07)
+- [[github-vs-gitea]] — 軽量・低コストなGitHub代替。Gitea Actionsの互換性を検証 (confidence: medium, 更新: 2026-04-07)
+- [[github-vs-forgejo]] — ガバナンス思想の差。機能はGiteaとほぼ同等 (confidence: medium, 更新: 2026-04-07)
+- [[github-vs-gitlab]] — フルDevOps移行。CI/CD書き直しコストと運用負荷を整理 (confidence: medium, 更新: 2026-04-07)
 
 ## カテゴリ分析（wiki/categories/）
 
 - [[knowledge-management]] — PKM・Wiki系・ワークスペース系OSSのトレンド分析。Notion代替の主戦場 (confidence: medium, 更新: 2026-04-05)
 - [[team-communication]] — チャット・メッセージングOSSのトレンド。Slack代替3候補の勢力図 (confidence: medium, 更新: 2026-04-05)
 - [[design-tools]] — デザインツールOSSのトレンド。Penpotが唯一の本格Figma代替 (confidence: medium, 更新: 2026-04-05)
+- [[password-management]] — パスワード管理OSS。LastPass漏洩後の移行需要にBitwardenで応える (confidence: medium, 更新: 2026-04-07)
+- [[code-hosting]] — GitホスティングOSS。Gitea/Forgejo/GitLabの選び方を整理 (confidence: medium, 更新: 2026-04-07)
 
 ## 判断軸（wiki/decision-axes/）
 
