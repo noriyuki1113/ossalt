@@ -1,5 +1,12 @@
 # find-my-alt wiki log
 
+## [2026-04-07] ingest | メール・モニタリング・PaaSカテゴリ追加（saas×3 / tools×7 / comparisons×3 / categories×3）
+
+- 追加ソース: なし（既存知識をベースに作成）
+- 更新ページ: index.md
+- 新規ページ: wiki/saas/google-workspace.md, datadog.md, heroku.md, wiki/tools/mailcow.md, mailu.md, grafana.md, prometheus.md, coolify.md, dokku.md, wiki/comparisons/google-workspace-vs-mailcow.md, datadog-vs-grafana.md, heroku-vs-coolify.md, wiki/categories/email-hosting.md, monitoring.md, paas-deployment.md
+- 所感: メールのセルフホストは「ossalt が扱う中で最も難しいカテゴリ」と明示することにした。IP レピュテーション・配信到達性のリスクを先行して伝え、「Google Workspace 継続も正解」という方針を取る。モニタリングは Prometheus + Grafana が最も成熟した OSS 代替で、段階的移行が現実的。PaaS は Coolify が急成長中で Heroku 無料廃止後の受け皿として機能している。次の優先候補：wiki の lint（整合性チェック）を実施してオープンクエスチョンの整理、またはストレージ（MinIO/Nextcloud）・認証（Keycloak）カテゴリ追加。
+
 ## [2026-04-07] ingest | ビデオ会議・CRM・カスタマーサポートカテゴリ追加（saas×3 / tools×6 / comparisons×6 / categories×3）
 
 - 追加ソース: なし（既存知識をベースに作成）

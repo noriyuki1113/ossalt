@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-07 | ページ数: 70 | ソース数: 94
+最終更新: 2026-04-07 | ページ数: 88 | ソース数: 112
 
 -----
 
@@ -16,6 +16,9 @@
 - [[zoom]] — ビデオ会議。プライバシー懸念・AI学習利用規約・コストが代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[hubspot]] — CRM。フリーミアムトラップ・コスト急増・データ所有権が代替動機 (confidence: medium, 更新: 2026-04-07)
 - [[zendesk]] — カスタマーサポート。エージェントライセンス高額・機能過剰が代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[google-workspace]] — ビジネスメール。コスト・データ所有権・Google依存が代替動機（難易度高） (confidence: medium, 更新: 2026-04-07)
+- [[datadog]] — モニタリング。請求書ショック・ホスト数課金・ベンダーロックインが代替動機 (confidence: medium, 更新: 2026-04-07)
+- [[heroku]] — PaaS。無料プラン廃止・Salesforce依存・コスト増が代替動機 (confidence: medium, 更新: 2026-04-07)
 
 ## OSSツール（wiki/tools/）
 
@@ -43,6 +46,12 @@
 - [[suitecrm]] — フル機能OSS CRM。HubSpot近似・メールキャンペーン・ワークフロー (confidence: medium, 更新: 2026-04-07)
 - [[chatwoot]] — オムニチャンネルOSSサポート。チャット+メール+SNS統合・MIT (confidence: medium, 更新: 2026-04-07)
 - [[zammad]] — メールベース本格ヘルプデスクOSS。SLA・エスカレーション対応 (confidence: medium, 更新: 2026-04-07)
+- [[mailcow]] — フルスタックメールサーバーOSS。Docker Compose・SOGo・Rspamd統合 (confidence: medium, 更新: 2026-04-07)
+- [[mailu]] — シンプルなメールサーバーOSS。軽量・MIT・小規模向け (confidence: medium, 更新: 2026-04-07)
+- [[grafana]] — OSS可視化・ダッシュボード。150+データソース対応・スター6.6万 (confidence: medium, 更新: 2026-04-07)
+- [[prometheus]] — Pull型メトリクス収集OSS。CNCF標準・PromQL・スター5.7万 (confidence: medium, 更新: 2026-04-07)
+- [[coolify]] — モダンセルフホストPaaS。Web UI・Docker・ワンクリックDB・スター3.6万 (confidence: medium, 更新: 2026-04-07)
+- [[dokku]] — CLI重視のHerokuライクPaaS OSS。git push デプロイ・軽量 (confidence: medium, 更新: 2026-04-07)
 
 ## 比較記事（wiki/comparisons/）
 
@@ -68,6 +77,9 @@
 - [[hubspot-vs-suitecrm]] — フル機能CRMの代替。メールキャンペーン・ワークフロー維持 (confidence: medium, 更新: 2026-04-07)
 - [[zendesk-vs-chatwoot]] — オムニチャンネルサポートの代替。コスト削減・MIT (confidence: medium, 更新: 2026-04-07)
 - [[zendesk-vs-zammad]] — 本格ヘルプデスクの代替。SLA・GDPR対応 (confidence: medium, 更新: 2026-04-07)
+- [[google-workspace-vs-mailcow]] — メールセルフホストの現実的評価。リスク先行で推薦 (confidence: medium, 更新: 2026-04-07)
+- [[datadog-vs-grafana]] — モニタリング代替の最有力。段階的移行を推薦 (confidence: medium, 更新: 2026-04-07)
+- [[heroku-vs-coolify]] — PaaS代替。$5 VPSでHerokuライクな体験を実現 (confidence: medium, 更新: 2026-04-07)
 
 ## カテゴリ分析（wiki/categories/）
 
@@ -81,6 +93,9 @@
 - [[video-conferencing]] — ビデオ会議OSS。Jitsi/BigBlueButtonによるZoom代替 (confidence: medium, 更新: 2026-04-07)
 - [[crm]] — CRM OSS。Twenty/SuiteCRMによるHubSpot代替 (confidence: medium, 更新: 2026-04-07)
 - [[customer-support]] — カスタマーサポートOSS。Chatwoot/ZammadによるZendesk代替 (confidence: medium, 更新: 2026-04-07)
+- [[email-hosting]] — メールホスティングOSS。Mailcow/MailuによるGoogle Workspace代替（難易度高） (confidence: medium, 更新: 2026-04-07)
+- [[monitoring]] — モニタリングOSS。Grafana+PrometheusによるDatadog代替 (confidence: medium, 更新: 2026-04-07)
+- [[paas-deployment]] — PaaS OSS。Coolify/DokkuによるHeroku代替 (confidence: medium, 更新: 2026-04-07)
 
 ## 判断軸（wiki/decision-axes/）
 
