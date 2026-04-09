@@ -41,6 +41,20 @@
 - 対応: categories 7件を作成、comparisons 4件（優先度高）を作成、lunacy/linear/notion を saas ページで注記
 - 提案: gitlab.md を tools に追加（GitLab CE は OSS）、collaboration-model と non-engineer-usability の decision-axes 追加
 
+## [2026-04-09] ingest | フェーズ2完成（tools 1件・decision-axes 2件・comparisons 3件・synthesis 2件）
+
+- 新規ページ:
+  - wiki/tools/gitlab.md（GitLab CE：コードリポジトリ＋Issue＋CI/CD統合 DevOps プラットフォーム）
+  - wiki/decision-axes/collaboration-model.md（コラボレーションモデル軸：リアルタイム共同編集の差異）
+  - wiki/decision-axes/non-engineer-usability.md（非エンジニア向け使いやすさ軸：全社導入時の習得コスト）
+  - wiki/comparisons/notion-vs-anytype.md（Anytype比較：プライバシー・ローカルファースト観点）
+  - wiki/comparisons/notion-vs-affine.md（AFFiNE比較：ホワイトボード統合・セルフホスト観点）
+  - wiki/comparisons/notion-vs-outline.md（Outline比較：Wiki特化・ドキュメント管理観点）
+  - wiki/synthesis/oss-workspace-landscape-2026.md（OSS全体俯瞰：SaaS→OSS対応表・カテゴリ別評価）
+  - wiki/synthesis/saas-to-oss-cost-guide.md（移行コスト試算ガイド：ツール別損益分岐点分析）
+- 更新ページ: index.md（55ページ・195ソースに更新）, log.md
+- 所感: wiki の全セクション（synthesis を含む）が完成。55ページ。gitlab.md を追加し jira.md の related_tools 参照が解消された。figma.md が言及する collaboration-model・decision-axes も追加され、broken link がすべて解消された。synthesis/oss-workspace-landscape-2026.md はカテゴリ横断の全体地図として機能し、synthesis/saas-to-oss-cost-guide.md は意思決定支援ツールとして具体的な試算枠組みを提供する。残タスク候補: plane-vs-gitlab-issues.md（comparisons）、vikunja-vs-appflowy.md、gitlab.md の日本語情報拡充。
+
 ## [2026-04-09] ingest | categories 7件・comparisons 4件・lint 修正
 
 - 新規ページ:
