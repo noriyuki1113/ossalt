@@ -7,6 +7,9 @@
 const BASE_URL = "https://ossalt.jp";
 const SITE_NAME = "OSSアルタナティブ";
 
+const SUPABASE_URL = process.env.SUPABASE_URL || "https://fjljkjbheqtprmforvpr.supabase.co";
+const SUPABASE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
+
 // --- Alternatives pages ---
 // slug → competitor name
 const ALTERNATIVES = {
@@ -41,6 +44,17 @@ const ALTERNATIVES = {
   bitly: "Bitly",
   canny: "Canny",
   zendesk: "Zendesk",
+  // Added
+  linear: "Linear",
+  asana: "Asana",
+  confluence: "Confluence",
+  sentry: "Sentry",
+  miro: "Miro",
+  mixpanel: "Mixpanel",
+  hubspot: "HubSpot",
+  clickup: "ClickUp",
+  pagerduty: "PagerDuty",
+  sendgrid: "SendGrid",
 };
 
 /**
@@ -81,10 +95,73 @@ const SLUG_META_OVERRIDES = {
     title: "Auth0の代替OSSツール比較 | 無料で使える認証・IAMツール",
     description: "Auth0より安く使えるオープンソースの認証ツールを比較。Keycloak・Authentikなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
   },
+  linear: {
+    title: "Linearの代替OSSツール比較 | 無料で使えるプロジェクト管理ツール",
+    description: "Linearより安く使えるオープンソースのプロジェクト管理ツールを比較。Plane・GitLabなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  asana: {
+    title: "Asanaの代替OSSツール比較 | 無料で使えるタスク管理ツール",
+    description: "Asanaより安く使えるオープンソースのタスク・プロジェクト管理ツールを比較。Vikunja・Planeなど自己ホスト可能なツールを日本語で紹介。",
+  },
+  confluence: {
+    title: "Confluenceの代替OSSツール比較 | 無料で使えるWikiツール",
+    description: "Confluenceより安く使えるオープンソースのWiki・ドキュメント管理ツールを比較。Outline・BookStackなど自己ホスト可能なツールを日本語で紹介。",
+  },
+  sentry: {
+    title: "Sentryの代替OSSツール比較 | 無料で使えるエラー監視ツール",
+    description: "Sentryより安く使えるオープンソースのエラー監視ツールを比較。GlitchTip・Glimmer など自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  miro: {
+    title: "Miroの代替OSSツール比較 | 無料で使えるオンラインホワイトボード",
+    description: "Miroより安く使えるオープンソースのホワイトボードツールを比較。Excalidraw・tldrawなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  mixpanel: {
+    title: "Mixpanelの代替OSSツール比較 | 無料で使えるプロダクト分析ツール",
+    description: "Mixpanelより安く使えるオープンソースのプロダクト分析ツールを比較。PostHog・Umamiなど自己ホスト可能なツールを日本語で紹介。",
+  },
+  hubspot: {
+    title: "HubSpotの代替OSSツール比較 | 無料で使えるCRM・マーケティングツール",
+    description: "HubSpotより安く使えるオープンソースのCRM・マーケティングツールを比較。SuiteCRM・Ersatzなど自己ホスト可能なツールを日本語で紹介。",
+  },
+  clickup: {
+    title: "ClickUpの代替OSSツール比較 | 無料で使えるオールインワン管理ツール",
+    description: "ClickUpより安く使えるオープンソースのプロジェクト管理ツールを比較。Plane・Vikunjaなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  pagerduty: {
+    title: "PagerDutyの代替OSSツール比較 | 無料で使えるインシデント管理ツール",
+    description: "PagerDutyより安く使えるオープンソースのインシデント管理ツールを比較。Grafana OnCall・Keepなど自己ホスト可能なツールを日本語で紹介。",
+  },
+  sendgrid: {
+    title: "SendGridの代替OSSツール比較 | 無料で使えるメール配信ツール",
+    description: "SendGridより安く使えるオープンソースのメール配信ツールを比較。Listmonk・Postal など自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
 };
 
-/** @returns {{ path: string, title: string, description: string, canonical: string }[]} */
-export function getPrerenderRoutes() {
+async function fetchTools() {
+  if (!SUPABASE_KEY) {
+    console.warn("⚠️  SUPABASE_PUBLISHABLE_KEY not set — skipping tool page prerender");
+    return [];
+  }
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/tools?select=id,name,description_ja,description_en,parent_category_ja,primary_competitor&order=id`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        },
+      }
+    );
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    return await resp.json();
+  } catch (e) {
+    console.warn("⚠️  Failed to fetch tools for prerender:", e.message);
+    return [];
+  }
+}
+
+/** @returns {Promise<{ path: string, title: string, description: string, canonical: string }[]>} */
+export async function getPrerenderRoutes() {
   const routes = [];
 
   // Alternatives pages
@@ -184,6 +261,25 @@ export function getPrerenderRoutes() {
     routes.push({
       ...page,
       canonical: page.canonical || `${BASE_URL}${page.path === "/" ? "" : page.path}`,
+    });
+  }
+
+  // Tool detail pages — fetched from Supabase at build time
+  const tools = await fetchTools();
+  console.log(`  📦 Fetched ${tools.length} tools from Supabase`);
+  for (const tool of tools) {
+    const competitor = tool.primary_competitor || "";
+    const titleBase = competitor
+      ? `${tool.name}は${competitor}の代替？特徴と違いを解説`
+      : `${tool.name} — OSSアルタナティブ`;
+    const rawDesc = competitor
+      ? `${tool.name}は${competitor}の代替OSSです。${tool.description_ja || tool.description_en || ""}。無料・セルフホスト可能。`
+      : tool.description_ja || tool.description_en || `${tool.name}の詳細情報。ossalt.jpで無料で探せます。`;
+    routes.push({
+      path: `/tools/${tool.id}`,
+      title: `${titleBase} | OSSアルタナティブ`,
+      description: rawDesc.slice(0, 160),
+      canonical: `${BASE_URL}/tools/${tool.id}`,
     });
   }
 

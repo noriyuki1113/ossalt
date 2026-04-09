@@ -260,13 +260,37 @@ export default function ToolDetailPage() {
     : "";
   const jsonLd = tool ? {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: tool.name,
-    description: tool.description_ja || tool.description_en || "",
-    applicationCategory: tool.category_ja || tool.parent_category_ja || "",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-    operatingSystem: "Web",
-    ...(tool.url ? { url: tool.url } : {}),
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        name: tool.name,
+        description: tool.description_ja || tool.description_en || "",
+        applicationCategory: tool.category_ja || tool.parent_category_ja || "",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+        operatingSystem: "Web",
+        ...(tool.url ? { url: tool.url } : {}),
+        ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
+        ...(tool.license ? { license: tool.license } : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          ...(tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? [{
+            "@type": "ListItem",
+            position: 2,
+            name: tool.parent_category_ja,
+            item: `https://ossalt.jp/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}`,
+          }] : []),
+          {
+            "@type": "ListItem",
+            position: tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
+            name: tool.name || "",
+            item: `https://ossalt.jp/tools/${tool.id}`,
+          },
+        ],
+      },
+    ],
   } : undefined;
 
   useSeo({
@@ -340,7 +364,7 @@ export default function ToolDetailPage() {
           {tool.parent_category_ja && (
             <>
               <Link
-                to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}
+                to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
                 {tool.parent_category_ja}
@@ -866,7 +890,7 @@ export default function ToolDetailPage() {
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/?category=${encodeURIComponent(tool.parent_category_ja)}`}>
+              <Link to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/`}>
                 {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

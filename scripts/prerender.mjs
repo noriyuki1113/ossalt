@@ -18,7 +18,7 @@ if (!existsSync(INDEX_HTML)) {
 }
 
 const template = readFileSync(INDEX_HTML, "utf-8");
-const routes = getPrerenderRoutes();
+const routes = await getPrerenderRoutes();
 
 console.log(`\n🔧 Prerendering ${routes.length} routes...\n`);
 
