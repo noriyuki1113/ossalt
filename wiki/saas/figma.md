@@ -26,7 +26,7 @@ source_count: 5
 related_tools:
   - penpot
   - inkscape
-  - lunacy
+  # lunacy は OSS でないため wiki/tools/ ページ対象外（SaaS/proprietary）
 related_category_pages:
   - wiki/categories/ui-design.md
 related_comparison_pages:

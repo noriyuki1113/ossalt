@@ -1,6 +1,6 @@
 # find-my-alt wiki index
 
-最終更新: 2026-04-09 | ページ数: 28 | ソース数: 110
+最終更新: 2026-04-09 | ページ数: 43 | ソース数: 155
 
 -----
 
@@ -8,7 +8,7 @@
 
 - [[notion]] — 統合ワークスペース。代替検討の最多起点 (confidence: medium, 更新: 2026-04-05)
 - [[slack]] — チームコミュニケーション。Mattermost・Rocket.Chat・Zulip (confidence: medium, 更新: 2026-04-09)
-- [[figma]] — UIデザインツール。Penpot・Inkscape・Lunacy (confidence: medium, 更新: 2026-04-09)
+- [[figma]] — UIデザインツール。Penpot・Inkscape (confidence: medium, 更新: 2026-04-09)
 - [[jira]] — プロジェクト管理。Plane・GitLab Issues (confidence: medium, 更新: 2026-04-09)
 - [[asana]] — タスク管理。Vikunja・AppFlowy (confidence: medium, 更新: 2026-04-09)
 - [[airtable]] — ノーコードデータベース。NocoDB・Baserow・Teable (confidence: medium, 更新: 2026-04-09)
@@ -36,10 +36,20 @@
 - [[jira-vs-plane]] — Jira代替文脈でのPlane vs GitLab Issues比較 (confidence: medium, 更新: 2026-04-09)
 - [[mattermost-vs-rocketchat]] — Slack代替文脈でのMattermost vs Rocket.Chat比較 (confidence: medium, 更新: 2026-04-09)
 - [[nocodb-vs-baserow]] — Airtable代替文脈でのNocoDB vs Baserow比較 (confidence: medium, 更新: 2026-04-09)
+- [[notion-vs-appflowy]] — Notion代替の最有力候補AppFlowyとの詳細比較 (confidence: medium, 更新: 2026-04-09)
+- [[mattermost-vs-zulip]] — Slack代替文脈でのMattermost vs Zulip比較 (confidence: medium, 更新: 2026-04-09)
+- [[nocodb-vs-teable]] — Airtable代替文脈でのNocoDB vs Teable比較 (confidence: low, 更新: 2026-04-09)
+- [[asana-vs-vikunja]] — Asana代替文脈でのVikunja vs AppFlowy比較 (confidence: medium, 更新: 2026-04-09)
 
 ## カテゴリ分析（wiki/categories/）
 
-*未作成*
+- [[workspace]] — ワークスペース。AppFlowy・AFFiNE・Anytype・Outline (更新: 2026-04-09)
+- [[team-communication]] — チームコミュニケーション。Mattermost・Rocket.Chat・Zulip (更新: 2026-04-09)
+- [[no-code-database]] — ノーコードDB。NocoDB・Baserow・Teable (更新: 2026-04-09)
+- [[project-management]] — プロジェクト管理。Plane・GitLab Issues (更新: 2026-04-09)
+- [[task-management]] — タスク管理。Vikunja・AppFlowy (更新: 2026-04-09)
+- [[ui-design]] — UIデザイン。Penpot・Inkscape (更新: 2026-04-09)
+- [[knowledge-management]] — 知識管理・PKM。Outline・AppFlowy・Anytype (更新: 2026-04-09)
 
 ## 判断軸（wiki/decision-axes/）
 

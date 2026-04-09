@@ -25,7 +25,7 @@ source_count: 5
 related_tools:
   - plane
   - gitlab
-  - linear
+  # linear は SaaS のため wiki/tools/ ページ対象外（OSS 文脈では比較言及のみ）
 related_category_pages:
   - wiki/categories/project-management.md
 related_comparison_pages:
