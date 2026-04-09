@@ -205,7 +205,7 @@ export function useComparisonLists() {
 
   const updateList = useMutation({
     mutationFn: async ({ id, title, summaryNote }: { id: string; title?: string; summaryNote?: string }) => {
-      const updates: Record<string, string> = { updated_at: new Date().toISOString() };
+      const updates: { updated_at: string; title?: string; summary_note?: string } = { updated_at: new Date().toISOString() };
       if (title !== undefined) updates.title = title;
       if (summaryNote !== undefined) updates.summary_note = summaryNote;
       const { error } = await supabase
