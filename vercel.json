@@ -5,6 +5,66 @@
       "has": [{ "type": "host", "value": "www.ossalt.jp" }],
       "destination": "https://ossalt.jp/:path",
       "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "AI%E3%83%BBML" }],
+      "destination": "/category/ai-ml",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E6%A5%AD%E5%8B%99%E3%82%BD%E3%83%95%E3%83%88" }],
+      "destination": "/category/business",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E9%96%8B%E7%99%BA%E3%83%84%E3%83%BC%E3%83%AB" }],
+      "destination": "/category/developer-tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%82%A4%E3%83%B3%E3%83%95%E3%83%A9%E3%83%BB%E9%81%8B%E7%94%A8" }],
+      "destination": "/category/infrastructure",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%83%87%E3%83%BC%E3%82%BF%E3%83%BB%E5%88%86%E6%9E%90" }],
+      "destination": "/category/data-analytics",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84" }],
+      "destination": "/category/content",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E7%94%9F%E7%94%A3%E6%80%A7%E3%83%BB%E4%BE%BF%E5%88%A9%E3%83%84%E3%83%BC%E3%83%AB" }],
+      "destination": "/category/productivity",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3" }],
+      "destination": "/category/security",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%83%86%E3%82%A3" }],
+      "destination": "/category/community",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "category", "value": "%E3%81%9D%E3%81%AE%E4%BB%96" }],
+      "destination": "/category/other",
+      "statusCode": 301
     }
   ],
   "rewrites": [

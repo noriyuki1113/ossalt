@@ -7,6 +7,20 @@ const corsHeaders = {
 
 const BASE_URL = "https://ossalt.jp";
 
+// Maps parent_category_ja (from DB) → clean URL slug
+const CATEGORY_SLUG_MAP: Record<string, string> = {
+  "AI・ML": "ai-ml",
+  "業務ソフト": "business",
+  "開発ツール": "developer-tools",
+  "インフラ・運用": "infrastructure",
+  "データ・分析": "data-analytics",
+  "コンテンツ": "content",
+  "生産性・便利ツール": "productivity",
+  "セキュリティ": "security",
+  "コミュニティ": "community",
+  "その他": "other",
+};
+
 Deno.serve(async () => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -18,11 +32,12 @@ Deno.serve(async () => {
     .select("id, parent_category_ja")
     .order("id");
 
-  // Fetch distinct categories
-  const categories = new Set<string>();
+  // Collect distinct category slugs (mapped from Japanese DB values)
+  const categorySlugs = new Set<string>();
   if (tools) {
     for (const t of tools) {
-      if (t.parent_category_ja) categories.add(t.parent_category_ja);
+      const slug = t.parent_category_ja ? CATEGORY_SLUG_MAP[t.parent_category_ja] : undefined;
+      if (slug) categorySlugs.add(slug);
     }
   }
 
@@ -43,6 +58,17 @@ Deno.serve(async () => {
     <priority>0.8</priority>
   </url>`;
 
+  // Category pages — clean /category/:slug URLs (not ?category= query params)
+  for (const slug of categorySlugs) {
+    xml += `
+  <url>
+    <loc>${BASE_URL}/category/${slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+  }
+
   // Tool detail pages
   if (tools) {
     for (const t of tools) {
@@ -62,7 +88,7 @@ Deno.serve(async () => {
     "wordpress","shopify","google-analytics","datadog","auth0","typeform",
     "github-copilot","tableau","contentful","launchdarkly","google-drive",
     "intercom","retool","postman","webflow","evernote","chatgpt","devin",
-    "stripe-billing","pinecone","bitly","canny",
+    "stripe-billing","pinecone","bitly","canny","zendesk",
   ];
   for (const slug of altSlugs) {
     xml += `
@@ -71,17 +97,6 @@ Deno.serve(async () => {
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>`;
-  }
-
-  // Category pages
-  for (const cat of categories) {
-    xml += `
-  <url>
-    <loc>${BASE_URL}/?category=${encodeURIComponent(cat)}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
   </url>`;
   }
 
