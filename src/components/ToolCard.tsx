@@ -24,8 +24,8 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group card-unified-hover p-5 flex flex-col relative"
-      style={{ animationDelay: `${Math.min(index * 40, 500)}ms`, animationFillMode: "both" }}
+      className="group card-unified-hover p-5 flex flex-col relative animate-fade-in-up"
+      style={{ animationDelay: `${Math.min(index * 40, 400)}ms`, animationFillMode: "both" }}
     >
       {highlightLabel && (
         <span className={`absolute -top-2.5 right-4 text-[10px] font-bold px-2 py-0.5 rounded-full ${highlightLabel.cls}`}>
@@ -50,7 +50,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
         <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} variant="icon" source="tool_card" />
       </div>
 
-      <p className="text-xs text-muted-foreground line-clamp-1 leading-relaxed mb-3 flex-1 break-words">
+      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1 break-words">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 

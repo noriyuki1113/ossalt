@@ -117,22 +117,34 @@ export function PopularAlternatives() {
                 </span>
               </div>
 
-              {/* Arrow + top OSS name */}
-              <div className="flex items-center gap-1.5 mb-1">
-                <ArrowRight className="h-3 w-3 text-primary shrink-0" />
-                <span className="text-sm font-medium text-primary truncate">
-                  {g.topTool}
-                </span>
+              {/* OSS alternatives list */}
+              <div className="flex flex-col gap-0.5 mb-3 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <ArrowRight className="h-3 w-3 text-primary shrink-0" />
+                  <span className="text-sm font-semibold text-primary truncate">
+                    {g.topTool}
+                  </span>
+                </div>
+                {g.secondTool && (
+                  <div className="flex items-center gap-1.5">
+                    <ArrowRight className="h-3 w-3 text-muted-foreground/40 shrink-0" />
+                    <span className="text-xs text-muted-foreground truncate">
+                      {g.secondTool}
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* Count */}
-              <p className="text-[11px] text-muted-foreground mb-4 flex-1">
-                {g.count}件のOSS代替あり
-              </p>
-
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground border border-border rounded-lg px-4 py-2 justify-center group-hover:text-primary group-hover:border-primary/30 transition-all">
-                詳細を見る
-              </span>
+              {/* Count + CTA */}
+              <div className="flex items-center justify-between mt-auto">
+                <span className="text-[10px] text-muted-foreground bg-secondary rounded-full px-2 py-0.5">
+                  全{g.count}件
+                </span>
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                  見る
+                  <ArrowRight className="h-3 w-3" />
+                </span>
+              </div>
             </Link>
           );
         })}

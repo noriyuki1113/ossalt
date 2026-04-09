@@ -94,7 +94,7 @@
   }
 
   .card-unified-hover {
-    @apply card-unified hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5;
+    @apply card-unified hover:border-primary/40 hover:shadow-lg hover:-translate-y-1;
   }
 }
 
@@ -110,5 +110,20 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.35s ease both;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
