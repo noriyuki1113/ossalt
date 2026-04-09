@@ -43,16 +43,57 @@ const ALTERNATIVES = {
   zendesk: "Zendesk",
 };
 
+/**
+ * Slug-specific meta overrides.
+ * Use when you want a more specific title/description with concrete tool names
+ * or keyword-rich phrases beyond the generic template.
+ */
+const SLUG_META_OVERRIDES = {
+  zapier: {
+    title: "Zapierの代替OSSツール5選 | 無料で使えるワークフロー自動化ツール比較",
+    description: "Zapierより安く使えるオープンソースの自動化ツールを比較。n8n・Activepiecesなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  notion: {
+    title: "Notionの代替OSSツール比較 | 無料・自己ホスト可能なワークスペース",
+    description: "Notionより安く使えるオープンソースのワークスペースツールを比較。AppFlowy・AFFiNEなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  slack: {
+    title: "Slackの代替OSSツール比較 | 無料で使えるチームチャットツール",
+    description: "Slackより安く使えるオープンソースのチャットツールを比較。Mattermost・Rocket.Chatなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  figma: {
+    title: "Figmaの代替OSSツール比較 | 無料で使えるUIデザインツール",
+    description: "Figmaより安く使えるオープンソースのデザインツールを比較。Penpot・Inkscapeなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  jira: {
+    title: "Jiraの代替OSSツール比較 | 無料で使えるプロジェクト管理ツール",
+    description: "Jiraより安く使えるオープンソースのプロジェクト管理ツールを比較。Plane・GitLab Issuesなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  airtable: {
+    title: "Airtableの代替OSSツール比較 | 無料で使えるノーコードDBツール",
+    description: "Airtableより安く使えるオープンソースのデータベースツールを比較。NocoDB・Baserowなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  "google-analytics": {
+    title: "Google Analyticsの代替OSSツール比較 | プライバシー重視のアクセス解析",
+    description: "Google Analyticsの代替となるオープンソースのアクセス解析ツールを比較。Matomo・Umamiなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+  auth0: {
+    title: "Auth0の代替OSSツール比較 | 無料で使える認証・IAMツール",
+    description: "Auth0より安く使えるオープンソースの認証ツールを比較。Keycloak・Authentikなど自己ホスト可能なツールを日本語で紹介。無料で使えるものも。",
+  },
+};
+
 /** @returns {{ path: string, title: string, description: string, canonical: string }[]} */
 export function getPrerenderRoutes() {
   const routes = [];
 
   // Alternatives pages
   for (const [slug, name] of Object.entries(ALTERNATIVES)) {
+    const override = SLUG_META_OVERRIDES[slug];
     routes.push({
       path: `/alternatives/${slug}`,
-      title: `${name}の代替OSSツール一覧 | ${SITE_NAME}`,
-      description: `${name}の代わりに使える無料オープンソースツールを比較。無料・セルフホスト可能なOSS代替を探そう。`,
+      title: override?.title ?? `${name}の代替OSSツール比較 | 無料・自己ホスト可`,
+      description: override?.description ?? `${name}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`,
       canonical: `${BASE_URL}/alternatives/${slug}`,
     });
   }

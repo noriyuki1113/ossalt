@@ -116,11 +116,19 @@ export default function AlternativesPage() {
     [tools]
   );
 
+  // Build dynamic description: include top 2 tool names once data is loaded
+  const topToolNames = topPicks.slice(0, 2).map(t => t.name).filter(Boolean).join("・");
+  const dynamicDescription = competitor
+    ? topToolNames
+      ? `${competitor}より安く使えるオープンソース代替ツールを比較。${topToolNames}など自己ホスト可能なツールを日本語で紹介。無料で使えるものも。`
+      : `${competitor}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`
+    : "";
+
   const jsonLd = competitor ? {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: editorial?.metaTitle || `${competitor}の代替OSSツール一覧`,
-    description: editorial?.metaDescription || `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。`,
+    name: editorial?.metaTitle || `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}`,
+    description: editorial?.metaDescription || dynamicDescription,
     url: `https://ossalt.jp/alternatives/${slug}`,
     numberOfItems: count,
     mainEntity: {
@@ -146,11 +154,9 @@ export default function AlternativesPage() {
 
   useSeo({
     title: editorial?.metaTitle || (competitor
-      ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "一覧"} | OSSアルタナティブ`
+      ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"} | 無料・自己ホスト可`
       : "代替ツール | OSSアルタナティブ"),
-    description: editorial?.metaDescription || (competitor
-      ? `${competitor}の代わりに使える無料オープンソースツール${count}件を比較。セルフホスト可能でライセンス費用ゼロのOSS代替を見つけよう。`
-      : ""),
+    description: editorial?.metaDescription || dynamicDescription,
     canonical: competitor
       ? `https://ossalt.jp/alternatives/${slug}`
       : undefined,
