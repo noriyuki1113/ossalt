@@ -126,30 +126,39 @@ export default function AlternativesPage() {
 
   const jsonLd = competitor ? {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: editorial?.metaTitle || `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}`,
-    description: editorial?.metaDescription || dynamicDescription,
-    url: `https://ossalt.jp/alternatives/${slug}`,
-    numberOfItems: count,
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: tools.slice(0, 10).map((t, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: t.name,
-        url: `https://ossalt.jp/tools/${t.id}`,
-      })),
-    },
-    ...(editorial?.faq && editorial.faq.length > 0 ? {
-      mainEntity2: {
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: editorial?.metaTitle || `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}`,
+        description: editorial?.metaDescription || dynamicDescription,
+        url: `https://ossalt.jp/alternatives/${slug}`,
+        numberOfItems: count,
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: tools.slice(0, 10).map((t, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: t.name,
+            url: `https://ossalt.jp/tools/${t.id}`,
+          })),
+        },
+      },
+      ...(editorial?.faq && editorial.faq.length > 0 ? [{
         "@type": "FAQPage",
         mainEntity: editorial.faq.map(f => ({
           "@type": "Question",
           name: f.question,
           acceptedAnswer: { "@type": "Answer", text: f.answer },
         })),
+      }] : []),
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          { "@type": "ListItem", position: 2, name: `${competitor}の代替ツール`, item: `https://ossalt.jp/alternatives/${slug}` },
+        ],
       },
-    } : {}),
+    ],
   } : undefined;
 
   useSeo({

@@ -89,6 +89,8 @@ Deno.serve(async () => {
     "github-copilot","tableau","contentful","launchdarkly","google-drive",
     "intercom","retool","postman","webflow","evernote","chatgpt","devin",
     "stripe-billing","pinecone","bitly","canny","zendesk",
+    "linear","asana","confluence","sentry","miro","mixpanel","hubspot",
+    "clickup","pagerduty","sendgrid",
   ];
   for (const slug of altSlugs) {
     xml += `

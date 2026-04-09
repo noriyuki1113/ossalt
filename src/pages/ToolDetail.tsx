@@ -260,13 +260,37 @@ export default function ToolDetailPage() {
     : "";
   const jsonLd = tool ? {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: tool.name,
-    description: tool.description_ja || tool.description_en || "",
-    applicationCategory: tool.category_ja || tool.parent_category_ja || "",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-    operatingSystem: "Web",
-    ...(tool.url ? { url: tool.url } : {}),
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        name: tool.name,
+        description: tool.description_ja || tool.description_en || "",
+        applicationCategory: tool.category_ja || tool.parent_category_ja || "",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+        operatingSystem: "Web",
+        ...(tool.url ? { url: tool.url } : {}),
+        ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
+        ...(tool.license ? { license: tool.license } : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          ...(tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? [{
+            "@type": "ListItem",
+            position: 2,
+            name: tool.parent_category_ja,
+            item: `https://ossalt.jp/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}`,
+          }] : []),
+          {
+            "@type": "ListItem",
+            position: tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
+            name: tool.name || "",
+            item: `https://ossalt.jp/tools/${tool.id}`,
+          },
+        ],
+      },
+    ],
   } : undefined;
 
   useSeo({
