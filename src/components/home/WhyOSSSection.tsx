@@ -16,8 +16,8 @@ export function WhyOSSSection() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
         {REASONS.map((r) => (
-          <div key={r.title} className="text-center">
-            <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl border border-primary/20 flex items-center justify-center mx-auto mb-3 md:mb-4">
+          <div key={r.title} className="group text-center">
+            <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl bg-primary/8 border border-primary/20 flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:bg-primary/15 group-hover:border-primary/40 group-hover:scale-105 transition-all duration-200">
               <r.icon className="h-5 w-5 md:h-6 md:w-6 text-primary" strokeWidth={1.5} />
             </div>
             <h3 className="font-semibold text-sm text-foreground mb-1.5">{r.title}</h3>
