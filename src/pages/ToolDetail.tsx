@@ -5,7 +5,7 @@ import {
   ExternalLink, Github, Star, ArrowRight, Copy,
   Users, Zap, Shield, GitFork, Clock, Code2, Scale,
   CheckCircle2, XCircle, Twitter, ChevronRight,
-  Server, HardDrive, Settings, MessageSquare,
+  Server, HardDrive, Settings, MessageSquare, Box, Building2,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -352,7 +352,7 @@ export default function ToolDetailPage() {
         </nav>
 
         {/* ── 3. Hero ── */}
-        <section className="pb-10">
+        <section className="pb-10 -mx-4 md:-mx-8 px-4 md:px-8 pt-4 rounded-2xl bg-gradient-to-b from-primary/[0.04] to-transparent">
           <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
 
             {/* Left: Identity */}
@@ -499,36 +499,40 @@ export default function ToolDetailPage() {
           <div className="card-unified p-4 sm:p-5">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
-                <p className="text-[10px] text-muted-foreground mb-1.5">導入難易度</p>
-                <div className="flex items-center gap-2">
-                  <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${
-                    difficulty.setupLevel === "easy" ? "bg-emerald-500" :
-                    difficulty.setupLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                  }`} />
-                  <p className="text-xs font-semibold text-foreground">{difficulty.setupLabel}</p>
-                </div>
+                <p className="text-[10px] text-muted-foreground mb-2">導入難易度</p>
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                  difficulty.setupLevel === "easy"
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    : difficulty.setupLevel === "medium"
+                    ? "bg-amber-50 text-amber-700 border-amber-200"
+                    : "bg-red-50 text-red-700 border-red-200"
+                }`}>
+                  {difficulty.setupLabel}
+                </span>
               </div>
               <div>
-                <p className="text-[10px] text-muted-foreground mb-1.5">セルフホスト</p>
-                <div className="flex items-center gap-2">
-                  <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${
-                    difficulty.selfHostLevel === "easy" ? "bg-emerald-500" :
-                    difficulty.selfHostLevel === "medium" ? "bg-amber-500" : "bg-red-400"
-                  }`} />
-                  <p className="text-xs font-semibold text-foreground">{difficulty.selfHostLabel}</p>
-                </div>
+                <p className="text-[10px] text-muted-foreground mb-2">セルフホスト</p>
+                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                  difficulty.selfHostLevel === "easy"
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                    : difficulty.selfHostLevel === "medium"
+                    ? "bg-amber-50 text-amber-700 border-amber-200"
+                    : "bg-red-50 text-red-700 border-red-200"
+                }`}>
+                  {difficulty.selfHostLabel}
+                </span>
               </div>
               <div>
-                <p className="text-[10px] text-muted-foreground mb-1.5">対象ユーザー</p>
-                <p className="text-xs font-semibold text-foreground">
+                <p className="text-[10px] text-muted-foreground mb-2">対象ユーザー</p>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-secondary text-foreground border-border">
                   {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
-                </p>
+                </span>
               </div>
               <div>
-                <p className="text-[10px] text-muted-foreground mb-1.5">チーム規模</p>
-                <p className="text-xs font-semibold text-foreground">
+                <p className="text-[10px] text-muted-foreground mb-2">チーム規模</p>
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-secondary text-foreground border-border">
                   {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
-                </p>
+                </span>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 pt-4 border-t border-border/40">
@@ -591,7 +595,7 @@ export default function ToolDetailPage() {
           <h2 className="text-lg font-bold text-foreground mb-4">主なメリット</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {benefits.map((b, i) => (
-              <div key={i} className="card-unified p-4">
+              <div key={i} className="card-unified p-4 border-l-2 border-l-primary/50">
                 <div className="flex items-center gap-2 mb-1.5">
                   <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" />
                   <p className="font-semibold text-sm text-foreground">{b.title}</p>
@@ -615,7 +619,7 @@ export default function ToolDetailPage() {
                   <thead>
                     <tr className="border-b border-border/60">
                       <th className="text-left p-3 md:p-4 font-medium text-muted-foreground text-xs w-[28%]">比較項目</th>
-                      <th className="text-left p-3 md:p-4 font-medium text-primary text-xs">
+                      <th className="text-left p-3 md:p-4 font-medium text-primary text-xs bg-primary/[0.03]">
                         {tool.name}
                         <span className="text-[10px] text-muted-foreground font-normal ml-1">(OSS)</span>
                       </th>
@@ -629,8 +633,10 @@ export default function ToolDetailPage() {
                     {comparisonRows.map(([label, oss, saas, ossWins]) => (
                       <tr key={label} className="border-b border-border/30 last:border-0">
                         <td className="p-3 md:p-4 text-muted-foreground text-xs">{label}</td>
-                        <td className={`p-3 md:p-4 text-xs font-medium ${ossWins ? "text-foreground" : "text-muted-foreground"}`}>
-                          {oss}
+                        <td className={`p-3 md:p-4 text-xs font-medium bg-primary/[0.02] ${ossWins ? "text-foreground" : "text-muted-foreground"}`}>
+                          {ossWins
+                            ? <span className="inline-flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />{oss}</span>
+                            : oss}
                         </td>
                         <td className={`p-3 md:p-4 text-xs font-medium ${!ossWins ? "text-foreground" : "text-muted-foreground"}`}>
                           {saas}
@@ -660,25 +666,29 @@ export default function ToolDetailPage() {
         <section className="py-8">
           <h2 className="text-lg font-bold text-foreground mb-4">導入環境</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="card-unified p-3 text-center">
-              <p className="text-[10px] text-muted-foreground mb-1">Docker対応</p>
-              <p className="text-xs font-medium text-foreground">
+            <div className="card-unified p-4 flex flex-col items-center gap-2">
+              <Box className="h-5 w-5 text-primary/70" />
+              <p className="text-[10px] text-muted-foreground">Docker対応</p>
+              <p className="text-xs font-semibold text-foreground text-center">
                 {(tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
               </p>
             </div>
-            <div className="card-unified p-3 text-center">
-              <p className="text-[10px] text-muted-foreground mb-1">セルフホスト</p>
-              <p className="text-xs font-medium text-foreground">可能</p>
+            <div className="card-unified p-4 flex flex-col items-center gap-2">
+              <Server className="h-5 w-5 text-primary/70" />
+              <p className="text-[10px] text-muted-foreground">セルフホスト</p>
+              <p className="text-xs font-semibold text-foreground">可能</p>
             </div>
-            <div className="card-unified p-3 text-center">
-              <p className="text-[10px] text-muted-foreground mb-1">対象ユーザー</p>
-              <p className="text-xs font-medium text-foreground">
+            <div className="card-unified p-4 flex flex-col items-center gap-2">
+              <Users className="h-5 w-5 text-primary/70" />
+              <p className="text-[10px] text-muted-foreground">対象ユーザー</p>
+              <p className="text-xs font-semibold text-foreground text-center">
                 {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
               </p>
             </div>
-            <div className="card-unified p-3 text-center">
-              <p className="text-[10px] text-muted-foreground mb-1">チーム規模</p>
-              <p className="text-xs font-medium text-foreground">
+            <div className="card-unified p-4 flex flex-col items-center gap-2">
+              <Building2 className="h-5 w-5 text-primary/70" />
+              <p className="text-[10px] text-muted-foreground">チーム規模</p>
+              <p className="text-xs font-semibold text-foreground text-center">
                 {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
               </p>
             </div>
