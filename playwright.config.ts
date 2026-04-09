@@ -1,9 +1,20 @@
-import { createLovableConfig } from "lovable-agent-playwright-config/config";
+import { defineConfig, devices } from '@playwright/test';
 
-export default createLovableConfig({
+export default defineConfig({
   timeout: 30000,
   use: {
-    baseURL: "https://ossalt.jp",
-    viewport: { width: 390, height: 844 }, // iPhone 14 size
+    baseURL: 'https://ossalt.jp',
+    viewport: { width: 390, height: 844 }, // iPhoneサイズ
   },
+
+  projects: [
+    {
+      name: 'Mobile Chrome',
+      use: {
+        ...devices['iPhone 14'],
+      },
+    },
+  ],
+
+  reporter: 'html',
 });
