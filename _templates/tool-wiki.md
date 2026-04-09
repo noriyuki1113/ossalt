@@ -1,33 +1,34 @@
------
+---
+# wiki/tools/ 統合テンプレート
+# - frontmatter: CLAUDE.md スキーマ（LLM比較用メタデータ）
+# - 本文: ユーザー向けコンテンツ + 知識エンジン層の統合
+type: tool
+slug: [slug]
+name: [ツール名]
+category: [カテゴリ（英語）]
+github: [GitHub URL]
+stars: [表示用文字列 例: 42k]
+stars_num: [数値 例: 42000]
+language: [主要言語]
+last_commit: YYYY-MM-DD
+license: [ライセンス]
+self_hostable: true | false
+local_first: true | false
+ossalt_listed: true | false
+last_reviewed: YYYY-MM-DD
+confidence: high | medium | low
+source_count: [N]
+replaces:
+  - [saas-slug]
+related_tools:
+  - [tool-slug]
+---
 
-title: “ツール名”
-slug: “tool-slug”
-category: “saas”
-description: “1〜2文の日本語説明をここに書く”
-website: “https://example.com”
-github: “https://github.com/org/repo”
-license: “MIT”
-alternatives:
+# [ツール名]
 
-- name: “代替ツール名1”
-  url: “https://…”
-  type: “oss”
-- name: “代替ツール名2”
-  url: “https://…”
-  type: “saas”
-- name: “代替ツール名3”
-  url: “https://…”
-  type: “oss”
-  tags:
-- “タグ1”
-- “タグ2”
-  lastUpdated: “YYYY-MM-DD”
+## 一言定義
 
------
-
-## 概要
-
-<!-- ツールの概要を3〜5文で説明。何ができるか、誰が作ったか、どんな課題を解決するか。 -->
+<!-- 10〜20字で。「〇〇のOSS代替。△△が特徴。」の形式 -->
 
 ## 主な機能
 
@@ -37,33 +38,55 @@ alternatives:
 - 機能4
 - 機能5
 
-## OSSとしての特徴
+## Positioning
 
-<!-- なぜ商用SaaSではなくこのOSSを選ぶべきか。セルフホスト可能か、ライセンスの自由度、コミュニティの活発さなど。 -->
+<!-- 競合・類似ツールとの位置づけ。「〇〇よりも△△寄り」の軸で書く -->
 
-## こんな人におすすめ
+## 強み
+
+- 強み1
+- 強み2
+- 強み3
+
+## 弱み・注意点
+
+- 弱み1
+- 弱み2
+
+## どんなユーザーに向くか
 
 - **ユースケース1：** 説明
 - **ユースケース2：** 説明
 - **ユースケース3：** 説明
 
-## 導入方法
+## セルフホスト難易度
+
+**難易度：** 低 | 中 | 高
+
+<!-- 構成の複雑さ・必要スペック・メンテ頻度を簡潔に -->
 
 ```bash
-# インストール例
-npm install tool-name
-# or
-docker run tool-name
+# 最小起動例
+docker run ...
 ```
 
-<!-- セットアップの概要を簡潔に。詳細は公式ドキュメントへのリンクで補う。 -->
+詳細は [公式ドキュメント]([URL]) を参照。
 
-詳細は[公式ドキュメント](https://example.com/docs)を参照。
+## 日本語圏での採用状況
 
-## 関連ツール
+<!-- グローバルトレンドと日本の温度感の差を記録。情報源が少ない場合は正直に書く -->
 
-|ツール                   |タイプ |特徴  |
-|----------------------|----|----|
-|[代替ツール名1](https://...)|OSS |特徴メモ|
-|[代替ツール名2](https://...)|SaaS|特徴メモ|
-|[代替ツール名3](https://...)|OSS |特徴メモ|
+## ossaltにおける推奨文脈
+
+<!-- どのSaaS代替ページからリンクすべきか。どんな用途・規模のユーザーに推奨するか -->
+
+## Open questions
+
+- 未解決の比較・調査課題1
+- 未解決の比較・調査課題2
+- 未解決の比較・調査課題3
+
+## Evidence sources
+
+- [URL]
+- [URL]
