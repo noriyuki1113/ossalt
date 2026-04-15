@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap, Shield, Settings, HelpCircle, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap, Shield, Settings, HelpCircle, ExternalLink, ListChecks, SlidersHorizontal } from "lucide-react";
 import { track } from "@/lib/track";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -53,6 +53,17 @@ const SLUG_MAP: Record<string, string> = {
   bitly: "Bitly",
   canny: "Canny",
   zendesk: "Zendesk",
+  // new slugs added in phase 3
+  linear: "Linear",
+  asana: "Asana",
+  confluence: "Confluence",
+  sentry: "Sentry",
+  miro: "Miro",
+  mixpanel: "Mixpanel",
+  hubspot: "HubSpot",
+  clickup: "ClickUp",
+  pagerduty: "PagerDuty",
+  sendgrid: "SendGrid",
 };
 
 const COMPETITOR_TO_SLUG: Record<string, string> = {};
@@ -124,13 +135,21 @@ export default function AlternativesPage() {
       : `${competitor}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`
     : "";
 
+  // Resolve title/description across v1 and v2 editorial formats
+  const editorialTitle = editorial?.metaTitle || editorial?.seo?.title;
+  const editorialDesc = editorial?.metaDescription || editorial?.seo?.description;
+  const editorialHero = editorial?.heroDescription || editorial?.hero?.subheadline;
+  // Unify migrationReasons (v2) as whySwitchReasons (v1) when v1 not present
+  const whySwitchItems = editorial?.whySwitchReasons ||
+    editorial?.migrationReasons?.map(r => ({ ...r, icon: "cost" as const }));
+
   const jsonLd = competitor ? {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollectionPage",
-        name: editorial?.metaTitle || `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}`,
-        description: editorial?.metaDescription || dynamicDescription,
+        name: editorialTitle || `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}`,
+        description: editorialDesc || dynamicDescription,
         url: `https://ossalt.jp/alternatives/${slug}`,
         numberOfItems: count,
         mainEntity: {
@@ -162,10 +181,10 @@ export default function AlternativesPage() {
   } : undefined;
 
   useSeo({
-    title: editorial?.metaTitle || (competitor
+    title: editorialTitle || (competitor
       ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"} | 無料・自己ホスト可`
       : "代替ツール | OSSアルタナティブ"),
-    description: editorial?.metaDescription || dynamicDescription,
+    description: editorialDesc || dynamicDescription,
     canonical: competitor
       ? `https://ossalt.jp/alternatives/${slug}`
       : undefined,
@@ -204,7 +223,7 @@ export default function AlternativesPage() {
             {competitor} の代替OSSツール{!isLoading && count > 0 ? `${count}選` : "一覧"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
-            {editorial?.heroDescription || (
+            {editorialHero || (
               <>
                 {competitor}の月額コストやベンダーロックインに悩んでいませんか？
                 ここでは{competitor}の代わりに使える無料・オープンソースのツール{!isLoading ? `${count}件` : ""}を、
@@ -212,6 +231,12 @@ export default function AlternativesPage() {
               </>
             )}
           </p>
+          {/* v2: longer intro text */}
+          {editorial?.intro?.long && (
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+              {editorial.intro.long}
+            </p>
+          )}
 
           {/* Quick stats */}
           {!isLoading && count > 0 && (
@@ -344,16 +369,15 @@ export default function AlternativesPage() {
             )}
 
             {/* ── 4. Why switch section ── */}
-            {/* Uses editorial JSON reasons if available, otherwise generic fallback */}
             <section className="mb-10">
               <h2 className="text-base font-bold text-foreground mb-3">
                 なぜ{competitor}からOSSに乗り換えるのか？
               </h2>
               <div className="card-unified p-5">
-                {editorial?.whySwitchReasons ? (
-                  <div className={`grid grid-cols-1 ${editorial.whySwitchReasons.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4 text-xs text-muted-foreground leading-relaxed`}>
-                    {editorial.whySwitchReasons.map((reason, i) => {
-                      const Icon = REASON_ICONS[reason.icon] || Zap;
+                {whySwitchItems ? (
+                  <div className={`grid grid-cols-1 ${whySwitchItems.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4 text-xs text-muted-foreground leading-relaxed`}>
+                    {whySwitchItems.map((reason, i) => {
+                      const Icon = ("icon" in reason && reason.icon) ? (REASON_ICONS[reason.icon as string] || Zap) : Zap;
                       return (
                         <div key={i} className="flex items-start gap-2.5">
                           <div className="h-7 w-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
@@ -401,6 +425,44 @@ export default function AlternativesPage() {
               </div>
             </section>
 
+            {/* ── 4b. Decision Axes (v2 editorial only) ── */}
+            {editorial?.decisionAxes && editorial.decisionAxes.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+                  <SlidersHorizontal className="h-4 w-4 text-primary" />
+                  選び方の軸
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {editorial.decisionAxes.map((axis, i) => (
+                    <div key={i} className="rounded-xl border border-border/60 bg-card px-4 py-3">
+                      <p className="text-xs font-semibold text-foreground mb-0.5">{axis.label}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{axis.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── 4c. Quick Guide (v2 editorial only) ── */}
+            {editorial?.quickGuide && editorial.quickGuide.steps.length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
+                  <ListChecks className="h-4 w-4 text-primary" />
+                  {editorial.quickGuide.title}
+                </h2>
+                <ol className="space-y-2">
+                  {editorial.quickGuide.steps.map((step, i) => (
+                    <li key={i} className="flex items-start gap-3 rounded-xl border border-border/60 bg-card px-4 py-3">
+                      <span className="shrink-0 h-5 w-5 rounded-full bg-primary/10 text-primary text-[11px] font-bold flex items-center justify-center mt-0.5">
+                        {i + 1}
+                      </span>
+                      <p className="text-sm text-foreground leading-relaxed">{step}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
             {/* ── 5. Rest of tools grid ── */}
             {restTools.length > 0 && (
               <section className="mb-10">
@@ -439,12 +501,12 @@ export default function AlternativesPage() {
               </section>
             )}
 
-            {/* ── 7. Related alternatives (only when JSON exists) ── */}
-            {editorial?.relatedSlugs && editorial.relatedSlugs.length > 0 && (
+            {/* ── 7. Related alternatives ── */}
+            {(editorial?.relatedSlugs?.length || 0) > 0 && (
               <section className="mb-10">
                 <h2 className="text-sm font-bold text-foreground mb-3">関連する代替ページ</h2>
                 <div className="flex flex-wrap gap-2">
-                  {editorial.relatedSlugs
+                  {editorial!.relatedSlugs!
                     .filter(s => SLUG_MAP[s])
                     .map(s => (
                       <Link
@@ -459,7 +521,7 @@ export default function AlternativesPage() {
               </section>
             )}
 
-            {/* ── 8. Competitor source link (only when JSON exists) ── */}
+            {/* ── 8. Competitor source link ── */}
             {editorial?.competitorUrl && (
               <section className="mb-10">
                 <div className="card-unified p-4 flex items-center gap-3 text-xs text-muted-foreground">

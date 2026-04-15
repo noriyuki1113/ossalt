@@ -1,0 +1,49 @@
+{
+  "slug": "asana",
+  "competitor": "Asana",
+  "competitorUrl": "https://asana.com",
+  "metaTitle": "Asanaの代替OSSツール一覧 | 無料タスク管理 | OSSアルタナティブ",
+  "metaDescription": "Asanaの代わりに使える無料・オープンソースのタスク・プロジェクト管理ツールを比較。Plane・Vikunja などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Asanaのシート課金やメンバー上限に悩んでいませんか？ここではAsanaの代わりに使えるオープンソースのタスク管理ツールをGitHubスター数順で比較できます。チーム全員が追加費用なしで使えるセルフホスト型OSSを紹介します。",
+  "whySwitchReasons": [
+    {
+      "title": "メンバー上限・シート課金をなくす",
+      "description": "Asanaの無料プランは15名まで。人数が増えるとコストが急増します。OSSなら何人でも無料で使えます。",
+      "icon": "cost"
+    },
+    {
+      "title": "プロジェクトデータを自社管理",
+      "description": "タスク・期日・コメントを自社サーバーに保存。情報漏洩リスクを最小化し、コンプライアンス要件にも対応できます。",
+      "icon": "data"
+    },
+    {
+      "title": "カスタムワークフローで自由に拡張",
+      "description": "Asanaのルール制限なく、独自の自動化・ステータス・フィールドを設定できます。",
+      "icon": "customization"
+    },
+    {
+      "title": "ベンダーロックインを回避",
+      "description": "オープンソースならデータのエクスポートは常に自由。別ツールへの移行も選択肢として残せます。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "AsanaのオープンソースOSSの代替は何がありますか？",
+      "answer": "Plane（モダンUIでAsanaに近い体験）、Vikunja（軽量・セルフホスト向け）、OpenProject（エンタープライズ向け）などが有力です。"
+    },
+    {
+      "question": "スマートフォンアプリはありますか？",
+      "answer": "PlaneはiOS/Androidアプリを提供しています。Vikunjaもモバイルブラウザで利用可能で、PWA対応しています。"
+    },
+    {
+      "question": "Asanaからデータを移行できますか？",
+      "answer": "AsanaはCSVエクスポートに対応しています。PlaneはAsanaのCSVインポートを段階的にサポートしています。"
+    },
+    {
+      "question": "ガントチャート・タイムライン表示はありますか？",
+      "answer": "PlaneとOpenProjectはガントチャートをサポートしています。Vikunjaはガントビューも提供しています。"
+    }
+  ],
+  "relatedSlugs": ["linear", "jira", "trello", "clickup"]
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "datadog",
+  "competitor": "Datadog",
+  "competitorUrl": "https://datadoghq.com",
+  "metaTitle": "Datadogの代替OSSツール一覧 | 無料監視・可観測性ツール | OSSアルタナティブ",
+  "metaDescription": "Datadogの代わりに使える無料・オープンソースの監視・可観測性ツールを比較。Grafana・Prometheus・SigNoz などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Datadogのホスト課金・カスタムメトリクス費用は、インフラが大きくなるほど高騰します。ここではDatadogの代わりに使えるオープンソースの監視・可観測性ツールをGitHubスター数順で比較できます。メトリクス・ログ・トレースをすべて自社インフラで完結させましょう。",
+  "whySwitchReasons": [
+    {
+      "title": "ホスト課金・カスタムメトリクス費用をゼロに",
+      "description": "Datadogはホスト数・カスタムメトリクス数・ログ量で課金が増大します。OSSなら自社サーバーで無制限に収集できます。",
+      "icon": "cost"
+    },
+    {
+      "title": "メトリクス・ログを自社管理",
+      "description": "システムの動作状況・エラーログ・トレースデータをDatadogのクラウドではなく自社インフラに保存できます。",
+      "icon": "data"
+    },
+    {
+      "title": "ダッシュボードを自由にカスタマイズ",
+      "description": "Grafanaならデータソースを問わず自由なダッシュボードを構築。Datadogのウィジェット制限がありません。",
+      "icon": "customization"
+    },
+    {
+      "title": "ベンダーロックインを避ける",
+      "description": "OpenTelemetry準拠のOSSなら将来的なツール移行も容易。特定ベンダーのエージェントに縛られません。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "DatadogのOSSの代替は何がありますか？",
+      "answer": "Grafana+Prometheus（メトリクス）、SigNoz（APM・トレーシング）、OpenTelemetry（計装）、Loki（ログ）を組み合わせることで、Datadogの主要機能をカバーできます。"
+    },
+    {
+      "question": "GrafanaとPrometheusを組み合わせると何ができますか？",
+      "answer": "Prometheusでメトリクスを収集・保存し、Grafanaで可視化・アラートを設定できます。Datadogのインフラ監視の大半はこの組み合わせで代替可能です。"
+    },
+    {
+      "question": "APM・分散トレーシングも代替できますか？",
+      "answer": "SigNozはOpenTelemetry対応のAPMとトレーシングを提供しており、Datadog APMの代替として機能します。Tempoも有力な選択肢です。"
+    },
+    {
+      "question": "セルフホストの運用負荷はどのくらいですか？",
+      "answer": "Grafana+Prometheusはシンプルな構成から始められます。大規模環境ではThanos（Prometheusの長期保存）やVictoriaMetricsの追加が推奨されます。"
+    }
+  ],
+  "relatedSlugs": ["sentry", "pagerduty", "google-analytics"]
+}

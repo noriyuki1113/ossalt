@@ -1,0 +1,49 @@
+{
+  "slug": "zapier",
+  "competitor": "Zapier",
+  "competitorUrl": "https://zapier.com",
+  "metaTitle": "Zapierの代替OSSツール一覧 | 無料ワークフロー自動化 | OSSアルタナティブ",
+  "metaDescription": "Zapierの代わりに使える無料・オープンソースのワークフロー自動化ツールを比較。n8n・Activepieces などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Zapierのタスク課金やAPI制限に悩んでいませんか？ここではZapierの代わりに使えるオープンソースの自動化・ワークフローツールをGitHubスター数順で比較できます。セルフホストすれば実行回数無制限でコスト削減できます。",
+  "whySwitchReasons": [
+    {
+      "title": "実行回数・タスク制限をなくす",
+      "description": "Zapierは月のタスク数に上限があり、超過すると課金が急増します。OSSなら自社サーバーで無制限に実行可能です。",
+      "icon": "cost"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Zapierの月額$20〜$100以上の費用をゼロに。複雑なワークフローも追加課金なしで構築できます。",
+      "icon": "cost"
+    },
+    {
+      "title": "APIキー・認証情報を自社管理",
+      "description": "Zapierに各SaaSのAPIキーを渡さず、自社サーバーで接続情報を安全に管理できます。",
+      "icon": "data"
+    },
+    {
+      "title": "カスタムノードで無限に拡張",
+      "description": "Zapierにない連携先もカスタムノードで独自に実装可能。コードを直接書けるOSSならロジックを完全制御できます。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ZapierのオープンソースOSSの代替は何がありますか？",
+      "answer": "n8n が最も機能が近く、300以上の連携・ビジュアルワークフローエディタ・コードノードを備えています。ActivepiecesやTemporal、Airbyteも用途によって有力候補です。"
+    },
+    {
+      "question": "n8nはセルフホストできますか？",
+      "answer": "はい。Docker一行で起動でき、npm経由でも動かせます。クラウド版（n8n.io）も提供されており、セルフホストが難しい場合の選択肢もあります。"
+    },
+    {
+      "question": "Zapierのワークフローをn8nに移行できますか？",
+      "answer": "直接の移行ツールはありません。ただしn8nのノード構造はZapierのZapと対応しており、手動で再構築するのは比較的容易です。"
+    },
+    {
+      "question": "トリガーはWebhookとスケジュールに対応していますか？",
+      "answer": "はい。n8nはWebhookトリガー、Cronスケジュール、HTTPリクエスト、イベントベースのトリガーすべてに対応しています。"
+    }
+  ],
+  "relatedSlugs": ["retool", "airtable", "firebase"]
+}

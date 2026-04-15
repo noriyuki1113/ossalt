@@ -1,0 +1,49 @@
+{
+  "slug": "figma",
+  "competitor": "Figma",
+  "competitorUrl": "https://figma.com",
+  "metaTitle": "Figmaの代替OSSツール一覧 | 無料UIデザインツール | OSSアルタナティブ",
+  "metaDescription": "Figmaの代わりに使える無料・オープンソースのUIデザインツールを比較。Penpot・Lunacy などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "FigmaのAdobe買収後の価格改定やベンダー依存が気になりますか？ここではFigmaの代わりに使えるオープンソースのデザインツールをGitHubスター数順で比較できます。セルフホストでデザインデータを自社管理できるものも含まれます。",
+  "whySwitchReasons": [
+    {
+      "title": "デザインデータを自社管理",
+      "description": "デザインファイルをFigmaのクラウドではなく自社サーバーに保存。機密デザインを外部に出さずに管理できます。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックインを回避",
+      "description": "Adobe傘下になったFigmaへの依存を減らし、オープンフォーマットでデザインデータを保持できます。",
+      "icon": "lockin"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Figmaのシート課金（月額$15〜）を排除。OSSならチーム全員が無料で利用できます。",
+      "icon": "cost"
+    },
+    {
+      "title": "オフライン利用・プライバシー",
+      "description": "クラウド必須のFigmaと違い、デスクトップ版で完全オフライン作業が可能なツールもあります。",
+      "icon": "data"
+    }
+  ],
+  "faq": [
+    {
+      "question": "FigmaのオープンソースOSSの代替は何がありますか？",
+      "answer": "Penpot が最も機能が近く、ベクター編集・プロトタイプ・チーム共有をすべてカバーしています。セルフホストにも対応しています。"
+    },
+    {
+      "question": "Penpotはどれくらいの完成度ですか？",
+      "answer": "基本的なUIデザインとプロトタイプ機能はPenpotで十分カバーできます。ただしFigmaのプラグインエコシステムや自動レイアウトの完成度はまだ差があります。"
+    },
+    {
+      "question": "Figmaのデザインファイルを移行できますか？",
+      "answer": "FigmaからのSVG/PDFエクスポートは可能です。PenpotはFigmaファイルの直接インポート機能を開発中です（一部対応済み）。"
+    },
+    {
+      "question": "デザイナー以外のメンバーとの共有はできますか？",
+      "answer": "Penpotはブラウザベースで動作し、リアルタイム共同編集と共有リンクをサポートしています。閲覧者専用リンクも使えます。"
+    }
+  ],
+  "relatedSlugs": ["webflow", "retool", "contentful"]
+}

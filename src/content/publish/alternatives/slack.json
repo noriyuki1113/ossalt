@@ -1,0 +1,49 @@
+{
+  "slug": "slack",
+  "competitor": "Slack",
+  "competitorUrl": "https://slack.com",
+  "metaTitle": "Slackの代替OSSツール一覧 | セルフホスト可能なチャット | OSSアルタナティブ",
+  "metaDescription": "Slackの代わりに使える無料・オープンソースのチームチャットツールを比較。Mattermost・Rocket.Chatなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Slackのシート課金や月額コストに悩んでいませんか？ここではSlackの代わりに使えるオープンソースのチームコミュニケーションツールをGitHubスター数順で比較できます。すべてセルフホスト可能で、メッセージ履歴の制限もありません。",
+  "whySwitchReasons": [
+    {
+      "title": "メッセージ履歴の制限をなくす",
+      "description": "Slackの無料プランはメッセージ履歴が90日に制限されます。OSSなら全履歴を自社サーバーに永続保存できます。",
+      "icon": "data"
+    },
+    {
+      "title": "シート課金をゼロに",
+      "description": "人数が増えるほどコストが上がるSlackの課金構造から脱却。OSSなら何人でも無料で使えます。",
+      "icon": "cost"
+    },
+    {
+      "title": "コミュニケーションデータを自社管理",
+      "description": "社内の会話・ファイルをSlackのサーバーではなく自社インフラに保存。情報漏洩リスクを最小化できます。",
+      "icon": "data"
+    },
+    {
+      "title": "カスタムBot・連携を自由に追加",
+      "description": "Slack Appの審査なしにカスタムインテグレーションやBotを開発・運用できます。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Slackの完全な代替OSSはありますか？",
+      "answer": "Mattermost と Rocket.Chat が最も機能が近く、スレッド、チャンネル、ファイル共有、Webhook連携などSlackの主要機能をカバーしています。"
+    },
+    {
+      "question": "セルフホストはどのくらい難しいですか？",
+      "answer": "Mattermost・Rocket.ChatともにDocker Composeで比較的簡単に起動できます。10名以下の小チームなら1時間程度で導入可能です。"
+    },
+    {
+      "question": "Slackからの移行でデータを持ち出せますか？",
+      "answer": "Slackはエクスポート機能を提供しており、JSONまたはZIP形式でメッセージ履歴を取得できます。MattermostはSlackインポートに対応しています。"
+    },
+    {
+      "question": "モバイルアプリはありますか？",
+      "answer": "Mattermost・Rocket.ChatともにiOS/Androidネイティブアプリを提供しています。ただしSlackほどUXが洗練されていない場合があります。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "zendesk", "canny"]
+}
