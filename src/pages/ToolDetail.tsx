@@ -21,9 +21,10 @@ import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
-import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 import { PartnerCTA } from "@/components/ads/PartnerCTA";
+import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
+import { SponsorBannerSlot } from "@/components/ads/SponsorBannerSlot";
 import { EditorialInsightCard } from "@/components/EditorialInsightCard";
 import { RelatedGuideCard } from "@/components/RelatedGuideCard";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
@@ -33,6 +34,7 @@ import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
+import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
 
@@ -211,6 +213,12 @@ export default function ToolDetailPage() {
     },
     enabled: !!tool,
   });
+
+  const { data: partnerCards = [] } = usePartnerCards(
+    tool?.id ?? 0,
+    tool?.name ?? null,
+  );
+  const primaryCard = partnerCards[0] ?? null;
 
   const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
@@ -426,14 +434,36 @@ export default function ToolDetailPage() {
               <div className="card-unified p-5 space-y-3">
                 {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
-                  {tool.url && (
-                    <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
-                      <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                        onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
-                      >
-                        公式サイトへ <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
+                  {/* Partner / managed card takes top slot when available */}
+                  {primaryCard?.url ? (
+                    <>
+                      <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                        <a href={primaryCard.url} target="_blank" rel="noopener noreferrer sponsored"
+                          onClick={() => track("partner_card_click", { tool: tool.name, partner: primaryCard.partner_name, url: primaryCard.url })}
+                        >
+                          {primaryCard.label} <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                      {tool.url && (
+                        <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
+                          <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                            onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                          >
+                            公式サイトへ <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    tool.url && (
+                      <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                          onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                        >
+                          公式サイトへ <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )
                   )}
                   {tool.github_url && (
                     <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
@@ -747,11 +777,9 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── Ad slot before related tools ── */}
+        {/* ── Sponsor banner before related tools ── */}
         <div className="border-t border-border/60" />
-        <div className="py-6">
-          <AdSlot slotId="detail-before-related" format="horizontal" />
-        </div>
+        <SponsorBannerSlot slotId="detail-before-related" />
 
         {/* ── 9. Similar projects ── */}
         {relatedTools && relatedTools.length > 0 && (
@@ -837,26 +865,36 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {/* ── 13. Community Participation ── */}
+        {/* ── 13. Partner / Affiliate CTA (when partner_cards exist) ── */}
+        {partnerCards.length > 0 && (
+          <>
+            <div className="border-t border-border/60" />
+            <div className="py-6">
+              <AffiliateCTA
+                toolName={tool.name || "このツール"}
+                cards={partnerCards}
+              />
+            </div>
+          </>
+        )}
+
+        {/* ── 14. Partner + Consultation CTAs ── */}
+        <div className="border-t border-border/60" />
+        <section className="py-6 space-y-3">
+          <PartnerCTA toolName={tool.name || undefined} />
+          <ConsultationCTA toolName={tool.name || undefined} />
+        </section>
+
+        {/* ── 15. Community Participation ── */}
         <div className="border-t border-border/60" />
         <section className="py-8">
           <CommunityParticipationCTA toolName={tool.name || undefined} context="detail" />
         </section>
 
-        {/* ── 14. Newsletter ── */}
+        {/* ── 16. Newsletter ── */}
         <section className="pb-8">
           <NewsletterSignup />
         </section>
-
-        {/* ── Partner CTA ── */}
-        <div className="pb-4">
-          <PartnerCTA toolName={tool.name || undefined} />
-        </div>
-
-        {/* ── Consultation CTA ── */}
-        <div className="pb-4">
-          <ConsultationCTA toolName={tool.name || undefined} />
-        </div>
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">

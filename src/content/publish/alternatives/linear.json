@@ -1,0 +1,49 @@
+{
+  "slug": "linear",
+  "competitor": "Linear",
+  "competitorUrl": "https://linear.app",
+  "metaTitle": "Linearの代替OSSツール一覧 | 無料Issue Tracker | OSSアルタナティブ",
+  "metaDescription": "Linearの代わりに使える無料・オープンソースのIssue Tracker・プロジェクト管理ツールを比較。Plane・GitLab Issues などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "LinearのモダンなUXはそのまま、コストとデータ管理を自社でコントロールしたいですか？ここではLinearの代わりに使えるオープンソースのIssue Trackerをスター数順で比較できます。開発チーム向けの軽量かつ高速なOSS代替を紹介します。",
+  "whySwitchReasons": [
+    {
+      "title": "シート課金をゼロに",
+      "description": "Linearの月額$8〜/人の費用をなくし、チーム全員が追加コストなしで使えます。",
+      "icon": "cost"
+    },
+    {
+      "title": "Issue・スプリントデータを自社管理",
+      "description": "開発課題・バックログ・マイルストーンをLinearのクラウドではなく自社サーバーに保存できます。",
+      "icon": "data"
+    },
+    {
+      "title": "GitとのDeep連携を自由に設計",
+      "description": "GitLabはIssuesをリポジトリ内蔵で持ち、GitHubとのWebhook連携もOSSで柔軟に構築できます。",
+      "icon": "customization"
+    },
+    {
+      "title": "ベンダー依存なしでデータを保持",
+      "description": "ツールを変えてもIssueデータはオープンフォーマットで持ち続けられます。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "LinearのOSS代替は何がありますか？",
+      "answer": "Plane が最もLinearに近いUIと体験を提供しています。GitLab Issuesも開発者向けには強力な選択肢です。"
+    },
+    {
+      "question": "PlaneはLinearのキーボードショートカットに対応していますか？",
+      "answer": "PlaneはLinear風のUIを参考にしており、主要なキーボード操作をサポートしています。完全な互換性はありませんが、開発者には使いやすい設計です。"
+    },
+    {
+      "question": "サイクル（スプリント）管理はできますか？",
+      "answer": "PlaneはCyclesという機能でスプリント管理をサポートしています。開始日・終了日・バーンダウンも確認できます。"
+    },
+    {
+      "question": "セルフホストの難易度はどのくらいですか？",
+      "answer": "PlaneはDocker Composeで数分で起動でき、セルフホストの難易度は低〜中程度です。GitLab CEも同様にDockerで動作します。"
+    }
+  ],
+  "relatedSlugs": ["jira", "asana", "trello", "github-copilot"]
+}

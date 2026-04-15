@@ -1,0 +1,49 @@
+{
+  "slug": "jira",
+  "competitor": "Jira",
+  "competitorUrl": "https://www.atlassian.com/software/jira",
+  "metaTitle": "Jiraの代替OSSツール一覧 | 無料プロジェクト管理 | OSSアルタナティブ",
+  "metaDescription": "Jiraの代わりに使える無料・オープンソースのプロジェクト管理ツールを比較。Plane・GitLab Issues・Taiga などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Jiraの複雑な設定やシート課金に疲れていませんか？ここではJiraの代わりに使えるオープンソースのプロジェクト管理・課題追跡ツールをGitHubスター数順で比較できます。セルフホストでデータを自社管理しながら、スクラム・カンバン・バックログを利用できます。",
+  "whySwitchReasons": [
+    {
+      "title": "複雑な設定・UIから解放される",
+      "description": "Jiraは高機能な反面、設定が複雑でオンボーディングに時間がかかります。OSS代替は軽量でモダンなUIが多く、すぐ使い始めやすいです。",
+      "icon": "customization"
+    },
+    {
+      "title": "シート課金をゼロに",
+      "description": "JiraはAtlassian全体のライセンス費用が積み上がりやすい構造です。OSSなら人数に関係なく無料で利用できます。",
+      "icon": "cost"
+    },
+    {
+      "title": "プロジェクトデータを自社管理",
+      "description": "開発の課題・スプリント・バックログをAtlassianのクラウドではなく自社サーバーに保存できます。",
+      "icon": "data"
+    },
+    {
+      "title": "GitLabやGitHubと緊密に連携",
+      "description": "GitLabはIssues・Board・Milestoneがビルトイン。リポジトリと課題追跡を一元管理できます。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "JiraのオープンソースOSSの代替は何がありますか？",
+      "answer": "Plane（スクラム・カンバン対応でJira最短代替）、GitLab Issues（開発者向け）、Taiga、OpenProjectなどが有力です。用途に応じて選びましょう。"
+    },
+    {
+      "question": "スクラム・スプリント管理に対応していますか？",
+      "answer": "PlaneとOpenProjectはスプリント計画・バーンダウンチャート・バックログ管理に対応しています。GitLab Issuesはイテレーション管理が可能です。"
+    },
+    {
+      "question": "Jiraからの移行でデータを持ち出せますか？",
+      "answer": "JiraはCSV/JSONエクスポートをサポートしています。PlaneはJiraのCSVインポートに対応しており、比較的スムーズに移行できます。"
+    },
+    {
+      "question": "非エンジニアのメンバーも使いやすいですか？",
+      "answer": "PlaneはJiraよりも直感的なUIを持ち、非エンジニアでも使いやすい設計です。LinearライクなモダンUIを採用しています。"
+    }
+  ],
+  "relatedSlugs": ["linear", "asana", "confluence", "trello"]
+}
