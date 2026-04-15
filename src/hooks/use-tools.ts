@@ -25,7 +25,6 @@ export interface Tool {
   last_commit: string | null;
   language: string | null;
   github_stars_updated_at: string | null;
-  affiliate_url: string | null;
 }
 
 export type SortOption = "stars" | "recent" | "name" | "newest";

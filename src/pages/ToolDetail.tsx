@@ -34,6 +34,7 @@ import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
+import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
 
@@ -212,6 +213,12 @@ export default function ToolDetailPage() {
     },
     enabled: !!tool,
   });
+
+  const { data: partnerCards = [] } = usePartnerCards(
+    tool?.id ?? 0,
+    tool?.name ?? null,
+  );
+  const primaryCard = partnerCards[0] ?? null;
 
   const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
@@ -427,14 +434,14 @@ export default function ToolDetailPage() {
               <div className="card-unified p-5 space-y-3">
                 {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
-                  {/* Affiliate / managed version takes top slot when available */}
-                  {tool.affiliate_url ? (
+                  {/* Partner / managed card takes top slot when available */}
+                  {primaryCard?.url ? (
                     <>
                       <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
-                        <a href={tool.affiliate_url} target="_blank" rel="noopener noreferrer sponsored"
-                          onClick={() => track("affiliate_click", { tool: tool.name, url: tool.affiliate_url })}
+                        <a href={primaryCard.url} target="_blank" rel="noopener noreferrer sponsored"
+                          onClick={() => track("partner_card_click", { tool: tool.name, partner: primaryCard.partner_name, url: primaryCard.url })}
                         >
-                          マネージド版を試す <ExternalLink className="h-4 w-4" />
+                          {primaryCard.label} <ExternalLink className="h-4 w-4" />
                         </a>
                       </Button>
                       {tool.url && (
@@ -448,17 +455,15 @@ export default function ToolDetailPage() {
                       )}
                     </>
                   ) : (
-                    <>
-                      {tool.url && (
-                        <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
-                          <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                            onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
-                          >
-                            公式サイトへ <ExternalLink className="h-4 w-4" />
-                          </a>
-                        </Button>
-                      )}
-                    </>
+                    tool.url && (
+                      <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                          onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                        >
+                          公式サイトへ <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )
                   )}
                   {tool.github_url && (
                     <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
@@ -860,14 +865,14 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {/* ── 13. Affiliate / Managed CTA (when affiliate_url is set) ── */}
-        {tool.affiliate_url && (
+        {/* ── 13. Partner / Affiliate CTA (when partner_cards exist) ── */}
+        {partnerCards.length > 0 && (
           <>
             <div className="border-t border-border/60" />
             <div className="py-6">
               <AffiliateCTA
                 toolName={tool.name || "このツール"}
-                affiliateUrl={tool.affiliate_url}
+                cards={partnerCards}
               />
             </div>
           </>
