@@ -9,8 +9,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
-import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
 import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
+import { SponsorBannerSlot } from "@/components/ads/SponsorBannerSlot";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
@@ -269,6 +269,9 @@ export default function AlternativesPage() {
           <>
             {/* ── Workspace: Compare all entry point ── */}
             <AlternativesCompareEntrypoint competitor={competitor} tools={tools} />
+
+            {/* ── Sponsor banner ── */}
+            <SponsorBannerSlot slotId="alternatives-top" />
 
             {/* ── 2. Top Picks (featured cards) ── */}
             {topPicks.length > 0 && (

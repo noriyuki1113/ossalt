@@ -21,9 +21,10 @@ import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
 import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
-import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
 import { PartnerCTA } from "@/components/ads/PartnerCTA";
+import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
+import { SponsorBannerSlot } from "@/components/ads/SponsorBannerSlot";
 import { EditorialInsightCard } from "@/components/EditorialInsightCard";
 import { RelatedGuideCard } from "@/components/RelatedGuideCard";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
@@ -426,14 +427,38 @@ export default function ToolDetailPage() {
               <div className="card-unified p-5 space-y-3">
                 {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
-                  {tool.url && (
-                    <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
-                      <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                        onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
-                      >
-                        公式サイトへ <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </Button>
+                  {/* Affiliate / managed version takes top slot when available */}
+                  {tool.affiliate_url ? (
+                    <>
+                      <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                        <a href={tool.affiliate_url} target="_blank" rel="noopener noreferrer sponsored"
+                          onClick={() => track("affiliate_click", { tool: tool.name, url: tool.affiliate_url })}
+                        >
+                          マネージド版を試す <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                      {tool.url && (
+                        <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
+                          <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                            onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                          >
+                            公式サイトへ <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        </Button>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {tool.url && (
+                        <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                          <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                            onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                          >
+                            公式サイトへ <ExternalLink className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      )}
+                    </>
                   )}
                   {tool.github_url && (
                     <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
@@ -747,11 +772,9 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── Ad slot before related tools ── */}
+        {/* ── Sponsor banner before related tools ── */}
         <div className="border-t border-border/60" />
-        <div className="py-6">
-          <AdSlot slotId="detail-before-related" format="horizontal" />
-        </div>
+        <SponsorBannerSlot slotId="detail-before-related" />
 
         {/* ── 9. Similar projects ── */}
         {relatedTools && relatedTools.length > 0 && (
@@ -837,26 +860,36 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {/* ── 13. Community Participation ── */}
+        {/* ── 13. Affiliate / Managed CTA (when affiliate_url is set) ── */}
+        {tool.affiliate_url && (
+          <>
+            <div className="border-t border-border/60" />
+            <div className="py-6">
+              <AffiliateCTA
+                toolName={tool.name || "このツール"}
+                affiliateUrl={tool.affiliate_url}
+              />
+            </div>
+          </>
+        )}
+
+        {/* ── 14. Partner + Consultation CTAs ── */}
+        <div className="border-t border-border/60" />
+        <section className="py-6 space-y-3">
+          <PartnerCTA toolName={tool.name || undefined} />
+          <ConsultationCTA toolName={tool.name || undefined} />
+        </section>
+
+        {/* ── 15. Community Participation ── */}
         <div className="border-t border-border/60" />
         <section className="py-8">
           <CommunityParticipationCTA toolName={tool.name || undefined} context="detail" />
         </section>
 
-        {/* ── 14. Newsletter ── */}
+        {/* ── 16. Newsletter ── */}
         <section className="pb-8">
           <NewsletterSignup />
         </section>
-
-        {/* ── Partner CTA ── */}
-        <div className="pb-4">
-          <PartnerCTA toolName={tool.name || undefined} />
-        </div>
-
-        {/* ── Consultation CTA ── */}
-        <div className="pb-4">
-          <ConsultationCTA toolName={tool.name || undefined} />
-        </div>
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
