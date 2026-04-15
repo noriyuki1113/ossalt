@@ -1,26 +1,25 @@
 import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowUpDown, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
-import { PopularAlternatives } from "@/components/home/PopularAlternatives";
+import { PopularAlternativesSection } from "@/components/home/PopularAlternativesSection";
+import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
+import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
 import { StatsBar } from "@/components/StatsBar";
-import { AdSlot } from "@/components/ads/AdSlot";
 import { CategoryCompareEntrypoint } from "@/components/workspace/CategoryCompareEntrypoint";
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
+import { FilterToolbar } from "@/components/discovery/FilterToolbar";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
 // Lazy load below-fold sections
-const UseCaseSection = lazy(() => import("@/components/home/UseCaseSection").then(m => ({ default: m.UseCaseSection })));
 const WhyOSSSection = lazy(() => import("@/components/home/WhyOSSSection").then(m => ({ default: m.WhyOSSSection })));
-const FeaturedTools = lazy(() => import("@/components/home/FeaturedTools").then(m => ({ default: m.FeaturedTools })));
+const FeaturedToolsRailLazy = lazy(() => import("@/components/home/FeaturedToolsRail").then(m => ({ default: m.FeaturedToolsRail })));
 const NewToolsSection = lazy(() => import("@/components/home/NewToolsSection").then(m => ({ default: m.NewToolsSection })));
-const TrustSection = lazy(() => import("@/components/home/TrustSection").then(m => ({ default: m.TrustSection })));
 const FAQSection = lazy(() => import("@/components/home/FAQSection").then(m => ({ default: m.FAQSection })));
 const BottomCTA = lazy(() => import("@/components/home/BottomCTA").then(m => ({ default: m.BottomCTA })));
 
@@ -116,12 +115,14 @@ export default function IndexPage() {
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [sort, setSort] = useState<SortOption>("stars");
+  const [license, setLicense] = useState("");
+  const [hasGithub, setHasGithub] = useState(false);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
   const prevSearchRef = useRef(search);
 
-  const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて";
+  const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて" || !!license || hasGithub;
 
   const categorySeo = selectedCategory !== "すべて" ? CATEGORY_SEO[selectedCategory] : null;
   const seoTitle = categorySeo
@@ -170,6 +171,8 @@ export default function IndexPage() {
     search: debouncedSearch,
     page,
     sort,
+    license: license || undefined,
+    hasGithub: hasGithub || undefined,
   });
 
   useEffect(() => {
@@ -213,8 +216,20 @@ export default function IndexPage() {
     }
   }, [navigate]);
 
-  const handleSortChange = useCallback((value: string) => {
-    setSort(value as SortOption);
+  const handleSortChange = useCallback((value: SortOption) => {
+    setSort(value);
+    setPage(0);
+    setAllTools([]);
+  }, []);
+
+  const handleLicenseChange = useCallback((value: string) => {
+    setLicense(value);
+    setPage(0);
+    setAllTools([]);
+  }, []);
+
+  const handleHasGithubChange = useCallback((value: boolean) => {
+    setHasGithub(value);
     setPage(0);
     setAllTools([]);
   }, []);
@@ -256,31 +271,28 @@ export default function IndexPage() {
           )}
 
           {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <ToolCardSkeleton key={i} />
-              ))}
-            </div>
+            <>
+              <FilterToolbar
+                sort={sort} onSortChange={handleSortChange}
+                license={license} onLicenseChange={handleLicenseChange}
+                hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                totalCount={0}
+              />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <ToolCardSkeleton key={i} />
+                ))}
+              </div>
+            </>
           ) : allTools.length > 0 ? (
             <>
-              <div className="flex items-center justify-between mb-6">
-                <p className="text-sm text-muted-foreground">
-                  {data?.totalCount ?? 0} 件のツール
-                </p>
-                <Select value={sort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-auto gap-1.5 h-9 text-xs rounded-lg border-border">
-                    <ArrowUpDown className="h-3.5 w-3.5" />
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="stars">⭐ スター数順</SelectItem>
-                    <SelectItem value="recent">🕐 最近更新順</SelectItem>
-                    <SelectItem value="name">🔤 A-Z順</SelectItem>
-                    <SelectItem value="newest">🆕 新着順</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <FilterToolbar
+                sort={sort} onSortChange={handleSortChange}
+                license={license} onLicenseChange={handleLicenseChange}
+                hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                totalCount={data?.totalCount ?? allTools.length}
+              />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {allTools.map((tool, i) => (
                   <ToolCard key={tool.id} tool={tool} index={i} />
                 ))}
@@ -339,21 +351,20 @@ export default function IndexPage() {
       ) : (
         <>
           <StatsBar />
-          <PopularAlternatives />
+          {/* 1. 人気SaaS代替チップ（最重要導線） */}
+          <PopularAlternativesSection />
+          {/* 2. カテゴリグリッド */}
+          <PopularCategoriesGrid />
+          {/* 3. 注目ツール横スクロールレール */}
           <Suspense fallback={<SectionFallback />}>
-            <UseCaseSection />
+            <FeaturedToolsRailLazy />
           </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <WhyOSSSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <FeaturedTools />
-          </Suspense>
+          {/* 4. 既存セクション群 */}
           <Suspense fallback={<SectionFallback />}>
             <NewToolsSection />
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
-            <TrustSection />
+            <WhyOSSSection />
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <FAQSection />

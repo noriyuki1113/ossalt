@@ -14,7 +14,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ToolIcon } from "@/components/ToolIcon";
-import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
@@ -32,6 +31,8 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
+import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
+import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
 
 /* ── helpers ── */
 
@@ -155,37 +156,6 @@ function getDifficultyInfo(tool: Tool) {
   }
 
   return { setupLevel, setupLabel, setupDesc, selfHostLevel, selfHostLabel, selfHostDesc };
-}
-
-/* ── Related card (reuses shared components) ── */
-
-function RelatedToolCard({ tool }: { tool: Tool }) {
-  const competitor = tool.primary_competitor || tool.primary_competitor_ja;
-  return (
-    <Link
-      to={`/tools/${tool.id}`}
-      className="group card-unified-hover p-4 flex flex-col"
-    >
-      <div className="flex items-center gap-2.5 mb-2 min-w-0">
-        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} />
-        <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate flex-1 min-w-0">
-          {tool.name}
-        </h4>
-        <StarCount count={tool.stars_num} size="sm" />
-      </div>
-      {competitor && competitor !== "有料SaaS" && (
-        <div className="mb-1.5">
-          <AlternativeBadge competitor={competitor} size="sm" />
-        </div>
-      )}
-      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed flex-1">
-        {tool.description_ja || tool.description_en || ""}
-      </p>
-      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-3 group-hover:gap-1.5 transition-all">
-        詳細を見る <ArrowRight className="h-3 w-3" />
-      </span>
-    </Link>
-  );
 }
 
 /* ── Main ── */
@@ -454,32 +424,32 @@ export default function ToolDetailPage() {
             {/* Right: CTAs */}
             <div className="lg:w-[260px] shrink-0">
               <div className="card-unified p-5 space-y-3">
-                {/* Workspace actions — primary placement */}
+                {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
-                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
-                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                  {tool.url && (
+                    <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                      <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                      >
+                        公式サイトへ <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  )}
+                  {tool.github_url && (
+                    <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
+                      <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
+                      >
+                        <Github className="h-4 w-4" /> GitHubを見る
+                      </a>
+                    </Button>
+                  )}
                 </div>
 
+                {/* Workspace actions */}
                 <div className="border-t border-border/60 pt-3 space-y-2">
-                {/* External links */}
-                {tool.url && (
-                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                      onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
-                    >
-                      公式サイトを見る <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  </Button>
-                )}
-                {tool.github_url && (
-                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
-                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
-                      onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
-                    >
-                      <Github className="h-3.5 w-3.5" /> GitHubリポジトリ
-                    </a>
-                  </Button>
-                )}
+                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
                 </div>
 
                 {/* Alternative link */}
@@ -630,6 +600,11 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        <div className="border-t border-border/60" />
+
+        {/* ── 6b. Key Features ── */}
+        <KeyFeaturesList tool={tool} />
+
         {/* ── 6. Comparison table ── */}
         {hasCompetitor && (
           <>
@@ -778,20 +753,17 @@ export default function ToolDetailPage() {
           <AdSlot slotId="detail-before-related" format="horizontal" />
         </div>
 
-        {/* ── 9. Related tools ── */}
+        {/* ── 9. Similar projects ── */}
         {relatedTools && relatedTools.length > 0 && (
           <>
             <div className="border-t border-border/60" />
-            <section className="py-10">
-              <h2 className="text-lg font-bold text-foreground mb-5">
-                {hasCompetitor ? `${competitorDisplay}の他のOSS代替` : "関連するOSSツール"}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {relatedTools.slice(0, 6).map((t) => (
-                  <RelatedToolCard key={t.id} tool={t} />
-                ))}
-              </div>
-            </section>
+            <SimilarProjectsSection
+              tools={relatedTools}
+              currentTool={tool}
+              competitorDisplay={competitorDisplay}
+              hasCompetitor={!!hasCompetitor}
+              altSlug={altSlug}
+            />
           </>
         )}
 
