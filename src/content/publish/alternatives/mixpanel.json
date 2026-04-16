@@ -1,0 +1,49 @@
+{
+  "slug": "mixpanel",
+  "competitor": "Mixpanel",
+  "competitorUrl": "https://mixpanel.com",
+  "metaTitle": "Mixpanelの代替OSSツール一覧 | 無料で使えるプロダクト分析ツール比較",
+  "metaDescription": "Mixpanelの代わりに使える無料オープンソースのプロダクト分析ツールを比較。PostHog・Umamiなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Mixpanelのイベント数制限や月額費用に悩んでいませんか？ここではMixpanelの代わりに使えるオープンソースのプロダクト分析・ユーザー行動追跡ツールを比較します。ファネル分析・コホート分析・セッション録画をセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Mixpanelは月100万イベントを超えると課金が急増。PostHogのセルフホスト版なら無制限のイベントをサーバー代のみで処理できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ユーザー行動データの自社管理",
+      "description": "ファネル・コホート・セッションデータをMixpanelのサーバーに送らず、GDPRや個人情報保護法に準拠した形で自社管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "機能フラグとの統合",
+      "description": "PostHogはA/Bテスト・機能フラグ・セッション録画を分析と一体で提供。Mixpanel+LaunchDarklyの機能を1ツールで実現できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "プライバシー対応",
+      "description": "セルフホストでデータを自社管理することで、ユーザーデータの第三者提供なしにCookielessトラッキングを実装できる。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "MixpanelのOSS代替はありますか？",
+      "answer": "PostHogが最も機能が充実したMixpanel代替です。ファネル・コホート・セッション録画・機能フラグを統合した包括的なプロダクト分析プラットフォームです。"
+    },
+    {
+      "question": "PostHogはMixpanelのファネル分析に対応していますか？",
+      "answer": "はい。PostHogはファネル・コホート・リテンション・パスなど、Mixpanelの主要な分析機能をすべてカバーしています。"
+    },
+    {
+      "question": "セルフホストすると処理速度は遅くなりますか？",
+      "answer": "適切なサーバースペック（推奨4コア以上）を用意すれば十分な速度で動作します。ClickHouseをストレージに使うため大量データでも高速なクエリが可能です。"
+    },
+    {
+      "question": "Mixpanelからデータを移行できますか？",
+      "answer": "MixpanelはJSONエクスポートに対応しています。PostHogはMixpanelからのデータインポート機能を持っており、過去の行動データも移行可能です。"
+    }
+  ],
+  "relatedSlugs": ["google-analytics", "datadog", "tableau"]
+}

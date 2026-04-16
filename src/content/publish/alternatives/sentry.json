@@ -1,0 +1,49 @@
+{
+  "slug": "sentry",
+  "competitor": "Sentry",
+  "competitorUrl": "https://sentry.io",
+  "metaTitle": "Sentryの代替OSSツール一覧 | 無料で使えるエラー監視ツール比較",
+  "metaDescription": "Sentryの代わりに使える無料オープンソースのエラー監視ツールを比較。GlitchTip・Highlight.ioなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Sentryのイベント数課金や月額費用に悩んでいませんか？ここではSentryの代わりに使えるオープンソースのエラー監視・パフォーマンス追跡ツールを比較します。アプリのクラッシュ・例外・パフォーマンス問題をセルフホストで無制限に記録できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "イベント数無制限",
+      "description": "Sentryの無料プランは月5万イベントまで。トラフィックが増えると課金が急増。OSSならイベント数の制限なし。",
+      "icon": "cost"
+    },
+    {
+      "title": "エラーデータの自社管理",
+      "description": "スタックトレース・ユーザー情報・パフォーマンスデータをSentryのサーバーに送らず、自社DBで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "SentryのSDK互換性",
+      "description": "GlitchTipはSentryのSDKと完全互換。既存コードのDSNを変更するだけで移行できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Sentryの有料プランは月額26ドル〜。規模が大きくなると月数万円以上に。OSSならサーバー代のみで同等機能を実現。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "SentryのOSS代替はありますか？",
+      "answer": "GlitchTipが最もSentryに近いOSS代替です。SentryのSDKをそのまま使えるAPIを提供しており、既存プロジェクトへの移行がほぼコードレスで行えます。"
+    },
+    {
+      "question": "GlitchTipはSentryのすべての機能を持っていますか？",
+      "answer": "基本的なエラー監視・グループ化・アラート機能は対応しています。パフォーマンスモニタリングやセッションリプレイなどの高度な機能はSentryの方が充実しています。"
+    },
+    {
+      "question": "既存のSentry SDKをそのまま使えますか？",
+      "answer": "はい。GlitchTipはSentry互換のAPIを実装しているため、SDKのDSN（接続文字列）のホスト部分を変更するだけで移行できます。"
+    },
+    {
+      "question": "JavaScript・Python・Rubyなど各言語に対応していますか？",
+      "answer": "SentryのSDKが対応している言語・フレームワークはすべてGlitchTipでも利用できます。公式SDKを変更なしで使用できます。"
+    }
+  ],
+  "relatedSlugs": ["datadog", "postman", "github-copilot"]
+}

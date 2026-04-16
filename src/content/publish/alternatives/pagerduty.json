@@ -1,0 +1,49 @@
+{
+  "slug": "pagerduty",
+  "competitor": "PagerDuty",
+  "competitorUrl": "https://www.pagerduty.com",
+  "metaTitle": "PagerDutyの代替OSSツール一覧 | 無料で使えるインシデント管理ツール比較",
+  "metaDescription": "PagerDutyの代わりに使える無料オープンソースのインシデント管理ツールを比較。Grafana OnCall・Keepなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "PagerDutyのオンコール管理費用やアラート件数の課金に悩んでいませんか？ここではPagerDutyの代わりに使えるオープンソースのインシデント管理・オンコールスケジューリングツールを比較します。アラート集約・エスカレーション・オンコールローテーションをセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "PagerDutyは月額21ドル〜/人。インシデントが多い運用チームでは費用が膨大に。OSSならサーバー代のみで構築できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "アラートデータの自社管理",
+      "description": "インシデント記録・オンコール履歴・ポストモーテムデータをPagerDutyのクラウドに預けず管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "Grafanaエコシステムとの統合",
+      "description": "Grafana OnCallはGrafana・Prometheusと直接統合。既存の監視スタックとシームレスに連携できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "アラート件数無制限",
+      "description": "PagerDutyは通知・インシデント件数に応じた課金あり。OSSならアラート件数の制限なしで運用できる。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "PagerDutyのOSS代替はありますか？",
+      "answer": "Grafana OnCallとKeepが代表的な代替です。Grafana OnCallはGrafanaと統合したオンコール管理、KeepはAIを活用したアラート管理・相関分析に対応しています。"
+    },
+    {
+      "question": "Grafana OnCallはオンコールローテーションに対応していますか？",
+      "answer": "はい。Grafana OnCallはシフトスケジュール・エスカレーションポリシー・電話/SMS/Slack通知などPagerDutyの主要機能をカバーしています。"
+    },
+    {
+      "question": "Prometheus・Alertmanagerとの連携はできますか？",
+      "answer": "はい。Grafana OnCallはPrometheus Alertmanager・Zabbix・Nagiosなど主要な監視ツールからのWebhookを受け取れます。"
+    },
+    {
+      "question": "モバイルアプリはありますか？",
+      "answer": "Grafana OnCallはiOS・Androidのモバイルアプリを提供しており、オンコール中のプッシュ通知を受け取れます。"
+    }
+  ],
+  "relatedSlugs": ["datadog", "sentry", "slack"]
+}

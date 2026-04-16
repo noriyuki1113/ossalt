@@ -1,0 +1,49 @@
+{
+  "slug": "confluence",
+  "competitor": "Confluence",
+  "competitorUrl": "https://www.atlassian.com/software/confluence",
+  "metaTitle": "Confluenceの代替OSSツール一覧 | 無料で使えるWiki・ドキュメント管理ツール比較",
+  "metaDescription": "Confluenceの代わりに使える無料オープンソースのWikiツールを比較。Outline・BookStackなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "AtlassianのConfluenceのライセンス費用やJiraとのセット費用に悩んでいませんか？ここではConfluenceの代わりに使えるオープンソースのWiki・ドキュメント管理ツールを比較します。チームのナレッジベースをセルフホストで無料で構築できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Confluenceは月額5.75ドル〜/人。Jiraとのセットで費用が膨らみやすい。OSSならサーバー代のみでWikiを構築できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ドキュメントデータの自社管理",
+      "description": "社内ナレッジ・仕様書・手順書をAtlassianのクラウドに預けず、自社サーバーで完全管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "Atlassianエコシステムからの脱却",
+      "description": "Jira・Confluence・Trelloへの依存を減らし、独立したドキュメント管理基盤を持てる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "シンプルな編集体験",
+      "description": "OutlineやBookStackはConfluenceより直感的なエディタを提供。マークダウン対応でエンジニアにも使いやすい。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ConfluenceのOSS代替はありますか？",
+      "answer": "OutlineとBookStackが代表的な代替です。Outlineはモダンなノーション風UIでエンジニアチームに人気、BookStackは階層構造が明確で運用管理がしやすいです。"
+    },
+    {
+      "question": "OutlineとBookStackはどちらがいいですか？",
+      "answer": "開発チームのドキュメント管理にはOutline、全社向けのWiki運用にはBookStackがおすすめです。BookStackはGitBookに近い感覚で使えます。"
+    },
+    {
+      "question": "マークダウンで書けますか？",
+      "answer": "はい。Outlineはマークダウンをネイティブサポートし、Wiki.jsはマークダウン・WYSIWYG・AsciiDocなど複数の編集モードに対応しています。"
+    },
+    {
+      "question": "Confluenceのデータを移行できますか？",
+      "answer": "ConfluenceはHTMLやXMLエクスポートに対応しています。OutlineやBookStackへの移行ツールはコミュニティで提供されていますが、手動での整理が必要なケースもあります。"
+    }
+  ],
+  "relatedSlugs": ["notion", "contentful", "wordpress"]
+}

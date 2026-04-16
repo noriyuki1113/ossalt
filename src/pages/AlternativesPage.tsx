@@ -53,6 +53,16 @@ const SLUG_MAP: Record<string, string> = {
   bitly: "Bitly",
   canny: "Canny",
   zendesk: "Zendesk",
+  linear: "Linear",
+  asana: "Asana",
+  confluence: "Confluence",
+  sentry: "Sentry",
+  miro: "Miro",
+  mixpanel: "Mixpanel",
+  hubspot: "HubSpot",
+  clickup: "ClickUp",
+  pagerduty: "PagerDuty",
+  sendgrid: "SendGrid",
 };
 
 const COMPETITOR_TO_SLUG: Record<string, string> = {};
@@ -488,7 +498,6 @@ export default function AlternativesPage() {
             <div className="flex flex-wrap gap-2">
               {Object.entries(SLUG_MAP)
                 .filter(([s]) => s !== slug)
-                .slice(0, 15)
                 .map(([s, name]) => (
                   <Link
                     key={s}
