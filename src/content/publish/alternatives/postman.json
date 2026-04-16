@@ -1,0 +1,49 @@
+{
+  "slug": "postman",
+  "competitor": "Postman",
+  "competitorUrl": "https://www.postman.com",
+  "metaTitle": "Postmanの代替OSSツール一覧 | 無料で使えるAPIテストツール比較",
+  "metaDescription": "Postmanの代わりに使える無料オープンソースのAPIテストツールを比較。Hoppscotch・Insomnia・Bruno などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Postmanのクラウド必須化やチーム機能の有料化に悩んでいませんか？ここではPostmanの代わりに使えるオープンソースのAPIクライアント・テストツールを比較します。ローカルで完結できるもの、セルフホストできるものを含めて紹介します。",
+  "whySwitchReasons": [
+    {
+      "title": "ローカル完結",
+      "description": "PostmanはAPIコレクションのクラウド同期が必須化。BrunoはGitベースでローカルにデータを保存。",
+      "icon": "data"
+    },
+    {
+      "title": "APIデータのプライバシー",
+      "description": "機密性の高いAPIエンドポイントやトークンをPostmanのクラウドに送らず、ローカルで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "チーム機能が無料",
+      "description": "Postmanはチームコラボレーション機能が有料プランのみ。OSSなら全機能を無料で使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "Gitとの統合",
+      "description": "BrunoはAPIコレクションをGitで管理でき、コードと一緒にバージョン管理・レビューできる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "PostmanのOSS代替はありますか？",
+      "answer": "Bruno、Hoppscotch、Insomniaが代表的な代替です。BrunoはローカルファーストでGit管理できる点が人気です。"
+    },
+    {
+      "question": "BrunoとHoppscotchはどちらがいいですか？",
+      "answer": "ローカルでGit管理したいならBruno、ブラウザから使えるものやセルフホストしたいならHoppscotchがおすすめです。"
+    },
+    {
+      "question": "PostmanのコレクションをBrunoに移行できますか？",
+      "answer": "はい。BrunoはPostmanコレクションのインポートをサポートしています。"
+    },
+    {
+      "question": "GraphQLのテストはできますか？",
+      "answer": "Hoppscotch・Bruno・InsomniaはいずれもGraphQLに対応しており、クエリの実行・スキーマの閲覧が可能です。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "datadog", "retool"]
+}

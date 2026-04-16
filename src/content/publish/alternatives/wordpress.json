@@ -1,0 +1,49 @@
+{
+  "slug": "wordpress",
+  "competitor": "WordPress",
+  "competitorUrl": "https://wordpress.com",
+  "metaTitle": "WordPress代替のOSSツール一覧 | 無料で使えるCMS比較",
+  "metaDescription": "WordPressの代わりに使える無料オープンソースのCMSツールを比較。Ghost・Strapi・PayloadCMSなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "WordPressのプラグイン管理やセキュリティ対応に疲れていませんか？ここではWordPressの代わりに使えるモダンなオープンソースCMSを比較します。ヘッドレスCMSや軽量ブログエンジンなど、用途に合わせた代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "モダンな技術スタック",
+      "description": "WordPressはPHP/MySQLベースで古さを感じる場面も。GhostやPayloadはNode.jsベースのモダンな設計。",
+      "icon": "speed"
+    },
+    {
+      "title": "セキュリティリスクの低減",
+      "description": "WordPressはシェアが高い分攻撃対象になりやすい。プラグインの脆弱性も多い。代替CMSはリスクが低い。",
+      "icon": "data"
+    },
+    {
+      "title": "パフォーマンス向上",
+      "description": "Ghostなど軽量CMSはWordPressより表示速度が速く、SEO・ユーザー体験の向上につながる。",
+      "icon": "speed"
+    },
+    {
+      "title": "ヘッドレスCMSとして活用",
+      "description": "StrapiやPayloadはヘッドレスCMSとして任意のフロントエンドと組み合わせて使えるAPIファーストな設計。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "WordPressのOSS代替はありますか？",
+      "answer": "用途によって異なります。ブログならGhost、ヘッドレスCMSならStrapi・Payload、静的サイトならHugoやJekyllがおすすめです。"
+    },
+    {
+      "question": "GhostはWordPressより使いやすいですか？",
+      "answer": "Ghostはブログ・ニュースレターに特化しており、WordPressより設定がシンプルです。購読者管理機能も内蔵しています。"
+    },
+    {
+      "question": "WordPressのデータをGhostに移行できますか？",
+      "answer": "GhostはWordPressからのインポート機能を提供しています。記事・タグ・著者情報を移行できます。"
+    },
+    {
+      "question": "ヘッドレスCMSとは何ですか？",
+      "answer": "コンテンツ管理部分（バックエンド）とフロントエンドが分離したCMSです。APIでコンテンツを配信するため、Next.jsなど任意のフロントエンドと組み合わせられます。"
+    }
+  ],
+  "relatedSlugs": ["contentful", "webflow", "evernote"]
+}

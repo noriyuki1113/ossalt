@@ -1,0 +1,49 @@
+{
+  "slug": "figma",
+  "competitor": "Figma",
+  "competitorUrl": "https://figma.com",
+  "metaTitle": "Figmaの代替OSSツール一覧 | 無料で使えるUIデザインツール比較",
+  "metaDescription": "Figmaの代わりに使える無料オープンソースのUIデザインツールを比較。Penpotなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "FigmaのAdobe買収や価格改定に不安を感じていませんか？ここではFigmaの代わりに使えるオープンソースのUIデザイン・プロトタイピングツールを比較します。デザインデータを自社で管理しながら、チームで共同作業できる代替を探せます。",
+  "whySwitchReasons": [
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "FigmaはAdobe傘下となり価格・方針が変わるリスクがある。OSSなら特定企業の意思決定に左右されない。",
+      "icon": "lockin"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Figmaは1ユーザー月額約1,800円〜。デザイナーが多い組織ほど高額になる。OSSなら無制限に使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "デザインデータの管理",
+      "description": "クライアントや機密性の高いデザインをFigmaのサーバーに預けたくない場合、セルフホストで完全に管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "オフライン作業",
+      "description": "セルフホスト版はローカルネットワーク内で動作するため、インターネット接続なしでも使える環境を構築可能。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "FigmaのオープンソースのUI代替はありますか？",
+      "answer": "Penpotが最有力の代替です。ブラウザベースで動作し、Figmaに近い共同編集機能を持ちます。SVGベースのため標準準拠でデータ移行もしやすいです。"
+    },
+    {
+      "question": "PenpotはFigmaと互換性がありますか？",
+      "answer": "直接のインポート機能は限定的ですが、SVGやCSS形式でのエクスポート・インポートに対応しています。新規プロジェクトから始める場合は支障ありません。"
+    },
+    {
+      "question": "Penpotのセルフホストは難しいですか？",
+      "answer": "Docker Composeで数コマンドで起動できます。公式ドキュメントが整備されており、技術者なら30分程度で環境構築が可能です。"
+    },
+    {
+      "question": "デザイン初心者でも使えますか？",
+      "answer": "PenpotはFigmaライクなUIを採用しており、Figmaユーザーであれば比較的スムーズに移行できます。日本語UIも対応しています。"
+    }
+  ],
+  "relatedSlugs": ["notion", "retool", "webflow"]
+}

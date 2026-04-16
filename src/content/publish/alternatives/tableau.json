@@ -1,0 +1,49 @@
+{
+  "slug": "tableau",
+  "competitor": "Tableau",
+  "competitorUrl": "https://www.tableau.com",
+  "metaTitle": "Tableauの代替OSSツール一覧 | 無料で使えるBIツール・データ可視化ツール比較",
+  "metaDescription": "Tableauの代わりに使える無料オープンソースのBIツールを比較。Metabase・Apache Supersetなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Tableauの高額なライセンス費用やSalesforce傘下となってからの価格変更に悩んでいませんか？ここではTableauの代わりに使えるオープンソースのBIツール・データ可視化ツールを比較します。SQLが書けなくても使えるOSS代替も揃っています。",
+  "whySwitchReasons": [
+    {
+      "title": "大幅なコスト削減",
+      "description": "Tableauは1ユーザー年間数十万円。チーム全体に展開すると数百万円になる。OSSなら固定のサーバー代のみ。",
+      "icon": "cost"
+    },
+    {
+      "title": "ノーコードでSQL不要",
+      "description": "MetabaseはSQLを書かなくてもGUIでデータを探索・グラフ化できる。非エンジニアでも使いやすい。",
+      "icon": "speed"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "分析データをTableau（Salesforce）のサーバーに送らず、自社DB内で完結。機密情報の漏洩リスクを低減。",
+      "icon": "data"
+    },
+    {
+      "title": "Salesforce依存の回避",
+      "description": "TableauがSalesforceに買収されて以降、価格・機能の変更リスクが高まっている。OSSで回避できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "TableauのOSS代替はありますか？",
+      "answer": "MetabaseとApache Supersetが最も人気のある代替です。Metabaseはノーコードで使いやすく、SupersetはSQLベースで高度な分析が可能です。"
+    },
+    {
+      "question": "MetabaseとApache Supersetはどちらがいいですか？",
+      "answer": "非技術者も使う環境ならMetabase、SQLを使いこなせるデータアナリスト向けならSupersetがおすすめです。"
+    },
+    {
+      "question": "どんなDBに接続できますか？",
+      "answer": "Metabase・SupersetともにMySQL・PostgreSQL・BigQuery・Redshift・Snowflakeなど主要なDBに接続できます。"
+    },
+    {
+      "question": "ダッシュボードを他のメンバーと共有できますか？",
+      "answer": "はい。MetabaseもSupersetも権限管理機能を持ち、ダッシュボードを特定のチームや全社に共有できます。"
+    }
+  ],
+  "relatedSlugs": ["google-analytics", "datadog", "retool"]
+}

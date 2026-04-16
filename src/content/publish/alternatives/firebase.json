@@ -1,0 +1,49 @@
+{
+  "slug": "firebase",
+  "competitor": "Firebase",
+  "competitorUrl": "https://firebase.google.com",
+  "metaTitle": "Firebaseの代替OSSツール一覧 | 無料で使えるBaaS比較",
+  "metaDescription": "Firebaseの代わりに使える無料オープンソースのBaaS・バックエンドツールを比較。Supabase・AppWriteなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Firebaseの従量課金やGoogle依存に不安を感じていませんか？ここではFirebaseの代わりに使えるオープンソースのBaaS（Backend as a Service）をGitHubスター数順で比較します。データベース・認証・ストレージをまとめて提供するOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "予測可能なコスト",
+      "description": "Firebaseは使用量によって費用が急増するリスクがある。セルフホストなら固定コストで運用でき、予算管理が容易。",
+      "icon": "cost"
+    },
+    {
+      "title": "SQLデータベース対応",
+      "description": "FirebaseはNoSQL専用だが、SupabaseはPostgreSQLベースでSQLクエリが使える。複雑なデータ構造に対応。",
+      "icon": "data"
+    },
+    {
+      "title": "Google依存からの脱却",
+      "description": "Googleのサービス廃止・変更リスクを回避。OSSなら自分たちのペースで継続的に運用できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "完全なデータ管理",
+      "description": "ユーザーデータをGoogleに預けず、自社インフラで管理。GDPRやプライバシー要件への対応が容易。",
+      "icon": "data"
+    }
+  ],
+  "faq": [
+    {
+      "question": "FirebaseのOSS代替はありますか？",
+      "answer": "Supabaseが最も人気のある代替です。PostgreSQL・認証・リアルタイム・ストレージ・Edge Functionsを提供し、Firebaseとほぼ同等の機能をセルフホストで使えます。"
+    },
+    {
+      "question": "SupabaseはFirebaseと互換性がありますか？",
+      "answer": "APIの互換性はありませんが、機能的には代替可能です。Firebaseからの移行ガイドも公式で提供されています。"
+    },
+    {
+      "question": "AppWriteとSupabaseはどちらがいいですか？",
+      "answer": "Supabaseはより多機能で開発者に人気。AppWriteはDockerでのセルフホストが容易でモバイル開発にも向いています。"
+    },
+    {
+      "question": "リアルタイム機能はOSS代替でも使えますか？",
+      "answer": "はい。SupabaseはWebSocketベースのリアルタイムサブスクリプション機能を提供しており、FirebaseのリアルタイムDBに相当する機能があります。"
+    }
+  ],
+  "relatedSlugs": ["auth0", "datadog", "stripe-billing"]
+}

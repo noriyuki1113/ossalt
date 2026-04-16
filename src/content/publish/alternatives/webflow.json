@@ -1,0 +1,49 @@
+{
+  "slug": "webflow",
+  "competitor": "Webflow",
+  "competitorUrl": "https://webflow.com",
+  "metaTitle": "Webflowの代替OSSツール一覧 | 無料で使えるノーコードWeb構築ツール比較",
+  "metaDescription": "Webflowの代わりに使える無料オープンソースのWeb構築ツールを比較。Framer・Builder.ioなどの代替やNext.js・Astroなどのモダンフレームワークを紹介。",
+  "heroDescription": "Webflowのホスティング費用やCMS制限に悩んでいませんか？ここではWebflowの代わりに使えるノーコードビルダーやモダンなWebフレームワークを比較します。より自由度の高い、コスト効率の良い代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "ホスティングの自由",
+      "description": "WebflowはWebflowホスティングが必須。OSSフレームワークならVercel・Netlify・自社サーバーなど自由に選べる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "CMSアイテム数無制限",
+      "description": "Webflowの無料プランはCMSアイテム50件まで。OSSなら記事・商品数に制限なし。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "WebflowのCMSプランは月額約2,000円〜。Next.js + Vercelなら同等のサイトを無料〜低コストで構築・運用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "開発者による拡張",
+      "description": "Webflowの制約を超えた高度な機能実装が難しい。OSSフレームワークならエンジニアが自由にカスタマイズできる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "WebflowのOSS代替はありますか？",
+      "answer": "直接のOSS代替は少ないですが、Next.js・Astro・SvelteKitなどのフレームワークとHeadless CMSを組み合わせることでWebflowと同等のサイトを構築できます。"
+    },
+    {
+      "question": "ノーコードでWebflowの代替はありますか？",
+      "answer": "OSSのビジュアルエディタは発展途上ですが、Builder.ioやFramerがWebflowに近い体験を提供します。完全なOSS代替としてはPlasticityなどが開発中です。"
+    },
+    {
+      "question": "Webflowで作ったサイトをOSSに移行できますか？",
+      "answer": "WebflowはHTMLとCSSでのエクスポートが可能です。CMSコンテンツはCSV経由で移行できます。"
+    },
+    {
+      "question": "技術者でなくても代替ツールを使えますか？",
+      "answer": "Next.jsなどのフレームワークはある程度のコーディング知識が必要です。完全ノーコードにこだわる場合はFramerやBuilder.ioが現実的な代替です。"
+    }
+  ],
+  "relatedSlugs": ["wordpress", "contentful", "shopify"]
+}

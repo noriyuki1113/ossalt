@@ -1,0 +1,49 @@
+{
+  "slug": "trello",
+  "competitor": "Trello",
+  "competitorUrl": "https://trello.com",
+  "metaTitle": "Trelloの代替OSSツール一覧 | 無料で使えるカンバンボード比較",
+  "metaDescription": "Trelloの代わりに使える無料オープンソースのカンバンボードツールを比較。Wekan・Planka などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "TrelloのAtlassian移行による機能制限や価格変更に不安を感じていませんか？ここではTrelloの代わりに使えるオープンソースのカンバンボードツールを比較します。シンプルで使いやすく、ボード数・カード数無制限で使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "ボード・カード数無制限",
+      "description": "Trelloの無料プランはボード数に制限あり。OSS代替ならプロジェクト数・カード数ともに無制限。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Trelloの有料プランは1ユーザー月額約600円〜。チームが増えるほど高額になる。OSSなら無料。",
+      "icon": "cost"
+    },
+    {
+      "title": "シンプルなカンバン体験",
+      "description": "Jiraほど複雑でなく、Trelloライクなシンプルなカンバンをそのままセルフホストで実現できる。",
+      "icon": "speed"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "プロジェクト情報をAtlassianのサーバーに預けず、自社環境で管理。情報漏洩リスクを低減。",
+      "icon": "data"
+    }
+  ],
+  "faq": [
+    {
+      "question": "TrelloのOSS代替はありますか？",
+      "answer": "WekanとPlankaが代表的なTrello代替OSSです。どちらもカンバンボードのUIを持ち、セルフホストで動作します。"
+    },
+    {
+      "question": "WekanとPlankaはどちらがいいですか？",
+      "answer": "Wekanは機能が豊富でエンタープライズ向け、PlankaはシンプルなUIで個人・小チーム向けです。まずPlankaを試してみることをおすすめします。"
+    },
+    {
+      "question": "Trelloのデータを移行できますか？",
+      "answer": "TrelloはJSONとCSV形式でデータをエクスポートできます。Wekanはこのエクスポートデータのインポートに対応しています。"
+    },
+    {
+      "question": "モバイルアプリはありますか？",
+      "answer": "Wekanにはモバイル対応のWebアプリがあります。ネイティブアプリはありませんが、スマートフォンブラウザから使えます。"
+    }
+  ],
+  "relatedSlugs": ["jira", "notion", "asana"]
+}

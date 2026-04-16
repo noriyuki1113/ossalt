@@ -1,0 +1,49 @@
+{
+  "slug": "intercom",
+  "competitor": "Intercom",
+  "competitorUrl": "https://www.intercom.com",
+  "metaTitle": "Intercomの代替OSSツール一覧 | 無料で使えるカスタマーメッセージングツール比較",
+  "metaDescription": "Intercomの代わりに使える無料オープンソースのカスタマーメッセージングツールを比較。Chatwoot・Papercupsなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Intercomの高額な月額費用に悩んでいませんか？ここではIntercomの代わりに使えるオープンソースのカスタマーメッセージング・チャットツールを比較します。ライブチャット・メール・ヘルプセンターをまとめて管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Intercomは最低でも月額数万円〜。スタートアップには高負担。OSSならサーバー代のみで同等機能を実現。",
+      "icon": "cost"
+    },
+    {
+      "title": "顧客データの自社管理",
+      "description": "会話データや顧客情報をIntercomに預けず、自社環境で管理。プライバシーポリシー対応が容易になる。",
+      "icon": "data"
+    },
+    {
+      "title": "チャンネル統合",
+      "description": "メール・チャット・SNSを一元管理。チームの対応状況をリアルタイムで把握できる。",
+      "icon": "speed"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "顧客との会話履歴やセグメント情報をいつでもエクスポートでき、他ツールへの移行が自由。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "IntercomのOSS代替はありますか？",
+      "answer": "ChatwootがIntercomに最も近い機能を持つOSS代替です。ライブチャット・メール・SNS対応・チーム管理機能を備えています。"
+    },
+    {
+      "question": "ChatwootのチャットウィジェットはIntercomと同様に使えますか？",
+      "answer": "はい。1行のスクリプトタグでウェブサイトにチャットウィジェットを埋め込めます。デザインのカスタマイズも可能です。"
+    },
+    {
+      "question": "ヘルプセンター機能はありますか？",
+      "answer": "ChatwootにはHelp Center（記事・FAQ）機能があります。Intercomのように顧客がセルフサービスで解決できる環境を作れます。"
+    },
+    {
+      "question": "Intercomからのデータ移行はできますか？",
+      "answer": "会話履歴をCSV形式でエクスポートし、移行することが可能です。完全な自動移行ツールは現時点ではありません。"
+    }
+  ],
+  "relatedSlugs": ["zendesk", "slack", "canny"]
+}

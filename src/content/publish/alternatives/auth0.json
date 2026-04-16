@@ -1,0 +1,49 @@
+{
+  "slug": "auth0",
+  "competitor": "Auth0",
+  "competitorUrl": "https://auth0.com",
+  "metaTitle": "Auth0の代替OSSツール一覧 | 無料で使える認証・IAMツール比較",
+  "metaDescription": "Auth0の代わりに使える無料オープンソースの認証ツールを比較。Keycloak・Authentikなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Auth0のMAU（月間アクティブユーザー）課金やOkta傘下となってからの価格変動に不安を感じていませんか？ここではAuth0の代わりに使えるオープンソースの認証・IDプロバイダーツールを比較します。SSO・MFA・ソーシャルログインを無制限ユーザーで使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "MAU課金なし",
+      "description": "Auth0はアクティブユーザー数で課金が増加。OSSならユーザー数が増えてもコストは変わらない。",
+      "icon": "cost"
+    },
+    {
+      "title": "エンタープライズ機能が無料",
+      "description": "SAML・LDAP・MFA・ソーシャルログインなどAuth0有料プランの機能がOSSなら無制限に使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "認証データの自社管理",
+      "description": "ユーザーの認証情報をAuth0（Okta）に預けず、自社環境で完全に管理。セキュリティ要件を満たしやすい。",
+      "icon": "data"
+    },
+    {
+      "title": "Okta依存の回避",
+      "description": "Auth0がOktaに買収されて以降、価格変更リスクが高まっている。OSSで依存を排除できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Auth0のOSS代替はありますか？",
+      "answer": "KeycloakとAuthentikが代表的な代替です。KeycloakはRed Hat製で実績があり、AuthentikはモダンなUIと使いやすさが特徴です。"
+    },
+    {
+      "question": "KeycloakとAuthentikはどちらがいいですか？",
+      "answer": "エンタープライズ要件・豊富なプロトコル対応（SAML・LDAP等）ならKeycloak、モダンなUIと手軽なセルフホストならAuthentikがおすすめです。"
+    },
+    {
+      "question": "SSOは実装できますか？",
+      "answer": "はい。KeycloakもAuthentikもSAML・OpenID Connect・OAuthを完全サポートしており、SSOの実装が可能です。"
+    },
+    {
+      "question": "Auth0からの移行は難しいですか？",
+      "answer": "ユーザーのパスワードデータの移行は難しいですが、新規ユーザーからの移行やソーシャルログインの移行は比較的容易です。"
+    }
+  ],
+  "relatedSlugs": ["firebase", "datadog", "launchdarkly"]
+}

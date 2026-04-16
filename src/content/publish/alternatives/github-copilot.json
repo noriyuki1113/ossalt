@@ -1,0 +1,49 @@
+{
+  "slug": "github-copilot",
+  "competitor": "GitHub Copilot",
+  "competitorUrl": "https://github.com/features/copilot",
+  "metaTitle": "GitHub Copilotの代替OSSツール一覧 | 無料で使えるAIコーディング支援比較",
+  "metaDescription": "GitHub Copilotの代わりに使える無料オープンソースのAIコーディング支援ツールを比較。Continue・Tabbyなどローカル・セルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "GitHub Copilotの月額費用やコードのプライバシーに懸念はありませんか？ここではCopilotの代わりに使えるオープンソースのAIコーディング支援ツールを比較します。ローカルLLMやセルフホスト可能な代替で、コードを外部に送信せず使えるものも揃っています。",
+  "whySwitchReasons": [
+    {
+      "title": "コードのプライバシー保護",
+      "description": "GitHub CopilotはコードをGitHubのサーバーに送信する。ローカルLLMを使うOSSならコードが外部に出ない。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Copilotは1ユーザー月額約1,300円〜。チーム全体に導入すると高額。OSSなら無制限に使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "モデルの自由な選択",
+      "description": "ローカルLLM（Ollama等）と組み合わせて好みのモデルを選択可能。Claude・GPT・Geminiなど複数を試せる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "オフライン環境での使用",
+      "description": "インターネット接続のない開発環境や、セキュアな社内ネットワークでもAIコーディング支援が使える。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "GitHub CopilotのOSS代替はありますか？",
+      "answer": "ContinueとTabbyが代表的な代替です。ContinueはVS Code・JetBrains拡張として動作し、複数のLLMバックエンドに対応しています。"
+    },
+    {
+      "question": "ローカルLLMでCopilotと同等の精度が出ますか？",
+      "answer": "最新のローカルモデル（Codestral・DeepSeek Coder等）はCopilotと近い精度を実現しています。ただしハードウェアスペックによって応答速度が異なります。"
+    },
+    {
+      "question": "Tabbyのセルフホストは難しいですか？",
+      "answer": "DockerまたはDockerComposeで起動できます。GPU環境があれば高速に動作します。CPUのみでも動作しますが応答速度は遅めです。"
+    },
+    {
+      "question": "VS Codeで使えますか？",
+      "answer": "Continueは公式のVS Code拡張機能を提供しており、Copilotと同じような感覚でインライン補完やチャットが使えます。"
+    }
+  ],
+  "relatedSlugs": ["devin", "chatgpt", "datadog"]
+}
