@@ -7,7 +7,7 @@
 const BASE_URL = "https://ossalt.jp";
 const SITE_NAME = "OSSアルタナティブ";
 
-const SUPABASE_URL = process.env.SUPABASE_URL || "https://fjljkjbheqtprmforvpr.supabase.co";
+const SUPABASE_URL = process.env.SUPABASE_URL || "https://jwcjmgvitywhsbjkqsui.supabase.co";
 const SUPABASE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
 
 // --- Alternatives pages ---

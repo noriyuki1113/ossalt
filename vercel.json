@@ -70,7 +70,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "https://fjljkjbheqtprmforvpr.supabase.co/functions/v1/sitemap"
+      "destination": "https://jwcjmgvitywhsbjkqsui.supabase.co/functions/v1/sitemap"
     },
     {
       "source": "/(.*)",
