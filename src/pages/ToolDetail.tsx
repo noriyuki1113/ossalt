@@ -306,6 +306,7 @@ export default function ToolDetailPage() {
   const shareUrl = `https://ossalt.jp/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const hatenaUrl = `https://b.hatena.ne.jp/add?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
   const altSlug = COMPETITOR_TO_SLUG[competitorEn];
   const targetUsers = getTargetUsers(tool, competitorDisplay);
   const notGoodFor = getNotGoodFor(tool);
@@ -479,11 +480,73 @@ export default function ToolDetailPage() {
                   >
                     <Twitter className="h-3 w-3 text-muted-foreground" />
                   </a>
+                  <a
+                    href={hatenaUrl} target="_blank" rel="noopener noreferrer"
+                    className="h-7 w-7 rounded-md border border-border/60 flex items-center justify-center hover:bg-secondary transition-colors font-black text-[11px] text-muted-foreground"
+                    title="はてなブックマークに追加"
+                  >
+                    B!
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* ── GitHub Stats Card ── */}
+        {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
+          <section className="py-6">
+            <div className="card-unified p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <Github className="h-4 w-4" />
+                  GitHub
+                </h2>
+                <a
+                  href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                  onClick={() => track("external_link_click", { tool: tool.name, target: "github_stats", url: tool.github_url })}
+                  className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
+                >
+                  リポジトリを見る <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {tool.stars_num != null && tool.stars_num > 0 && (
+                  <div className="text-center p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20">
+                    <p className="text-2xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> Stars
+                    </p>
+                  </div>
+                )}
+                {tool.forks_num != null && tool.forks_num > 0 && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-2xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <GitFork className="h-3 w-3" /> Forks
+                    </p>
+                  </div>
+                )}
+                {lastCommitText && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight">{lastCommitText}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Clock className="h-3 w-3" /> 最終更新
+                    </p>
+                  </div>
+                )}
+                {tool.license && tool.license !== "NOASSERTION" && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight">{tool.license}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Scale className="h-3 w-3" /> ライセンス
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
         <div className="border-t border-border/60" />
 
@@ -857,6 +920,32 @@ export default function ToolDetailPage() {
         <div className="pb-4">
           <ConsultationCTA toolName={tool.name || undefined} />
         </div>
+
+        {/* ── Share Bar ── */}
+        <div className="border-t border-border/60" />
+        <section className="py-6">
+          <p className="text-xs text-muted-foreground text-center mb-3">このページをシェア</p>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <button
+              onClick={copyLink}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <Copy className="h-3.5 w-3.5" /> リンクをコピー
+            </button>
+            <a
+              href={twitterUrl} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <Twitter className="h-3.5 w-3.5" /> Xでシェア
+            </a>
+            <a
+              href={hatenaUrl} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <span className="font-black text-[13px] leading-none">B!</span> はてなブックマーク
+            </a>
+          </div>
+        </section>
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
