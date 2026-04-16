@@ -33,6 +33,8 @@ import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
+import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
+import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
 
@@ -211,6 +213,8 @@ export default function ToolDetailPage() {
     },
     enabled: !!tool,
   });
+
+  const { data: partnerCards = [] } = usePartnerCards(tool?.id ?? 0, tool?.name ?? null);
 
   const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
@@ -809,6 +813,16 @@ export default function ToolDetailPage() {
             </div>
           </div>
         </section>
+
+        {/* ── Affiliate CTA ── */}
+        {partnerCards.length > 0 && (
+          <>
+            <div className="border-t border-border/60" />
+            <div className="py-6">
+              <AffiliateCTA toolName={tool.name || ""} cards={partnerCards} />
+            </div>
+          </>
+        )}
 
         {/* ── Ad slot before related tools ── */}
         <div className="border-t border-border/60" />
