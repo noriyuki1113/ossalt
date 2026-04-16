@@ -172,6 +172,7 @@ export async function getPrerenderRoutes() {
       title: override?.title ?? `${name}の代替OSSツール比較 | 無料・自己ホスト可`,
       description: override?.description ?? `${name}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`,
       canonical: `${BASE_URL}/alternatives/${slug}`,
+      ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(name)}`,
     });
   }
 

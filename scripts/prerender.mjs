@@ -53,6 +53,14 @@ for (const route of routes) {
     `<meta property="og:url" content="${escapeAttr(route.canonical)}">`
   );
 
+  // Replace OG image (use dynamic URL if provided, otherwise keep default)
+  if (route.ogImage) {
+    html = html.replace(
+      /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:image" content="${escapeAttr(route.ogImage)}">`
+    );
+  }
+
   // Replace Twitter tags
   html = html.replace(
     /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
@@ -62,6 +70,12 @@ for (const route of routes) {
     /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
     `<meta name="twitter:description" content="${escapeAttr(route.description)}">`
   );
+  if (route.ogImage) {
+    html = html.replace(
+      /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:image" content="${escapeAttr(route.ogImage)}">`
+    );
+  }
 
   // Replace canonical
   html = html.replace(
