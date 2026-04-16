@@ -7,6 +7,12 @@ interface ToolIconProps {
   size?: number;
 }
 
+function getClearbitUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  try { return `https://logo.clearbit.com/${new URL(url).hostname}`; }
+  catch { return null; }
+}
+
 function getFaviconUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`; }
@@ -42,21 +48,27 @@ function getColorClass(name: string | null | undefined): string {
 }
 
 export function ToolIcon({ url, githubUrl, name, size = 22 }: ToolIconProps) {
+  const clearbit = getClearbitUrl(url);
   const favicon = getFaviconUrl(url);
   const ghAvatar = getGithubAvatarUrl(githubUrl);
-  const [src, setSrc] = useState<string | null>(favicon || ghAvatar);
+
+  // Priority: Clearbit → Favicon → GitHub avatar
+  const sources = [clearbit, favicon, ghAvatar].filter(Boolean) as string[];
+
+  const [srcIndex, setSrcIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const s = `${size}px`;
   const colorClass = getColorClass(name);
+  const src = sources[srcIndex] ?? null;
 
   const handleError = useCallback(() => {
-    if (src === favicon && ghAvatar) {
-      setSrc(ghAvatar);
+    if (srcIndex < sources.length - 1) {
+      setSrcIndex(srcIndex + 1);
       setLoaded(false);
     } else {
-      setSrc(null);
+      setSrcIndex(sources.length); // triggers null fallback
     }
-  }, [src, favicon, ghAvatar]);
+  }, [srcIndex, sources.length]);
 
   // Initial fallback (no src or all failed)
   if (!src) {
