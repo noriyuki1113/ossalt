@@ -1,0 +1,50 @@
+{
+  "slug": "outline-vs-confluence",
+  "ossName": "Outline",
+  "ossUrl": "https://www.getoutline.com",
+  "ossGithub": "https://github.com/outline/outline",
+  "saasName": "Confluence",
+  "saasUrl": "https://www.atlassian.com/software/confluence",
+  "alternativeSlug": "confluence",
+  "metaTitle": "Outline vs Confluence 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Outline（OSS）とConfluenceを徹底比較。コスト・Markdownサポート・UI・検索機能の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "ConfluenceからOutline（OSS）への移行を検討していますか？コスト・Markdown対応・UI・検索・権限管理など6項目で徹底比較します。",
+  "verdict": "コスト削減とエンジニアフレンドリーなUI・Markdownを重視するならOutline。Jiraとの密な連携・豊富な既存テンプレートが必要ならConfluence。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額5.75ドル〜/人", "winner": "oss" },
+    { "category": "Markdownサポート", "oss": "ネイティブ対応", "saas": "限定的", "winner": "oss" },
+    { "category": "UIの快適さ", "oss": "モダンで高速", "saas": "やや重い", "winner": "oss" },
+    { "category": "Jira連携", "oss": "非対応", "saas": "深い統合", "winner": "saas" },
+    { "category": "テンプレート数", "oss": "少なめ", "saas": "非常に豊富", "winner": "saas" },
+    { "category": "全文検索", "oss": "高速・優秀", "saas": "標準的", "winner": "oss" }
+  ],
+  "ossFor": [
+    "エンジニアチームがMarkdownでドキュメントを書きたい",
+    "Jira不要でConfluenceだけ代替したい",
+    "軽快で高速なドキュメント管理ツールが欲しい"
+  ],
+  "saasFor": [
+    "JiraとConfluenceをセットで活用しているAtlassianユーザー",
+    "大企業向けの細かいページ権限管理が必要",
+    "豊富な既存テンプレートをそのまま活用したい"
+  ],
+  "faq": [
+    {
+      "question": "ConfluenceからOutlineへの移行は簡単ですか？",
+      "answer": "ConfluenceはHTML・PDFエクスポートに対応しています。OutlineはMarkdownインポートをサポートしており、変換ツールを使って移行できますが、複雑なページ構造は手動での整理が必要です。"
+    },
+    {
+      "question": "OutlineはConfluenceのページ階層（スペース）に対応していますか？",
+      "answer": "はい。Outlineはコレクション（スペース相当）とネストされたドキュメント構造を持っており、Confluenceに近い階層管理が可能です。"
+    },
+    {
+      "question": "外部ユーザーへのドキュメント公開はできますか？",
+      "answer": "Outlineは特定のドキュメントやコレクションを公開URLで共有する機能を持っています。認証なしでのアクセスも設定可能です。"
+    },
+    {
+      "question": "Slackとの連携はできますか？",
+      "answer": "はい。OutlineはSlackとの連携をサポートしており、ドキュメントの更新通知をSlackチャンネルに送ることができます。"
+    }
+  ],
+  "relatedSlugs": ["confluence", "notion", "contentful"]
+}

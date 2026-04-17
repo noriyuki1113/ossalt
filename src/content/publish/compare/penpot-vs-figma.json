@@ -1,0 +1,50 @@
+{
+  "slug": "penpot-vs-figma",
+  "ossName": "Penpot",
+  "ossUrl": "https://penpot.app",
+  "ossGithub": "https://github.com/penpot/penpot",
+  "saasName": "Figma",
+  "saasUrl": "https://figma.com",
+  "alternativeSlug": "figma",
+  "metaTitle": "Penpot vs Figma 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Penpot（OSS）とFigmaを徹底比較。コスト・プロトタイプ・コンポーネント・SVG対応の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "FigmaからPenpot（OSS）への移行を検討していますか？コスト・プロトタイプ・コンポーネント・開発者向け機能など6項目で徹底比較します。",
+  "verdict": "コスト削減とデータの自社管理が優先ならPenpot。プラグイン豊富さ・Dev Modeなど高度な開発連携が必要ならFigma。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額15ドル〜/人", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "プラグイン数", "oss": "少なめ", "saas": "非常に豊富", "winner": "saas" },
+    { "category": "リアルタイム共同編集", "oss": "対応", "saas": "対応", "winner": "draw" },
+    { "category": "SVGベース編集", "oss": "対応（ネイティブ）", "saas": "対応", "winner": "oss" },
+    { "category": "開発者向け機能", "oss": "基本的な仕様書出力", "saas": "Dev Mode完備", "winner": "saas" }
+  ],
+  "ossFor": [
+    "デザインファイルを自社サーバーで管理したい",
+    "チーム全員分のFigmaライセンスコストを削減したい",
+    "オープン規格（SVG）での管理・移行を重視する"
+  ],
+  "saasFor": [
+    "豊富なプラグインやコミュニティリソースを活用したい",
+    "エンジニアとのDev Modeを使った連携が必要",
+    "大規模チームでのデザインシステム管理をしたい"
+  ],
+  "faq": [
+    {
+      "question": "FigmaファイルをPenpotにインポートできますか？",
+      "answer": "はい。PenpotはFigmaファイル（.fig）のインポートに対応しており、レイヤー・コンポーネント・スタイルを取り込めます。ただし完全な再現性はなく、細かい調整が必要な場合があります。"
+    },
+    {
+      "question": "Penpotはコンポーネントとバリアントに対応していますか？",
+      "answer": "はい。Penpotはコンポーネント・グリッドレイアウト・カラースタイルに対応しています。FigmaのVariantsに相当する機能も実装されています。"
+    },
+    {
+      "question": "プロトタイプ機能はありますか？",
+      "answer": "はい。Penpotは画面遷移・インタラクション・アニメーションを含むプロトタイプ機能を提供しており、クリック共有も可能です。"
+    },
+    {
+      "question": "セルフホストの場合パフォーマンスは問題ないですか？",
+      "answer": "Docker Composeで起動し、4コア以上のサーバーであれば快適に動作します。大規模チームの場合はDBとストレージの分離が推奨されます。"
+    }
+  ],
+  "relatedSlugs": ["figma", "webflow", "retool"]
+}

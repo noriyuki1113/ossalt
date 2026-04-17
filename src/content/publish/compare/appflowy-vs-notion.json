@@ -1,0 +1,50 @@
+{
+  "slug": "appflowy-vs-notion",
+  "ossName": "AppFlowy",
+  "ossUrl": "https://appflowy.io",
+  "ossGithub": "https://github.com/AppFlowy-IO/AppFlowy",
+  "saasName": "Notion",
+  "saasUrl": "https://notion.so",
+  "alternativeSlug": "notion",
+  "metaTitle": "AppFlowy vs Notion 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "AppFlowy（OSS）とNotionを徹底比較。コスト・セルフホスト・AI機能・日本語対応の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "NotionからAppFlowy（OSS）への移行を検討していますか？コスト・機能・セルフホスト対応・オフライン利用など6項目で徹底比較します。",
+  "verdict": "コスト削減とデータの自社管理が優先ならAppFlowy。AI機能・すぐ使える手軽さ・豊富なテンプレートが必要ならNotion。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額16ドル〜/人", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "AI機能", "oss": "限定的", "saas": "Notion AI（追加費用）", "winner": "saas" },
+    { "category": "リアルタイム共同編集", "oss": "対応", "saas": "対応", "winner": "draw" },
+    { "category": "テンプレート数", "oss": "少なめ", "saas": "非常に豊富", "winner": "saas" },
+    { "category": "オフライン利用", "oss": "対応", "saas": "限定的", "winner": "oss" }
+  ],
+  "ossFor": [
+    "データを自社サーバーで管理・GDPRに対応したい",
+    "5人以上のチームでコストを削減したい",
+    "オフライン環境や社内ネットワークのみで使いたい"
+  ],
+  "saasFor": [
+    "セットアップなしですぐ使い始めたい",
+    "Notion AIなど高度なAI機能を使いたい",
+    "非エンジニアも含むチームで手軽に導入したい"
+  ],
+  "faq": [
+    {
+      "question": "AppFlowy はNotionと同じようにデータベース機能を使えますか？",
+      "answer": "はい。AppFlowy はグリッド・カンバン・ギャラリービューなどNotionのデータベース機能に相当する機能を持っています。フィルター・ソート・関連レコードにも対応しています。"
+    },
+    {
+      "question": "Notionからデータを移行できますか？",
+      "answer": "NotionはMarkdown・HTMLエクスポートに対応しています。AppFlowy はNotionからのインポート機能を実装しており、テキスト・データベースの基本的な移行が可能です。"
+    },
+    {
+      "question": "AppFlowy はモバイルで使えますか？",
+      "answer": "はい。AppFlowy はiOS・Androidアプリを提供しています。ただしNotionのモバイルアプリと比べると機能面でまだ開発中の部分もあります。"
+    },
+    {
+      "question": "セルフホストの技術的難易度はどのくらいですか？",
+      "answer": "Docker Composeを使って数コマンドでセットアップできます。Linuxサーバーの基本知識があれば30分〜1時間程度で起動できます。"
+    }
+  ],
+  "relatedSlugs": ["notion", "evernote", "confluence"]
+}

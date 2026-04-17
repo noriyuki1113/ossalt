@@ -1,0 +1,50 @@
+{
+  "slug": "excalidraw-vs-miro",
+  "ossName": "Excalidraw",
+  "ossUrl": "https://excalidraw.com",
+  "ossGithub": "https://github.com/excalidraw/excalidraw",
+  "saasName": "Miro",
+  "saasUrl": "https://miro.com",
+  "alternativeSlug": "miro",
+  "metaTitle": "Excalidraw vs Miro 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Excalidraw（OSS）とMiroを徹底比較。コスト・ボード数・リアルタイム共同編集・テンプレートの違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "MiroからExcalidraw（OSS）への移行を検討していますか？コスト・ボード数・共同編集・エクスポート機能など6項目で徹底比較します。",
+  "verdict": "コスト削減・手軽な共同編集・シンプルな図解が優先ならExcalidraw。大規模ワークショップ・豊富なテンプレート・付箋機能が必要ならMiro。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料", "saas": "月額8ドル〜/人", "winner": "oss" },
+    { "category": "ボード数", "oss": "無制限", "saas": "無料版は3ボードのみ", "winner": "oss" },
+    { "category": "リアルタイム共同編集", "oss": "対応（URLシェア）", "saas": "対応", "winner": "draw" },
+    { "category": "テンプレート数", "oss": "少なめ", "saas": "非常に豊富", "winner": "saas" },
+    { "category": "大規模ワークショップ機能", "oss": "限定的", "saas": "充実", "winner": "saas" },
+    { "category": "SVGエクスポート", "oss": "対応（高品質）", "saas": "対応", "winner": "draw" }
+  ],
+  "ossFor": [
+    "無料で無制限にボードを作りたい",
+    "チームでURLシェアだけで素早く図解したい",
+    "手描き風の軽量なダイアグラムツールが欲しい"
+  ],
+  "saasFor": [
+    "大人数のオンラインワークショップを運営したい",
+    "豊富なテンプレートやフレームワークを活用したい",
+    "スティッキーノート・タイマーなどワークショップ機能が必要"
+  ],
+  "faq": [
+    {
+      "question": "ExcalidrawはMiroのようにリアルタイムで複数人が編集できますか？",
+      "answer": "はい。Excalidrawはリアルタイムコラボレーション機能を持っており、URLをシェアするだけで複数人が同時編集できます。アカウント登録不要で使えます。"
+    },
+    {
+      "question": "Excalidrawをセルフホストすることはできますかrr？",
+      "answer": "はい。ExcalidrawはOSSでDockerを使ってセルフホストできます。企業内のプライベート環境でチームが使えるよう構築できます。"
+    },
+    {
+      "question": "作成した図をPowerPointやGoogleスライドに貼り付けられますか？",
+      "answer": "ExcalidrawはSVG・PNG・クリップボードコピーでの出力に対応しています。SVGはベクター形式なので拡大しても劣化しません。"
+    },
+    {
+      "question": "Miroのボードコンテンツを移行できますか？",
+      "answer": "Miroからの直接インポートは対応していません。Miroでエクスポートした画像を取り込むことは可能ですが、編集可能な形での移行は現状できません。"
+    }
+  ],
+  "relatedSlugs": ["miro", "figma", "notion"]
+}

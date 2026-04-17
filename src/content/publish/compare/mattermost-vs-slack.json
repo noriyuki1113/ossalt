@@ -1,0 +1,50 @@
+{
+  "slug": "mattermost-vs-slack",
+  "ossName": "Mattermost",
+  "ossUrl": "https://mattermost.com",
+  "ossGithub": "https://github.com/mattermost/mattermost",
+  "saasName": "Slack",
+  "saasUrl": "https://slack.com",
+  "alternativeSlug": "slack",
+  "metaTitle": "Mattermost vs Slack 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Mattermost（OSS）とSlackを徹底比較。コスト・セルフホスト・メッセージ履歴・連携機能の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "SlackからMattermost（OSS）への移行を検討していますか？コスト・メッセージ履歴・セルフホスト・連携機能など6項目で徹底比較します。",
+  "verdict": "コスト削減・メッセージ無制限・セキュリティ要件が優先ならMattermost。豊富なインテグレーション・使いやすさ優先ならSlack。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額7.25ドル〜/人", "winner": "oss" },
+    { "category": "メッセージ履歴", "oss": "無制限", "saas": "無料版は90日分のみ", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "アプリ連携数", "oss": "数百", "saas": "2000以上", "winner": "saas" },
+    { "category": "音声・ビデオ通話", "oss": "対応（プラグイン）", "saas": "ネイティブ対応", "winner": "saas" },
+    { "category": "UIの使いやすさ", "oss": "良好", "saas": "非常に優れている", "winner": "saas" }
+  ],
+  "ossFor": [
+    "メッセージ履歴を無制限に保存したい",
+    "金融・医療など高いセキュリティ要件がある",
+    "100人以上のチームでコストを大幅削減したい"
+  ],
+  "saasFor": [
+    "2000以上のアプリと連携したい",
+    "セットアップの手間をかけたくない",
+    "Slackの使い勝手をそのまま維持したい"
+  ],
+  "faq": [
+    {
+      "question": "MattermostはSlackとUIが似ていますか？",
+      "answer": "はい。Mattermostはチャンネル・DM・スレッド・絵文字リアクションなどSlackと非常に似たUIを持っています。Slackユーザーなら違和感なく移行できます。"
+    },
+    {
+      "question": "SlackのBotやワークフローはMattermostで使えますか？",
+      "answer": "SlackのBotをそのまま使うことはできませんが、MattermostはSlack互換のWebhook形式をサポートしており、多くのツールはMattermost向けの設定で動作します。"
+    },
+    {
+      "question": "Slackからのメッセージ履歴を移行できますか？",
+      "answer": "SlackはJSONエクスポートに対応しており、Mattermostにはそのインポートツールが提供されています。チャンネル・DM・ファイルの移行が可能です。"
+    },
+    {
+      "question": "サーバーの推奨スペックはどのくらいですか？",
+      "answer": "100人規模であれば2コア・4GBメモリのVPSで十分動作します。500人以上の場合は4コア・8GB以上を推奨します。"
+    }
+  ],
+  "relatedSlugs": ["slack", "intercom", "zendesk"]
+}
