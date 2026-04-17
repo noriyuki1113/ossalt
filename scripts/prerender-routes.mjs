@@ -307,6 +307,14 @@ export async function getPrerenderRoutes() {
     "chatwoot-vs-intercom": { oss: "Chatwoot", saas: "Intercom" },
     "taiga-vs-jira": { oss: "Taiga", saas: "Jira" },
     "activepieces-vs-zapier": { oss: "Activepieces", saas: "Zapier" },
+    "supabase-vs-firebase": { oss: "Supabase", saas: "Firebase" },
+    "grafana-vs-datadog": { oss: "Grafana", saas: "Datadog" },
+    "metabase-vs-tableau": { oss: "Metabase", saas: "Tableau" },
+    "formbricks-vs-typeform": { oss: "Formbricks", saas: "Typeform" },
+    "budibase-vs-retool": { oss: "Budibase", saas: "Retool" },
+    "directus-vs-contentful": { oss: "Directus", saas: "Contentful" },
+    "twenty-vs-hubspot": { oss: "Twenty", saas: "HubSpot" },
+    "hoppscotch-vs-postman": { oss: "Hoppscotch", saas: "Postman" },
   };
   for (const [slug, { oss, saas }] of Object.entries(COMPARE_PAGES)) {
     routes.push({

@@ -1,0 +1,50 @@
+{
+  "slug": "grafana-vs-datadog",
+  "ossName": "Grafana",
+  "ossUrl": "https://grafana.com",
+  "ossGithub": "https://github.com/grafana/grafana",
+  "saasName": "Datadog",
+  "saasUrl": "https://www.datadoghq.com",
+  "alternativeSlug": "datadog",
+  "metaTitle": "Grafana vs Datadog 比較 | OSSで監視・可観測性を代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Grafana（OSS）とDatadogを徹底比較。コスト・メトリクス・ログ管理・APM・アラートの違いを解説。インフラ監視ツールの選び方がわかります。",
+  "heroDescription": "DatadogからGrafana（OSS）への移行を検討していますか？コスト・メトリクス・ログ・APM・アラート・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・既存Prometheus/Lokiスタックの活用・フルスタック可観測性をOSSで構築したいならGrafana。ワンストップAPM・AI Ops・エンタープライズサポートが必要ならDatadog。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額15ドル〜/ホスト", "winner": "oss" },
+    { "category": "メトリクス監視", "oss": "Prometheus連携（強力）", "saas": "エージェント自動収集", "winner": "draw" },
+    { "category": "ログ管理", "oss": "Loki（軽量・低コスト）", "saas": "高速検索・ML解析", "winner": "saas" },
+    { "category": "APM・トレーシング", "oss": "Tempo（Jaeger互換）", "saas": "高精度・自動検出", "winner": "saas" },
+    { "category": "アラート", "oss": "Grafana Alerting", "saas": "AI異常検知（Watchdog）", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker/k8s）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "Prometheus・Loki・Tempoスタックをすでに使っている",
+    "Datadogの高額な従量課金コストを削減したい",
+    "Kubernetesクラスターを自社インフラで監視・可視化したい"
+  ],
+  "saasFor": [
+    "インフラ監視・ログ・APMを1つのツールでワンストップ管理したい",
+    "AIによる自動異常検知（Watchdog）を活用したい",
+    "セットアップ工数をかけずすぐに監視を始めたい"
+  ],
+  "faq": [
+    {
+      "question": "GrafanaだけでDatadogを完全に代替できますか？",
+      "answer": "Grafana + Prometheus + Loki + Tempoの組み合わせでメトリクス・ログ・トレーシングをカバーできます。ただし各コンポーネントの設定・運用が必要なため、Datadogより初期構築に手間がかかります。"
+    },
+    {
+      "question": "Grafanaはクラウドホストとセルフホストどちらがいいですか？",
+      "answer": "Grafana Cloudの無料プランは個人・小規模チームに十分です。大規模チームやデータを自社管理したい場合はセルフホストを選択し、Docker ComposeまたはHelmで簡単に構築できます。"
+    },
+    {
+      "question": "DatadogからGrafanaへの移行は難しいですか？",
+      "answer": "エージェントをDatadog AgentからPrometheus Node ExporterやOpenTelemetry Collectorに切り替え、ダッシュボードを再構築する作業が必要です。Datadogのダッシュボードエクスポーターも存在します。"
+    },
+    {
+      "question": "GrafanaはAWS・GCP・Azureのクラウド監視に対応していますか？",
+      "answer": "はい。CloudWatch・Google Cloud Monitoring・Azure Monitorのデータソースプラグインが公式提供されており、マルチクラウドのメトリクスを一画面で可視化できます。"
+    }
+  ],
+  "relatedSlugs": ["datadog", "sentry", "pagerduty"]
+}

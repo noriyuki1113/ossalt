@@ -90,6 +90,14 @@ const COMPARE_LINKS: Record<string, { slug: string; ossName: string }[]> = {
   "github-copilot": [{ slug: "gitea-vs-github", ossName: "Gitea" }],
   intercom: [{ slug: "chatwoot-vs-intercom", ossName: "Chatwoot" }],
   jira: [{ slug: "taiga-vs-jira", ossName: "Taiga" }],
+  firebase: [{ slug: "supabase-vs-firebase", ossName: "Supabase" }],
+  datadog: [{ slug: "grafana-vs-datadog", ossName: "Grafana" }],
+  tableau: [{ slug: "metabase-vs-tableau", ossName: "Metabase" }],
+  typeform: [{ slug: "formbricks-vs-typeform", ossName: "Formbricks" }],
+  retool: [{ slug: "budibase-vs-retool", ossName: "Budibase" }],
+  contentful: [{ slug: "directus-vs-contentful", ossName: "Directus" }],
+  hubspot: [{ slug: "twenty-vs-hubspot", ossName: "Twenty" }],
+  postman: [{ slug: "hoppscotch-vs-postman", ossName: "Hoppscotch" }],
 };
 
 export { SLUG_MAP, COMPETITOR_TO_SLUG, COMPARE_LINKS };

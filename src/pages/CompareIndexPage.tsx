@@ -24,7 +24,15 @@ const COMPARE_PAGES = [
   { slug: "plausible-vs-google-analytics",oss: "Plausible",  saas: "Google Analytics",category: "アクセス解析" },
   { slug: "chatwoot-vs-intercom",         oss: "Chatwoot",   saas: "Intercom",        category: "カスタマーサポート" },
   { slug: "taiga-vs-jira",               oss: "Taiga",      saas: "Jira",            category: "プロジェクト管理" },
-  { slug: "activepieces-vs-zapier",       oss: "Activepieces",saas: "Zapier",         category: "自動化" },
+  { slug: "activepieces-vs-zapier",       oss: "Activepieces", saas: "Zapier",        category: "自動化" },
+  { slug: "supabase-vs-firebase",         oss: "Supabase",     saas: "Firebase",      category: "BaaS・バックエンド" },
+  { slug: "grafana-vs-datadog",           oss: "Grafana",      saas: "Datadog",       category: "インフラ監視" },
+  { slug: "metabase-vs-tableau",          oss: "Metabase",     saas: "Tableau",       category: "BIツール" },
+  { slug: "formbricks-vs-typeform",       oss: "Formbricks",   saas: "Typeform",      category: "フォーム" },
+  { slug: "budibase-vs-retool",           oss: "Budibase",     saas: "Retool",        category: "ローコード" },
+  { slug: "directus-vs-contentful",       oss: "Directus",     saas: "Contentful",    category: "ヘッドレスCMS" },
+  { slug: "twenty-vs-hubspot",            oss: "Twenty",       saas: "HubSpot",       category: "CRM" },
+  { slug: "hoppscotch-vs-postman",        oss: "Hoppscotch",   saas: "Postman",       category: "APIツール" },
 ];
 
 const CATEGORIES = [...new Set(COMPARE_PAGES.map(p => p.category))];

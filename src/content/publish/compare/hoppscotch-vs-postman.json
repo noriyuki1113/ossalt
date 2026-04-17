@@ -1,0 +1,50 @@
+{
+  "slug": "hoppscotch-vs-postman",
+  "ossName": "Hoppscotch",
+  "ossUrl": "https://hoppscotch.io",
+  "ossGithub": "https://github.com/hoppscotch/hoppscotch",
+  "saasName": "Postman",
+  "saasUrl": "https://www.postman.com",
+  "alternativeSlug": "postman",
+  "metaTitle": "Hoppscotch vs Postman 比較 | OSSのAPIクライアントで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Hoppscotch（OSS）とPostmanを徹底比較。コスト・APIテスト・コレクション管理・チーム共有・セルフホストの違いを解説。API開発ツール選びの参考に。",
+  "heroDescription": "PostmanからHoppscotch（OSS）への移行を検討していますか？コスト・APIテスト・コレクション管理・チーム共有・セルフホストなど6項目で徹底比較します。",
+  "verdict": "軽快なWeb UIでAPIを素早くテスト・コスト削減・チームAPI管理を自社サーバーで行いたいならHoppscotch。高度な自動テスト・モニタリング・CI/CD連携が必要ならPostman。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額14ドル〜/人", "winner": "oss" },
+    { "category": "UIの軽快さ", "oss": "超軽量Web UI", "saas": "Electronアプリ（重め）", "winner": "oss" },
+    { "category": "APIテスト", "oss": "REST・GraphQL・WebSocket対応", "saas": "REST・GraphQL・gRPC等", "winner": "draw" },
+    { "category": "自動テスト", "oss": "基本的なテストスクリプト", "saas": "高度なテスト・CI連携", "winner": "saas" },
+    { "category": "APIモニタリング", "oss": "非対応", "saas": "対応（有料）", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "軽量なWebブラウザからAPIを素早くテストしたい",
+    "Postmanのチームプランコストを削減したい",
+    "APIコレクションをチーム内で自社サーバー共有したい"
+  ],
+  "saasFor": [
+    "Newman・GitHub ActionsなどCI/CDとの自動テスト統合が必要",
+    "APIモニタリング・アップタイム監視を使いたい",
+    "大規模チームのAPIドキュメント生成・公開が必要"
+  ],
+  "faq": [
+    {
+      "question": "HoppscotchはPostmanのコレクションをインポートできますか？",
+      "answer": "はい。PostmanコレクションV2.1形式をHoppscotchにインポートできます。エンドポイント・ヘッダー・パラメータがそのまま読み込まれます。"
+    },
+    {
+      "question": "HoppscotchはGraphQL・WebSocketに対応していますか？",
+      "answer": "はい。HoppscotchはREST・GraphQL・WebSocket・Socket.IO・SSE・MQTT・gRPCに対応しており、様々なプロトコルのAPIをテストできます。"
+    },
+    {
+      "question": "HoppscotchはローカルホストのAPIもテストできますか？",
+      "answer": "はい。Hoppscotch Proxyを使うか、ブラウザ拡張機能をインストールすることでlocalhostのAPIも問題なくテストできます。"
+    },
+    {
+      "question": "HoppscotchのセルフホストはDockerで簡単にできますか？",
+      "answer": "はい。Docker Composeで起動でき、PostgreSQL・Mailhogも含まれています。Google・GitHubなどの認証プロバイダー設定が必要です。"
+    }
+  ],
+  "relatedSlugs": ["postman", "datadog", "github-copilot"]
+}

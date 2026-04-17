@@ -141,6 +141,9 @@ Deno.serve(async () => {
     "listmonk-vs-sendgrid","vikunja-vs-asana","rocket-chat-vs-slack",
     "nextcloud-vs-google-drive","gitea-vs-github","plausible-vs-google-analytics",
     "chatwoot-vs-intercom","taiga-vs-jira","activepieces-vs-zapier",
+    "supabase-vs-firebase","grafana-vs-datadog","metabase-vs-tableau",
+    "formbricks-vs-typeform","budibase-vs-retool","directus-vs-contentful",
+    "twenty-vs-hubspot","hoppscotch-vs-postman",
   ];
   for (const slug of compareSlugs) {
     xml += `

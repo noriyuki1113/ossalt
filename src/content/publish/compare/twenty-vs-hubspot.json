@@ -1,0 +1,50 @@
+{
+  "slug": "twenty-vs-hubspot",
+  "ossName": "Twenty",
+  "ossUrl": "https://twenty.com",
+  "ossGithub": "https://github.com/twentyhq/twenty",
+  "saasName": "HubSpot",
+  "saasUrl": "https://www.hubspot.com",
+  "alternativeSlug": "hubspot",
+  "metaTitle": "Twenty vs HubSpot 比較 | OSSのCRMで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Twenty（OSS）とHubSpotを徹底比較。コスト・コンタクト管理・セールスパイプライン・マーケティング自動化・セルフホストの違いを解説。",
+  "heroDescription": "HubSpotからTwenty（OSS）への移行を検討していますか？コスト・CRM機能・パイプライン管理・自動化・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・シンプルなCRM・顧客データを自社管理したいならTwenty。メール配信・マーケティングハブ・充実したHubSpotエコシステムが必要ならHubSpot。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額15ドル〜/人", "winner": "oss" },
+    { "category": "コンタクト管理", "oss": "直感的・カスタムフィールド対応", "saas": "高機能・エンリッチメント", "winner": "draw" },
+    { "category": "セールスパイプライン", "oss": "カンバン形式（シンプル）", "saas": "高度なパイプライン管理", "winner": "saas" },
+    { "category": "マーケティング自動化", "oss": "基本的なワークフロー", "saas": "高度なメール・MA機能", "winner": "saas" },
+    { "category": "API・拡張性", "oss": "GraphQL API・Webhook", "saas": "豊富なAPIと連携", "winner": "draw" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "コンタクト・取引のシンプルな管理をコストゼロで始めたい",
+    "顧客データをGDPR準拠で自社サーバーに保管したい",
+    "HubSpotの高額プランに移行せずCRMを使いたいスタートアップ"
+  ],
+  "saasFor": [
+    "HubSpotのマーケティングハブ（メール・LP・MA）を活用したい",
+    "Salesforce連携やZoom等多数のアプリとのインテグレーションが必要",
+    "HubSpot AIでメール文章生成・予測スコアリングを使いたい"
+  ],
+  "faq": [
+    {
+      "question": "TwentyはHubSpotのようなカンバン形式のパイプラインを持っていますか？",
+      "answer": "はい。TwentyはSalesforceライクなオブジェクト設計とカンバン形式のパイプライン管理をサポートしています。カスタムオブジェクトやフィールドも追加できます。"
+    },
+    {
+      "question": "HubSpotからTwentyへコンタクトを移行できますか？",
+      "answer": "HubSpotのCSVエクスポートを使ってコンタクト・会社・取引データを取り出し、TwentyのCSVインポート機能またはAPIで移行できます。"
+    },
+    {
+      "question": "TwentyはGmailやOutlookと連携できますか？",
+      "answer": "はい。TwentyはGmail連携（メールの同期・送信履歴の自動記録）をサポートしています。Calendarとの連携機能も提供されています。"
+    },
+    {
+      "question": "TwentyのセルフホストはDockerで簡単にできますか？",
+      "answer": "はい。Docker Composeファイルが提供されており、PostgreSQL・Redisを含めて一括起動できます。VPS（2コア・4GB）で快適に動作します。"
+    }
+  ],
+  "relatedSlugs": ["hubspot", "intercom", "airtable"]
+}
