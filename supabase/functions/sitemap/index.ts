@@ -56,6 +56,36 @@ Deno.serve(async () => {
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/news</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/quiz</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/savings</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/compare</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/about</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>`;
 
   // Category pages — clean /category/:slug URLs (not ?category= query params)
@@ -98,6 +128,24 @@ Deno.serve(async () => {
     <loc>${BASE_URL}/alternatives/${slug}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+  }
+
+  // Compare pages
+  const compareSlugs = [
+    "appflowy-vs-notion","mattermost-vs-slack","plane-vs-linear",
+    "posthog-vs-mixpanel","penpot-vs-figma","outline-vs-confluence",
+    "n8n-vs-zapier","nocodb-vs-airtable","matomo-vs-google-analytics",
+    "keycloak-vs-auth0","glitchtip-vs-sentry","excalidraw-vs-miro",
+    "listmonk-vs-sendgrid","vikunja-vs-asana","rocket-chat-vs-slack",
+  ];
+  for (const slug of compareSlugs) {
+    xml += `
+  <url>
+    <loc>${BASE_URL}/compare/${slug}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`;
   }

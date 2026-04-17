@@ -31,6 +31,7 @@ const WorkspaceSavedPage = lazy(() => import("./pages/WorkspaceSaved"));
 const WorkspaceComparePage = lazy(() => import("./pages/WorkspaceCompare"));
 const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
+const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/alternatives/:slug" element={<AlternativesPage />} />
+            <Route path="/compare" element={<CompareIndexPage />} />
             <Route path="/compare/:slug" element={<ComparePage />} />
             <Route path="/ranking" element={<RankingPage />} />
             <Route path="/quiz" element={<QuizPage />} />
