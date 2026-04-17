@@ -54,10 +54,33 @@ export default function ComparePage() {
   const { slug } = useParams<{ slug: string }>();
   const { content, loading } = useCompareContent(slug);
 
+  const jsonLd = content ? {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        mainEntity: content.faq.map(f => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+          { "@type": "ListItem", position: 2, name: `${content.saasName}の代替`, item: `https://ossalt.jp/alternatives/${content.alternativeSlug}` },
+          { "@type": "ListItem", position: 3, name: `${content.ossName} vs ${content.saasName}`, item: `https://ossalt.jp/compare/${content.slug}` },
+        ],
+      },
+    ],
+  } : undefined;
+
   useSeo({
     title: content?.metaTitle ?? `${slug} 比較 | OSSアルタナティブ`,
     description: content?.metaDescription,
     ogImage: content ? `https://ossalt.jp/api/og?type=compare&c=${encodeURIComponent(content.ossName + " vs " + content.saasName)}` : undefined,
+    jsonLd,
   });
 
   if (loading) {

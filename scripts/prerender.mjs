@@ -83,6 +83,12 @@ for (const route of routes) {
     `<link rel="canonical" href="${escapeAttr(route.canonical)}">`
   );
 
+  // Inject JSON-LD schema
+  if (route.jsonLd) {
+    const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(route.jsonLd)}</script>`;
+    html = html.replace("</head>", `${jsonLdScript}\n</head>`);
+  }
+
   // Write file
   const filePath =
     route.path === "/"

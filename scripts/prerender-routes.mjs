@@ -4,6 +4,22 @@
  * Add new routes here to expand prerender coverage.
  */
 
+import { readFileSync, existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const CONTENT_DIR = join(__dirname, "../src/content/publish");
+
+function readJson(filePath) {
+  try {
+    if (!existsSync(filePath)) return null;
+    return JSON.parse(readFileSync(filePath, "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
 const BASE_URL = "https://ossalt.jp";
 const SITE_NAME = "OSSアルタナティブ";
 
@@ -167,12 +183,35 @@ export async function getPrerenderRoutes() {
   // Alternatives pages
   for (const [slug, name] of Object.entries(ALTERNATIVES)) {
     const override = SLUG_META_OVERRIDES[slug];
+    const altData = readJson(join(CONTENT_DIR, `alternatives/${slug}.json`));
+    const altFaq = altData?.faq ?? [];
+    const altJsonLd = altFaq.length > 0 ? {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "FAQPage",
+          mainEntity: altFaq.map(f => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ホーム", item: BASE_URL },
+            { "@type": "ListItem", position: 2, name: `${name}の代替ツール`, item: `${BASE_URL}/alternatives/${slug}` },
+          ],
+        },
+      ],
+    } : undefined;
     routes.push({
       path: `/alternatives/${slug}`,
       title: override?.title ?? `${name}の代替OSSツール比較 | 無料・自己ホスト可`,
       description: override?.description ?? `${name}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`,
       canonical: `${BASE_URL}/alternatives/${slug}`,
       ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(name)}`,
+      jsonLd: altJsonLd,
     });
   }
 
@@ -317,12 +356,36 @@ export async function getPrerenderRoutes() {
     "hoppscotch-vs-postman": { oss: "Hoppscotch", saas: "Postman" },
   };
   for (const [slug, { oss, saas }] of Object.entries(COMPARE_PAGES)) {
+    const cmpData = readJson(join(CONTENT_DIR, `compare/${slug}.json`));
+    const cmpFaq = cmpData?.faq ?? [];
+    const cmpJsonLd = {
+      "@context": "https://schema.org",
+      "@graph": [
+        ...(cmpFaq.length > 0 ? [{
+          "@type": "FAQPage",
+          mainEntity: cmpFaq.map(f => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        }] : []),
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ホーム", item: BASE_URL },
+            { "@type": "ListItem", position: 2, name: `${saas}の代替`, item: `${BASE_URL}/alternatives/${cmpData?.alternativeSlug ?? slug}` },
+            { "@type": "ListItem", position: 3, name: `${oss} vs ${saas}`, item: `${BASE_URL}/compare/${slug}` },
+          ],
+        },
+      ],
+    };
     routes.push({
       path: `/compare/${slug}`,
-      title: `${oss} vs ${saas} 比較 | OSSで代替できる？コスト・機能を徹底解説`,
-      description: `${oss}（OSS）と${saas}を徹底比較。コスト・セルフホスト・機能の違いを解説。どちらを選ぶべきか判断できます。`,
+      title: cmpData?.metaTitle ?? `${oss} vs ${saas} 比較 | OSSで代替できる？コスト・機能を徹底解説`,
+      description: cmpData?.metaDescription ?? `${oss}（OSS）と${saas}を徹底比較。コスト・セルフホスト・機能の違いを解説。どちらを選ぶべきか判断できます。`,
       canonical: `${BASE_URL}/compare/${slug}`,
       ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(oss + " vs " + saas)}`,
+      jsonLd: cmpJsonLd,
     });
   }
 
