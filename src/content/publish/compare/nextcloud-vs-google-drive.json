@@ -1,0 +1,50 @@
+{
+  "slug": "nextcloud-vs-google-drive",
+  "ossName": "Nextcloud",
+  "ossUrl": "https://nextcloud.com",
+  "ossGithub": "https://github.com/nextcloud/server",
+  "saasName": "Google Drive",
+  "saasUrl": "https://drive.google.com",
+  "alternativeSlug": "google-drive",
+  "metaTitle": "Nextcloud vs Google Drive 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Nextcloud（OSS）とGoogle Driveを徹底比較。コスト・プライバシー・ストレージ容量・オフライン対応の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "Google DriveからNextcloud（OSS）への移行を検討していますか？コスト・プライバシー・ストレージ上限・オフライン利用など6項目で徹底比較します。",
+  "verdict": "プライバシー重視・ストレージを自社管理・コスト削減が優先ならNextcloud。手軽さ・Google Workspaceとの統合が重要ならGoogle Drive。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（サーバー代のみ）", "saas": "月額250円〜（追加容量課金）", "winner": "oss" },
+    { "category": "ストレージ容量", "oss": "サーバー容量次第で無制限", "saas": "15GB無料、追加は有料", "winner": "oss" },
+    { "category": "プライバシー", "oss": "Googleにデータ非提供", "saas": "Googleがデータを保有", "winner": "oss" },
+    { "category": "Google Docs連携", "oss": "非対応（OnlyOffice/Collaboraで代替）", "saas": "完全統合", "winner": "saas" },
+    { "category": "モバイルアプリ", "oss": "iOS/Android対応", "saas": "非常に優れている", "winner": "saas" },
+    { "category": "共同編集", "oss": "OnlyOffice統合で対応", "saas": "ネイティブ対応", "winner": "saas" }
+  ],
+  "ossFor": [
+    "ファイルをGoogleのサーバーに預けたくない",
+    "大容量ストレージをコストを抑えて運用したい",
+    "GDPR・個人情報保護法への厳格な対応が必要"
+  ],
+  "saasFor": [
+    "Google Docs/Sheets/Slidesをそのまま使いたい",
+    "セットアップなしですぐ使える手軽さが必要",
+    "スマートフォンからの快適なアクセスを重視する"
+  ],
+  "faq": [
+    {
+      "question": "NextcloudはGoogle Driveと同じようにファイル共有できますか？",
+      "answer": "はい。Nextcloudは共有リンク生成・パスワード付き共有・有効期限設定・外部ユーザーへの共有など、Google Driveに相当するファイル共有機能を持っています。"
+    },
+    {
+      "question": "Google DriveのデータをNextcloudに移行できますか？",
+      "answer": "Googleテイクアウトでデータをダウンロードし、Nextcloudにアップロードすることで移行できます。Google DocsはODT/DOCX形式で変換されます。"
+    },
+    {
+      "question": "NextcloudでもWord/Excelのようなオフィス文書を編集できますか？",
+      "answer": "はい。NextcloudはOnlyOfficeまたはCollabora Onlineと統合することで、ブラウザ上でDocx/Xlsx/Pptx形式のファイルをリアルタイム共同編集できます。"
+    },
+    {
+      "question": "スマートフォンから自動写真バックアップはできますか？",
+      "answer": "はい。NextcloudのiOS/Androidアプリは撮影した写真・動画を自動的にサーバーへアップロードする機能を持っています。"
+    }
+  ],
+  "relatedSlugs": ["google-drive", "notion", "evernote"]
+}

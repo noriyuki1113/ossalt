@@ -1,0 +1,50 @@
+{
+  "slug": "gitea-vs-github",
+  "ossName": "Gitea",
+  "ossUrl": "https://gitea.com",
+  "ossGithub": "https://github.com/go-gitea/gitea",
+  "saasName": "GitHub",
+  "saasUrl": "https://github.com",
+  "alternativeSlug": "github-copilot",
+  "metaTitle": "Gitea vs GitHub 比較 | セルフホストGitで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Gitea（OSS）とGitHubを徹底比較。コスト・セルフホスト・Actions互換性・プライベートリポジトリの違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "GitHubからGitea（OSS）への移行を検討していますか？コスト・プライベートリポジトリ数・CI/CD・セルフホスト対応など6項目で徹底比較します。",
+  "verdict": "プライベートリポジトリ無制限・コスト削減・コードを自社管理したいならGitea。GitHubエコシステム・Actions/Marketplace・OSSコミュニティが必要ならGitHub。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（サーバー代のみ）", "saas": "月額4ドル〜/人", "winner": "oss" },
+    { "category": "プライベートリポジトリ", "oss": "無制限", "saas": "無制限（無料含む）", "winner": "draw" },
+    { "category": "セルフホスト", "oss": "対応（軽量・Go製）", "saas": "非対応", "winner": "oss" },
+    { "category": "GitHub Actions互換", "oss": "Gitea Actions（互換）", "saas": "GitHub Actions（本家）", "winner": "saas" },
+    { "category": "Marketplace/連携", "oss": "限定的", "saas": "非常に豊富", "winner": "saas" },
+    { "category": "コードスキャン/セキュリティ", "oss": "基本的な対応", "saas": "Dependabot等充実", "winner": "saas" }
+  ],
+  "ossFor": [
+    "ソースコードを自社サーバーで完全管理したい",
+    "大人数のチームでGitHubコストを削減したい",
+    "エアギャップ環境（インターネット非接続）で運用したい"
+  ],
+  "saasFor": [
+    "GitHubの豊富なMarketplaceとActionsを活用したい",
+    "OSSコミュニティへの公開・貢献を重視する",
+    "Dependabot等のセキュリティ機能を使いたい"
+  ],
+  "faq": [
+    {
+      "question": "GiteaはGitHub Actionsと互換性がありますか？",
+      "answer": "はい。GiteaはGitHub Actions互換のCI/CDシステム「Gitea Actions」を搭載しており、多くのGitHub Actionsワークフローをそのまま使えます。"
+    },
+    {
+      "question": "GitHubからGiteaへリポジトリを移行できますか？",
+      "answer": "はい。GiteaはGitHubからのリポジトリ・Issues・Pull Request・Wikiの移行機能を内蔵しており、GitHub APIを使って自動移行できます。"
+    },
+    {
+      "question": "GiteaはGitLabと比べてどうですか？",
+      "answer": "GiteaはGitLabより軽量でリソース消費が少ないため、小〜中規模のチームに向いています。GitLabはCI/CD・セキュリティ・DevOps機能がより充実しています。"
+    },
+    {
+      "question": "1台のVPSでGiteaを動かせますか？",
+      "answer": "はい。GiteaはGo製で非常に軽量なため、512MB〜1GBのRAMを持つVPSでも十分動作します。SQLite・MySQL・PostgreSQLのいずれかが必要です。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "datadog", "postman"]
+}

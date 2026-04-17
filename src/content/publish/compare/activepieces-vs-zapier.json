@@ -1,0 +1,50 @@
+{
+  "slug": "activepieces-vs-zapier",
+  "ossName": "Activepieces",
+  "ossUrl": "https://www.activepieces.com",
+  "ossGithub": "https://github.com/activepieces/activepieces",
+  "saasName": "Zapier",
+  "saasUrl": "https://zapier.com",
+  "alternativeSlug": "zapier",
+  "metaTitle": "Activepieces vs Zapier 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Activepieces（OSS）とZapierを徹底比較。コスト・ワークフロー数・UIの使いやすさ・コネクタ数の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "ZapierからActivepieces（OSS）への移行を検討していますか？コスト・自動化数・UIのシンプルさ・コードレス操作など6項目で徹底比較します。",
+  "verdict": "コスト削減・ビジュアルで使いやすい自動化・データを自社管理したいならActivepieces。5000以上のコネクタと豊富なテンプレートが必要ならZapier。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額19.99ドル〜", "winner": "oss" },
+    { "category": "UIの使いやすさ", "oss": "シンプルで直感的", "saas": "シンプルで使いやすい", "winner": "draw" },
+    { "category": "コネクタ数", "oss": "200以上", "saas": "5000以上", "winner": "saas" },
+    { "category": "ワークフロー実行数", "oss": "無制限（セルフホスト）", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "コード実行", "oss": "JavaScript/TypeScript対応", "saas": "限定的", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "Zapierより使いやすいUIでセルフホストしたい",
+    "実行数の制限なく自動化を無制限に使いたい",
+    "ワークフローのデータを自社サーバーで処理したい"
+  ],
+  "saasFor": [
+    "5000以上の豊富なコネクタをすぐ使いたい",
+    "大量のZapierテンプレートライブラリを活用したい",
+    "ノーコードで誰でも自動化を作りたい非エンジニア"
+  ],
+  "faq": [
+    {
+      "question": "ActivepiecesはZapierより使いやすいですか？",
+      "answer": "はい。ActivepiecesはZapierに近いビジュアルフロービルダーを持っており、n8nより初心者に使いやすい設計です。ドラッグ&ドロップでフローを作成できます。"
+    },
+    {
+      "question": "ZapierのZapをActivepiecesに移行できますか？",
+      "answer": "直接の自動変換ツールはありませんが、ActivepiecesはZapierと同じトリガー・アクション形式を採用しており、手動での再構築が比較的容易です。"
+    },
+    {
+      "question": "Activepiecesはどのくらいのコネクタをサポートしていますか？",
+      "answer": "2024年時点で200以上のコネクタを提供しています。またOSSのためコミュニティによる独自コネクタの開発・追加も可能です。"
+    },
+    {
+      "question": "n8nとActivepiecesはどちらがいいですか？",
+      "answer": "コードを書ける開発者や複雑なロジックが必要な場合はn8n、シンプルなUIでコードなしに自動化を作りたい場合はActivepiecesがおすすめです。"
+    }
+  ],
+  "relatedSlugs": ["zapier", "retool", "airtable"]
+}

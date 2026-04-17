@@ -18,7 +18,7 @@ import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
-import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
+import { COMPETITOR_TO_SLUG, COMPARE_LINKS } from "./AlternativesPage";
 import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
@@ -994,6 +994,35 @@ export default function ToolDetailPage() {
             </a>
           </div>
         </section>
+
+        {/* ── Compare page links ── */}
+        {(() => {
+          const altSlug = hasCompetitor && competitorEn ? COMPETITOR_TO_SLUG[competitorEn] : null;
+          const compareItems = altSlug ? (COMPARE_LINKS[altSlug] ?? []) : [];
+          const matchedCompare = compareItems.find(({ ossName }) =>
+            (tool.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") ===
+            ossName.toLowerCase().replace(/[^a-z0-9]/g, "")
+          );
+          if (!matchedCompare) return null;
+          return (
+            <section className="mb-8 pt-6 border-t border-border/60">
+              <Link
+                to={`/compare/${matchedCompare.slug}`}
+                className="card-unified p-4 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
+              >
+                <div>
+                  <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {matchedCompare.ossName} vs {competitorEn} を徹底比較
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    コスト・機能・セルフホスト対応を項目別に比較
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              </Link>
+            </section>
+          );
+        })()}
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">

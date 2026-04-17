@@ -139,6 +139,8 @@ Deno.serve(async () => {
     "n8n-vs-zapier","nocodb-vs-airtable","matomo-vs-google-analytics",
     "keycloak-vs-auth0","glitchtip-vs-sentry","excalidraw-vs-miro",
     "listmonk-vs-sendgrid","vikunja-vs-asana","rocket-chat-vs-slack",
+    "nextcloud-vs-google-drive","gitea-vs-github","plausible-vs-google-analytics",
+    "chatwoot-vs-intercom","taiga-vs-jira","activepieces-vs-zapier",
   ];
   for (const slug of compareSlugs) {
     xml += `

@@ -78,14 +78,18 @@ const COMPARE_LINKS: Record<string, { slug: string; ossName: string }[]> = {
   mixpanel: [{ slug: "posthog-vs-mixpanel", ossName: "PostHog" }],
   figma: [{ slug: "penpot-vs-figma", ossName: "Penpot" }],
   confluence: [{ slug: "outline-vs-confluence", ossName: "Outline" }],
-  zapier: [{ slug: "n8n-vs-zapier", ossName: "n8n" }],
+  zapier: [{ slug: "n8n-vs-zapier", ossName: "n8n" }, { slug: "activepieces-vs-zapier", ossName: "Activepieces" }],
   airtable: [{ slug: "nocodb-vs-airtable", ossName: "NocoDB" }],
-  "google-analytics": [{ slug: "matomo-vs-google-analytics", ossName: "Matomo" }],
+  "google-analytics": [{ slug: "matomo-vs-google-analytics", ossName: "Matomo" }, { slug: "plausible-vs-google-analytics", ossName: "Plausible" }],
   auth0: [{ slug: "keycloak-vs-auth0", ossName: "Keycloak" }],
   sentry: [{ slug: "glitchtip-vs-sentry", ossName: "GlitchTip" }],
   miro: [{ slug: "excalidraw-vs-miro", ossName: "Excalidraw" }],
   sendgrid: [{ slug: "listmonk-vs-sendgrid", ossName: "Listmonk" }],
   asana: [{ slug: "vikunja-vs-asana", ossName: "Vikunja" }],
+  "google-drive": [{ slug: "nextcloud-vs-google-drive", ossName: "Nextcloud" }],
+  "github-copilot": [{ slug: "gitea-vs-github", ossName: "Gitea" }],
+  intercom: [{ slug: "chatwoot-vs-intercom", ossName: "Chatwoot" }],
+  jira: [{ slug: "taiga-vs-jira", ossName: "Taiga" }],
 };
 
 export { SLUG_MAP, COMPETITOR_TO_SLUG, COMPARE_LINKS };

@@ -19,6 +19,12 @@ const COMPARE_PAGES = [
   { slug: "keycloak-vs-auth0",            oss: "Keycloak",   saas: "Auth0",           category: "認証" },
   { slug: "glitchtip-vs-sentry",          oss: "GlitchTip",  saas: "Sentry",          category: "エラー監視" },
   { slug: "listmonk-vs-sendgrid",         oss: "Listmonk",   saas: "SendGrid",        category: "メール配信" },
+  { slug: "nextcloud-vs-google-drive",    oss: "Nextcloud",  saas: "Google Drive",    category: "ストレージ" },
+  { slug: "gitea-vs-github",              oss: "Gitea",      saas: "GitHub",          category: "Gitホスティング" },
+  { slug: "plausible-vs-google-analytics",oss: "Plausible",  saas: "Google Analytics",category: "アクセス解析" },
+  { slug: "chatwoot-vs-intercom",         oss: "Chatwoot",   saas: "Intercom",        category: "カスタマーサポート" },
+  { slug: "taiga-vs-jira",               oss: "Taiga",      saas: "Jira",            category: "プロジェクト管理" },
+  { slug: "activepieces-vs-zapier",       oss: "Activepieces",saas: "Zapier",         category: "自動化" },
 ];
 
 const CATEGORIES = [...new Set(COMPARE_PAGES.map(p => p.category))];

@@ -34,6 +34,12 @@ const ALL_COMPARE_SLUGS: Record<string, { oss: string; saas: string }> = {
   "listmonk-vs-sendgrid": { oss: "Listmonk", saas: "SendGrid" },
   "vikunja-vs-asana": { oss: "Vikunja", saas: "Asana" },
   "rocket-chat-vs-slack": { oss: "Rocket.Chat", saas: "Slack" },
+  "nextcloud-vs-google-drive": { oss: "Nextcloud", saas: "Google Drive" },
+  "gitea-vs-github": { oss: "Gitea", saas: "GitHub" },
+  "plausible-vs-google-analytics": { oss: "Plausible", saas: "Google Analytics" },
+  "chatwoot-vs-intercom": { oss: "Chatwoot", saas: "Intercom" },
+  "taiga-vs-jira": { oss: "Taiga", saas: "Jira" },
+  "activepieces-vs-zapier": { oss: "Activepieces", saas: "Zapier" },
 };
 
 export default function ComparePage() {

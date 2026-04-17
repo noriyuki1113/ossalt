@@ -1,0 +1,50 @@
+{
+  "slug": "taiga-vs-jira",
+  "ossName": "Taiga",
+  "ossUrl": "https://taiga.io",
+  "ossGithub": "https://github.com/taigaio/taiga-back",
+  "saasName": "Jira",
+  "saasUrl": "https://www.atlassian.com/software/jira",
+  "alternativeSlug": "jira",
+  "metaTitle": "Taiga vs Jira 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Taiga（OSS）とJiraを徹底比較。コスト・アジャイル機能・スプリント管理・Confluence連携の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "JiraからTaiga（OSS）への移行を検討していますか？コスト・スクラム・カンバン・スプリント管理・Slack連携など6項目で徹底比較します。",
+  "verdict": "シンプルなアジャイル管理・コスト削減が優先ならTaiga。複雑なワークフロー・Confluenceとの統合・大規模チームの管理ならJira。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額8.15ドル〜/人", "winner": "oss" },
+    { "category": "スクラム・カンバン", "oss": "対応（直感的）", "saas": "対応（高機能）", "winner": "draw" },
+    { "category": "UIのシンプルさ", "oss": "シンプルで使いやすい", "saas": "複雑・学習コスト高", "winner": "oss" },
+    { "category": "Confluence連携", "oss": "非対応", "saas": "深い統合", "winner": "saas" },
+    { "category": "カスタムワークフロー", "oss": "基本的な設定", "saas": "高度なカスタマイズ", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "Data Center版のみ（高額）", "winner": "oss" }
+  ],
+  "ossFor": [
+    "シンプルなアジャイル開発管理を低コストで始めたい",
+    "小〜中規模チームでJiraの複雑さを避けたい",
+    "データを自社サーバーで管理したい"
+  ],
+  "saasFor": [
+    "JiraとConfluenceのAtlassianエコシステムを活用している",
+    "複雑なビジネスワークフローのカスタマイズが必要",
+    "100人以上の大規模チームでの運用を想定している"
+  ],
+  "faq": [
+    {
+      "question": "TaigaはJiraと同じようにスプリント計画ができますか？",
+      "answer": "はい。Taigaはスクラムボードとカンバンボードのどちらにも対応しており、スプリント計画・バーンダウンチャート・ベロシティ追跡をサポートしています。"
+    },
+    {
+      "question": "JiraからTaigaへイシューを移行できますか？",
+      "answer": "JiraのCSVエクスポートを使ってタスク・ストーリーのデータを取り出せます。TaigaにはCSVインポート機能があり、基本的な移行が可能です。"
+    },
+    {
+      "question": "TaigaはGitHubやGitLabと連携できますか？",
+      "answer": "はい。TaigaはGitHub・GitLabとの連携機能を持ち、コミットやPRをイシューと紐付けることができます。"
+    },
+    {
+      "question": "Taigaの無料版とセルフホスト版の違いは何ですか？",
+      "answer": "Taiga.ioのクラウド版は小規模チームに無料プランがあります。セルフホスト版はDockerで構築でき、メンバー数制限なしで使えます。"
+    }
+  ],
+  "relatedSlugs": ["jira", "trello", "asana"]
+}

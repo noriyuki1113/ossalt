@@ -1,0 +1,50 @@
+{
+  "slug": "chatwoot-vs-intercom",
+  "ossName": "Chatwoot",
+  "ossUrl": "https://www.chatwoot.com",
+  "ossGithub": "https://github.com/chatwoot/chatwoot",
+  "saasName": "Intercom",
+  "saasUrl": "https://www.intercom.com",
+  "alternativeSlug": "intercom",
+  "metaTitle": "Chatwoot vs Intercom 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Chatwoot（OSS）とIntercomを徹底比較。コスト・チャットウィジェット・自動化・多チャンネル対応の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "IntercomからChatwoot（OSS）への移行を検討していますか？コスト・ライブチャット・自動化・多チャンネル対応など6項目で徹底比較します。",
+  "verdict": "コスト削減・チャットデータの自社管理・基本的なサポート機能が必要ならChatwoot。高度なAI自動化・プロダクトツアー・メール配信との統合が必要ならIntercom。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額74ドル〜/人", "winner": "oss" },
+    { "category": "ライブチャット", "oss": "対応", "saas": "対応", "winner": "draw" },
+    { "category": "多チャンネル対応", "oss": "Web・メール・WhatsApp等", "saas": "Web・メール・SMS等", "winner": "draw" },
+    { "category": "AI自動応答", "oss": "基本的な自動化", "saas": "Fin AI（高精度）", "winner": "saas" },
+    { "category": "プロダクトツアー", "oss": "非対応", "saas": "対応", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "ライブチャットのコストを大幅に削減したい",
+    "顧客データを自社DBで管理したい",
+    "WhatsApp・Twitter・FacebookなどSNSも統合したい"
+  ],
+  "saasFor": [
+    "高精度のAIチャットbot（Fin AI）を活用したい",
+    "プロダクトツアーやオンボーディング機能が必要",
+    "大規模サポートチームのレポート・分析機能を活用したい"
+  ],
+  "faq": [
+    {
+      "question": "ChatwootはIntercomのようなチャットウィジェットを設置できますか？",
+      "answer": "はい。ChatwootはWebサイトに埋め込めるカスタマイズ可能なライブチャットウィジェットを提供しています。カラーやテキストも変更できます。"
+    },
+    {
+      "question": "IntercomからChatwootへ顧客データを移行できますか？",
+      "answer": "IntercomはCSVエクスポートに対応しており、連絡先・会話履歴をChatwootにインポートできます。"
+    },
+    {
+      "question": "ChatwootはSlackや他ツールと連携できますか？",
+      "answer": "はい。ChatwootはSlack・Jira・HubSpotとの連携機能を持っています。また、Webhook経由で他ツールとも連携可能です。"
+    },
+    {
+      "question": "Chatwootのセルフホストに必要なスペックは？",
+      "answer": "小規模チームなら2コア・2GBメモリのVPSで動作します。PostgreSQLとRedisが必要で、Docker Composeでの起動が最も簡単です。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "zendesk", "typeform"]
+}

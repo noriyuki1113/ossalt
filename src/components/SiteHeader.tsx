@@ -2,28 +2,31 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const NAV = [
-  {
-    label: "代替を探す",
-    children: [
-      { to: "/alternatives/notion", label: "Notion の代替" },
-      { to: "/alternatives/slack", label: "Slack の代替" },
-      { to: "/alternatives/figma", label: "Figma の代替" },
-      { to: "/alternatives/jira", label: "Jira の代替" },
-      { to: "/alternatives/zapier", label: "Zapier の代替" },
-      { to: "/alternatives/airtable", label: "Airtable の代替" },
-      { to: "/alternatives/google-analytics", label: "Google Analytics の代替" },
-      { to: "/alternatives/datadog", label: "Datadog の代替" },
-    ],
-  },
-  { to: "/ranking", label: "人気ツール" },
-  { to: "/workspace", label: "比較する" },
-  { to: "/advertise", label: "広告掲載" },
+const ALTERNATIVES_NAV = [
+  { to: "/alternatives/notion",           label: "Notion の代替" },
+  { to: "/alternatives/slack",            label: "Slack の代替" },
+  { to: "/alternatives/figma",            label: "Figma の代替" },
+  { to: "/alternatives/jira",             label: "Jira の代替" },
+  { to: "/alternatives/zapier",           label: "Zapier の代替" },
+  { to: "/alternatives/airtable",         label: "Airtable の代替" },
+  { to: "/alternatives/google-analytics", label: "Google Analytics の代替" },
+  { to: "/alternatives/datadog",          label: "Datadog の代替" },
+];
+
+const COMPARE_NAV = [
+  { to: "/compare/appflowy-vs-notion",        label: "AppFlowy vs Notion" },
+  { to: "/compare/mattermost-vs-slack",       label: "Mattermost vs Slack" },
+  { to: "/compare/penpot-vs-figma",           label: "Penpot vs Figma" },
+  { to: "/compare/plane-vs-linear",           label: "Plane vs Linear" },
+  { to: "/compare/n8n-vs-zapier",             label: "n8n vs Zapier" },
+  { to: "/compare/posthog-vs-mixpanel",       label: "PostHog vs Mixpanel" },
+  { to: "/compare/keycloak-vs-auth0",         label: "Keycloak vs Auth0" },
+  { to: "/compare/glitchtip-vs-sentry",       label: "GlitchTip vs Sentry" },
 ];
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [headerSearch, setHeaderSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,6 +42,50 @@ export function SiteHeader() {
 
   const isActive = (to: string) => location.pathname === to;
 
+  const Dropdown = ({
+    id, label, items, allTo, allLabel,
+  }: {
+    id: string;
+    label: string;
+    items: { to: string; label: string }[];
+    allTo: string;
+    allLabel: string;
+  }) => (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpenDropdown(id)}
+      onMouseLeave={() => setOpenDropdown(null)}
+    >
+      <button className="flex items-center gap-1 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md">
+        {label}
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${openDropdown === id ? "rotate-180" : ""}`} />
+      </button>
+      {openDropdown === id && (
+        <div className="absolute top-full left-0 mt-1 w-56 rounded-xl border border-border bg-card shadow-lg py-1 z-50">
+          {items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+              onClick={() => setOpenDropdown(null)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <div className="border-t border-border mt-1 pt-1">
+            <Link
+              to={allTo}
+              className="block px-4 py-2 text-sm text-primary font-medium hover:bg-secondary transition-colors"
+              onClick={() => setOpenDropdown(null)}
+            >
+              {allLabel}
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-xl">
       <div className="container flex h-14 items-center justify-between gap-4">
@@ -52,47 +99,30 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-0.5">
-          {/* Dropdown: 代替を探す */}
-          <div
-            className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
-          >
-            <button className="flex items-center gap-1 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md">
-              代替を探す
-              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
-            </button>
-            {dropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-52 rounded-xl border border-border bg-card shadow-lg py-1 z-50">
-                {NAV[0].children!.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-                <div className="border-t border-border mt-1 pt-1">
-                  <Link
-                    to="/ranking"
-                    className="block px-4 py-2 text-sm text-primary font-medium hover:bg-secondary transition-colors"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    すべて見る →
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {NAV.slice(1).map((item) => (
+          <Dropdown
+            id="alt"
+            label="代替を探す"
+            items={ALTERNATIVES_NAV}
+            allTo="/ranking"
+            allLabel="すべて見る →"
+          />
+          <Dropdown
+            id="compare"
+            label="A vs B 比較"
+            items={COMPARE_NAV}
+            allTo="/compare"
+            allLabel="比較一覧を見る →"
+          />
+          {[
+            { to: "/ranking", label: "人気ツール" },
+            { to: "/workspace", label: "比較する" },
+            { to: "/advertise", label: "広告掲載" },
+          ].map((item) => (
             <Link
               key={item.to}
-              to={item.to!}
+              to={item.to}
               className={`px-3 py-1.5 text-sm transition-colors rounded-md ${
-                isActive(item.to!)
+                isActive(item.to)
                   ? "text-foreground font-medium bg-secondary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
@@ -130,7 +160,7 @@ export function SiteHeader() {
           <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider px-3 pt-1 pb-0.5">
             代替を探す
           </p>
-          {NAV[0].children!.map((item) => (
+          {ALTERNATIVES_NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -140,13 +170,39 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <div className="border-t border-border pt-2 mt-2 space-y-1">
-            {NAV.slice(1).map((item) => (
+          <div className="border-t border-border pt-2 mt-2">
+            <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider px-3 pb-0.5">
+              A vs B 比較
+            </p>
+            {COMPARE_NAV.slice(0, 4).map((item) => (
               <Link
                 key={item.to}
-                to={item.to!}
+                to={item.to}
+                className="block px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-secondary"
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              to="/compare"
+              className="block px-3 py-2 text-sm text-primary font-medium hover:bg-secondary transition-colors rounded-md"
+              onClick={() => setMobileOpen(false)}
+            >
+              比較一覧を見る →
+            </Link>
+          </div>
+          <div className="border-t border-border pt-2 mt-2 space-y-1">
+            {[
+              { to: "/ranking", label: "人気ツール" },
+              { to: "/workspace", label: "比較する" },
+              { to: "/advertise", label: "広告掲載" },
+            ].map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
                 className={`block px-3 py-2 text-sm transition-colors rounded-md ${
-                  isActive(item.to!)
+                  isActive(item.to)
                     ? "text-foreground font-medium bg-secondary"
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                 }`}
