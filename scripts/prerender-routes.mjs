@@ -284,5 +284,33 @@ export async function getPrerenderRoutes() {
     });
   }
 
+  // Compare pages
+  const COMPARE_PAGES = {
+    "appflowy-vs-notion": { oss: "AppFlowy", saas: "Notion" },
+    "mattermost-vs-slack": { oss: "Mattermost", saas: "Slack" },
+    "plane-vs-linear": { oss: "Plane", saas: "Linear" },
+    "posthog-vs-mixpanel": { oss: "PostHog", saas: "Mixpanel" },
+    "penpot-vs-figma": { oss: "Penpot", saas: "Figma" },
+    "outline-vs-confluence": { oss: "Outline", saas: "Confluence" },
+    "n8n-vs-zapier": { oss: "n8n", saas: "Zapier" },
+    "nocodb-vs-airtable": { oss: "NocoDB", saas: "Airtable" },
+    "matomo-vs-google-analytics": { oss: "Matomo", saas: "Google Analytics" },
+    "keycloak-vs-auth0": { oss: "Keycloak", saas: "Auth0" },
+    "glitchtip-vs-sentry": { oss: "GlitchTip", saas: "Sentry" },
+    "excalidraw-vs-miro": { oss: "Excalidraw", saas: "Miro" },
+    "listmonk-vs-sendgrid": { oss: "Listmonk", saas: "SendGrid" },
+    "vikunja-vs-asana": { oss: "Vikunja", saas: "Asana" },
+    "rocket-chat-vs-slack": { oss: "Rocket.Chat", saas: "Slack" },
+  };
+  for (const [slug, { oss, saas }] of Object.entries(COMPARE_PAGES)) {
+    routes.push({
+      path: `/compare/${slug}`,
+      title: `${oss} vs ${saas} 比較 | OSSで代替できる？コスト・機能を徹底解説`,
+      description: `${oss}（OSS）と${saas}を徹底比較。コスト・セルフホスト・機能の違いを解説。どちらを選ぶべきか判断できます。`,
+      canonical: `${BASE_URL}/compare/${slug}`,
+      ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(oss + " vs " + saas)}`,
+    });
+  }
+
   return routes;
 }
