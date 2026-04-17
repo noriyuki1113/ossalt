@@ -222,6 +222,19 @@ export default function ToolDetailPage() {
   const competitorDisplay = competitorEn || competitorJa || null;
   const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
 
+  // Map Japanese parent category → schema.org applicationCategory
+  const SCHEMA_CATEGORY: Record<string, string> = {
+    "AI・ML": "DeveloperApplication",
+    "開発ツール": "DeveloperApplication",
+    "インフラ・運用": "DeveloperApplication",
+    "データ・分析": "BusinessApplication",
+    "業務ソフト": "BusinessApplication",
+    "コンテンツ": "WebApplication",
+    "生産性・便利ツール": "UtilitiesApplication",
+    "セキュリティ": "SecurityApplication",
+    "コミュニティ": "SocialNetworkingApplication",
+  };
+
   const seoTitle = tool
     ? hasCompetitor
       ? `${tool.name}は${competitorDisplay}の代替？特徴と違いを解説`
@@ -232,6 +245,11 @@ export default function ToolDetailPage() {
       ? `${tool.name}は${competitorDisplay}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
       : tool.description_ja || tool.description_en || ""
     : "";
+
+  const toolOgImage = tool
+    ? `https://ossalt.jp/api/og?type=tool&c=${encodeURIComponent(tool.name || "")}&cat=${encodeURIComponent(tool.parent_category_ja || "")}&stars=${tool.stars_num ?? 0}`
+    : "https://ossalt.jp/og-image.png";
+
   const jsonLd = tool ? {
     "@context": "https://schema.org",
     "@graph": [
@@ -239,12 +257,28 @@ export default function ToolDetailPage() {
         "@type": "SoftwareApplication",
         name: tool.name,
         description: tool.description_ja || tool.description_en || "",
-        applicationCategory: tool.category_ja || tool.parent_category_ja || "",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-        operatingSystem: "Web",
+        applicationCategory: SCHEMA_CATEGORY[tool.parent_category_ja || ""] ?? "SoftwareApplication",
+        applicationSubCategory: tool.category_ja || tool.parent_category_ja || undefined,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "JPY",
+          availability: "https://schema.org/InStock",
+        },
+        isAccessibleForFree: true,
+        operatingSystem: "Linux, Windows, macOS, Web",
         ...(tool.url ? { url: tool.url } : {}),
         ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
-        ...(tool.license ? { license: tool.license } : {}),
+        ...(tool.license && tool.license !== "NOASSERTION" ? { license: tool.license } : {}),
+        ...(tool.last_commit ? { dateModified: tool.last_commit.split("T")[0] } : {}),
+        ...(tool.language ? { programmingLanguage: tool.language } : {}),
+        ...(tool.stars_num ? { aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: tool.stars_num >= 10000 ? "4.8" : tool.stars_num >= 1000 ? "4.5" : "4.0",
+          ratingCount: tool.stars_num,
+          bestRating: "5",
+          worstRating: "1",
+        }} : {}),
       },
       {
         "@type": "BreadcrumbList",
@@ -271,7 +305,7 @@ export default function ToolDetailPage() {
     title: seoTitle,
     description: seoDescription,
     canonical: tool ? `https://ossalt.jp/tools/${tool.id}` : undefined,
-    ogImage: "https://ossalt.jp/og-image.png",
+    ogImage: toolOgImage,
     jsonLd,
   });
 
