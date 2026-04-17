@@ -1,0 +1,49 @@
+{
+  "slug": "mailchimp",
+  "competitor": "Mailchimp",
+  "competitorUrl": "https://mailchimp.com",
+  "metaTitle": "Mailchimpの代替OSSツール一覧 | 無料で使えるメールマーケティングツール比較",
+  "metaDescription": "Mailchimpの代わりに使える無料オープンソースのメールマーケティングツールを比較。Listmonk・Mauticなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Mailchimpの購読者数に応じた高額な料金体系に悩んでいませんか？ここではMailchimpの代わりに使えるオープンソースのメールマーケティング・メルマガ配信ツールを比較します。購読者数無制限・自社サーバーからの配信・セグメント配信をOSSで実現できます。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Mailchimpは購読者数で課金（10万人で月額350ドル〜）。OSSなら購読者数無制限でSMTPコストのみ。",
+      "icon": "cost"
+    },
+    {
+      "title": "購読者データの自社管理",
+      "description": "顧客メールアドレス・開封率・クリック率データをMailchimpに渡さず、自社DBで完全管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "配信制限・規約の回避",
+      "description": "Mailchimpの送信制限・コンテンツポリシーに縛られず、自社SMTPから自由に配信できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "高度なカスタマイズ",
+      "description": "テンプレート・セグメント・自動化ワークフローを自社のビジネスロジックに合わせて設計できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "MailchimpのOSS代替で最も人気なのは何ですか？",
+      "answer": "Listmonkが最も人気のOSSメルマガ配信ツールです。軽量・高速・購読者数無制限で、既製のSMTPサービス（AWS SES・Postmark等）と組み合わせて使えます。Mauticはより高度なマーケティング自動化機能を持ちます。"
+    },
+    {
+      "question": "ListmonkはMailchimpのようなメール配信自動化（オートメーション）に対応していますか？",
+      "answer": "Listmonkは基本的なキャンペーン配信とセグメント機能を持ちますが、複雑な自動化フローはMauticやMailerLiteが適しています。シンプルなメルマガ配信ならListmonkが最適です。"
+    },
+    {
+      "question": "MailchimpからListmonkへ購読者リストを移行できますか？",
+      "answer": "はい。MailchimpはCSVエクスポートに対応しており、ListmonkのCSVインポート機能でそのまま移行できます。カスタムフィールドのマッピングが必要になる場合があります。"
+    },
+    {
+      "question": "OSSメール配信ツールを使うにはSMTPサーバーが必要ですか？",
+      "answer": "はい。Listmonk等のOSSツールは送信エンジンとして外部SMTPが必要です。Amazon SES（月額1,000通0.1ドル）・Postmark・SendGridのAPIを利用するのが一般的です。"
+    }
+  ],
+  "relatedSlugs": ["sendgrid", "intercom", "hubspot"]
+}

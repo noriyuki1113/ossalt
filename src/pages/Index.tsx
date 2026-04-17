@@ -7,6 +7,7 @@ import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
 import { PopularAlternativesSection } from "@/components/home/PopularAlternativesSection";
+import { PopularComparisonsSection } from "@/components/home/PopularComparisonsSection";
 import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
 import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
 import { StatsBar } from "@/components/StatsBar";
@@ -353,7 +354,9 @@ export default function IndexPage() {
           <StatsBar />
           {/* 1. 人気SaaS代替チップ（最重要導線） */}
           <PopularAlternativesSection />
-          {/* 2. カテゴリグリッド */}
+          {/* 2. OSS vs SaaS 比較 */}
+          <PopularComparisonsSection />
+          {/* 3. カテゴリグリッド */}
           <PopularCategoriesGrid />
           {/* 3. 注目ツール横スクロールレール */}
           <Suspense fallback={<SectionFallback />}>

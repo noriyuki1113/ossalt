@@ -1,0 +1,49 @@
+{
+  "slug": "github-actions",
+  "competitor": "GitHub Actions",
+  "competitorUrl": "https://github.com/features/actions",
+  "metaTitle": "GitHub Actionsの代替OSSツール一覧 | 無料で使えるCI/CDパイプライン比較",
+  "metaDescription": "GitHub Actionsの代わりに使える無料オープンソースのCI/CDツールを比較。Woodpecker CI・Drone CI・Forgejo Actionsなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "GitHub Actionsの実行時間制限やプライベートリポジトリの課金が課題になっていませんか？ここではGitHub Actionsの代わりに使えるオープンソースのCI/CDパイプラインツールを比較します。セルフホストのCI/CDでビルド・テスト・デプロイを無制限に実行できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "GitHub Actionsはプライベートリポジトリで月2,000分まで無料、超過は課金。OSSならサーバー上で無制限に実行できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "CI/CDデータの自社管理",
+      "description": "ビルドログ・シークレット・アーティファクトをGitHubに渡さず、完全に自社管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "エアギャップ環境での運用",
+      "description": "インターネット非接続のオンプレ環境でもCI/CDパイプラインを完全動作させることができる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタムランナーとキャッシュ",
+      "description": "高性能な自社サーバーをランナーとして使い、キャッシュやアーティファクトを自社ストレージに保存できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "GitHub ActionsのOSS代替で最も人気なのは何ですか？",
+      "answer": "Woodpecker CIとDrone CIが最も人気です。両方ともDockerベースのCI/CDで、GitHub/GitLab/Giteaと連携できます。Gitea/ForgejoユーザーにはForgejo Actionsが最適です。"
+    },
+    {
+      "question": "Woodpecker CIはGitHub Actionsのワークフロー構文と互換性がありますか？",
+      "answer": "Woodpecker CIは独自のYAML形式を使用します（GitHub Actions互換ではありません）。ただし概念は似ており、ステップ・サービス・シークレット・マトリックスビルドに対応しています。"
+    },
+    {
+      "question": "セルフホストCI/CDに必要なサーバースペックは？",
+      "answer": "Woodpecker CIのサーバー自体は1コア・512MBで動作します。実際のビルド負荷に応じてエージェント（ランナー）のスペックを調整します。並列ビルドが多い場合は4コア・8GB以上を推奨します。"
+    },
+    {
+      "question": "GitHub ActionsからWoodpecker CIへの移行は難しいですか？",
+      "answer": "ワークフローの書き直しが必要です。GitHub ActionsのYAMLをWoodpecker CI形式に変換するツールはないため手動での移行になりますが、ステップ構造が似ているため比較的スムーズに対応できます。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "datadog", "sentry"]
+}

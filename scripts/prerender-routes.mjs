@@ -71,6 +71,16 @@ const ALTERNATIVES = {
   clickup: "ClickUp",
   pagerduty: "PagerDuty",
   sendgrid: "SendGrid",
+  heroku: "Heroku",
+  calendly: "Calendly",
+  mailchimp: "Mailchimp",
+  discord: "Discord",
+  monday: "Monday.com",
+  loom: "Loom",
+  vercel: "Vercel",
+  doodle: "Doodle",
+  "github-actions": "GitHub Actions",
+  circleci: "CircleCI",
 };
 
 /**

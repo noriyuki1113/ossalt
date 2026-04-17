@@ -1,0 +1,49 @@
+{
+  "slug": "calendly",
+  "competitor": "Calendly",
+  "competitorUrl": "https://calendly.com",
+  "metaTitle": "Calendlyの代替OSSツール一覧 | 無料で使えるスケジュール調整ツール比較",
+  "metaDescription": "Calendlyの代わりに使える無料オープンソースの日程調整ツールを比較。Cal.comなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Calendlyの月額コストや予約データの外部依存が気になっていませんか？ここではCalendlyの代わりに使えるオープンソースのスケジュール調整・予約管理ツールを比較します。Cal.comを筆頭に、Googleカレンダー連携・自動リマインダー・チーム予約をセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Calendlyは月額8ドル〜/人。チームで使うと費用が膨らむが、OSSならサーバー代のみで全員分使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "予約データの自社管理",
+      "description": "顧客の予約情報・連絡先をCalendlyのサーバーに依存せず、自社DBで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ブランディングのカスタマイズ",
+      "description": "Calendlyのブランドロゴを外し、自社ドメイン・デザインで予約ページを構築できる。",
+      "icon": "customization"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "Calendlyの独自機能・制限に縛られず、OSSなら自社のワークフローに合わせた設計が可能。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "CalendlyのOSS代替で最も有力なのは何ですか？",
+      "answer": "Cal.comがCalendlyに最も近い機能セットを持つOSS代替です。Google/Outlook カレンダー連携・チーム予約・自動リマインダー・Webhook連携に対応しており、セルフホストも可能です。"
+    },
+    {
+      "question": "Cal.comはCalendlyと同じようにGoogleカレンダーと連携できますか？",
+      "answer": "はい。Cal.comはGoogleカレンダー・Outlook・Apple Calendarとの双方向同期に対応しています。既存の予定との衝突を自動検出して空き時間を管理できます。"
+    },
+    {
+      "question": "Cal.comでZoom・Google Meetのリンクを自動生成できますか？",
+      "answer": "はい。Cal.comはZoom・Google Meet・Microsoft Teams・Whereby等のビデオ会議ツールと連携し、予約確定時にミーティングURLを自動生成します。"
+    },
+    {
+      "question": "CalendlyからCal.comへ予約リンクを移行できますか？",
+      "answer": "直接のデータ移行ツールはありませんが、Cal.comで同等のイベントタイプを再作成するのは容易です。既存の予約データはCalendlyからCSVエクスポートして保管を推奨します。"
+    }
+  ],
+  "relatedSlugs": ["notion", "zapier", "typeform"]
+}

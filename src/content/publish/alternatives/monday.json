@@ -1,0 +1,49 @@
+{
+  "slug": "monday",
+  "competitor": "Monday.com",
+  "competitorUrl": "https://monday.com",
+  "metaTitle": "Monday.comの代替OSSツール一覧 | 無料で使えるプロジェクト管理ツール比較",
+  "metaDescription": "Monday.comの代わりに使える無料オープンソースのプロジェクト管理ツールを比較。Plane・OpenProjectなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Monday.comの席課金が高額になっていませんか？ここではMonday.comの代わりに使えるオープンソースのプロジェクト管理・ワークマネジメントツールを比較します。カンバン・ガントチャート・スプリント管理をセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Monday.comは月額9〜19ドル/人（最低3名〜）。OSSなら人数制限なくサーバー代のみで運用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "プロジェクトデータの自社管理",
+      "description": "タスク・マイルストーン・チームの作業データを外部に預けず、自社サーバーで完全管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "Monday.comの独自ワークフローに依存せず、OSSなら自社プロセスに合った設計が自由にできる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタムワークフロー",
+      "description": "カスタムフィールド・ビュー・自動化をビジネスロジックに合わせて細かく設定できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Monday.comのOSS代替で最も機能が近いのは何ですか？",
+      "answer": "PlaneがMonday.comに最も近い機能セットを提供しています。カンバン・リスト・スプリント・ガントビューに対応し、GitHub連携も可能です。OpenProjectはより重厚なエンタープライズ向けの機能を持ちます。"
+    },
+    {
+      "question": "PlaneはMonday.comのガントチャートに対応していますか？",
+      "answer": "はい。Planeはガントチャートビューに対応しており、タイムラインでプロジェクトの進捗を可視化できます。スプリント・サイクル管理も可能です。"
+    },
+    {
+      "question": "Monday.comからPlaneへデータを移行できますか？",
+      "answer": "Monday.comはCSVエクスポートに対応しており、Planeのインポート機能でタスクを移行できます。カスタムカラムやオートメーションの再設定が必要になります。"
+    },
+    {
+      "question": "小規模チーム（5名以下）にはどのOSS代替がおすすめですか？",
+      "answer": "Planeはセルフホストが比較的容易で、小規模チームでも使いやすいUIです。よりシンプルな管理ならVikunjaやTaigaも選択肢になります。"
+    }
+  ],
+  "relatedSlugs": ["jira", "asana", "linear"]
+}
