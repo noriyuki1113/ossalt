@@ -27,20 +27,20 @@ export default function PrivacyPage() {
 
           <Section title="アクセス解析">
             <p>
-              当サイトでは、サイトの利用状況を把握するためにGoogle Analyticsを使用しています。
-              Google Analyticsは匿名のデータのみを収集し、個人を特定する情報は取得しません。
+              当サイトでは、サイトの利用状況を把握するためにUmami Analyticsを使用しています。
+              Umamiはプライバシーに配慮した解析ツールで、Cookieを使用せず、個人を特定する情報は一切収集しません。
             </p>
             <p>
-              データの収集にはCookieが使用されます。ブラウザの設定でCookieを無効にすることで、
-              データの収集を拒否することができます。
+              収集されるデータは匿名の集計情報（ページビュー数・リファラー・使用デバイスなど）のみです。
+              IPアドレスや個人情報は保存されません。
             </p>
           </Section>
 
           <Section title="Cookie（クッキー）について">
             <p>
-              当サイトでは、Google Analytics用のCookieを使用しています。
-              Cookieはブラウザに保存される小さなテキストファイルで、
-              サイトの利用状況の分析に使用されます。
+              当サイトのアクセス解析にはCookieを使用していません。
+              Umami AnalyticsはCookieレスで動作するため、ブラウザのCookie設定に関わらず
+              トラッキングされることはありません。
             </p>
           </Section>
 
