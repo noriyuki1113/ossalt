@@ -17,9 +17,12 @@ export default function PrivacyPage() {
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
           プライバシーポリシー
         </h1>
-        <p className="text-sm text-muted-foreground mb-8">制定日：2026年3月30日</p>
+        <div className="flex gap-4 text-sm text-muted-foreground mb-10">
+          <span>制定日：2026年3月30日</span>
+          <span>最終更新日：2026年4月18日</span>
+        </div>
 
-        <div className="space-y-10 text-muted-foreground leading-relaxed">
+        <div className="divide-y divide-border">
           <Section title="個人情報の利用目的">
             <p>
               当サイトでは、お問い合わせやサービスの利用時に、名前やメールアドレス等の個人情報をご提供いただく場合があります。
@@ -56,7 +59,7 @@ export default function PrivacyPage() {
 
           <Section title="個人情報の第三者への提供">
             <p>取得した個人情報は、以下の場合を除き第三者に提供することはありません。</p>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className="list-disc pl-4 space-y-1">
               <li>本人の同意がある場合</li>
               <li>法令に基づき開示が必要な場合</li>
             </ul>
@@ -99,12 +102,12 @@ export default function PrivacyPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section>
-      <h2 className="text-xl font-bold flex items-center gap-3 mb-4">
-        <span className="w-1 h-6 rounded-full bg-primary shrink-0" />
+    <section className="py-8">
+      <h2 className="text-lg font-bold text-foreground flex items-center gap-3 mb-4">
+        <span className="w-1 h-5 rounded-full bg-primary shrink-0" />
         {title}
       </h2>
-      <div className="space-y-2 pl-4">{children}</div>
+      <div className="space-y-3 text-muted-foreground leading-relaxed">{children}</div>
     </section>
   );
 }
