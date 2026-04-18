@@ -246,9 +246,7 @@ export default function ToolDetailPage() {
       : tool.description_ja || tool.description_en || ""
     : "";
 
-  const toolOgImage = tool
-    ? `https://ossalt.jp/api/og?type=tool&c=${encodeURIComponent(tool.name || "")}&cat=${encodeURIComponent(tool.parent_category_ja || "")}&stars=${tool.stars_num ?? 0}`
-    : "https://ossalt.jp/og-image.png";
+  const toolOgImage = "https://ossalt.jp/og-image.png";
 
   const jsonLd = tool ? {
     "@context": "https://schema.org",
