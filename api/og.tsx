@@ -1,4 +1,7 @@
-import { ImageResponse } from "@vercel/og";
+// Import edge-specific bundle directly; Vercel's bundler resolves the default
+// condition to index.node.js which uses Node.js APIs unsupported in Edge Runtime.
+// @ts-ignore
+import { ImageResponse } from "@vercel/og/dist/index.edge.js";
 
 export const config = { runtime: "edge" };
 
