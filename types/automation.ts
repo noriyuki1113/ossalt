@@ -60,7 +60,7 @@ export interface NormalizedTool {
   github_url: string;
   website_url?: string;
   license: string;
-  stars_count: number;
+  stars_num: number;
   language: string;
   categories: string[];
   tags: string[];

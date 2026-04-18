@@ -95,7 +95,7 @@ async function upsertTool(normalized: NormalizedTool): Promise<number> {
         github_url: normalized.github_url,
         website_url: normalized.website_url,
         license: normalized.license,
-        stars_count: normalized.stars_count,
+        stars_num: normalized.stars_count,
         language: normalized.language,
         tags: normalized.tags,
         quality_score: normalized.quality_score,

@@ -9,7 +9,7 @@ export async function runContentGen(batchSize = 5): Promise<ContentGenResult> {
   const { data: tools, error } = await supabaseAdmin
     .from("tools")
     .select(`
-      id, name, slug, description, github_url, stars_count, language, tags,
+      id, name, slug, description, github_url, stars_num, language, tags,
       tool_alternatives(saas_name, saas_slug, saas_url, confidence_score, is_primary)
     `)
     .eq("status", "approved")
@@ -75,7 +75,7 @@ export async function runContentGen(batchSize = 5): Promise<ContentGenResult> {
 }
 
 async function generateComparisonContent(
-  tool: { name: string; slug: string; description: string; stars_count: number; language: string },
+  tool: { name: string; slug: string; description: string; stars_num: number; language: string },
   alt: { saas_name: string; saas_slug: string },
   systemPrompt: string
 ): Promise<ComparisonContent> {
@@ -84,7 +84,7 @@ async function generateComparisonContent(
 OSS: ${tool.name} (${tool.slug})
 SaaS: ${alt.saas_name} (${alt.saas_slug})
 OSSの概要: ${tool.description}
-Stars: ${tool.stars_count}
+Stars: ${tool.stars_num}
 言語: ${tool.language}
 
 comparison JSONを生成してください。`;

@@ -134,7 +134,7 @@ SELECT
   c.quality_score,
   c.created_at,
   c.updated_at,
-  t.stars_count,
+  t.stars_num,
   t.github_url
 FROM public.comparisons c
 LEFT JOIN public.tools t ON t.id = c.oss_tool_id;

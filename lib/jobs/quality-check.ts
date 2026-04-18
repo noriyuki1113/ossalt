@@ -13,7 +13,7 @@ export async function runQualityCheck(batchSize = 20): Promise<QualityCheckResul
 
   const { data: tools, error } = await supabaseAdmin
     .from("tools")
-    .select("id, name, slug, description, github_url, stars_count, language, tags, quality_score")
+    .select("id, name, slug, description, github_url, stars_num, language, tags, quality_score")
     .eq("status", "pending_review")
     .is("quality_score", null)
     .limit(batchSize);
@@ -52,7 +52,7 @@ export async function runQualityCheck(batchSize = 20): Promise<QualityCheckResul
 }
 
 function scoreToolHeuristic(tool: {
-  stars_count: number;
+  stars_num: number;
   description: string | null;
   github_url: string | null;
   language: string | null;
@@ -60,7 +60,7 @@ function scoreToolHeuristic(tool: {
   let score = 0;
 
   // Stars: log scale, maxes at ~10k stars = 0.4
-  const stars = tool.stars_count ?? 0;
+  const stars = tool.stars_num ?? 0;
   score += Math.min(0.4, Math.log10(Math.max(1, stars)) / 4);
 
   // Has description
@@ -79,7 +79,7 @@ function scoreToolHeuristic(tool: {
 }
 
 async function scoreTool(
-  tool: { id: number; name: string; description: string | null; stars_count: number; tags: string[] },
+  tool: { id: number; name: string; description: string | null; stars_num: number; tags: string[] },
   systemPrompt: string
 ): Promise<QualityScore> {
   const userMessage = `以下のOSSツールの品質スコアを評価してください:\n\n${JSON.stringify(tool, null, 2)}`;

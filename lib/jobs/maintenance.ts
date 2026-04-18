@@ -8,7 +8,7 @@ export async function runStarRefresh(batchSize = 50): Promise<Partial<Maintenanc
   try {
     const { data: tools, error } = await supabaseAdmin
       .from("tools")
-      .select("id, github_url, stars_count")
+      .select("id, github_url, stars_num")
       .not("github_url", "is", null)
       .order("updated_at", { ascending: true })
       .limit(batchSize);
@@ -19,8 +19,8 @@ export async function runStarRefresh(batchSize = 50): Promise<Partial<Maintenanc
     for (const tool of tools ?? []) {
       const fullName = (tool.github_url as string).replace("https://github.com/", "");
       const newStars = await getRepoStars(fullName);
-      if (newStars !== null && newStars !== tool.stars_count) {
-        await supabaseAdmin.from("tools").update({ stars_count: newStars }).eq("id", tool.id);
+      if (newStars !== null && newStars !== tool.stars_num) {
+        await supabaseAdmin.from("tools").update({ stars_num: newStars }).eq("id", tool.id);
         updated++;
       }
       await sleep(300);
