@@ -1,0 +1,49 @@
+{
+  "slug": "pinecone",
+  "competitor": "Pinecone",
+  "competitorUrl": "https://www.pinecone.io",
+  "metaTitle": "Pineconeの代替OSSツール一覧 | 無料で使えるベクトルDBツール比較",
+  "metaDescription": "Pineconeの代わりに使える無料オープンソースのベクトルデータベースを比較。Qdrant・Weaviate・Chromaなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "PineconeのVector DB費用やデータのクラウド保存に懸念はありませんか？ここではPineconeの代わりに使えるオープンソースのベクトルデータベースをGitHubスター数順で比較します。RAGシステムやAIアプリ構築に使えるセルフホスト可能なOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Pineconeは保存ベクトル数・リクエスト数で従量課金。OSSならサーバー代のみで大量のベクトルを保存できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ベクトルデータの自社管理",
+      "description": "RAGシステムで使う埋め込みデータをPineconeのサーバーに預けず、自社環境で管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "オフライン・オンプレ利用",
+      "description": "インターネット非接続環境でのAIアプリ開発も可能。機密データを扱う企業に適している。",
+      "icon": "speed"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "Pineconeの独自APIに依存せず、標準的なベクトルDB操作でいつでも移行できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "PineconeのOSS代替はありますか？",
+      "answer": "Qdrant・Weaviate・Chromaが代表的な代替です。Qdrantは高性能でRust製、Chromaは小規模・開発用途に手軽に使えます。"
+    },
+    {
+      "question": "どのOSSベクトルDBが最もPineconeに近いですか？",
+      "answer": "Qdrantが機能・性能ともにPineconeに最も近いと言われています。フィルタリング・ペイロード管理・高速ANN検索に優れています。"
+    },
+    {
+      "question": "LangChainやLlamaIndexと組み合わせられますか？",
+      "answer": "はい。Qdrant・Weaviate・ChromaはすべてLangChain・LlamaIndexとの統合に対応しており、RAGシステムの構築が容易です。"
+    },
+    {
+      "question": "移行はどのくらい大変ですか？",
+      "answer": "Pineconeから直接のデータエクスポート機能がないため、元のデータを再埋め込みする必要があります。埋め込み処理のスクリプトを再実行する形での移行が一般的です。"
+    }
+  ],
+  "relatedSlugs": ["chatgpt", "firebase", "datadog"]
+}

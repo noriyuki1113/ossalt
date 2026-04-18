@@ -1,0 +1,49 @@
+{
+  "slug": "bitly",
+  "competitor": "Bitly",
+  "competitorUrl": "https://bitly.com",
+  "metaTitle": "Bitlyの代替OSSツール一覧 | 無料で使えるURL短縮ツール比較",
+  "metaDescription": "Bitlyの代わりに使える無料オープンソースのURL短縮ツールを比較。Dub・Shlink などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Bitlyのリンク数制限やブランドドメイン機能の有料化に悩んでいませんか？ここではBitlyの代わりに使えるオープンソースのURL短縮・リンク管理ツールを比較します。自社ドメインで無制限にリンクを作成できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "カスタムドメイン無料",
+      "description": "Bitlyのカスタムドメイン機能は有料プランのみ。OSSなら自社ドメイン（例: yourco.jp/abc）で短縮URLを無料で作れる。",
+      "icon": "cost"
+    },
+    {
+      "title": "リンク数無制限",
+      "description": "Bitlyの無料プランはリンク数に制限あり。OSSならリンク作成数に制限なし。",
+      "icon": "data"
+    },
+    {
+      "title": "クリックデータの自社管理",
+      "description": "リンクのクリック数・流入元・地域データをBitlyのサーバーに送らず、自社DBで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Bitlyの有料プランは月額約3,000円〜。OSSならサーバー代のみで同等機能を実現。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "BitlyのOSS代替はありますか？",
+      "answer": "DubとShlinkが代表的な代替です。DubはモダンなUIでチーム管理機能も充実、ShlinkはAPIファーストの成熟したURL短縮エンジンです。"
+    },
+    {
+      "question": "DubとShlinkはどちらがいいですか？",
+      "answer": "管理UIを重視するならDub、API経由での自動化・システム連携を重視するならShlinkがおすすめです。"
+    },
+    {
+      "question": "QRコード生成はできますか？",
+      "answer": "DubはQRコード生成機能を内蔵しており、短縮URLごとにQRコードを自動生成できます。"
+    },
+    {
+      "question": "クリック分析はできますか？",
+      "answer": "はい。DubもShlinkもクリック数・リファラー・国・デバイスなどの詳細な分析機能を提供しています。"
+    }
+  ],
+  "relatedSlugs": ["google-analytics", "retool", "zapier"]
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "glitchtip-vs-sentry",
+  "ossName": "GlitchTip",
+  "ossUrl": "https://glitchtip.com",
+  "ossGithub": "https://gitlab.com/glitchtip/glitchtip-backend",
+  "saasName": "Sentry",
+  "saasUrl": "https://sentry.io",
+  "alternativeSlug": "sentry",
+  "metaTitle": "GlitchTip vs Sentry 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "GlitchTip（OSS）とSentryを徹底比較。コスト・イベント数・SDK互換性・パフォーマンス監視の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "SentryからGlitchTip（OSS）への移行を検討していますか？コスト・イベント数・SDK互換性・パフォーマンス監視など6項目で徹底比較します。",
+  "verdict": "コスト削減・イベント数無制限・SDK変更ゼロで移行したいならGlitchTip。パフォーマンス監視・セッションリプレイなど高度な機能が必要ならSentry。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額26ドル〜", "winner": "oss" },
+    { "category": "イベント数", "oss": "無制限", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "Sentry SDK互換性", "oss": "完全互換", "saas": "（本家）", "winner": "draw" },
+    { "category": "パフォーマンス監視", "oss": "基本的な対応", "saas": "高機能・詳細", "winner": "saas" },
+    { "category": "セッションリプレイ", "oss": "非対応", "saas": "対応", "winner": "saas" },
+    { "category": "アップタイム監視", "oss": "対応（内蔵）", "saas": "対応", "winner": "draw" }
+  ],
+  "ossFor": [
+    "Sentry SDKをコード変更ゼロでセルフホストに移行したい",
+    "イベント数が多くSentryの費用が月数万円になっている",
+    "エラー監視の基本機能だけあれば十分なプロジェクト"
+  ],
+  "saasFor": [
+    "トランザクション追跡・プロファイリングなど高度な機能が必要",
+    "セッションリプレイでユーザーの問題を再現したい",
+    "SLAと公式サポートが必要なビジネスクリティカルなシステム"
+  ],
+  "faq": [
+    {
+      "question": "GlitchTipはSentryのSDKをそのまま使えますか？",
+      "answer": "はい。GlitchTipはSentry互換のAPIを実装しているため、既存のSentry DSNのホスト部分を変更するだけで移行できます。コードの変更は一切不要です。"
+    },
+    {
+      "question": "GlitchTipでエラーのグループ化は機能しますか？",
+      "answer": "はい。GlitchTipはSentryと同様のエラーフィンガープリントによるグループ化をサポートしています。同一エラーを1つのイシューとして集約します。"
+    },
+    {
+      "question": "Slackへのアラート通知はできますか？",
+      "answer": "はい。GlitchTipはWebhookとSlack通知に対応しており、新規エラーや高頻度エラーを自動通知できます。"
+    },
+    {
+      "question": "セルフホストのGlitchTipに必要なリソースは？",
+      "answer": "小規模プロジェクトであれば2コア・2GBメモリで十分動作します。PostgreSQLとRedisが必要で、Docker Composeでのセットアップが簡単です。"
+    }
+  ],
+  "relatedSlugs": ["sentry", "datadog", "postman"]
+}

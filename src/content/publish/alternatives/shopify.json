@@ -1,0 +1,49 @@
+{
+  "slug": "shopify",
+  "competitor": "Shopify",
+  "competitorUrl": "https://www.shopify.com/jp",
+  "metaTitle": "Shopifyの代替OSSツール一覧 | 無料で使えるECプラットフォーム比較",
+  "metaDescription": "Shopifyの代わりに使える無料オープンソースのECプラットフォームを比較。Medusa・WooCommerceなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Shopifyの月額費用や手数料に悩んでいませんか？ここではShopifyの代わりに使えるオープンソースのECプラットフォームを比較します。取引手数料ゼロ・完全カスタマイズ可能なOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "取引手数料ゼロ",
+      "description": "Shopifyは決済ごとに0.5〜2%の手数料が発生。OSSなら手数料なしで直接決済ゲートウェイを利用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "完全なカスタマイズ",
+      "description": "Shopifyのテーマや機能はLiquidで制限がある。OSSなら任意のフロントエンドや機能を自由に構築できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "顧客データ・注文データをShopifyに預けず、自社DBで管理。法規制対応やデータ分析が自由に行える。",
+      "icon": "data"
+    },
+    {
+      "title": "月額費用なし",
+      "description": "Shopifyは月額3,000円〜。売上規模が小さい時期は固定費が重荷になる。OSSならコストを変動費のみに抑えられる。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ShopifyのOSS代替はありますか？",
+      "answer": "MedusaJSとWooCommerceが代表的な代替です。MedusaはAPI-firstのモダンなECバックエンド、WooCommerceはWordPressベースの成熟したECシステムです。"
+    },
+    {
+      "question": "MedusaとWooCommerceはどちらがいいですか？",
+      "answer": "フルカスタマイズしたいエンジニア向けのモダンEC構築にはMedusa、WordPressと合わせて使いたい場合や実績重視ならWooCommerceがおすすめです。"
+    },
+    {
+      "question": "ShopifyのデータをOSSに移行できますか？",
+      "answer": "商品・顧客・注文データをCSVでエクスポートし、移行することが可能です。完全な移行ツールはShopifyコミュニティでも提供されています。"
+    },
+    {
+      "question": "決済連携はどうすればいいですか？",
+      "answer": "MedusaはStripe・PayPal・Braindtreeなどの決済ゲートウェイと統合できます。WooCommerceも同様の決済プラグインが豊富です。"
+    }
+  ],
+  "relatedSlugs": ["stripe-billing", "webflow", "wordpress"]
+}

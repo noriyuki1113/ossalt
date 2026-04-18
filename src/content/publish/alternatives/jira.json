@@ -1,0 +1,49 @@
+{
+  "slug": "jira",
+  "competitor": "Jira",
+  "competitorUrl": "https://www.atlassian.com/ja/software/jira",
+  "metaTitle": "Jiraの代替OSSツール一覧 | 無料で使えるプロジェクト管理ツール比較",
+  "metaDescription": "Jiraの代わりに使える無料オープンソースのプロジェクト管理ツールを比較。Plane・GitLab Issuesなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Jiraの複雑な設定や高額なライセンス費用に悩んでいませんか？ここではJiraの代わりに使えるオープンソースのプロジェクト管理・課題管理ツールをGitHubスター数順で比較します。シンプルで使いやすく、セルフホスト可能なOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "JiraはAtlassianのCloud版で1ユーザー月額約900円〜。チームが大きくなるほど高額。OSSなら無制限ユーザーをゼロコストで管理。",
+      "icon": "cost"
+    },
+    {
+      "title": "シンプルな操作性",
+      "description": "Jiraは機能が多すぎて複雑。PlaneやLinearライクなOSSはシンプルなUIで素早くタスク管理できる。",
+      "icon": "speed"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "プロジェクトデータをAtlassianのサーバーに預けず、自社環境で完全に管理。セキュリティポリシーを満たしやすい。",
+      "icon": "data"
+    },
+    {
+      "title": "Atlassianへの依存回避",
+      "description": "Atlassian製品の価格改定やCloud移行強制のリスクを回避。自分たちのペースでアップデートを管理できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "JiraのオープンソースのUI代替はありますか？",
+      "answer": "Planeが最も人気のあるJira代替OSSです。スプリント管理・バックログ・ロードマップ機能を備え、Jiraに近い操作感で使えます。"
+    },
+    {
+      "question": "PlaneとGitLab Issuesはどちらがいいですか？",
+      "answer": "GitLabをすでに使っている開発チームならGitLab Issuesが自然に使えます。GitLabと独立して使いたい場合や、より高機能なプロジェクト管理にはPlaneがおすすめです。"
+    },
+    {
+      "question": "Jiraのチケットデータを移行できますか？",
+      "answer": "PlaneはJiraからのインポート機能を備えています。CSV経由での移行もサポートされており、既存の課題データを引き継げます。"
+    },
+    {
+      "question": "スクラム・アジャイル開発に対応していますか？",
+      "answer": "Planeはスプリント・バックログ・エピック管理に対応しており、スクラム開発に必要な機能が揃っています。"
+    }
+  ],
+  "relatedSlugs": ["notion", "trello", "confluence"]
+}

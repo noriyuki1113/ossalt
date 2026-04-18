@@ -3,8 +3,14 @@ interface AlternativeBadgeProps {
   size?: "sm" | "default";
 }
 
+// Values that look like placeholders or catch-alls — suppress the badge
+const INVALID_COMPETITORS = new Set([
+  "有料SaaS", "有料SaaSサービス", "商用ツール", "その他",
+  "unknown", "Unknown", "n/a", "N/A", "TBD", "tbd", "none", "None", "-",
+]);
+
 export function AlternativeBadge({ competitor, size = "default" }: AlternativeBadgeProps) {
-  if (!competitor || competitor === "有料SaaS") return null;
+  if (!competitor || INVALID_COMPETITORS.has(competitor.trim())) return null;
 
   const isSm = size === "sm";
   return (

@@ -1,0 +1,49 @@
+{
+  "slug": "miro",
+  "competitor": "Miro",
+  "competitorUrl": "https://miro.com",
+  "metaTitle": "Miroの代替OSSツール一覧 | 無料で使えるオンラインホワイトボード比較",
+  "metaDescription": "Miroの代わりに使える無料オープンソースのホワイトボードツールを比較。Excalidraw・tldrawなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Miroのボード数制限や月額費用に悩んでいませんか？ここではMiroの代わりに使えるオープンソースのオンラインホワイトボード・ブレインストーミングツールを比較します。図解・付箋・フローチャートをセルフホストで無制限に使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Miroの有料プランは月額8ドル〜/人。OSSなら無制限のボードを無料で作れる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ボード内容の自社管理",
+      "description": "設計図・要件整理・ブレインストーミング内容をMiroのクラウドに預けず、自社サーバーで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "シンプルで高速",
+      "description": "Excalidrawは余計な機能を削ぎ落としたシンプル設計で、Miroより軽快に動作する。手描き風の見た目が直感的。",
+      "icon": "speed"
+    },
+    {
+      "title": "ボード数無制限",
+      "description": "Miroの無料プランは3ボードまで。OSSなら作成できるボード・ページ数に制限なし。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "MiroのOSS代替はありますか？",
+      "answer": "ExcalidrawとtldrawがMiroの主なOSS代替です。Excalidrawは手描き風の図を素早く作れる軽量ツール、tldrawはより高機能でスライド機能も持ちます。"
+    },
+    {
+      "question": "ExcalidrawはMiroのように複数人でリアルタイム編集できますか？",
+      "answer": "はい。Excalidrawはリアルタイムコラボレーション機能を持っており、URLを共有するだけで複数人での同時編集が可能です。セルフホスト版でも対応しています。"
+    },
+    {
+      "question": "図形テンプレートや付箋機能はありますか？",
+      "answer": "Excalidrawは付箋・矢印・基本図形のテンプレートを内蔵しています。tldrawはより多くの図形とスタイルオプションを提供しています。"
+    },
+    {
+      "question": "作成したボードをエクスポートできますか？",
+      "answer": "はい。ExcalidrawはボードをPNG・SVG・Excalidrawネイティブ形式でエクスポートできます。SVGはベクター形式なので高解像度での出力が可能です。"
+    }
+  ],
+  "relatedSlugs": ["figma", "notion", "trello"]
+}

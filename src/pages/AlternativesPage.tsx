@@ -53,6 +53,26 @@ const SLUG_MAP: Record<string, string> = {
   bitly: "Bitly",
   canny: "Canny",
   zendesk: "Zendesk",
+  linear: "Linear",
+  asana: "Asana",
+  confluence: "Confluence",
+  sentry: "Sentry",
+  miro: "Miro",
+  mixpanel: "Mixpanel",
+  hubspot: "HubSpot",
+  clickup: "ClickUp",
+  pagerduty: "PagerDuty",
+  sendgrid: "SendGrid",
+  heroku: "Heroku",
+  calendly: "Calendly",
+  mailchimp: "Mailchimp",
+  discord: "Discord",
+  monday: "Monday.com",
+  loom: "Loom",
+  vercel: "Vercel",
+  doodle: "Doodle",
+  "github-actions": "GitHub Actions",
+  circleci: "CircleCI",
 };
 
 const COMPETITOR_TO_SLUG: Record<string, string> = {};
@@ -60,7 +80,37 @@ for (const [slug, name] of Object.entries(SLUG_MAP)) {
   COMPETITOR_TO_SLUG[name] = slug;
 }
 
-export { SLUG_MAP, COMPETITOR_TO_SLUG };
+// slug → compare page slugs involving that competitor
+const COMPARE_LINKS: Record<string, { slug: string; ossName: string }[]> = {
+  notion: [{ slug: "appflowy-vs-notion", ossName: "AppFlowy" }],
+  slack: [{ slug: "mattermost-vs-slack", ossName: "Mattermost" }, { slug: "rocket-chat-vs-slack", ossName: "Rocket.Chat" }],
+  linear: [{ slug: "plane-vs-linear", ossName: "Plane" }],
+  mixpanel: [{ slug: "posthog-vs-mixpanel", ossName: "PostHog" }],
+  figma: [{ slug: "penpot-vs-figma", ossName: "Penpot" }],
+  confluence: [{ slug: "outline-vs-confluence", ossName: "Outline" }],
+  zapier: [{ slug: "n8n-vs-zapier", ossName: "n8n" }, { slug: "activepieces-vs-zapier", ossName: "Activepieces" }],
+  airtable: [{ slug: "nocodb-vs-airtable", ossName: "NocoDB" }],
+  "google-analytics": [{ slug: "matomo-vs-google-analytics", ossName: "Matomo" }, { slug: "plausible-vs-google-analytics", ossName: "Plausible" }],
+  auth0: [{ slug: "keycloak-vs-auth0", ossName: "Keycloak" }],
+  sentry: [{ slug: "glitchtip-vs-sentry", ossName: "GlitchTip" }],
+  miro: [{ slug: "excalidraw-vs-miro", ossName: "Excalidraw" }],
+  sendgrid: [{ slug: "listmonk-vs-sendgrid", ossName: "Listmonk" }],
+  asana: [{ slug: "vikunja-vs-asana", ossName: "Vikunja" }],
+  "google-drive": [{ slug: "nextcloud-vs-google-drive", ossName: "Nextcloud" }],
+  "github-copilot": [{ slug: "gitea-vs-github", ossName: "Gitea" }],
+  intercom: [{ slug: "chatwoot-vs-intercom", ossName: "Chatwoot" }],
+  jira: [{ slug: "taiga-vs-jira", ossName: "Taiga" }],
+  firebase: [{ slug: "supabase-vs-firebase", ossName: "Supabase" }],
+  datadog: [{ slug: "grafana-vs-datadog", ossName: "Grafana" }],
+  tableau: [{ slug: "metabase-vs-tableau", ossName: "Metabase" }],
+  typeform: [{ slug: "formbricks-vs-typeform", ossName: "Formbricks" }],
+  retool: [{ slug: "budibase-vs-retool", ossName: "Budibase" }],
+  contentful: [{ slug: "directus-vs-contentful", ossName: "Directus" }],
+  hubspot: [{ slug: "twenty-vs-hubspot", ossName: "Twenty" }],
+  postman: [{ slug: "hoppscotch-vs-postman", ossName: "Hoppscotch" }],
+};
+
+export { SLUG_MAP, COMPETITOR_TO_SLUG, COMPARE_LINKS };
 
 /* ── Icon map for whySwitchReasons ── */
 const REASON_ICONS: Record<string, React.ElementType> = {
@@ -459,7 +509,25 @@ export default function AlternativesPage() {
               </section>
             )}
 
-            {/* ── 8. Competitor source link (only when JSON exists) ── */}
+            {/* ── 8. Compare page links ── */}
+            {slug && COMPARE_LINKS[slug] && COMPARE_LINKS[slug].length > 0 && (
+              <section className="mb-10">
+                <h2 className="text-sm font-bold text-foreground mb-3">1対1で比較する</h2>
+                <div className="flex flex-wrap gap-2">
+                  {COMPARE_LINKS[slug].map(({ slug: cs, ossName }) => (
+                    <Link
+                      key={cs}
+                      to={`/compare/${cs}`}
+                      className="text-xs px-3 py-1.5 rounded-full border border-border bg-card text-muted-foreground hover:text-primary hover:border-primary/30 transition-all"
+                    >
+                      {ossName} vs {competitor} 比較
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── 9. Competitor source link (only when JSON exists) ── */}
             {editorial?.competitorUrl && (
               <section className="mb-10">
                 <div className="card-unified p-4 flex items-center gap-3 text-xs text-muted-foreground">
@@ -488,7 +556,6 @@ export default function AlternativesPage() {
             <div className="flex flex-wrap gap-2">
               {Object.entries(SLUG_MAP)
                 .filter(([s]) => s !== slug)
-                .slice(0, 15)
                 .map(([s, name]) => (
                   <Link
                     key={s}

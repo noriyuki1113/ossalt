@@ -1,0 +1,50 @@
+{
+  "slug": "listmonk-vs-sendgrid",
+  "ossName": "Listmonk",
+  "ossUrl": "https://listmonk.app",
+  "ossGithub": "https://github.com/knadh/listmonk",
+  "saasName": "SendGrid",
+  "saasUrl": "https://sendgrid.com",
+  "alternativeSlug": "sendgrid",
+  "metaTitle": "Listmonk vs SendGrid 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Listmonk（OSS）とSendGridを徹底比較。コスト・送信数・ニュースレター機能・配信分析の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "SendGridからListmonk（OSS）への移行を検討していますか？コスト・送信数・購読者管理・分析機能など6項目で徹底比較します。",
+  "verdict": "ニュースレター配信のコストを削減・購読者データを自社管理したいならListmonk。トランザクションメールのAPIと高い到達率が必要ならSendGrid。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（SMTPコストのみ）", "saas": "月額約3,000円〜", "winner": "oss" },
+    { "category": "送信数", "oss": "無制限", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "購読者管理", "oss": "高機能・セグメント対応", "saas": "対応", "winner": "draw" },
+    { "category": "トランザクションメール", "oss": "基本的な対応", "saas": "高機能なAPI", "winner": "saas" },
+    { "category": "配信到達率", "oss": "SMTPサーバー次第", "saas": "高い（専用IP管理）", "winner": "saas" },
+    { "category": "メールテンプレート", "oss": "HTMLテンプレート対応", "saas": "ビジュアルエディタ完備", "winner": "saas" }
+  ],
+  "ossFor": [
+    "定期ニュースレターを大量に配信してSendGridのコストを削減したい",
+    "購読者データを自社DBで完全管理したい",
+    "既存のSMTPサーバー（SES・Mailgun等）を活用したい"
+  ],
+  "saasFor": [
+    "パスワードリセットなどトランザクションメールのAPIが必要",
+    "高い到達率と専用IPウォームアップ管理が必要",
+    "ドラッグ&ドロップのビジュアルメールエディタが欲しい"
+  ],
+  "faq": [
+    {
+      "question": "ListmonkはSendGridのAPIと互換性がありますか？",
+      "answer": "直接の互換性はありませんが、ListmonkはSMTP経由でSendGrid・Amazon SES・Mailgunなど任意のメール配信サービスを使って送信できます。"
+    },
+    {
+      "question": "Listmonkは開封率・クリック率を計測できますか？",
+      "answer": "はい。Listmonkは配信数・開封数・クリック数・バウンス数をリアルタイムで計測するダッシュボードを持っています。"
+    },
+    {
+      "question": "SendGridの購読者リストをListmonkに移行できますか？",
+      "answer": "はい。SendGridからCSVでエクスポートした購読者リストをListmonkにインポートできます。カスタム属性の移行も対応しています。"
+    },
+    {
+      "question": "A/Bテスト機能はありますか？",
+      "answer": "現在のListmonkにはA/Bテスト機能は内蔵されていませんが、2つの異なるキャンペーンをセグメント分割して手動で比較することは可能です。"
+    }
+  ],
+  "relatedSlugs": ["sendgrid", "intercom", "typeform"]
+}

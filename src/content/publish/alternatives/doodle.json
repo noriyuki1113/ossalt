@@ -1,0 +1,49 @@
+{
+  "slug": "doodle",
+  "competitor": "Doodle",
+  "competitorUrl": "https://doodle.com",
+  "metaTitle": "Doodleの代替OSSツール一覧 | 無料で使えるスケジュール調整ツール比較",
+  "metaDescription": "Doodleの代わりに使える無料オープンソースの日程調整ツールを比較。Ralllyなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Doodleの広告表示や有料プランへの誘導が気になっていませんか？ここではDoodleの代わりに使えるオープンソースのグループスケジュール調整ツールを比較します。参加者が候補日に投票できるシンプルな仕組みを、広告なし・自社管理で実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "広告なし・クリーンな体験",
+      "description": "Doodleの無料版には広告が表示されるが、OSSなら広告ゼロのクリーンなUIで参加者に提供できる。",
+      "icon": "customization"
+    },
+    {
+      "title": "スケジュールデータの自社管理",
+      "description": "会議の候補日・参加者情報・投票結果をDoodleに預けず、自社サーバーで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Doodleのビジネスプランは月額6.95ドル〜。OSSならサーバー代のみで同等機能を提供できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ブランディングのカスタマイズ",
+      "description": "自社ドメイン・ロゴ・カラーで日程調整ページを提供し、プロフェッショナルな印象を与えられる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "DoodleのOSS代替で最も有力なのは何ですか？",
+      "answer": "Ralllyが最もDoodleに近いOSS代替です。候補日の投票・コメント・リマインダーに対応し、Docker Composeでセルフホストできます。シンプルで使いやすいUIが特徴です。"
+    },
+    {
+      "question": "RalllyはDoodleのように参加者がアカウントなしで投票できますか？",
+      "answer": "はい。Ralllyは参加者がアカウント登録なしで候補日に投票できます。メール通知も設定でき、Doodleに近い体験を提供します。"
+    },
+    {
+      "question": "RalllyはGoogleカレンダーやOutlookと連携できますか？",
+      "answer": "Ralllyは現時点ではカレンダーとの直接連携機能は限定的です。日程が確定したらical形式でカレンダーに追加する形が一般的です。"
+    },
+    {
+      "question": "Ralllyのセルフホストは難しいですか？",
+      "answer": "Docker Composeで数分で起動できます。PostgreSQLとRedisが必要で、環境変数を設定するだけでメール通知も動作します。VPS（1コア・1GB）で十分動作します。"
+    }
+  ],
+  "relatedSlugs": ["calendly", "notion", "typeform"]
+}

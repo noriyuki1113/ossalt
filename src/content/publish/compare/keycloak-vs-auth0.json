@@ -1,0 +1,50 @@
+{
+  "slug": "keycloak-vs-auth0",
+  "ossName": "Keycloak",
+  "ossUrl": "https://www.keycloak.org",
+  "ossGithub": "https://github.com/keycloak/keycloak",
+  "saasName": "Auth0",
+  "saasUrl": "https://auth0.com",
+  "alternativeSlug": "auth0",
+  "metaTitle": "Keycloak vs Auth0 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Keycloak（OSS）とAuth0を徹底比較。コスト・MAU制限・SSO・セルフホストの違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "Auth0からKeycloak（OSS）への移行を検討していますか？コスト・MAU数・SSO・MFA・セルフホスト対応など6項目で徹底比較します。",
+  "verdict": "MAU数が多い・コスト削減・オンプレ要件があるならKeycloak。セットアップの手間を省きたい・サポートが必要な小規模スタートアップならAuth0。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額23ドル〜（MAU課金）", "winner": "oss" },
+    { "category": "MAU無制限", "oss": "無制限", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応", "saas": "非対応", "winner": "oss" },
+    { "category": "導入の簡単さ", "oss": "やや複雑", "saas": "非常に簡単", "winner": "saas" },
+    { "category": "SSO/SAML/OIDC", "oss": "完全対応", "saas": "完全対応", "winner": "draw" },
+    { "category": "サポート体制", "oss": "コミュニティのみ", "saas": "公式サポートあり", "winner": "saas" }
+  ],
+  "ossFor": [
+    "MAUが多くAuth0の費用が月数万円を超えている",
+    "金融・医療など認証データをクラウドに出せない要件がある",
+    "SAMLによるエンタープライズSSOを無料で実装したい"
+  ],
+  "saasFor": [
+    "認証基盤を素早く立ち上げたいスタートアップ",
+    "SLAや公式サポートが必要なプロダクト",
+    "Keycloakの複雑な設定に対応できるエンジニアがいない"
+  ],
+  "faq": [
+    {
+      "question": "KeycloakはAuth0のSocial Login（Google・GitHub等）に対応していますか？",
+      "answer": "はい。Keycloakは主要なソーシャルプロバイダー（Google・GitHub・Facebook・Twitter等）のOAuth2/OIDCログインをサポートしています。"
+    },
+    {
+      "question": "Auth0からKeycloakへのユーザー移行はできますか？",
+      "answer": "Auth0のManagement APIでユーザーデータをエクスポートし、KeycloakのAdmin APIでインポートできます。パスワードは再設定が必要な場合があります。"
+    },
+    {
+      "question": "KeycloakはMulti-Factor Authentication（MFA）に対応していますか？",
+      "answer": "はい。KeycloakはTOTP（Google Authenticator互換）・WebAuthn・SMSなどのMFAをサポートしています。"
+    },
+    {
+      "question": "KubernetesでのKeycloak運用は難しいですか？",
+      "answer": "Helmチャートが公式に提供されており、Kubernetes環境への導入は標準化されています。高可用性構成（複数レプリカ）も設定可能です。"
+    }
+  ],
+  "relatedSlugs": ["auth0", "firebase", "launchdarkly"]
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "nocodb-vs-airtable",
+  "ossName": "NocoDB",
+  "ossUrl": "https://nocodb.com",
+  "ossGithub": "https://github.com/nocodb/nocodb",
+  "saasName": "Airtable",
+  "saasUrl": "https://airtable.com",
+  "alternativeSlug": "airtable",
+  "metaTitle": "NocoDB vs Airtable 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "NocoDB（OSS）とAirtableを徹底比較。コスト・レコード数制限・API・自動化機能の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "AirtableからNocoDB（OSS）への移行を検討していますか？コスト・レコード数・API・自動化・ビュー機能など6項目で徹底比較します。",
+  "verdict": "レコード数無制限・コスト削減・自社DBの活用が優先ならNocoDB。豊富な自動化・Marketplaceアプリが必要ならAirtable。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額20ドル〜/人", "winner": "oss" },
+    { "category": "レコード数", "oss": "無制限", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "既存DBとの接続", "oss": "MySQL/PG/SQLite等に対応", "saas": "非対応", "winner": "oss" },
+    { "category": "自動化機能", "oss": "基本的な自動化", "saas": "豊富な自動化", "winner": "saas" },
+    { "category": "Marketplace/拡張", "oss": "限定的", "saas": "豊富", "winner": "saas" },
+    { "category": "APIアクセス", "oss": "REST API完全対応", "saas": "対応", "winner": "draw" }
+  ],
+  "ossFor": [
+    "既存のMySQL・PostgreSQLをスプレッドシートUIで管理したい",
+    "レコード数無制限のデータベースUIが必要",
+    "Airtableのコストを大幅削減したい"
+  ],
+  "saasFor": [
+    "豊富な自動化テンプレートをすぐ使いたい",
+    "MarketplaceのサードパーティAppを活用したい",
+    "非エンジニアが手軽にデータベースを構築したい"
+  ],
+  "faq": [
+    {
+      "question": "NocoDBはAirtableのビュー（グリッド・カンバン等）に対応していますか？",
+      "answer": "はい。NocoDBはグリッド・カンバン・ギャラリー・フォーム・カレンダービューに対応しており、Airtableの主要ビューをカバーしています。"
+    },
+    {
+      "question": "AirtableのデータをNocoDBに移行できますか？",
+      "answer": "AirtableはCSVエクスポートに対応しており、NocoDBのCSVインポート機能で移行できます。添付ファイルは別途移行が必要です。"
+    },
+    {
+      "question": "既存のPostgreSQLデータベースをNocoDBで使えますか？",
+      "answer": "はい。NocoDBの最大の特徴の一つで、既存のMySQL・PostgreSQL・SQLiteをGUI付きで操作できます。テーブルを作成せずに既存DBを即座にスプレッドシート化できます。"
+    },
+    {
+      "question": "フォーム機能はありますか？",
+      "answer": "はい。NocoDBはフォームビューを持っており、外部ユーザーがデータを入力できるフォームURLを発行できます。"
+    }
+  ],
+  "relatedSlugs": ["airtable", "retool", "firebase"]
+}

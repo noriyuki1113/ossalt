@@ -1,0 +1,49 @@
+{
+  "slug": "zendesk",
+  "competitor": "Zendesk",
+  "competitorUrl": "https://www.zendesk.co.jp",
+  "metaTitle": "Zendeskの代替OSSツール一覧 | 無料で使えるカスタマーサポートツール比較",
+  "metaDescription": "Zendeskの代わりに使える無料オープンソースのカスタマーサポートツールを比較。Chatwoot・Helpdeskなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Zendeskの高額な月額費用やエージェント数課金に悩んでいませんか？ここではZendeskの代わりに使えるオープンソースのカスタマーサポート・ヘルプデスクツールを比較します。チャット・メール・SNSを一元管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "エージェント数無制限",
+      "description": "Zendeskはエージェント（担当者）数で課金。OSSならサポートチームが増えても追加費用なし。",
+      "icon": "cost"
+    },
+    {
+      "title": "大幅なコスト削減",
+      "description": "Zendeskの有料プランは1エージェント月額約5,000円〜。10名のチームで月5万円。OSSならサーバー代のみ。",
+      "icon": "cost"
+    },
+    {
+      "title": "顧客データの自社管理",
+      "description": "顧客の問い合わせデータをZendeskのサーバーに預けず、自社環境で管理。プライバシーポリシーを満たしやすい。",
+      "icon": "data"
+    },
+    {
+      "title": "チャンネル統合",
+      "description": "ChatwootはメールからWhatsApp、Twitterまで複数チャンネルを1画面で管理できる。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ZendeskのOSS代替はありますか？",
+      "answer": "Chatwootが最も人気のある代替です。メール・チャット・SNSを統合したオムニチャネル対応のカスタマーサポートツールをセルフホストで使えます。"
+    },
+    {
+      "question": "ChatwootはZendeskと比べてどうですか？",
+      "answer": "機能はZendeskより少ないですが、基本的なチケット管理・チャット・メール対応には十分です。UIがシンプルで学習コストが低いのも特徴です。"
+    },
+    {
+      "question": "Zendeskのデータを移行できますか？",
+      "answer": "CSV経由でチケットデータを移行できます。完全な移行ツールはありませんが、主要なデータは引き継げます。"
+    },
+    {
+      "question": "ライブチャット機能はありますか？",
+      "answer": "はい。Chatwootはウェブサイトに埋め込めるライブチャットウィジェットを提供しており、Zendeskのチャット機能に相当します。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "slack", "canny"]
+}

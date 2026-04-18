@@ -1,0 +1,49 @@
+{
+  "slug": "discord",
+  "competitor": "Discord",
+  "competitorUrl": "https://discord.com",
+  "metaTitle": "Discordの代替OSSツール一覧 | 無料で使えるコミュニティチャットツール比較",
+  "metaDescription": "Discordの代わりに使える無料オープンソースのコミュニティ・チャットツールを比較。Matrix（Element）・Revoltなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Discordの利用規約変更やデータプライバシーが気になっていませんか？ここではDiscordの代わりに使えるオープンソースのコミュニティチャットツールを比較します。音声・テキスト・チャンネル管理をセルフホストで実現し、コミュニティデータを自社管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コミュニティデータの自社管理",
+      "description": "会話履歴・メンバー情報・添付ファイルをDiscordのサーバーに依存せず、自社インフラで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "プライバシーとセキュリティ",
+      "description": "機密性の高い社内コミュニティや顧客コミュニティを、外部サービスに依存せずプライベートに運用できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタマイズとブランディング",
+      "description": "OSSなら独自テーマ・カスタムBot・権限システムを自社ブランドに合わせて自由に設計できる。",
+      "icon": "customization"
+    },
+    {
+      "title": "コミュニティ主導の開発",
+      "description": "Discordの機能制限や規約に縛られず、コミュニティのニーズに応じてOSSを拡張・改善できる。",
+      "icon": "community"
+    }
+  ],
+  "faq": [
+    {
+      "question": "DiscordのOSS代替で音声チャットに対応しているものはありますか？",
+      "answer": "Matrix（Element）はWebRTCを使った音声・ビデオ通話に対応しています。Revolt（revolt.chat）も音声チャンネル機能を持ちます。Discordほどの音質・安定性には差がある場合があります。"
+    },
+    {
+      "question": "MatrixはDiscordのボット・インテグレーションに対応していますか？",
+      "answer": "はい。MatrixはBotのサポートとブリッジ機能（Discordやその他のサービスとの双方向連携）を持ちます。既存のDiscordボットを直接移行はできませんが、同等機能のMatrixボットを開発できます。"
+    },
+    {
+      "question": "RevoltはDiscordのUIに似ていますか？",
+      "answer": "はい。RevoltはDiscordに最も近いUIデザインを持つOSS代替です。チャンネル・サーバー・DM・ロール管理など、Discordユーザーが馴染みやすい設計になっています。"
+    },
+    {
+      "question": "DiscordからMatrixへコミュニティを移行できますか？",
+      "answer": "メッセージ履歴の完全自動移行ツールは限定的です。Matrix Appserviceを使ったDiscordブリッジで並行運用しながら段階的に移行するのが現実的です。"
+    }
+  ],
+  "relatedSlugs": ["slack", "intercom", "canny"]
+}

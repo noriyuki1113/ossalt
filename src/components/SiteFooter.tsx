@@ -4,8 +4,8 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 const SITE_LINKS = [
   { to: "/about", label: "OSSアルタナティブについて" },
   { to: "/ranking", label: "人気ランキング" },
-  { to: "/guides/notion-alternatives", label: "Notion代替ガイド" },
-  { to: "/guides/self-hosting", label: "セルフホストガイド" },
+  { to: "/compare", label: "A vs B 比較一覧" },
+  { to: "/quiz", label: "OSS診断ツール" },
   { to: "/savings", label: "コスト削減シミュレーター" },
 ];
 

@@ -1,0 +1,49 @@
+{
+  "slug": "canny",
+  "competitor": "Canny",
+  "competitorUrl": "https://canny.io",
+  "metaTitle": "Cannyの代替OSSツール一覧 | 無料で使えるフィードバック管理ツール比較",
+  "metaDescription": "Cannyの代わりに使える無料オープンソースのフィードバック管理ツールを比較。Formbricks・Fiderなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Cannyの月額費用やフィードバック件数の制限に悩んでいませんか？ここではCannyの代わりに使えるオープンソースのプロダクトフィードバック・要望管理ツールを比較します。ユーザーからの声を無制限に収集・管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Cannyは月額400ドル〜と高額。OSSならサーバー代のみでフィードバックボードを構築できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "フィードバックデータの自社管理",
+      "description": "ユーザーの要望・投票データをCannyのサーバーに預けず、自社DBで管理。分析・連携が自由に行える。",
+      "icon": "data"
+    },
+    {
+      "title": "ブランドカスタマイズ",
+      "description": "Cannyのロゴなしで、完全に自社ブランドのフィードバックポータルを作れる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "投稿数・投票数無制限",
+      "description": "Cannyの無料プランは機能・投稿数に制限あり。OSSなら無制限にフィードバックを収集できる。",
+      "icon": "data"
+    }
+  ],
+  "faq": [
+    {
+      "question": "CannyのOSS代替はありますか？",
+      "answer": "FiderとFormbricksが代表的な代替です。Fiderはシンプルなフィードバックボード、FormbricksはよりリッチなPMツールとして機能します。"
+    },
+    {
+      "question": "FiderはCannyと同じような投票機能がありますか？",
+      "answer": "はい。Fiderはユーザーが機能要望を投稿・投票・コメントできるボード機能を提供しており、Cannyの基本機能を代替できます。"
+    },
+    {
+      "question": "ロードマップ公開機能はありますか？",
+      "answer": "Fiderには公開ロードマップ機能があり、ステータス（검토中・計画中・実装中・完了）を設定してユーザーに見せることができます。"
+    },
+    {
+      "question": "Cannyのデータを移行できますか？",
+      "answer": "CannyはCSVエクスポートをサポートしており、フィードバックデータを取り出してFiderに移行できます。"
+    }
+  ],
+  "relatedSlugs": ["typeform", "intercom", "zendesk"]
+}

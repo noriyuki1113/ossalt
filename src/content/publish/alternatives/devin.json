@@ -1,0 +1,49 @@
+{
+  "slug": "devin",
+  "competitor": "Devin",
+  "competitorUrl": "https://devin.ai",
+  "metaTitle": "Devinの代替OSSツール一覧 | 無料で使えるAIソフトウェアエンジニアツール比較",
+  "metaDescription": "Devinの代わりに使える無料オープンソースのAIコーディングエージェントを比較。OpenHands・SWE-agentなどローカルで動かせるOSS代替を日本語で紹介。",
+  "heroDescription": "Devinの高額な月額費用や外部サーバーへのコード送信に不安を感じていませんか？ここではDevinの代わりに使えるオープンソースのAIソフトウェアエンジニアリングエージェントを比較します。ローカルで動かせるOSS代替で、コードを外部に出さずに自律的な開発タスクをこなせます。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Devinは月額500ドル〜と高額。OSSならローカルLLMと組み合わせて大幅に低コストで使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "コードのプライバシー",
+      "description": "Devinにはコードベース全体を送信する。OSSなら自社環境内で動作させてコードを外部に出さずに済む。",
+      "icon": "data"
+    },
+    {
+      "title": "モデルの自由な選択",
+      "description": "OpenHandsはClaude・GPT-4・ローカルLLMなど任意のモデルをバックエンドに使える。",
+      "icon": "lockin"
+    },
+    {
+      "title": "完全なコントロール",
+      "description": "エージェントの動作をカスタマイズ・監視できる。Devinの「ブラックボックス」的な動作を避けられる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "DevinのOSS代替はありますか？",
+      "answer": "OpenHands（旧OpenDevin）とSWE-agentが代表的な代替です。どちらも自律的なコード編集・デバッグ・テスト実行が可能なAIエージェントです。"
+    },
+    {
+      "question": "OpenHandsはDevinと同じくらい使えますか？",
+      "answer": "Devinほどの完成度ではありませんが、SWE-benchのスコアでは上位モデルと組み合わせることでDevinに近い性能を発揮します。"
+    },
+    {
+      "question": "どのLLMと組み合わせて使えますか？",
+      "answer": "Claude 3.5/3.7 Sonnet、GPT-4o、Gemini、ローカルモデル（Ollama経由）などに対応しています。Claude Sonnetとの組み合わせが特に評価されています。"
+    },
+    {
+      "question": "セキュアな環境で動かせますか？",
+      "answer": "OpenHandsはDockerコンテナ内でエージェントを動作させる設計で、ホスト環境への影響を最小化しています。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "chatgpt", "retool"]
+}

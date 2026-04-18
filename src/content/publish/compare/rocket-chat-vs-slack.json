@@ -1,0 +1,50 @@
+{
+  "slug": "rocket-chat-vs-slack",
+  "ossName": "Rocket.Chat",
+  "ossUrl": "https://rocket.chat",
+  "ossGithub": "https://github.com/RocketChat/Rocket.Chat",
+  "saasName": "Slack",
+  "saasUrl": "https://slack.com",
+  "alternativeSlug": "slack",
+  "metaTitle": "Rocket.Chat vs Slack 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Rocket.Chat（OSS）とSlackを徹底比較。コスト・メッセージ履歴・音声通話・カスタマイズ性の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "SlackからRocket.Chat（OSS）への移行を検討していますか？コスト・メッセージ履歴・音声ビデオ通話・ホワイトラベル機能など6項目で徹底比較します。",
+  "verdict": "コスト削減・無制限履歴・ホワイトラベル・高いカスタマイズ性が優先ならRocket.Chat。2000以上の豊富なインテグレーションと使いやすさ優先ならSlack。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額7.25ドル〜/人", "winner": "oss" },
+    { "category": "メッセージ履歴", "oss": "無制限", "saas": "無料版は90日分", "winner": "oss" },
+    { "category": "音声・ビデオ通話", "oss": "対応（内蔵）", "saas": "対応（内蔵）", "winner": "draw" },
+    { "category": "ホワイトラベル", "oss": "対応（ブランドカスタマイズ）", "saas": "非対応", "winner": "oss" },
+    { "category": "インテグレーション数", "oss": "数百", "saas": "2000以上", "winner": "saas" },
+    { "category": "モバイルアプリ品質", "oss": "良好", "saas": "非常に優れている", "winner": "saas" }
+  ],
+  "ossFor": [
+    "メッセージ履歴を無制限に保存したい",
+    "自社ブランドのチャットツールをホワイトラベルで提供したい",
+    "100人以上のチームでコストを大幅削減したい"
+  ],
+  "saasFor": [
+    "2000以上のサービスとシームレスに連携したい",
+    "Slackの使い勝手と豊富なエコシステムをそのまま使いたい",
+    "モバイルでの使いやすさを最優先したい"
+  ],
+  "faq": [
+    {
+      "question": "Rocket.ChatはSlackのワークスペースに似ていますか？",
+      "answer": "はい。Rocket.Chatはチャンネル・DM・スレッド・絵文字リアクションなどSlackに非常に近いUIを持っています。移行後の学習コストは低めです。"
+    },
+    {
+      "question": "Slackからメッセージ履歴を移行できますか？",
+      "answer": "SlackのJSONエクスポートを使ってメッセージをRocket.Chatにインポートするツールが提供されています。チャンネル・DM・ファイルの移行が可能です。"
+    },
+    {
+      "question": "Rocket.ChatにはSlack Appに相当するものがありますか？",
+      "answer": "Rocket.Chatにはアプリマーケットプレイスがあり、GitLab・Jira・GitHub・Trello・Zoom等との連携を提供しています。Slackほど数は多くありません。"
+    },
+    {
+      "question": "セルフホストした場合、暗号化は対応していますか？",
+      "answer": "はい。Rocket.ChatはE2E暗号化（エンドツーエンド）をサポートしています。特定のチャンネルや会話でE2E暗号化を有効にできます。"
+    }
+  ],
+  "relatedSlugs": ["slack", "intercom", "zendesk"]
+}

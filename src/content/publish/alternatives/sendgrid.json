@@ -1,0 +1,49 @@
+{
+  "slug": "sendgrid",
+  "competitor": "SendGrid",
+  "competitorUrl": "https://sendgrid.com",
+  "metaTitle": "SendGridの代替OSSツール一覧 | 無料で使えるメール配信ツール比較",
+  "metaDescription": "SendGridの代わりに使える無料オープンソースのメール配信ツールを比較。Listmonk・Postalなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "SendGridのメール送信数課金やIPレピュテーション管理に悩んでいませんか？ここではSendGridの代わりに使えるオープンソースのメール配信・マーケティングオートメーションツールを比較します。ニュースレター・トランザクションメールをセルフホストで無制限に送れるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "送信数無制限",
+      "description": "SendGridは月10万通を超えると課金が発生。OSSならサーバーのSMTP容量の範囲で無制限に送信できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "メールリストの自社管理",
+      "description": "購読者リスト・開封率・クリックデータをSendGridのサーバーに預けず、自社DBで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "SendGridの有料プランは月額約3,000円〜。メール数が増えると急激にコストが上昇。OSSならサーバー代のみ。",
+      "icon": "cost"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "SendGridのAPIや独自テンプレートへの依存を排除。標準SMTPで任意の送信サービスに切り替えられる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "SendGridのOSS代替はありますか？",
+      "answer": "ニュースレター配信にはListmonk、トランザクションメール（パスワードリセット等）の自社配信サーバーにはPostalが代表的なOSS代替です。"
+    },
+    {
+      "question": "ListmonkはSendGridのような配信分析機能がありますか？",
+      "answer": "はい。Listmonkは開封率・クリック率・バウンス率などの配信統計をダッシュボードで確認できます。セグメント配信やA/Bテストにも対応しています。"
+    },
+    {
+      "question": "SMTPサーバーとして使えますか？",
+      "answer": "PostalはフルSMTPサーバーとして動作し、アプリからの送信APIやSMTP接続に対応します。バウンス処理・SPF/DKIM設定も自動化されています。"
+    },
+    {
+      "question": "IPレピュテーションの管理は必要ですか？",
+      "answer": "セルフホストの場合は自前でSPF・DKIM・DMARCを設定し、IPのウォームアップを行う必要があります。初期の到達率管理にはある程度の知識が必要です。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "zapier", "typeform"]
+}

@@ -84,7 +84,7 @@ JSON以外は出力しないでください。`;
       .trim();
     return JSON.parse(cleaned);
   } catch (e) {
-    console.error(`JSON parse error for ${name}: ${e.message}`, content);
+    console.error(`JSON parse error for ${name}: ${e instanceof Error ? e.message : String(e)}`, content);
     return null;
   }
 }
@@ -199,7 +199,7 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error("Refine error:", err);
     return new Response(
-      JSON.stringify({ error: err.message }),
+      JSON.stringify({ error: err instanceof Error ? err.message : String(err) }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

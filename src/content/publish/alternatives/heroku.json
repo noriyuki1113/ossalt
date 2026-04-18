@@ -1,0 +1,49 @@
+{
+  "slug": "heroku",
+  "competitor": "Heroku",
+  "competitorUrl": "https://www.heroku.com",
+  "metaTitle": "Herokuの代替OSSツール一覧 | 無料で使えるPaaSプラットフォーム比較",
+  "metaDescription": "Herokuの代わりに使える無料オープンソースのPaaSツールを比較。Coolify・Dokku・CapRoverなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Herokuの無料プランが廃止され、コストや移行先を検討していませんか？ここではHerokuの代わりに使えるオープンソースのPaaSプラットフォームを比較します。Dockerベースのセルフホストで、Herokuライクなデプロイ体験を維持しながらコストを大幅削減できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Herokuは月額5ドル〜/dyno。セルフホストPaaSなら月額5〜10ドルのVPSで複数アプリを動かせる。",
+      "icon": "cost"
+    },
+    {
+      "title": "インフラの自社管理",
+      "description": "アプリのデプロイ先・環境変数・ログをHerokuに依存せず、自社サーバーで完全制御できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "HerokuのDyno・Add-ons独自エコシステムへの依存から脱却し、標準的なDockerコンテナで運用できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタマイズ・拡張",
+      "description": "OSSのPaaSならNginxリバースプロキシ・SSL・ドメイン設定・スケーリングを自由に設定できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "HerokuのOSS代替で最も人気なのは何ですか？",
+      "answer": "CoolifyとDokkuが最も人気があります。CoolifyはモダンなUIでDockerコンテナ・GitHub連携・SSL自動設定が揃い、初心者にも使いやすいです。DokkuはHerokuライクなgit pushデプロイが可能な軽量PaaSです。"
+    },
+    {
+      "question": "CoolifyはHerokuと同じようにgit pushでデプロイできますか？",
+      "answer": "はい。CoolifyはGitHub/GitLab/Bitbucketとの連携により、git pushトリガーの自動デプロイに対応しています。DockerfileまたはNixpacksによる自動ビルドも可能です。"
+    },
+    {
+      "question": "Herokuのdynoに相当する機能はCoolifyにありますか？",
+      "answer": "CoolifyはDockerコンテナとしてアプリを管理します。スケーリング・環境変数・ドメイン設定・ヘルスチェックなどHerokuのDyno相当の機能を持っています。"
+    },
+    {
+      "question": "セルフホストPaaSに必要なサーバースペックは？",
+      "answer": "2コア・4GBメモリのVPSで複数の小〜中規模アプリを運用できます。DigitalOcean・Hetzner・Vultrなどで月額5〜20ドル程度のサーバーが目安です。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "firebase", "datadog"]
+}

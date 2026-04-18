@@ -1,0 +1,49 @@
+{
+  "slug": "launchdarkly",
+  "competitor": "LaunchDarkly",
+  "competitorUrl": "https://launchdarkly.com",
+  "metaTitle": "LaunchDarklyの代替OSSツール一覧 | 無料で使えるフィーチャーフラグツール比較",
+  "metaDescription": "LaunchDarklyの代わりに使える無料オープンソースのフィーチャーフラグツールを比較。Unleash・FlagSmithなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "LaunchDarklyの高額なプランに悩んでいませんか？ここではLaunchDarklyの代わりに使えるオープンソースのフィーチャーフラグ・機能切替管理ツールを比較します。A/Bテスト・段階的ロールアウト・カナリアリリースをセルフホストで実現できます。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "LaunchDarklyは月額数万円〜。Unleashのセルフホスト版なら基本機能を無料で使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "フラグデータの自社管理",
+      "description": "フィーチャーフラグの設定・ユーザーセグメント情報をLaunchDarklyのサーバーに預けず管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "SDKの互換性",
+      "description": "UnleashはLaunchDarklyと互換性のあるSDKを提供しており、既存コードの変更を最小限に移行できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "セルフホストで低レイテンシ",
+      "description": "自社インフラ内でフラグを管理することでフラグ評価のレイテンシを最小化できる。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "LaunchDarklyのOSS代替はありますか？",
+      "answer": "UnleashとFlagSmithが代表的な代替です。UnleashはLaunchDarklyに最も近い機能セットを持ち、FlagSmithはシンプルで使いやすいです。"
+    },
+    {
+      "question": "UnleashはA/Bテストに使えますか？",
+      "answer": "はい。Unleashはカスタムストラテジーを使ってA/Bテストの実装ができます。ただしAnalytics機能はLaunchDarklyより限定的です。"
+    },
+    {
+      "question": "移行はどのくらい大変ですか？",
+      "answer": "SDKのインポートを変更するのみで移行できます。フラグの設定は手動で移行する必要がありますが、数が少なければ短時間で完了します。"
+    },
+    {
+      "question": "Kubernetes環境でも使えますか？",
+      "answer": "はい。UnleashとFlagSmithはどちらもKubernetesへのデプロイをサポートしており、Helmチャートが提供されています。"
+    }
+  ],
+  "relatedSlugs": ["datadog", "auth0", "firebase"]
+}

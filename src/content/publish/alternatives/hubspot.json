@@ -1,0 +1,49 @@
+{
+  "slug": "hubspot",
+  "competitor": "HubSpot",
+  "competitorUrl": "https://www.hubspot.com",
+  "metaTitle": "HubSpotの代替OSSツール一覧 | 無料で使えるCRM・マーケティングツール比較",
+  "metaDescription": "HubSpotの代わりに使える無料オープンソースのCRM・マーケティングツールを比較。Twenty・Mauticなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "HubSpotの月額費用やアドオン課金に悩んでいませんか？ここではHubSpotの代わりに使えるオープンソースのCRM・マーケティングオートメーションツールを比較します。リード管理・メールキャンペーン・パイプライン管理をセルフホストで無料で実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "HubSpotの有料プランは月額800ドル〜と高額。OSSのCRMならサーバー代のみで全機能を使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "顧客データの自社管理",
+      "description": "リード・商談・顧客の連絡先データをHubSpotのクラウドに預けず、自社DBで完全管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "HubSpotの独自ワークフローや連携エコシステムへの依存を排除。OSSなら自由にカスタマイズ・連携できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "コンタクト数無制限",
+      "description": "HubSpotの無料版はコンタクト数に制限あり。OSSならコンタクト数の制限なしでリード管理できる。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "HubSpotのOSS代替はありますか？",
+      "answer": "TwentyとMauticが代表的な代替です。TwentyはモダンなUIのCRM（TypeScript製）、Mauticはメール・SNSキャンペーンを自動化するマーケティングオートメーションです。"
+    },
+    {
+      "question": "TwentyはHubSpotのCRM機能をカバーできますか？",
+      "answer": "商談パイプライン・コンタクト管理・アクティビティ記録などコアCRM機能をカバーします。Salesforce・HubSpotのような高度なレポート機能は現在開発中です。"
+    },
+    {
+      "question": "メールキャンペーン機能はありますか？",
+      "answer": "Mauticがメール・SMS・SNS・プッシュ通知などを組み合わせたマーケティングオートメーションを提供します。ドラッグ&ドロップでメールテンプレートを作成できます。"
+    },
+    {
+      "question": "HubSpotからデータを移行できますか？",
+      "answer": "HubSpotはCSVエクスポートに対応しており、コンタクト・会社・商談データを取り出せます。Twentyはインポート機能を持っており、移行は比較的容易です。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "zendesk", "typeform"]
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "evernote",
+  "competitor": "Evernote",
+  "competitorUrl": "https://evernote.com/intl/jp",
+  "metaTitle": "Evernoteの代替OSSツール一覧 | 無料で使えるノートアプリ比較",
+  "metaDescription": "Evernoteの代わりに使える無料オープンソースのノートアプリを比較。Joplin・Silverbulletなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Evernoteのデバイス制限や価格改定に不満を感じていませんか？ここではEvernoteの代わりに使えるオープンソースのノート・ナレッジ管理ツールを比較します。データを自分のサーバーやローカルに保存できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "デバイス制限なし",
+      "description": "Evernoteの無料プランは2デバイスまで制限。OSS代替なら無制限のデバイスで同期できる。",
+      "icon": "data"
+    },
+    {
+      "title": "データの完全所有",
+      "description": "ノートデータをEvernoteのサーバーに預けず、自分のサーバーやローカルに保存。データを完全に所有できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Evernoteの有料プランは月額約700円〜。OSSなら完全無料または少額のサーバー代のみで使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "オフライン完全対応",
+      "description": "Joplinはローカル保存が基本でオフラインでも完全に使える。同期はDropbox・OneDrive等を任意で使える。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "EvernoteのOSS代替はありますか？",
+      "answer": "Joplinが最も人気のある代替です。Markdown対応・E2E暗号化・クロスプラットフォームで動作し、Evernoteに近い機能を持ちます。"
+    },
+    {
+      "question": "EvernoteのノートをJoplinに移行できますか？",
+      "answer": "はい。JoplinはENEX形式（Evernoteのエクスポート形式）のインポートに対応しており、ノート・タグ・添付ファイルを移行できます。"
+    },
+    {
+      "question": "Joplinは複数デバイスで同期できますか？",
+      "answer": "Dropbox・Google Drive・OneDrive・Nextcloud・WebDAVと同期できます。有料のJoplin Cloudサービスも提供されています。"
+    },
+    {
+      "question": "NotionとJoplinはどちらがいいですか？",
+      "answer": "個人のノート管理・オフライン使用を重視するならJoplin、チーム共有・データベース機能が必要ならNotionが向いています。"
+    }
+  ],
+  "relatedSlugs": ["notion", "wordpress", "contentful"]
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "vikunja-vs-asana",
+  "ossName": "Vikunja",
+  "ossUrl": "https://vikunja.io",
+  "ossGithub": "https://github.com/go-vikunja/vikunja",
+  "saasName": "Asana",
+  "saasUrl": "https://asana.com",
+  "alternativeSlug": "asana",
+  "metaTitle": "Vikunja vs Asana 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Vikunja（OSS）とAsanaを徹底比較。コスト・タスク管理・ガントチャート・チーム共有の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "AsanaからVikunja（OSS）への移行を検討していますか？コスト・タスク管理・ガントチャート・カンバン・チーム機能など6項目で徹底比較します。",
+  "verdict": "コスト削減・シンプルなタスク管理・セルフホストが優先ならVikunja。豊富な連携・AI機能・大規模チームのポートフォリオ管理が必要ならAsana。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額13.49ドル〜/人", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "ガントチャート", "oss": "対応", "saas": "対応（有料プランのみ）", "winner": "oss" },
+    { "category": "アプリ連携数", "oss": "少なめ", "saas": "200以上", "winner": "saas" },
+    { "category": "AIによる自動化", "oss": "非対応", "saas": "Asana AI対応", "winner": "saas" },
+    { "category": "ポートフォリオ管理", "oss": "限定的", "saas": "充実", "winner": "saas" }
+  ],
+  "ossFor": [
+    "コストを抑えてシンプルなタスク・プロジェクト管理をしたい",
+    "ガントチャートを無料で使いたい（AsanaはBusiness以上）",
+    "データを自社サーバーで管理したい"
+  ],
+  "saasFor": [
+    "200以上のアプリとの連携が必要な大規模ワークフロー",
+    "AI機能で作業の自動化を活用したい",
+    "複数プロジェクトのポートフォリオを統合管理したい"
+  ],
+  "faq": [
+    {
+      "question": "VikunjaはAsanaのタイムライン（ガントチャート）に対応していますか？",
+      "answer": "はい。Vikunjaはガントチャートビューを無料で提供しています。AsanaのガントチャートはBusinessプラン以上が必要なのに対し、コスト優位があります。"
+    },
+    {
+      "question": "AsanaのデータをVikunjaに移行できますか？",
+      "answer": "AsanaはCSVエクスポートに対応しており、VikunjaはCSVインポートをサポートしています。タスク名・期日・担当者などの基本データを移行できます。"
+    },
+    {
+      "question": "モバイルアプリはありますか？",
+      "answer": "VikunjaはiOS・Androidのネイティブアプリとモバイル対応のWebアプリを提供しています。プッシュ通知にも対応しています。"
+    },
+    {
+      "question": "Vikunjaにはカンバンボード機能はありますか？",
+      "answer": "はい。Vikunjaはカンバン・リスト・ガントチャート・カレンダーの4種類のビューを提供しており、プロジェクトに合わせて切り替えられます。"
+    }
+  ],
+  "relatedSlugs": ["asana", "jira", "trello"]
+}

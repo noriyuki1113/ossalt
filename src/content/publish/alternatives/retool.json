@@ -1,0 +1,49 @@
+{
+  "slug": "retool",
+  "competitor": "Retool",
+  "competitorUrl": "https://retool.com",
+  "metaTitle": "Retoolの代替OSSツール一覧 | 無料で使える社内ツール構築プラットフォーム比較",
+  "metaDescription": "Retoolの代わりに使える無料オープンソースの社内ツール構築ツールを比較。Appsmith・Tooljetなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Retoolのユーザー数課金や高額な有料プランに悩んでいませんか？ここではRetoolの代わりに使えるオープンソースのローコード社内ツール構築プラットフォームを比較します。DB接続・API連携・UI構築をドラッグ＆ドロップで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "ユーザー数無制限",
+      "description": "Retoolはユーザー数で課金が増加。OSSなら社内全員が使っても追加費用なし。",
+      "icon": "cost"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Retoolの有料プランは1ユーザー月額約2,000円〜。10名のチームで月2万円。OSSならサーバー代のみ。",
+      "icon": "cost"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "社内DBへのクエリ結果やビジネスデータをRetoolのサーバーに通さず、自社環境内で処理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "オンプレ環境での利用",
+      "description": "インターネット非接続の環境でも社内ツールを構築できる。セキュリティポリシーの厳しい企業に適している。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "RetoolのOSS代替はありますか？",
+      "answer": "AppsmithとTooljetが最も人気のある代替です。どちらもドラッグ＆ドロップでDBやAPIと繋いだ管理画面を作れます。"
+    },
+    {
+      "question": "AppsmithとTooljetはどちらがいいですか？",
+      "answer": "Appsmithはカスタムコンポーネントの柔軟性が高く、Tooljetはシンプルで素早くツールを構築しやすいです。どちらも試してみることをおすすめします。"
+    },
+    {
+      "question": "どんなDBに接続できますか？",
+      "answer": "MySQL・PostgreSQL・MongoDB・Redis・Firebase・REST API・GraphQLなど主要なデータソースに対応しています。"
+    },
+    {
+      "question": "プログラミング知識は必要ですか？",
+      "answer": "基本的な操作はノーコードで完結しますが、カスタムロジックにはJavaScriptの知識があると便利です。"
+    }
+  ],
+  "relatedSlugs": ["airtable", "notion", "zapier"]
+}

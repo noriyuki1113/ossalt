@@ -1,0 +1,49 @@
+{
+  "slug": "stripe-billing",
+  "competitor": "Stripe Billing",
+  "competitorUrl": "https://stripe.com/jp/billing",
+  "metaTitle": "Stripe Billingの代替OSSツール一覧 | 無料で使えるサブスクリプション管理ツール比較",
+  "metaDescription": "Stripe Billingの代わりに使える無料オープンソースのサブスクリプション管理ツールを比較。LakesideやKillbillなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Stripe Billingの手数料や請求管理コストを削減したいですか？ここではStripe Billingの代わりに使えるオープンソースのサブスクリプション・請求管理ツールを比較します。手数料なしで柔軟な課金モデルを実装できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "取引手数料の削減",
+      "description": "Stripe Billingは処理金額の0.5%〜の手数料が発生。セルフホストの請求システムなら決済ゲートウェイの手数料のみに抑えられる。",
+      "icon": "cost"
+    },
+    {
+      "title": "複雑な課金モデルへの対応",
+      "description": "Killbillは使用量課金・階層課金・バンドル販売など複雑な課金ロジックをコードなしで設定できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "請求データの自社管理",
+      "description": "サブスクリプションデータや請求履歴を自社DBで管理。財務レポートや分析を自由に行える。",
+      "icon": "data"
+    },
+    {
+      "title": "マルチゲートウェイ対応",
+      "description": "複数の決済ゲートウェイを使い分けられる。Stripeに依存しない支払いフローを構築できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Stripe BillingのOSS代替はありますか？",
+      "answer": "KillbillとLakesideが代表的なOSS代替です。Killbillは本格的な請求エンジンで複雑な課金モデルに対応、LakesideはSaaS向けのシンプルなサブスクリプション管理を提供します。"
+    },
+    {
+      "question": "Stripeをやめる必要はありますか？",
+      "answer": "いいえ。KillbillはStripeを決済ゲートウェイとして使いながら、请求管理ロジックだけを自社で持つことも可能です。"
+    },
+    {
+      "question": "セットアップは複雑ですか？",
+      "answer": "Killbillは設定が複雑で本格的なエンジニアリングリソースが必要です。小規模のSaaSであれば、まずはStripeのネイティブ機能で十分な場合が多いです。"
+    },
+    {
+      "question": "請求書の発行はできますか？",
+      "answer": "はい。KillbillはPDF請求書の生成・送付機能を持ちます。日本の消費税対応も設定可能です。"
+    }
+  ],
+  "relatedSlugs": ["shopify", "firebase", "retool"]
+}

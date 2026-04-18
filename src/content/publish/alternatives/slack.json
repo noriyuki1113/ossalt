@@ -1,0 +1,49 @@
+{
+  "slug": "slack",
+  "competitor": "Slack",
+  "competitorUrl": "https://slack.com",
+  "metaTitle": "Slackの代替OSSツール一覧 | 無料で使えるチームチャットツール比較",
+  "metaDescription": "Slackの代わりに使える無料オープンソースのチームチャットツールを比較。Mattermost・Rocket.Chatなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Slackの有料プランやメッセージ履歴の制限に悩んでいませんか？ここではSlackの代わりに使えるオープンソースのチームチャットツールをGitHubスター数順で比較します。すべてセルフホスト可能で、メッセージ履歴の制限なし・ユーザー数無制限で使えます。",
+  "whySwitchReasons": [
+    {
+      "title": "メッセージ履歴無制限",
+      "description": "Slackの無料プランはメッセージ履歴が90日制限。OSSなら過去のやり取りをすべて保持できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Slackは1ユーザー月額約900円〜。チームが大きいほどコスト増。OSSならユーザー数に関係なくゼロコスト。",
+      "icon": "cost"
+    },
+    {
+      "title": "データの完全管理",
+      "description": "社内の会話データを外部サービスに預けず、自社サーバーで管理。コンプライアンス要件を満たしやすい。",
+      "icon": "data"
+    },
+    {
+      "title": "カスタマイズの自由",
+      "description": "ソースコードを改変して独自機能を追加可能。既存の社内システムとの連携も自由に構築できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Slackの無料代替ツールはありますか？",
+      "answer": "はい。Mattermost、Rocket.Chat、Zuliなど多数のオープンソースのチャットツールがあります。すべてセルフホスト可能でユーザー数・メッセージ数に制限がありません。"
+    },
+    {
+      "question": "MattermostとRocket.Chatはどちらがおすすめですか？",
+      "answer": "企業向け・セキュリティ重視ならMattermost、機能の豊富さと拡張性を重視するならRocket.Chatがおすすめです。どちらもSlackに近いUIを持っています。"
+    },
+    {
+      "question": "Slackからの移行は難しいですか？",
+      "answer": "多くのOSS代替はSlackライクなUIを持っており、移行ハードルは低めです。Slackのデータエクスポート機能を使って過去のメッセージを移行できるツールもあります。"
+    },
+    {
+      "question": "セルフホストに必要なスペックは？",
+      "answer": "Mattermostは1〜50名規模なら2コア・4GBRAMで動作します。Rocket.Chatはやや多めのリソースが必要です。クラウドVPS（月額1,000〜3,000円）で十分動かせます。"
+    }
+  ],
+  "relatedSlugs": ["intercom", "zendesk", "notion"]
+}

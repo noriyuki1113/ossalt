@@ -1,0 +1,49 @@
+{
+  "slug": "circleci",
+  "competitor": "CircleCI",
+  "competitorUrl": "https://circleci.com",
+  "metaTitle": "CircleCIの代替OSSツール一覧 | 無料で使えるCI/CDパイプライン比較",
+  "metaDescription": "CircleCIの代わりに使える無料オープンソースのCI/CDツールを比較。Woodpecker CI・Jenkins・Drone CIなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "CircleCIの従量課金や2023年のセキュリティインシデントを機に移行先を検討していませんか？ここではCircleCIの代わりに使えるオープンソースのCI/CDパイプラインツールを比較します。セルフホストでビルド・テスト・デプロイを完全管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "CircleCIは実行時間で課金（無料枠6,000分/月）。大規模プロジェクトでは高額になるが、OSSならサーバー代のみで無制限実行できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "CI/CDシークレットの自社管理",
+      "description": "2023年のCircleCIシークレット漏洩事故を受け、重要なAPIキー・証明書を自社管理するニーズが高まっている。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "CircleCI独自のOrbs・設定形式への依存を減らし、標準的なDockerコンテナベースのCIに移行できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "オンプレ・エアギャップ対応",
+      "description": "金融・医療など厳格なコンプライアンス要件のある環境でも、インターネット非接続でCI/CDを運用できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "CircleCIのOSS代替で最も人気なのは何ですか？",
+      "answer": "Jenkins（最多実績）・Woodpecker CI（軽量モダン）・Drone CI（Docker中心）が人気です。Jenkinsは豊富なプラグインエコシステムを持ち、大規模組織での採用実績が多いです。"
+    },
+    {
+      "question": "CircleCIのOrbsに相当するものはOSSにありますか？",
+      "answer": "JenkinsはShared Libraryで再利用可能なパイプラインコードを共有できます。Woodpecker CIはプラグインとしてDockerイメージを使った再利用可能ステップをサポートしています。"
+    },
+    {
+      "question": "CircleCIからJenkinsへの移行は難しいですか？",
+      "answer": "設定ファイルの形式（YAML→Groovyのような差異）があるため書き直しが必要です。ただしDockerベースのビルド・テスト・デプロイのロジック自体は移植しやすいです。"
+    },
+    {
+      "question": "Jenkinsの代わりになる軽量なOSSはありますか？",
+      "answer": "Woodpecker CIはJenkinsより大幅に軽量でモダンなUIを持ちます。DockerとYAMLでパイプラインを定義でき、小〜中規模チームに向いています。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "datadog", "sentry"]
+}

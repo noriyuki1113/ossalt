@@ -1,0 +1,50 @@
+{
+  "slug": "posthog-vs-mixpanel",
+  "ossName": "PostHog",
+  "ossUrl": "https://posthog.com",
+  "ossGithub": "https://github.com/PostHog/posthog",
+  "saasName": "Mixpanel",
+  "saasUrl": "https://mixpanel.com",
+  "alternativeSlug": "mixpanel",
+  "metaTitle": "PostHog vs Mixpanel 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "PostHog（OSS）とMixpanelを徹底比較。コスト・ファネル分析・セッション録画・機能フラグの違いを解説。",
+  "heroDescription": "MixpanelからPostHog（OSS）への移行を検討していますか？コスト・ファネル分析・セッション録画・機能フラグなど6項目で徹底比較します。",
+  "verdict": "機能フラグ・セッション録画も含めた統合分析基盤を安くセルフホストしたいならPostHog。シンプルなイベント分析だけ必要ならMixpanel。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額25ドル〜", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "ファネル分析", "oss": "対応", "saas": "対応（より洗練）", "winner": "saas" },
+    { "category": "セッション録画", "oss": "対応（内蔵）", "saas": "非対応", "winner": "oss" },
+    { "category": "機能フラグ/A・Bテスト", "oss": "対応（内蔵）", "saas": "非対応", "winner": "oss" },
+    { "category": "UIの使いやすさ", "oss": "良好", "saas": "非常に優れている", "winner": "saas" }
+  ],
+  "ossFor": [
+    "分析・機能フラグ・セッション録画を1ツールで統合したい",
+    "GDPRなどプライバシー規制に厳格に対応する必要がある",
+    "月間イベント数が多くコストを抑えたい"
+  ],
+  "saasFor": [
+    "すぐに使えるシンプルな分析ツールが欲しい",
+    "エンジニアでないPMがUIを直感的に操作したい",
+    "小規模チームで月100万イベント以内に収まる"
+  ],
+  "faq": [
+    {
+      "question": "PostHogはMixpanelのコホート分析に対応していますか？",
+      "answer": "はい。PostHogはコホート分析・リテンション・パス分析・ファネルなどMixpanelの主要な分析機能をすべてカバーしています。"
+    },
+    {
+      "question": "MixpanelからPostHogへのデータ移行はできますか？",
+      "answer": "PostHogはMixpanelからのデータインポート機能を提供しています。過去のイベントデータをJSONで移行することが可能です。"
+    },
+    {
+      "question": "PostHogのセルフホストに必要なスペックは？",
+      "answer": "月100万イベント程度なら2コア・4GBで十分です。大量データにはClickHouseを使うため、規模に応じてスケールアップが必要です。"
+    },
+    {
+      "question": "PostHogのSDKはどの言語に対応していますか？",
+      "answer": "JavaScript・Python・Go・Ruby・PHP・iOS・Androidなど主要な言語・フレームワークのSDKを公式に提供しています。"
+    }
+  ],
+  "relatedSlugs": ["mixpanel", "google-analytics", "datadog"]
+}

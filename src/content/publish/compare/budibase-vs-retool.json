@@ -1,0 +1,50 @@
+{
+  "slug": "budibase-vs-retool",
+  "ossName": "Budibase",
+  "ossUrl": "https://budibase.com",
+  "ossGithub": "https://github.com/Budibase/budibase",
+  "saasName": "Retool",
+  "saasUrl": "https://retool.com",
+  "alternativeSlug": "retool",
+  "metaTitle": "Budibase vs Retool 比較 | OSSのローコードで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Budibase（OSS）とRetoolを徹底比較。コスト・UIビルダー・データソース・自動化・セルフホストの違いを解説。社内ツール開発の選び方がわかります。",
+  "heroDescription": "RetoolからBudibase（OSS）への移行を検討していますか？コスト・UIビルダー・データソース数・自動化・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・シンプルな社内ツール・データを自社管理したいならBudibase。高度なコードカスタマイズ・豊富なコネクタ・エンタープライズ機能が必要ならRetool。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額10ドル〜/人", "winner": "oss" },
+    { "category": "UIビルダー", "oss": "ドラッグ&ドロップ（直感的）", "saas": "コンポーネントベース（柔軟）", "winner": "draw" },
+    { "category": "データソース", "oss": "主要DB・REST API対応", "saas": "60以上のコネクタ", "winner": "saas" },
+    { "category": "自動化", "oss": "ビジュアルワークフロー", "saas": "高度なワークフロー", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "有料プランのみ", "winner": "oss" },
+    { "category": "内蔵DB", "oss": "BudibaseDB内蔵", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "社内CRMや管理画面をローコードで素早く構築したい",
+    "Retoolの月額コストを削減して自社サーバーで運用したい",
+    "BudibaseDB内蔵DBでデータを一元管理したい"
+  ],
+  "saasFor": [
+    "Salesforce・Stripe・Twilioなど60以上のコネクタを活用したい",
+    "JSでコンポーネントを細かくカスタマイズしたい上級者",
+    "エンタープライズのSSO・監査ログ・権限管理が必要"
+  ],
+  "faq": [
+    {
+      "question": "BudibaseはRetoolと同じように社内管理画面を作れますか？",
+      "answer": "はい。BudibaseはCRUD操作・フォーム・テーブル・チャートなど社内ツールに必要な基本コンポーネントを揃えています。PostgreSQL・MySQL・REST APIとも接続できます。"
+    },
+    {
+      "question": "Budibaseに内蔵DBはありますか？",
+      "answer": "はい。BudibaseDBという内蔵データベースがあり、外部DBなしでアプリを構築できます。スプレッドシートのようなUIでデータを管理できます。"
+    },
+    {
+      "question": "RetoolからBudibaseへの移行は難しいですか？",
+      "answer": "アプリの直接移行ツールはありません。Budibaseで画面を再構築する必要がありますが、ドラッグ&ドロップUIのため再構築は比較的早く完了します。"
+    },
+    {
+      "question": "BudibaseはKubernetes環境にデプロイできますか？",
+      "answer": "はい。公式のHelmチャートが提供されており、Kubernetes環境への本番デプロイが可能です。Docker Composeでのシングルノード構成も利用できます。"
+    }
+  ],
+  "relatedSlugs": ["retool", "airtable", "firebase"]
+}

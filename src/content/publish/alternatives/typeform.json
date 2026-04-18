@@ -1,0 +1,49 @@
+{
+  "slug": "typeform",
+  "competitor": "Typeform",
+  "competitorUrl": "https://www.typeform.com",
+  "metaTitle": "Typeformの代替OSSツール一覧 | 無料で使えるフォームツール比較",
+  "metaDescription": "Typeformの代わりに使える無料オープンソースのフォームツールを比較。Formbricks・Ralllyなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Typeformの月額費用や回答数制限に悩んでいませんか？ここではTypeformの代わりに使えるオープンソースのフォーム・アンケートツールを比較します。回答数無制限・ブランドロゴなしで使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "回答数無制限",
+      "description": "Typeformの無料プランは月10回答まで制限。OSSなら回答数に関係なく無制限に収集できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Typeformの有料プランは月額約3,000円〜。OSSなら回答者・フォーム数ともに無制限でゼロコスト。",
+      "icon": "cost"
+    },
+    {
+      "title": "回答データの自社管理",
+      "description": "アンケート・フォームのデータをTypeformのサーバーに預けず、自社DBで管理。GDPR対応も容易。",
+      "icon": "data"
+    },
+    {
+      "title": "ブランドカスタマイズ",
+      "description": "Typeformのロゴや広告なしで、自社ブランドのフォームを作成できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "TypeformのOSS代替はありますか？",
+      "answer": "Formbricksが最も人気のある代替です。製品内アンケート・ユーザーフィードバック収集に特化したモダンなOSSフォームツールです。"
+    },
+    {
+      "question": "Formbricksはどんなユースケースに向いていますか？",
+      "answer": "SaaSプロダクトのユーザーフィードバック収集、NPS調査、オンボーディングアンケートなどプロダクト内でのリサーチに特化しています。"
+    },
+    {
+      "question": "見た目の美しいフォームを作れますか？",
+      "answer": "FormbricksはTypeformライクなフルスクリーンフォームもサポートしており、見た目のカスタマイズも充実しています。"
+    },
+    {
+      "question": "Google Formsとの違いは何ですか？",
+      "answer": "Google FormsはGoogleサーバーにデータが保存されますが、FormbricksはセルフホストによりデータをGoogleに送らず管理できます。"
+    }
+  ],
+  "relatedSlugs": ["notion", "airtable", "canny"]
+}

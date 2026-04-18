@@ -1,0 +1,49 @@
+{
+  "slug": "datadog",
+  "competitor": "Datadog",
+  "competitorUrl": "https://www.datadoghq.com",
+  "metaTitle": "Datadogの代替OSSツール一覧 | 無料で使えるインフラ監視ツール比較",
+  "metaDescription": "Datadogの代わりに使える無料オープンソースの監視ツールを比較。Grafana・Prometheusなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Datadogの高額な従量課金や予期せぬコスト増に悩んでいませんか？ここではDatadogの代わりに使えるオープンソースの監視・可観測性ツールをGitHubスター数順で比較します。メトリクス・ログ・トレースをまとめて管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト予測が容易",
+      "description": "Datadogはホスト数・メトリクス数・ログ量で課金が急増するリスクがある。OSSなら固定コストで運用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "データの自社管理",
+      "description": "インフラ情報・ログデータをDatadogのサーバーに送信せず、自社環境で保持。セキュリティポリシーを満たしやすい。",
+      "icon": "data"
+    },
+    {
+      "title": "柔軟なカスタマイズ",
+      "description": "GrafanaはPromQL・LogQL・TraceQLで高度なクエリを記述でき、Datadogにはない独自のダッシュボードが作れる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "大規模環境でも固定コスト",
+      "description": "ホスト数が増えてもコストが増えない。Datadogは数百ホストになると月額数百万円になるケースもある。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "DatadogのOSS代替はありますか？",
+      "answer": "Grafana + Prometheusの組み合わせが最も広く使われる代替です。Grafanaでダッシュボード、Prometheusでメトリクス収集を担います。"
+    },
+    {
+      "question": "Grafana単体でDatadogと同等のことができますか？",
+      "answer": "GrafanaはVisualizationに特化しており、メトリクス収集にはPrometheus、ログにはLoki、トレースにはTempoを組み合わせる必要があります。"
+    },
+    {
+      "question": "移行はどのくらい大変ですか？",
+      "answer": "Datadogのエージェントとの互換性はないため、監視設定の書き直しが必要です。ただしPrometheusの設定は豊富なドキュメントがあり、段階的な移行が可能です。"
+    },
+    {
+      "question": "アラート機能はありますか？",
+      "answer": "はい。GrafanaにはAlertingが内蔵されており、Slack・PagerDuty・メールなどへの通知を設定できます。"
+    }
+  ],
+  "relatedSlugs": ["firebase", "auth0", "pagerduty"]
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "google-drive",
+  "competitor": "Google Drive",
+  "competitorUrl": "https://drive.google.com",
+  "metaTitle": "Google Driveの代替OSSツール一覧 | 無料で使えるクラウドストレージ比較",
+  "metaDescription": "Google Driveの代わりに使える無料オープンソースのクラウドストレージを比較。Nextcloud・Seafileなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Google Driveのストレージ制限やGoogleへのデータ依存に不安を感じていませんか？ここではGoogle Driveの代わりに使えるオープンソースのファイル共有・クラウドストレージツールを比較します。自社サーバーで無制限のストレージを実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "ストレージ容量無制限",
+      "description": "Google Driveは15GBまで無料で追加は有料。セルフホストなら自前のストレージ容量をフル活用できる。",
+      "icon": "data"
+    },
+    {
+      "title": "データのプライバシー",
+      "description": "ファイルをGoogleに預けず、自社サーバーで管理。機密文書・個人情報の取り扱いも自社ポリシーで完結。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Google Workspace Businessは1ユーザー月額約1,500円〜。OSSとNASやVPSを使えば同等環境をより安く構築できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "Google依存の回避",
+      "description": "Google Workspaceへの依存を減らし、Googleのサービス変更・廃止リスクを排除できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Google DriveのOSS代替はありますか？",
+      "answer": "NextcloudとSeafileが最も人気のある代替です。Nextcloudはファイル共有だけでなくカレンダー・連絡先・ビデオ通話機能も統合したGoogle Workspace代替として機能します。"
+    },
+    {
+      "question": "NextcloudはGoogle Driveと同じように使えますか？",
+      "answer": "はい。Web UIはもちろん、Windows・Mac・iOS・AndroidのネイティブクライアントもありGoogle Driveと同様の同期体験が得られます。"
+    },
+    {
+      "question": "どのくらいのサーバーが必要ですか？",
+      "answer": "小規模（5名以下）なら2GB RAM・20GBストレージで動作します。月額1,000〜2,000円のVPSにNASや外部ストレージを追加するのが一般的です。"
+    },
+    {
+      "question": "Google Docs代わりのオフィス機能はありますか？",
+      "answer": "NextcloudにはNextcloud Officeという共同編集ツールがあります。Collabora OfficeやOnlyOfficeと統合することでGoogle Docsに近い体験を実現できます。"
+    }
+  ],
+  "relatedSlugs": ["notion", "evernote", "wordpress"]
+}

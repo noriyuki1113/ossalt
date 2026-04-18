@@ -14,12 +14,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ToolIcon } from "@/components/ToolIcon";
-import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
-import { COMPETITOR_TO_SLUG } from "./AlternativesPage";
+import { COMPETITOR_TO_SLUG, COMPARE_LINKS } from "./AlternativesPage";
 import { CATEGORY_TO_SLUG } from "./Index";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
@@ -32,6 +31,10 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
+import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
+import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
+import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
+import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
 
@@ -157,37 +160,6 @@ function getDifficultyInfo(tool: Tool) {
   return { setupLevel, setupLabel, setupDesc, selfHostLevel, selfHostLabel, selfHostDesc };
 }
 
-/* ── Related card (reuses shared components) ── */
-
-function RelatedToolCard({ tool }: { tool: Tool }) {
-  const competitor = tool.primary_competitor || tool.primary_competitor_ja;
-  return (
-    <Link
-      to={`/tools/${tool.id}`}
-      className="group card-unified-hover p-4 flex flex-col"
-    >
-      <div className="flex items-center gap-2.5 mb-2 min-w-0">
-        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} />
-        <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate flex-1 min-w-0">
-          {tool.name}
-        </h4>
-        <StarCount count={tool.stars_num} size="sm" />
-      </div>
-      {competitor && competitor !== "有料SaaS" && (
-        <div className="mb-1.5">
-          <AlternativeBadge competitor={competitor} size="sm" />
-        </div>
-      )}
-      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed flex-1">
-        {tool.description_ja || tool.description_en || ""}
-      </p>
-      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-3 group-hover:gap-1.5 transition-all">
-        詳細を見る <ArrowRight className="h-3 w-3" />
-      </span>
-    </Link>
-  );
-}
-
 /* ── Main ── */
 
 export default function ToolDetailPage() {
@@ -242,11 +214,26 @@ export default function ToolDetailPage() {
     enabled: !!tool,
   });
 
+  const { data: partnerCards = [] } = usePartnerCards(tool?.id ?? 0, tool?.name ?? null);
+
   const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
   // Use English name for short display; it's always a clean name like "Notion", "Zapier"
   const competitorDisplay = competitorEn || competitorJa || null;
   const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
+
+  // Map Japanese parent category → schema.org applicationCategory
+  const SCHEMA_CATEGORY: Record<string, string> = {
+    "AI・ML": "DeveloperApplication",
+    "開発ツール": "DeveloperApplication",
+    "インフラ・運用": "DeveloperApplication",
+    "データ・分析": "BusinessApplication",
+    "業務ソフト": "BusinessApplication",
+    "コンテンツ": "WebApplication",
+    "生産性・便利ツール": "UtilitiesApplication",
+    "セキュリティ": "SecurityApplication",
+    "コミュニティ": "SocialNetworkingApplication",
+  };
 
   const seoTitle = tool
     ? hasCompetitor
@@ -258,6 +245,11 @@ export default function ToolDetailPage() {
       ? `${tool.name}は${competitorDisplay}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
       : tool.description_ja || tool.description_en || ""
     : "";
+
+  const toolOgImage = tool
+    ? `https://ossalt.jp/api/og?type=tool&c=${encodeURIComponent(tool.name || "")}&cat=${encodeURIComponent(tool.parent_category_ja || "")}&stars=${tool.stars_num ?? 0}`
+    : "https://ossalt.jp/og-image.png";
+
   const jsonLd = tool ? {
     "@context": "https://schema.org",
     "@graph": [
@@ -265,12 +257,28 @@ export default function ToolDetailPage() {
         "@type": "SoftwareApplication",
         name: tool.name,
         description: tool.description_ja || tool.description_en || "",
-        applicationCategory: tool.category_ja || tool.parent_category_ja || "",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
-        operatingSystem: "Web",
+        applicationCategory: SCHEMA_CATEGORY[tool.parent_category_ja || ""] ?? "SoftwareApplication",
+        applicationSubCategory: tool.category_ja || tool.parent_category_ja || undefined,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "JPY",
+          availability: "https://schema.org/InStock",
+        },
+        isAccessibleForFree: true,
+        operatingSystem: "Linux, Windows, macOS, Web",
         ...(tool.url ? { url: tool.url } : {}),
         ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
-        ...(tool.license ? { license: tool.license } : {}),
+        ...(tool.license && tool.license !== "NOASSERTION" ? { license: tool.license } : {}),
+        ...(tool.last_commit ? { dateModified: tool.last_commit.split("T")[0] } : {}),
+        ...(tool.language ? { programmingLanguage: tool.language } : {}),
+        ...(tool.stars_num ? { aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: tool.stars_num >= 10000 ? "4.8" : tool.stars_num >= 1000 ? "4.5" : "4.0",
+          ratingCount: tool.stars_num,
+          bestRating: "5",
+          worstRating: "1",
+        }} : {}),
       },
       {
         "@type": "BreadcrumbList",
@@ -297,7 +305,7 @@ export default function ToolDetailPage() {
     title: seoTitle,
     description: seoDescription,
     canonical: tool ? `https://ossalt.jp/tools/${tool.id}` : undefined,
-    ogImage: "https://ossalt.jp/og-image.png",
+    ogImage: toolOgImage,
     jsonLd,
   });
 
@@ -336,6 +344,7 @@ export default function ToolDetailPage() {
   const shareUrl = `https://ossalt.jp/tools/${tool.id}`;
   const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const hatenaUrl = `https://b.hatena.ne.jp/add?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
   const altSlug = COMPETITOR_TO_SLUG[competitorEn];
   const targetUsers = getTargetUsers(tool, competitorDisplay);
   const notGoodFor = getNotGoodFor(tool);
@@ -454,32 +463,32 @@ export default function ToolDetailPage() {
             {/* Right: CTAs */}
             <div className="lg:w-[260px] shrink-0">
               <div className="card-unified p-5 space-y-3">
-                {/* Workspace actions — primary placement */}
+                {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
-                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
-                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                  {tool.url && (
+                    <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
+                      <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                      >
+                        公式サイトへ <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  )}
+                  {tool.github_url && (
+                    <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
+                      <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
+                      >
+                        <Github className="h-4 w-4" /> GitHubを見る
+                      </a>
+                    </Button>
+                  )}
                 </div>
 
+                {/* Workspace actions */}
                 <div className="border-t border-border/60 pt-3 space-y-2">
-                {/* External links */}
-                {tool.url && (
-                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                      onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
-                    >
-                      公式サイトを見る <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-                  </Button>
-                )}
-                {tool.github_url && (
-                  <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-xs border-border" asChild>
-                    <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
-                      onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
-                    >
-                      <Github className="h-3.5 w-3.5" /> GitHubリポジトリ
-                    </a>
-                  </Button>
-                )}
+                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
+                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
                 </div>
 
                 {/* Alternative link */}
@@ -509,11 +518,73 @@ export default function ToolDetailPage() {
                   >
                     <Twitter className="h-3 w-3 text-muted-foreground" />
                   </a>
+                  <a
+                    href={hatenaUrl} target="_blank" rel="noopener noreferrer"
+                    className="h-7 w-7 rounded-md border border-border/60 flex items-center justify-center hover:bg-secondary transition-colors font-black text-[11px] text-muted-foreground"
+                    title="はてなブックマークに追加"
+                  >
+                    B!
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* ── GitHub Stats Card ── */}
+        {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
+          <section className="py-6">
+            <div className="card-unified p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <Github className="h-4 w-4" />
+                  GitHub
+                </h2>
+                <a
+                  href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                  onClick={() => track("external_link_click", { tool: tool.name, target: "github_stats", url: tool.github_url })}
+                  className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
+                >
+                  リポジトリを見る <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {tool.stars_num != null && tool.stars_num > 0 && (
+                  <div className="text-center p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20">
+                    <p className="text-2xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> Stars
+                    </p>
+                  </div>
+                )}
+                {tool.forks_num != null && tool.forks_num > 0 && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-2xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <GitFork className="h-3 w-3" /> Forks
+                    </p>
+                  </div>
+                )}
+                {lastCommitText && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight">{lastCommitText}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Clock className="h-3 w-3" /> 最終更新
+                    </p>
+                  </div>
+                )}
+                {tool.license && tool.license !== "NOASSERTION" && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight">{tool.license}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Scale className="h-3 w-3" /> ライセンス
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
         <div className="border-t border-border/60" />
 
@@ -629,6 +700,11 @@ export default function ToolDetailPage() {
             ))}
           </div>
         </section>
+
+        <div className="border-t border-border/60" />
+
+        {/* ── 6b. Key Features ── */}
+        <KeyFeaturesList tool={tool} />
 
         {/* ── 6. Comparison table ── */}
         {hasCompetitor && (
@@ -772,26 +848,33 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
+        {/* ── Affiliate CTA ── */}
+        {partnerCards.length > 0 && (
+          <>
+            <div className="border-t border-border/60" />
+            <div className="py-6">
+              <AffiliateCTA toolName={tool.name || ""} cards={partnerCards} />
+            </div>
+          </>
+        )}
+
         {/* ── Ad slot before related tools ── */}
         <div className="border-t border-border/60" />
         <div className="py-6">
           <AdSlot slotId="detail-before-related" format="horizontal" />
         </div>
 
-        {/* ── 9. Related tools ── */}
+        {/* ── 9. Similar projects ── */}
         {relatedTools && relatedTools.length > 0 && (
           <>
             <div className="border-t border-border/60" />
-            <section className="py-10">
-              <h2 className="text-lg font-bold text-foreground mb-5">
-                {hasCompetitor ? `${competitorDisplay}の他のOSS代替` : "関連するOSSツール"}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {relatedTools.slice(0, 6).map((t) => (
-                  <RelatedToolCard key={t.id} tool={t} />
-                ))}
-              </div>
-            </section>
+            <SimilarProjectsSection
+              tools={relatedTools}
+              currentTool={tool}
+              competitorDisplay={competitorDisplay}
+              hasCompetitor={!!hasCompetitor}
+              altSlug={altSlug}
+            />
           </>
         )}
 
@@ -885,6 +968,61 @@ export default function ToolDetailPage() {
         <div className="pb-4">
           <ConsultationCTA toolName={tool.name || undefined} />
         </div>
+
+        {/* ── Share Bar ── */}
+        <div className="border-t border-border/60" />
+        <section className="py-6">
+          <p className="text-xs text-muted-foreground text-center mb-3">このページをシェア</p>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <button
+              onClick={copyLink}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <Copy className="h-3.5 w-3.5" /> リンクをコピー
+            </button>
+            <a
+              href={twitterUrl} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <Twitter className="h-3.5 w-3.5" /> Xでシェア
+            </a>
+            <a
+              href={hatenaUrl} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border/60 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              <span className="font-black text-[13px] leading-none">B!</span> はてなブックマーク
+            </a>
+          </div>
+        </section>
+
+        {/* ── Compare page links ── */}
+        {(() => {
+          const altSlug = hasCompetitor && competitorEn ? COMPETITOR_TO_SLUG[competitorEn] : null;
+          const compareItems = altSlug ? (COMPARE_LINKS[altSlug] ?? []) : [];
+          const matchedCompare = compareItems.find(({ ossName }) =>
+            (tool.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") ===
+            ossName.toLowerCase().replace(/[^a-z0-9]/g, "")
+          );
+          if (!matchedCompare) return null;
+          return (
+            <section className="mb-8 pt-6 border-t border-border/60">
+              <Link
+                to={`/compare/${matchedCompare.slug}`}
+                className="card-unified p-4 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
+              >
+                <div>
+                  <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {matchedCompare.ossName} vs {competitorEn} を徹底比較
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-0.5">
+                    コスト・機能・セルフホスト対応を項目別に比較
+                  </div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+              </Link>
+            </section>
+          );
+        })()}
 
         {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">

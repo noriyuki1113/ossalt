@@ -1,0 +1,50 @@
+{
+  "slug": "metabase-vs-tableau",
+  "ossName": "Metabase",
+  "ossUrl": "https://www.metabase.com",
+  "ossGithub": "https://github.com/metabase/metabase",
+  "saasName": "Tableau",
+  "saasUrl": "https://www.tableau.com",
+  "alternativeSlug": "tableau",
+  "metaTitle": "Metabase vs Tableau 比較 | OSSのBIツールで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Metabase（OSS）とTableauを徹底比較。コスト・SQLレス操作・ダッシュボード共有・ビジュアライゼーションの違いを解説。BIツール選びの参考に。",
+  "heroDescription": "TableauからMetabase（OSS）への移行を検討していますか？コスト・BI機能・SQLレス操作・共有機能・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・非エンジニアでも使えるSQLレスBI・データを自社管理したいならMetabase。高度なビジュアライゼーション・大規模エンタープライズ分析・AI機能が必要ならTableau。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額75ドル〜/人", "winner": "oss" },
+    { "category": "UIの使いやすさ", "oss": "非常にシンプル・直感的", "saas": "ドラッグ&ドロップ（学習コスト中）", "winner": "oss" },
+    { "category": "SQLレス操作", "oss": "Question Builder（強力）", "saas": "ビジュアル操作中心", "winner": "draw" },
+    { "category": "ビジュアライゼーション", "oss": "基本的なグラフ・マップ", "saas": "高度・多様なチャート", "winner": "saas" },
+    { "category": "データソース接続", "oss": "20以上のDB対応", "saas": "100以上のコネクタ", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（JAR/Docker）", "saas": "Tableau Server（高額）", "winner": "oss" }
+  ],
+  "ossFor": [
+    "非エンジニアのビジネスチームがSQLなしでデータを分析したい",
+    "Tableauのライセンスコストを大幅に削減したい",
+    "社内データを自社DBに保管したままダッシュボードを共有したい"
+  ],
+  "saasFor": [
+    "高度なカスタムビジュアライゼーションやMapboxマップが必要",
+    "Salesforce・SAP等エンタープライズシステムとの深い統合が必要",
+    "大規模組織向けのガバナンス・権限管理機能を活用したい"
+  ],
+  "faq": [
+    {
+      "question": "MetabaseはSQL知識なしで使えますか？",
+      "answer": "はい。MetabaseのQuestion Builderを使えばSQLなしでフィルタリング・集計・グルーピングができます。SQL Editorも内蔵しており、エンジニアはSQLで直接分析もできます。"
+    },
+    {
+      "question": "MetabaseはBigQuery・Redshift・Snowflakeに対応していますか？",
+      "answer": "はい。MetabaseはBigQuery・Redshift・Snowflakeを含む主要なデータウェアハウスに対応しています。接続設定は管理画面から数分で完了します。"
+    },
+    {
+      "question": "MetabaseとTableauのダッシュボードの違いは何ですか？",
+      "answer": "Metabaseはシンプルで誰でも作れるダッシュボードが強みです。Tableauは高度なカスタムレイアウト・計算フィールド・詳細フィルタに優れており、複雑な分析に向いています。"
+    },
+    {
+      "question": "Metabaseのセルフホストに必要なスペックは？",
+      "answer": "小規模利用なら2コア・2GBメモリのVPSで動作します。DockerまたはJARファイルで起動でき、PostgreSQL・MySQL・H2をバックエンドDBとして使用できます。"
+    }
+  ],
+  "relatedSlugs": ["tableau", "google-analytics", "mixpanel"]
+}

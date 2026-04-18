@@ -1,0 +1,49 @@
+{
+  "slug": "asana",
+  "competitor": "Asana",
+  "competitorUrl": "https://asana.com",
+  "metaTitle": "Asanaの代替OSSツール一覧 | 無料で使えるタスク管理ツール比較",
+  "metaDescription": "Asanaの代わりに使える無料オープンソースのタスク管理ツールを比較。Vikunja・Planeなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Asanaの月額費用やシート数の制限に悩んでいませんか？ここではAsanaの代わりに使えるオープンソースのタスク・プロジェクト管理ツールを比較します。タイムライン・カンバン・リストビューをセルフホストで無料で使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Asanaの有料プランは月額13.49ドル〜/人。大規模チームでは月数万円以上に。OSSならサーバー代のみで全員分使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "タスクデータの自社管理",
+      "description": "プロジェクト・タスク・担当者データをAsanaのクラウドに預けず、自社インフラで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "無制限のシート数",
+      "description": "Asanaは人数が増えるほど費用が増加。OSSならユーザー数に関わらず固定コストで運用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "ワークフロー自由カスタマイズ",
+      "description": "OSSは自社のプロセスに合わせてワークフローを柔軟に改造できる。Asanaのテンプレートに縛られない。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "AsanaのOSS代替はありますか？",
+      "answer": "VikunjaとPlaneが代表的な代替です。Vikunjaはシンプルなタスク管理に特化しており、PlaneはスプリントやロードマップなどよりAsanaに近い機能セットを提供します。"
+    },
+    {
+      "question": "VikunjaはAsanaのタイムライン表示に対応していますか？",
+      "answer": "はい。Vikunjaはガントチャート（タイムライン）・カンバン・リスト・カレンダーなど複数のビューに対応しています。"
+    },
+    {
+      "question": "チーム向けの権限管理はできますか？",
+      "answer": "PlaneもVikunjaも、プロジェクトごとのメンバー管理・権限設定に対応しています。ゲスト招待にも対応しています。"
+    },
+    {
+      "question": "モバイルアプリはありますか？",
+      "answer": "PlaneはモバイルブラウザからのPWA利用が可能です。Vikunjaはモバイル対応のWebUIを提供しています。ネイティブアプリは現在開発中の段階です。"
+    }
+  ],
+  "relatedSlugs": ["jira", "trello", "clickup"]
+}

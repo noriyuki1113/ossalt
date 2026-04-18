@@ -1,0 +1,50 @@
+{
+  "slug": "plausible-vs-google-analytics",
+  "ossName": "Plausible",
+  "ossUrl": "https://plausible.io",
+  "ossGithub": "https://github.com/plausible/analytics",
+  "saasName": "Google Analytics",
+  "saasUrl": "https://analytics.google.com",
+  "alternativeSlug": "google-analytics",
+  "metaTitle": "Plausible vs Google Analytics 比較 | プライバシー重視の解析ツールを徹底解説",
+  "metaDescription": "Plausible（OSS）とGoogle Analyticsを徹底比較。Cookie不要・GDPR対応・シンプルUI・データ所有権の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "Google AnalyticsからPlausible（OSS）への移行を検討していますか？プライバシー・Cookie同意・UI・データ所有権・スクリプトサイズなど6項目で徹底比較します。",
+  "verdict": "Cookie不要・シンプルUI・プライバシー重視ならPlausible。Google広告連携・高度なファネル分析・無料で使いたいならGoogle Analytics。",
+  "comparison": [
+    { "category": "Cookie同意バナー", "oss": "不要（Cookie不使用）", "saas": "必要（Cookie使用）", "winner": "oss" },
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "無料（GA4）", "winner": "draw" },
+    { "category": "スクリプトサイズ", "oss": "約1KB（超軽量）", "saas": "約45KB", "winner": "oss" },
+    { "category": "UIのシンプルさ", "oss": "非常にシンプル", "saas": "複雑・機能過多", "winner": "oss" },
+    { "category": "Google広告連携", "oss": "非対応", "saas": "完全統合", "winner": "saas" },
+    { "category": "高度な分析", "oss": "基本的な指標に特化", "saas": "ファネル・コホート等豊富", "winner": "saas" }
+  ],
+  "ossFor": [
+    "Cookie同意バナーを表示せずにトラッキングしたい",
+    "シンプルなPV・直帰率・流入元だけ把握したい",
+    "ページ表示速度を落とさず軽量なスクリプトが欲しい"
+  ],
+  "saasFor": [
+    "Google広告・Search Consoleとの連携が必要",
+    "ファネル・コホートなど高度な分析を無料で使いたい",
+    "Google Looker Studioでレポートを作成したい"
+  ],
+  "faq": [
+    {
+      "question": "PlausibleはGDPR・日本の個人情報保護法に対応していますか？",
+      "answer": "はい。PlausibleはCookieを一切使わず、IPアドレスも保存しません。そのためGDPRや日本の個人情報保護法に基づくCookie同意バナーが不要になります。"
+    },
+    {
+      "question": "Google AnalyticsからPlausibleへのデータ移行はできますか？",
+      "answer": "過去のGA4データをPlausibleに直接インポートする機能はありません。移行後は新しいデータから蓄積していく形になります。"
+    },
+    {
+      "question": "PlausibleはGA4と同じくゴール（コンバージョン）計測ができますか？",
+      "answer": "はい。Plausibleはカスタムイベント・ゴール・ファネルの計測に対応しています。GA4ほど複雑な設定は不要でシンプルに設定できます。"
+    },
+    {
+      "question": "PlausibleをWordPressサイトで使えますか？",
+      "answer": "はい。公式のWordPressプラグインが提供されており、管理画面から簡単にトラッキングコードを挿入できます。"
+    }
+  ],
+  "relatedSlugs": ["google-analytics", "mixpanel", "datadog"]
+}

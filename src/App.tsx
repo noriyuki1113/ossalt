@@ -27,10 +27,13 @@ const AdminComparisonsPage = lazy(() => import("./pages/AdminComparisons"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
+const NotionAlternativesGuide = lazy(() => import("./pages/NotionAlternativesGuide"));
 const WorkspacePage = lazy(() => import("./pages/Workspace"));
 const WorkspaceSavedPage = lazy(() => import("./pages/WorkspaceSaved"));
 const WorkspaceComparePage = lazy(() => import("./pages/WorkspaceCompare"));
 const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 
 const queryClient = new QueryClient();
 
@@ -46,6 +49,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/category/:slug" element={<Index />} />
             <Route path="/tools/:id" element={<ToolDetail />} />
+            <Route path="/guides/notion-alternatives" element={<NotionAlternativesGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -53,6 +57,8 @@ const App = () => (
             <Route path="/disclaimer" element={<Disclaimer />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/alternatives/:slug" element={<AlternativesPage />} />
+            <Route path="/compare" element={<CompareIndexPage />} />
+            <Route path="/compare/:slug" element={<ComparePage />} />
             <Route path="/ranking" element={<RankingPage />} />
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/news" element={<NewsPage />} />

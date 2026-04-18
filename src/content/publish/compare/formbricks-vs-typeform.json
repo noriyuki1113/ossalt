@@ -1,0 +1,50 @@
+{
+  "slug": "formbricks-vs-typeform",
+  "ossName": "Formbricks",
+  "ossUrl": "https://formbricks.com",
+  "ossGithub": "https://github.com/formbricks/formbricks",
+  "saasName": "Typeform",
+  "saasUrl": "https://www.typeform.com",
+  "alternativeSlug": "typeform",
+  "metaTitle": "Formbricks vs Typeform 比較 | OSSのフォームで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Formbricks（OSS）とTypeformを徹底比較。コスト・アンケート機能・デザイン・プロダクトサーベイ・セルフホストの違いを解説。フォームツール選びの参考に。",
+  "heroDescription": "TypeformからFormbricks（OSS）への移行を検討していますか？コスト・フォームデザイン・条件分岐・プロダクトサーベイ・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・プロダクト内サーベイ・回答データを自社管理したいならFormbricks。美しいデザイン・豊富なテンプレート・Typeformの高いブランド信頼性が必要ならTypeform。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額25ドル〜", "winner": "oss" },
+    { "category": "フォームデザイン", "oss": "モダンUI・カスタマイズ可", "saas": "業界最高水準のUI", "winner": "saas" },
+    { "category": "条件分岐ロジック", "oss": "対応", "saas": "対応（高機能）", "winner": "draw" },
+    { "category": "プロダクトサーベイ", "oss": "In-app survey特化", "saas": "基本的な対応", "winner": "oss" },
+    { "category": "回答数上限", "oss": "無制限（セルフホスト）", "saas": "プランで制限あり", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "プロダクト内のユーザーサーベイをアプリに組み込みたい",
+    "Typeformの月額コストと回答数制限を解消したい",
+    "顧客データをGDPR準拠で自社サーバーに保管したい"
+  ],
+  "saasFor": [
+    "デザイン品質の高いブランデッドフォームを即時作成したい",
+    "Typeformの豊富なテンプレートライブラリを活用したい",
+    "HubSpot・Salesforceとの公式インテグレーションが必要"
+  ],
+  "faq": [
+    {
+      "question": "FormbricksはTypeformと同じような一問一答形式のフォームを作れますか？",
+      "answer": "はい。Formbricksはカード型の一問一答フォームをサポートしています。条件分岐・評価スケール・NPS・選択式など多様なフィールドタイプが使えます。"
+    },
+    {
+      "question": "FormbricksはWebサイトとアプリどちらにも埋め込めますか？",
+      "answer": "はい。Webサイト向けのポップアップ型と、React/Next.js等のアプリに組み込むIn-app Survey両方に対応しています。"
+    },
+    {
+      "question": "TypeformからFormbricksへフォームを移行できますか？",
+      "answer": "自動移行ツールはありませんが、Formbricksの管理画面でフォームを手動再構築するのは比較的容易です。Typeformのレスポンスデータはエクスポートして保管することを推奨します。"
+    },
+    {
+      "question": "Formbricksのセルフホストは難しいですか？",
+      "answer": "Docker Composeで数分で起動できます。環境変数を設定するだけでメールや認証も動作します。VPS（1コア・2GB）で小〜中規模のフォームを問題なく運用できます。"
+    }
+  ],
+  "relatedSlugs": ["typeform", "intercom", "sendgrid"]
+}

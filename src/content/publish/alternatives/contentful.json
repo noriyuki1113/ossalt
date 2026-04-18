@@ -1,0 +1,49 @@
+{
+  "slug": "contentful",
+  "competitor": "Contentful",
+  "competitorUrl": "https://www.contentful.com",
+  "metaTitle": "Contentfulの代替OSSツール一覧 | 無料で使えるヘッドレスCMS比較",
+  "metaDescription": "Contentfulの代わりに使える無料オープンソースのヘッドレスCMSを比較。Strapi・PayloadCMSなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Contentfulの高額なエンタープライズプランやコンテンツモデルの制限に悩んでいませんか？ここではContentfulの代わりに使えるオープンソースのヘッドレスCMSを比較します。コンテンツ型・エントリ数無制限でセルフホストできる代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コンテンツ型・エントリ数無制限",
+      "description": "Contentfulの無料プランはコンテンツ型25個・エントリ25,000件まで制限。OSSなら無制限に作成できる。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Contentfulの有料プランは月額数万円〜数十万円。OSSならサーバー代のみで同等機能が実現できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "コンテンツデータの自社管理",
+      "description": "コンテンツをContentfulのサーバーに預けず、自社DBで管理。バックアップや移行が完全にコントロールできる。",
+      "icon": "data"
+    },
+    {
+      "title": "APIの自由な拡張",
+      "description": "StrapiはREST/GraphQL APIを自由にカスタマイズ可能。Contentfulには実装できない独自ロジックも追加できる。",
+      "icon": "lockin"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ContentfulのOSS代替はありますか？",
+      "answer": "StrapiとPayloadCMSが最も人気のあるヘッドレスCMS代替です。どちらもREST・GraphQL APIを提供し、Next.jsなどとの連携が容易です。"
+    },
+    {
+      "question": "StrapiとPayloadCMSはどちらがいいですか？",
+      "answer": "Strapiは成熟度が高く導入実績も多い。PayloadCMSはTypeScript・Next.jsとの親和性が高く、より現代的な構成を好む場合に向いています。"
+    },
+    {
+      "question": "ContentfulのコンテンツをStrapiに移行できますか？",
+      "answer": "直接のインポートツールはありませんが、ContentfulのExport機能でJSONを取得し、Strapiに投入するスクリプトを作成することで移行できます。"
+    },
+    {
+      "question": "非技術者でも使えますか？",
+      "answer": "StrapiもPayloadもGUIの管理画面を提供しており、コンテンツ編集はノンエンジニアでも操作できます。ただしセットアップには技術者が必要です。"
+    }
+  ],
+  "relatedSlugs": ["wordpress", "webflow", "notion"]
+}

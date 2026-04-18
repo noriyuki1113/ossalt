@@ -35,6 +35,8 @@ interface UseToolsOptions {
   page?: number;
   pageSize?: number;
   sort?: SortOption;
+  license?: string;
+  hasGithub?: boolean;
 }
 
 export function useTools(options?: UseToolsOptions) {
@@ -71,6 +73,14 @@ export function useTools(options?: UseToolsOptions) {
         query = query.or(
           `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%,description_en.ilike.%${options.search}%,primary_competitor.ilike.%${options.search}%,primary_competitor_ja.ilike.%${options.search}%`
         );
+      }
+
+      if (options?.license) {
+        query = query.eq("license", options.license);
+      }
+
+      if (options?.hasGithub) {
+        query = query.not("github_url", "is", null);
       }
 
       const { data, error, count } = await query;

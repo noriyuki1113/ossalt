@@ -1,0 +1,49 @@
+{
+  "slug": "vercel",
+  "competitor": "Vercel",
+  "competitorUrl": "https://vercel.com",
+  "metaTitle": "Vercelの代替OSSツール一覧 | 無料で使えるフロントエンドデプロイ基盤比較",
+  "metaDescription": "Vercelの代わりに使える無料オープンソースのデプロイ・ホスティングプラットフォームを比較。Coolify・Dokployなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "VercelのTeamプランコストやエッジ関数の従量課金が高くなっていませんか？ここではVercelの代わりに使えるオープンソースのフロントエンドデプロイプラットフォームを比較します。Next.js・Nuxt・SvelteKitのデプロイをセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Vercelはチームプランで月額20ドル/人。大量のデプロイや帯域で高額になるが、OSSならサーバー代のみで運用できる。",
+      "icon": "cost"
+    },
+    {
+      "title": "デプロイ環境の自社管理",
+      "description": "ビルドログ・環境変数・デプロイ履歴をVercelに依存せず、自社インフラで完全制御できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "Vercel独自のEdge RuntimeやISR実装への依存を減らし、標準的なDockerデプロイに移行できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタムインフラ対応",
+      "description": "社内ネットワーク・プライベートVPC・特定リージョンへのデプロイなど、Vercelでは難しい要件にも対応できる。",
+      "icon": "customization"
+    }
+  ],
+  "faq": [
+    {
+      "question": "VercelのOSS代替で最も人気なのは何ですか？",
+      "answer": "CoolifyはVercel/Herokuに近いDXを提供するセルフホスト型PaaSです。Next.js・Nuxt・静的サイトのビルド・デプロイ・SSL・ドメイン管理をGUIで行えます。DokployやKamalも人気の選択肢です。"
+    },
+    {
+      "question": "CoolifyはNext.jsのISR（インクリメンタル静的再生成）に対応していますか？",
+      "answer": "CoolifyはDockerコンテナ上でNext.jsをサーバーとして実行します。ISRはNext.jsアプリ自体の機能として動作します。Vercelほどのエッジキャッシュ最適化はありませんが、基本的なISRは機能します。"
+    },
+    {
+      "question": "VercelのPreview DeployをCoolifyで再現できますか？",
+      "answer": "CoolifyはPull Requestごとのプレビューデプロイ機能を提供しています。GitHubのPR作成時に自動でプレビュー環境を立ち上げ、独自URLで確認できます。"
+    },
+    {
+      "question": "VercelからCoolifyへの移行は難しいですか？",
+      "answer": "Dockerfileを持つプロジェクトなら比較的容易です。環境変数・カスタムドメイン・GitHub連携を設定し直す作業が必要ですが、CoolifyのUIは直感的で1〜2時間で移行できることが多いです。"
+    }
+  ],
+  "relatedSlugs": ["firebase", "github-copilot", "datadog"]
+}

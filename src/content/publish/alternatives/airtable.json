@@ -1,0 +1,49 @@
+{
+  "slug": "airtable",
+  "competitor": "Airtable",
+  "competitorUrl": "https://airtable.com",
+  "metaTitle": "Airtableの代替OSSツール一覧 | 無料で使えるノーコードDBツール比較",
+  "metaDescription": "Airtableの代わりに使える無料オープンソースのノーコードデータベースツールを比較。NocoDB・Baserowなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Airtableの行数制限や高額なプランに悩んでいませんか？ここではAirtableの代わりに使えるオープンソースのスプレッドシート型データベースツールを比較します。NocoDBやBaserowなど、データ行数・ユーザー数無制限でセルフホストできる代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "行数・レコード数無制限",
+      "description": "Airtableの無料プランはベース1000行まで制限。NocoDBなら数百万行のデータも扱える。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "Airtableの有料プランは1ユーザー月額2,000円〜。OSSなら同等機能をサーバー代のみで実現。",
+      "icon": "cost"
+    },
+    {
+      "title": "既存DBへの接続",
+      "description": "NocoDBはMySQL・PostgreSQL・SQLiteに直接接続してAirtableライクなUIを提供。既存データを活用できる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "APIの自由度",
+      "description": "OSSなら独自のAPIエンドポイントを構築でき、他システムとのデータ連携が自由に設計できる。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "AirtableのOSS代替はありますか？",
+      "answer": "NocoDBとBaserowが最も人気のある代替です。NocoDBは既存のMySQLやPostgreSQLに接続してAirtableライクなUIを提供できます。"
+    },
+    {
+      "question": "NocoDBとBaserowはどちらがいいですか？",
+      "answer": "既存のデータベースに接続したい場合はNocoDB、ゼロからスプレッドシート感覚でデータ管理したい場合はBaserowがおすすめです。"
+    },
+    {
+      "question": "Airtableのデータを移行できますか？",
+      "answer": "CSV経由での移行が可能です。Airtableからデータをエクスポートし、NocoDBやBaserowにインポートできます。"
+    },
+    {
+      "question": "プログラミング知識がなくても使えますか？",
+      "answer": "NocoDBとBaserowはどちらもノーコードで使えます。ただしセルフホストにはDockerの基本操作が必要です。"
+    }
+  ],
+  "relatedSlugs": ["notion", "zapier", "retool"]
+}

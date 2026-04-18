@@ -6,6 +6,7 @@ import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
+import { isKnownCompetitor } from "@/lib/competitors";
 import type { Tool } from "@/hooks/use-tools";
 
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
@@ -18,7 +19,9 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
 }
 
 export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
-  const competitor = tool.primary_competitor_ja || tool.primary_competitor;
+  const competitor = isKnownCompetitor(tool.primary_competitor)
+    ? (tool.primary_competitor_ja || tool.primary_competitor)
+    : null;
   const highlightLabel = getHighlightLabel(tool);
 
   return (

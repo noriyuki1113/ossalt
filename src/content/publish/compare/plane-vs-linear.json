@@ -1,0 +1,50 @@
+{
+  "slug": "plane-vs-linear",
+  "ossName": "Plane",
+  "ossUrl": "https://plane.so",
+  "ossGithub": "https://github.com/makeplane/plane",
+  "saasName": "Linear",
+  "saasUrl": "https://linear.app",
+  "alternativeSlug": "linear",
+  "metaTitle": "Plane vs Linear 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Plane（OSS）とLinearを徹底比較。コスト・UI・スプリント機能・GitHub連携の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "LinearからPlane（OSS）への移行を検討していますか？コスト・スプリント・ロードマップ・GitHub連携など6項目で徹底比較します。",
+  "verdict": "コスト削減・データの自社管理が優先ならPlane。UIの快適さ・高速な操作感が最優先ならLinear。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額8ドル〜/人", "winner": "oss" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "UIの快適さ", "oss": "良好", "saas": "業界最高水準", "winner": "saas" },
+    { "category": "スプリント管理", "oss": "対応", "saas": "対応（Cycles）", "winner": "draw" },
+    { "category": "GitHub連携", "oss": "対応", "saas": "深い統合", "winner": "saas" },
+    { "category": "ロードマップ", "oss": "対応", "saas": "対応", "winner": "draw" }
+  ],
+  "ossFor": [
+    "データを自社サーバーで管理したい",
+    "10人以上のチームでコストを削減したい",
+    "カスタムワークフローを細かく設定したい"
+  ],
+  "saasFor": [
+    "Linearの高速・快適なUIを重視する",
+    "GitHubとの深い統合が必要",
+    "セットアップの手間をかけたくない小規模チーム"
+  ],
+  "faq": [
+    {
+      "question": "PlaneはLinearのCycles（スプリント）機能に対応していますか？",
+      "answer": "はい。Planeにはスプリント相当のCycles機能があり、期間設定・バーンダウンチャート・完了率の追跡ができます。"
+    },
+    {
+      "question": "LinearからPlaneへのデータ移行はできますか？",
+      "answer": "LinearはCSV・JSONエクスポートに対応しています。PlaneはCSVインポートをサポートしており、イシューの基本データを移行できます。"
+    },
+    {
+      "question": "PlaneはGitHub PRとイシューを紐付けられますか？",
+      "answer": "はい。PlaneはGitHub Appとの連携でPR・コミットとイシューを紐付けることができます。ただしLinearほどリアルタイムの更新反映はされません。"
+    },
+    {
+      "question": "セルフホストしたPlaneのパフォーマンスはどうですか？",
+      "answer": "適切なサーバースペック（2コア・4GB以上）であれば快適に動作します。Linearほどの即時応答性はありませんが、日常的な開発管理には十分です。"
+    }
+  ],
+  "relatedSlugs": ["linear", "jira", "asana"]
+}

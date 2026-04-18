@@ -1,0 +1,50 @@
+{
+  "slug": "supabase-vs-firebase",
+  "ossName": "Supabase",
+  "ossUrl": "https://supabase.com",
+  "ossGithub": "https://github.com/supabase/supabase",
+  "saasName": "Firebase",
+  "saasUrl": "https://firebase.google.com",
+  "alternativeSlug": "firebase",
+  "metaTitle": "Supabase vs Firebase 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Supabase（OSS）とFirebaseを徹底比較。コスト・PostgreSQL・リアルタイム・認証・セルフホストの違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "FirebaseからSupabase（OSS）への移行を検討していますか？コスト・データベース・認証・リアルタイム・pgvector対応など6項目で徹底比較します。",
+  "verdict": "PostgreSQL・オープンスタンダード・コスト削減・データを自社管理したいならSupabase。Google連携・モバイルSDKの充実度・NoSQLの柔軟性が必要ならFirebase。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料枠あり（セルフホスト可）", "saas": "無料枠あり（従量課金）", "winner": "draw" },
+    { "category": "データベース", "oss": "PostgreSQL（リレーショナル）", "saas": "Firestore（NoSQL）", "winner": "draw" },
+    { "category": "認証", "oss": "Supabase Auth（多プロバイダ対応）", "saas": "Firebase Auth（成熟）", "winner": "draw" },
+    { "category": "リアルタイム", "oss": "Realtime（PostgreSQL変更通知）", "saas": "Firestore（高速同期）", "winner": "draw" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" },
+    { "category": "AI/ベクター対応", "oss": "pgvector内蔵", "saas": "Firebase Vertex AI連携", "winner": "oss" }
+  ],
+  "ossFor": [
+    "PostgreSQLの豊富な機能とSQLで複雑なクエリを書きたい",
+    "ベンダーロックインを避けオープンスタンダードで構築したい",
+    "pgvectorでRAGやベクター検索を実装したいAIアプリ開発者"
+  ],
+  "saasFor": [
+    "Google WorkspaceとのシームレスなGoogle認証連携が必要",
+    "モバイルアプリでFlutter・Android・iOS SDKを重視する",
+    "NoSQL（Firestore）の柔軟なドキュメント構造が必要"
+  ],
+  "faq": [
+    {
+      "question": "SupabaseはFirebaseの完全な代替になりますか？",
+      "answer": "ほぼ代替できます。認証・データベース・ストレージ・リアルタイム・Edge Functionsを備えており、PostgreSQLベースのため複雑なクエリやリレーションが必要な場合はSupabaseが優れています。"
+    },
+    {
+      "question": "FirebaseからSupabaseへデータを移行できますか？",
+      "answer": "FirestoreのデータをJSONエクスポートし、PostgreSQLへインポートするツールやスクリプトが公開されています。スキーマ設計の変換が必要なため、移行規模によって工数が異なります。"
+    },
+    {
+      "question": "SupabaseのセルフホストはDockerで簡単にできますか？",
+      "answer": "はい。公式のDocker Composeファイルが提供されており、git cloneしてdocker compose upで起動できます。本番運用にはPostgreSQLのバックアップ設定を忘れずに行いましょう。"
+    },
+    {
+      "question": "SupabaseはNext.jsやRemixと相性がいいですか？",
+      "answer": "はい。@supabase/ssrパッケージがNext.js（App Router）・Remix・SvelteKit向けに最適化されており、サーバーコンポーネントからも簡単に利用できます。"
+    }
+  ],
+  "relatedSlugs": ["firebase", "auth0", "retool"]
+}

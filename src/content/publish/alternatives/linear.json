@@ -1,0 +1,49 @@
+{
+  "slug": "linear",
+  "competitor": "Linear",
+  "competitorUrl": "https://linear.app",
+  "metaTitle": "Linearの代替OSSツール一覧 | 無料で使えるプロジェクト管理ツール比較",
+  "metaDescription": "Linearの代わりに使える無料オープンソースのプロジェクト管理ツールを比較。Plane・Taigaなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "Linearの快適なUIに慣れたけど、コストやデータの自社管理が気になっていませんか？ここではLinearの代わりに使えるオープンソースのプロジェクト管理・イシュートラッカーツールを比較します。高速なUI・スプリント管理・GitHubとの連携をセルフホストで実現できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "Linearは月額8ドル〜/人。チームが大きくなるほどコストが増大。OSSならサーバー代のみで全員分使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "イシューデータの自社管理",
+      "description": "スプリント・ロードマップ・バグ追跡データをLinearのサーバーに預けず、自社DBで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "ベンダーロックイン回避",
+      "description": "Linearの独自ワークフローに依存せず、OSSなら自社に合ったカスタマイズが自由にできる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "オンプレ・エアギャップ対応",
+      "description": "セキュリティ要件が厳しい企業でも、インターネット非接続環境でプロジェクト管理ツールを運用できる。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "LinearのOSS代替はありますか？",
+      "answer": "PlaneがLinearに最も近いUIと機能セットを持つOSS代替です。スプリント・サイクル・ロードマップ管理に対応し、GitHubとの連携も可能です。"
+    },
+    {
+      "question": "PlaneはLinearと同じくらい速いですか？",
+      "answer": "Linearほどの速度感はありませんが、セルフホスト環境では十分な動作速度を提供します。UIもLinearを意識したモダンな設計です。"
+    },
+    {
+      "question": "GitHubとの連携はできますか？",
+      "answer": "Planeはコミットやプルリクエストとイシューを紐付けるGitHub連携機能を持っています。TaigaもGitHub/GitLabとの連携に対応しています。"
+    },
+    {
+      "question": "Linearのデータを移行できますか？",
+      "answer": "LinearはCSVおよびJSON形式でのエクスポートに対応しています。Planeにインポートするスクリプトもコミュニティで公開されています。"
+    }
+  ],
+  "relatedSlugs": ["jira", "asana", "trello"]
+}

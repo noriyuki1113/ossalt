@@ -1,11 +1,10 @@
-const GATEWAY_URL = 'https://connector-gateway.lovable.dev/resend';
 const ADMIN_EMAIL = 'noriyuki.ktm@gmail.com';
 const FROM_EMAIL = 'OSSアルタナティブ <noreply@ossalt.jp>';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
+    'authorization, x-client-info, apikey, content-type',
 };
 
 interface ContactPayload {
@@ -22,16 +21,14 @@ async function sendEmail(
   to: string,
   subject: string,
   html: string,
-  lovableKey: string,
-  resendKey: string,
+  apiKey: string,
 ): Promise<{ ok: boolean; error?: string }> {
   try {
-    const res = await fetch(`${GATEWAY_URL}/emails`, {
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${lovableKey}`,
-        'X-Connection-Api-Key': resendKey,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({ from: FROM_EMAIL, to: [to], subject, html }),
     });
@@ -104,19 +101,10 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-  if (!LOVABLE_API_KEY) {
-    console.error('LOVABLE_API_KEY is not configured');
-    return new Response(JSON.stringify({ error: 'Server config error: LOVABLE_API_KEY' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY_1');
+  const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
   if (!RESEND_API_KEY) {
-    console.error('RESEND_API_KEY_1 is not configured');
-    return new Response(JSON.stringify({ error: 'Server config error: RESEND_API_KEY_1' }), {
+    console.error('RESEND_API_KEY is not configured');
+    return new Response(JSON.stringify({ error: 'Server config error: RESEND_API_KEY not set' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -135,23 +123,10 @@ Deno.serve(async (req) => {
       ? '【OSSアルタナティブ】広告掲載の相談'
       : '【OSSアルタナティブ】新しいお問い合わせ';
 
-    // Send admin notification
-    const adminResult = await sendEmail(
-      ADMIN_EMAIL,
-      adminSubject,
-      buildAdminHtml(payload),
-      LOVABLE_API_KEY,
-      RESEND_API_KEY,
-    );
-
-    // Send auto-reply to sender
-    const replyResult = await sendEmail(
-      payload.email,
-      'お問い合わせありがとうございます | OSSアルタナティブ',
-      buildAutoReplyHtml(payload),
-      LOVABLE_API_KEY,
-      RESEND_API_KEY,
-    );
+    const [adminResult, replyResult] = await Promise.all([
+      sendEmail(ADMIN_EMAIL, adminSubject, buildAdminHtml(payload), RESEND_API_KEY),
+      sendEmail(payload.email, 'お問い合わせありがとうございます | OSSアルタナティブ', buildAutoReplyHtml(payload), RESEND_API_KEY),
+    ]);
 
     return new Response(
       JSON.stringify({

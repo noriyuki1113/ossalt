@@ -1,0 +1,50 @@
+{
+  "slug": "directus-vs-contentful",
+  "ossName": "Directus",
+  "ossUrl": "https://directus.io",
+  "ossGithub": "https://github.com/directus/directus",
+  "saasName": "Contentful",
+  "saasUrl": "https://www.contentful.com",
+  "alternativeSlug": "contentful",
+  "metaTitle": "Directus vs Contentful 比較 | OSSのヘッドレスCMSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "Directus（OSS）とContentfulを徹底比較。コスト・コンテンツモデリング・REST/GraphQL API・多言語対応・セルフホストの違いを解説。",
+  "heroDescription": "ContentfulからDirectus（OSS）への移行を検討していますか？コスト・コンテンツモデリング・API・多言語対応・セルフホストなど6項目で徹底比較します。",
+  "verdict": "コスト削減・既存DBをヘッドレスCMS化・データを自社管理したいならDirectus。グローバルCDN・成熟したエコシステム・エンタープライズサポートが必要ならContentful。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額300ドル〜（有料プラン）", "winner": "oss" },
+    { "category": "コンテンツモデリング", "oss": "柔軟なスキーマ設計", "saas": "直感的なコンテンツタイプ", "winner": "draw" },
+    { "category": "API", "oss": "REST・GraphQL・TypeScript SDK", "saas": "REST・GraphQL・CDN配信", "winner": "draw" },
+    { "category": "多言語対応", "oss": "対応", "saas": "対応（成熟）", "winner": "draw" },
+    { "category": "CDN・パフォーマンス", "oss": "自己管理", "saas": "グローバルCDN内蔵", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "既存のPostgreSQL・MySQL・SQLiteをヘッドレスCMS化したい",
+    "Contentfulの高額プランコストを削減したい",
+    "コンテンツデータを自社サーバーで管理・バックアップしたい"
+  ],
+  "saasFor": [
+    "グローバルCDNでコンテンツを高速配信したい",
+    "大規模メディア・ECサイトのエンタープライズ機能が必要",
+    "成熟したContentfulエコシステムのプラグイン・パートナーを活用したい"
+  ],
+  "faq": [
+    {
+      "question": "DirectusはContentfulと同じようにREST/GraphQL APIを提供しますか？",
+      "answer": "はい。DirectusはREST APIとGraphQL APIの両方を自動生成します。コレクション（テーブル）を作成するだけでエンドポイントが即座に利用可能になります。"
+    },
+    {
+      "question": "Directusは既存のデータベースに接続できますか？",
+      "answer": "はい。DirectusはPostgreSQL・MySQL・SQLite・MS SQL・OracleDBに接続でき、既存のDBスキーマをそのままCMSとして管理画面から操作できます。"
+    },
+    {
+      "question": "ContentfulからDirectusへコンテンツを移行できますか？",
+      "answer": "Contentful Management APIでコンテンツをエクスポートし、Directus Import機能またはAPIでインポートできます。コンテンツタイプの再設計が必要になる場合があります。"
+    },
+    {
+      "question": "DirectusはNext.js・Nuxt.jsとどう組み合わせて使いますか？",
+      "answer": "公式の@directus/sdk（TypeScript対応）を使ってAPI呼び出しを行います。ISR・SSGのデータソースとして最適で、Webhookによるコンテンツ更新時の自動ビルドトリガーも設定できます。"
+    }
+  ],
+  "relatedSlugs": ["contentful", "wordpress", "airtable"]
+}

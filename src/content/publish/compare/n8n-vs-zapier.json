@@ -1,0 +1,50 @@
+{
+  "slug": "n8n-vs-zapier",
+  "ossName": "n8n",
+  "ossUrl": "https://n8n.io",
+  "ossGithub": "https://github.com/n8n-io/n8n",
+  "saasName": "Zapier",
+  "saasUrl": "https://zapier.com",
+  "alternativeSlug": "zapier",
+  "metaTitle": "n8n vs Zapier 比較 | OSSで代替できる？コスト・機能を徹底解説",
+  "metaDescription": "n8n（OSS）とZapierを徹底比較。コスト・ノード数・コード実行・セルフホストの違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "Zapierからn8n（OSS）への移行を検討していますか？コスト・ワークフロー数・コード実行・セルフホスト対応など6項目で徹底比較します。",
+  "verdict": "コスト削減・コードの柔軟性・データを自社管理したいならn8n。技術知識がないユーザーが手軽に自動化を始めるならZapier。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "月額19.99ドル〜", "winner": "oss" },
+    { "category": "ワークフロー数", "oss": "無制限", "saas": "プランによる制限", "winner": "oss" },
+    { "category": "コード実行", "oss": "JavaScript/Python対応", "saas": "限定的", "winner": "oss" },
+    { "category": "コネクタ数", "oss": "400以上", "saas": "5000以上", "winner": "saas" },
+    { "category": "技術的難易度", "oss": "やや高い", "saas": "非常に低い", "winner": "saas" },
+    { "category": "セルフホスト", "oss": "対応（Docker）", "saas": "非対応", "winner": "oss" }
+  ],
+  "ossFor": [
+    "複雑なロジックをJavaScript/Pythonで記述したい",
+    "大量のワークフロー実行でコストを抑えたい",
+    "データを自社サーバーで処理・管理したい"
+  ],
+  "saasFor": [
+    "コードなしで手軽に自動化を始めたい非エンジニア",
+    "5000以上の豊富なアプリとの連携が必要",
+    "セットアップに時間をかけたくない小規模チーム"
+  ],
+  "faq": [
+    {
+      "question": "n8nはZapierのZap（ワークフロー）と互換性がありますか？",
+      "answer": "直接の互換性はありませんが、n8nはZapierと同様のトリガー・アクション形式でワークフローを構築できます。主要なWebhook連携はそのまま再現できます。"
+    },
+    {
+      "question": "技術者でなくてもn8nを使えますか？",
+      "answer": "n8nはビジュアルエディタを持ちドラッグ&ドロップでワークフローを作れますが、Zapierより設定の自由度が高い分、学習コストもやや高めです。"
+    },
+    {
+      "question": "n8nで外部APIとの連携はできますか？",
+      "answer": "はい。n8nはHTTPリクエストノードを使って任意のREST APIと連携できます。認証（OAuth・APIキー・JWT）にも対応しています。"
+    },
+    {
+      "question": "Zapierからのワークフロー移行はできますか？",
+      "answer": "自動移行ツールはありませんが、Zapierのワークフローをエクスポートしてn8nで再構築することが可能です。類似のノードが提供されており、論理的に変換できます。"
+    }
+  ],
+  "relatedSlugs": ["zapier", "retool", "airtable"]
+}

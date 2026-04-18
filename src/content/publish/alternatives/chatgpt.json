@@ -1,0 +1,49 @@
+{
+  "slug": "chatgpt",
+  "competitor": "ChatGPT",
+  "competitorUrl": "https://chat.openai.com",
+  "metaTitle": "ChatGPTの代替OSSツール一覧 | 無料で使えるAIチャットツール比較",
+  "metaDescription": "ChatGPTの代わりに使える無料オープンソースのAIチャットツールを比較。Open WebUI・LibreChat などセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "ChatGPTの月額費用やデータのOpenAI送信に懸念はありませんか？ここではChatGPTの代わりに使えるオープンソースのAIチャットUIをGitHubスター数順で比較します。ローカルLLMと組み合わせてデータを外部に出さずに使えるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "データのプライバシー保護",
+      "description": "ChatGPTに入力したデータはOpenAIに送信される。ローカルLLM + OSSなら入力データが外部に出ない。",
+      "icon": "data"
+    },
+    {
+      "title": "コスト削減",
+      "description": "ChatGPT Plusは月額約3,000円。OSSのUIにローカルモデルを組み合わせると月額ほぼゼロで使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "複数モデルの一元管理",
+      "description": "Open WebUIはOllama・OpenAI・Claude・Geminiなど複数のモデルを1つのUIで切り替えて使える。",
+      "icon": "lockin"
+    },
+    {
+      "title": "カスタマイズと拡張",
+      "description": "社内ドキュメントとのRAG連携や独自プロンプトテンプレートなど、ChatGPTでは不可能なカスタマイズが可能。",
+      "icon": "speed"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ChatGPTのOSS代替はありますか？",
+      "answer": "Open WebUIとLibreChatが代表的なOSS代替UIです。OllamaでローカルLLMを動かし、Open WebUIで操作するのが人気の構成です。"
+    },
+    {
+      "question": "ローカルLLMの精度はChatGPTと同じくらいですか？",
+      "answer": "最新のローカルモデル（Llama 3.1・Mistral・Gemma等）はGPT-3.5に近い性能を持ちます。GPT-4には及ばない場合もありますが、多くのタスクで実用的です。"
+    },
+    {
+      "question": "必要なハードウェアは？",
+      "answer": "8GB RAMがあれば小さいモデル（7B）が動きます。16GB以上あるとより高精度なモデルが使えます。GPUがあると応答速度が大幅に改善します。"
+    },
+    {
+      "question": "Open WebUIはDockerで起動できますか？",
+      "answer": "はい。docker run 1コマンドで起動できます。Ollamaとセットで使うためのDocker Composeも公式で提供されています。"
+    }
+  ],
+  "relatedSlugs": ["github-copilot", "devin", "datadog"]
+}

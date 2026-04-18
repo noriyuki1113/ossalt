@@ -1,0 +1,49 @@
+{
+  "slug": "clickup",
+  "competitor": "ClickUp",
+  "competitorUrl": "https://clickup.com",
+  "metaTitle": "ClickUpの代替OSSツール一覧 | 無料で使えるオールインワン管理ツール比較",
+  "metaDescription": "ClickUpの代わりに使える無料オープンソースのプロジェクト管理ツールを比較。Plane・Taigaなどセルフホスト可能なOSS代替を日本語で紹介。",
+  "heroDescription": "ClickUpのプラン制限や機能の多さに疲れていませんか？ここではClickUpの代わりに使えるオープンソースのオールインワンプロジェクト管理ツールを比較します。タスク・ドキュメント・目標管理をセルフホストで無料で統合管理できるOSS代替が見つかります。",
+  "whySwitchReasons": [
+    {
+      "title": "コスト削減",
+      "description": "ClickUpの有料プランは月額7ドル〜/人。チームが増えるほどコスト増大。OSSならサーバー代のみで全員分使える。",
+      "icon": "cost"
+    },
+    {
+      "title": "タスクデータの自社管理",
+      "description": "プロジェクト・タスク・ドキュメントをClickUpのクラウドに預けず、自社サーバーで管理できる。",
+      "icon": "data"
+    },
+    {
+      "title": "必要な機能だけ使える",
+      "description": "ClickUpは機能過多で学習コストが高い。OSSはシンプルで必要な機能に絞った構成を選べる。",
+      "icon": "lockin"
+    },
+    {
+      "title": "ストレージ・ドキュメント無制限",
+      "description": "ClickUpの無料プランはストレージ・ドキュメント数に制限あり。OSSなら制限なしで使える。",
+      "icon": "cost"
+    }
+  ],
+  "faq": [
+    {
+      "question": "ClickUpのOSS代替はありますか？",
+      "answer": "PlaneとTaigaが代表的な代替です。Planeはスプリント・ロードマップ・イシュー管理に強く、Taigaはアジャイルチームのスクラムボードとカンバンをシンプルに提供します。"
+    },
+    {
+      "question": "PlaneはClickUpのようにドキュメント管理もできますか？",
+      "answer": "Planeにはページ（ドキュメント）機能があり、プロジェクトに関連した文書を管理できます。ClickUpほど高機能ではありませんが、基本的なWiki的利用が可能です。"
+    },
+    {
+      "question": "ガントチャートやタイムライン機能はありますか？",
+      "answer": "Planeはガントチャート機能を持っており、タスクの依存関係をビジュアルで管理できます。Taigaはカンバン・スクラムボードに特化しています。"
+    },
+    {
+      "question": "Slackなどとの連携はできますか？",
+      "answer": "PlaneはSlack・GitHubとのWebhook連携に対応しています。セルフホスト環境でもZapierなどを使えば各種サービスとの連携が可能です。"
+    }
+  ],
+  "relatedSlugs": ["jira", "asana", "trello"]
+}

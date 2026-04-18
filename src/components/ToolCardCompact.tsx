@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
+import { isKnownCompetitor } from "@/lib/competitors";
 import type { Tool } from "@/hooks/use-tools";
 import { track } from "@/lib/track";
 
@@ -19,7 +20,10 @@ export function ToolCardCompact({
   tool: Tool;
   trackSource?: string;
 }) {
-  const competitor = tool.primary_competitor_ja || tool.primary_competitor;
+  // Validate using the English canonical name; display Japanese name if available
+  const competitor = isKnownCompetitor(tool.primary_competitor)
+    ? (tool.primary_competitor_ja || tool.primary_competitor)
+    : null;
 
   return (
     <Link

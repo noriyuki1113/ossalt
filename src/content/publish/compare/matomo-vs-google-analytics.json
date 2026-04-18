@@ -1,0 +1,50 @@
+{
+  "slug": "matomo-vs-google-analytics",
+  "ossName": "Matomo",
+  "ossUrl": "https://matomo.org",
+  "ossGithub": "https://github.com/matomo-org/matomo",
+  "saasName": "Google Analytics",
+  "saasUrl": "https://analytics.google.com",
+  "alternativeSlug": "google-analytics",
+  "metaTitle": "Matomo vs Google Analytics 比較 | OSSで代替できる？プライバシー・機能を徹底解説",
+  "metaDescription": "Matomo（OSS）とGoogle Analyticsを徹底比較。プライバシー・Cookie・データ所有権・機能の違いを解説。どちらを選ぶべきか判断できます。",
+  "heroDescription": "Google AnalyticsからMatomo（OSS）への移行を検討していますか？プライバシー・Cookie同意・データ所有権・機能など6項目で徹底比較します。",
+  "verdict": "GDPR対応・Cookie不要・データの完全自社管理が優先ならMatomo。無料で手軽に使える・Google広告との連携が重要ならGoogle Analytics。",
+  "comparison": [
+    { "category": "コスト", "oss": "無料（セルフホスト）", "saas": "無料（GA4）", "winner": "draw" },
+    { "category": "データの所有権", "oss": "完全に自社で保持", "saas": "Googleが保有", "winner": "oss" },
+    { "category": "Cookie同意", "oss": "Cookieless対応", "saas": "同意が必要", "winner": "oss" },
+    { "category": "Google広告連携", "oss": "非対応", "saas": "完全統合", "winner": "saas" },
+    { "category": "ヒートマップ", "oss": "対応（内蔵）", "saas": "非対応", "winner": "oss" },
+    { "category": "データサンプリング", "oss": "なし（全件処理）", "saas": "大量データでサンプリングあり", "winner": "oss" }
+  ],
+  "ossFor": [
+    "GDPRや日本の個人情報保護法に厳格に対応したい",
+    "アクセスデータをGoogleに提供せず自社管理したい",
+    "Cookieless・同意不要でトラッキングしたい"
+  ],
+  "saasFor": [
+    "Google広告・Search Consoleとの連携が必要",
+    "無料でGA4をすぐ始めたい（セットアップ不要）",
+    "Google Looker Studioでレポートを作成したい"
+  ],
+  "faq": [
+    {
+      "question": "MatomoはGA4と同等の分析機能を持っていますか？",
+      "answer": "はい。Matomoはセッション・ページビュー・コンバージョン・目標・ファネル・コホート分析などGA4の主要機能をカバーしています。ヒートマップ・セッション録画は追加プラグインで利用できます。"
+    },
+    {
+      "question": "Google AnalyticsからMatomoへデータを移行できますか？",
+      "answer": "GA4からの直接インポートツールはありませんが、Google Analytics Data APIを使って過去データを取り出し、Matomoに手動でインポートする方法があります。"
+    },
+    {
+      "question": "Cookieless（Cookie不要）でのトラッキングは可能ですか？",
+      "answer": "はい。MatomoはIPアドレスハッシュとUser-Agentを組み合わせたFingerprinting方式でCookieなしにトラッキングできます。GDPR下での同意バナー不要運用が可能です。"
+    },
+    {
+      "question": "セルフホストのMatomoに必要なサーバースペックは？",
+      "answer": "中規模サイト（月10万PV）なら1コア・2GBメモリ・SSD 20GB程度で十分動作します。大規模サイトではMySQLのチューニングが重要になります。"
+    }
+  ],
+  "relatedSlugs": ["google-analytics", "mixpanel", "datadog"]
+}
