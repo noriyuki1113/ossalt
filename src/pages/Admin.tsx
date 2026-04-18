@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3 } from "lucide-react";
+import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3, Database, GitCompare } from "lucide-react";
 
 interface SyncResult {
   message: string;
@@ -135,6 +136,31 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold mb-8">管理画面</h1>
 
         <AdminMetrics />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link to="/admin/queue">
+            <Card className="hover:border-primary transition-colors cursor-pointer h-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Database className="h-5 w-5" />
+                  Ingestion Queue
+                </CardTitle>
+                <CardDescription>GitHubから発見されたツールのレビュー・正規化管理</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+          <Link to="/admin/comparisons">
+            <Card className="hover:border-primary transition-colors cursor-pointer h-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <GitCompare className="h-5 w-5" />
+                  Comparisons Pipeline
+                </CardTitle>
+                <CardDescription>AIが生成したOSS vs SaaS比較ページのレビュー・公開管理</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+        </div>
 
         <Card>
           <CardHeader>
