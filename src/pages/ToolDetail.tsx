@@ -34,6 +34,7 @@ import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
 import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
+import { XserverVpsCTA } from "@/components/ads/XserverVpsCTA";
 import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
@@ -855,6 +856,12 @@ export default function ToolDetailPage() {
             </div>
           </>
         )}
+
+        {/* ── Xserver VPS CTA ── */}
+        <div className="border-t border-border/60" />
+        <div className="py-6">
+          <XserverVpsCTA toolName={tool.name || undefined} />
+        </div>
 
         {/* ── Ad slot before related tools ── */}
         <div className="border-t border-border/60" />
