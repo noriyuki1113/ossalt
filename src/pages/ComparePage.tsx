@@ -79,7 +79,7 @@ export default function ComparePage() {
   useSeo({
     title: content?.metaTitle ?? `${slug} 比較 | OSSアルタナティブ`,
     description: content?.metaDescription,
-    ogImage: content ? `https://ossalt.jp/api/og?type=compare&c=${encodeURIComponent(content.ossName + " vs " + content.saasName)}` : undefined,
+    ogImage: "https://ossalt.jp/og-image.png",
     jsonLd,
   });
 
