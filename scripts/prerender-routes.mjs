@@ -22,6 +22,7 @@ function readJson(filePath) {
 
 const BASE_URL = "https://ossalt.jp";
 const SITE_NAME = "OSSアルタナティブ";
+const OG_SERVICE = process.env.OG_SERVICE_URL || "http://162.43.50.241/og";
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://jwcjmgvitywhsbjkqsui.supabase.co";
 const SUPABASE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "";
@@ -220,7 +221,7 @@ export async function getPrerenderRoutes() {
       title: override?.title ?? `${name}の代替OSSツール比較 | 無料・自己ホスト可`,
       description: override?.description ?? `${name}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`,
       canonical: `${BASE_URL}/alternatives/${slug}`,
-      ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(name)}`,
+      ogImage: `${OG_SERVICE}?type=alt&name=${encodeURIComponent(name)}`,
       jsonLd: altJsonLd,
     });
   }
@@ -325,11 +326,15 @@ export async function getPrerenderRoutes() {
     const rawDesc = competitor
       ? `${tool.name}は${competitor}の代替OSSです。${tool.description_ja || tool.description_en || ""}。無料・セルフホスト可能。`
       : tool.description_ja || tool.description_en || `${tool.name}の詳細情報。ossalt.jpで無料で探せます。`;
+    const ogParams = new URLSearchParams({ type: "tool", name: tool.name || "" });
+    if (competitor) ogParams.set("competitor", competitor);
+    if (tool.parent_category_ja) ogParams.set("category", tool.parent_category_ja);
     routes.push({
       path: `/tools/${tool.id}`,
       title: `${titleBase} | OSSアルタナティブ`,
       description: rawDesc.slice(0, 160),
       canonical: `${BASE_URL}/tools/${tool.id}`,
+      ogImage: `${OG_SERVICE}?${ogParams.toString()}`,
     });
   }
 
@@ -394,7 +399,7 @@ export async function getPrerenderRoutes() {
       title: cmpData?.metaTitle ?? `${oss} vs ${saas} 比較 | OSSで代替できる？コスト・機能を徹底解説`,
       description: cmpData?.metaDescription ?? `${oss}（OSS）と${saas}を徹底比較。コスト・セルフホスト・機能の違いを解説。どちらを選ぶべきか判断できます。`,
       canonical: `${BASE_URL}/compare/${slug}`,
-      ogImage: `${BASE_URL}/api/og?c=${encodeURIComponent(oss + " vs " + saas)}`,
+      ogImage: `${OG_SERVICE}?type=compare&oss=${encodeURIComponent(oss)}&saas=${encodeURIComponent(saas)}`,
       jsonLd: cmpJsonLd,
     });
   }

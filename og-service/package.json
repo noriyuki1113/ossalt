@@ -1,0 +1,16 @@
+{
+  "name": "ossalt-og-service",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "OG image generation service for ossalt.jp",
+  "main": "src/server.mjs",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "node --watch src/server.mjs"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "satori": "^0.10.14",
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
