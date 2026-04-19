@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Load fonts once at startup
-const notoSansJP = readFileSync(join(__dirname, "../fonts/NotoSansJP-Bold.ttf"));
+const notoSansJP = readFileSync(join(__dirname, "../fonts/NotoSansJP-Bold.otf"));
 
 const W = 1200;
 const H = 630;
