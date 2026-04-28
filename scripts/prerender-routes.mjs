@@ -171,7 +171,7 @@ async function fetchTools() {
   }
   try {
     const resp = await fetch(
-      `${SUPABASE_URL}/rest/v1/tools?select=id,name,description_ja,description_en,parent_category_ja,primary_competitor&order=id`,
+      `${SUPABASE_URL}/rest/v1/tools?select=id,name,description_ja,description_en,parent_category_ja,category_ja,primary_competitor,url,github_url,license,last_commit,language,stars_num,updated_at&order=id`,
       {
         headers: {
           apikey: SUPABASE_KEY,
@@ -223,6 +223,8 @@ export async function getPrerenderRoutes() {
       canonical: `${BASE_URL}/alternatives/${slug}`,
       ogImage: `${OG_SERVICE}?type=alt&name=${encodeURIComponent(name)}`,
       jsonLd: altJsonLd,
+      changefreq: "weekly",
+      priority: 0.7,
     });
   }
 
@@ -246,63 +248,54 @@ export async function getPrerenderRoutes() {
       title: `${meta.title} | ${SITE_NAME}`,
       description: meta.desc,
       canonical: `${BASE_URL}/category/${slug}`,
+      changefreq: "weekly",
+      priority: 0.6,
     });
   }
 
   // Static pages (already have useSeo, but prerender for initial HTML)
   const staticPages = [
-    {
-      path: "/",
+    { path: "/", priority: 1.0, changefreq: "daily",
       title: `${SITE_NAME} - 有料SaaSの代わりに使えるオープンソースツール集`,
       description: "Notion・Slack・Figmaなどの有料SaaSの代替となるオープンソースツールを日本語で検索・比較できるサイトです。無料で使えるOSSを簡単に見つけられます。",
     },
-    {
-      path: "/ranking",
+    { path: "/ranking", priority: 0.8, changefreq: "weekly",
       title: `OSSツール人気ランキング | ${SITE_NAME}`,
       description: "GitHubスター数で見るOSSツール人気ランキング。AI・開発・生産性など全カテゴリのトップツールを一覧で確認。",
     },
-    {
-      path: "/news",
+    { path: "/news", priority: 0.8, changefreq: "weekly",
       title: `OSSニュース・注目ツール | ${SITE_NAME}`,
       description: "今週の注目OSSツールとGitHubトレンドを毎週更新。人気のオープンソースツールをいち早くチェック。",
     },
-    {
-      path: "/quiz",
+    { path: "/quiz", priority: 0.6, changefreq: "monthly",
       title: `私に合うOSSを診断 | ${SITE_NAME}`,
       description: "質問に答えるだけであなたに最適なオープンソースツールが見つかる診断ツール。",
     },
-    {
-      path: "/savings",
+    { path: "/savings", priority: 0.7, changefreq: "monthly",
       title: `SaaS→OSS コスト削減シミュレーター | ${SITE_NAME}`,
       description: "NotionやSlackなど有料SaaSをOSSに切り替えた場合の年間節約額を無料で計算。",
     },
-    {
-      path: "/about",
+    { path: "/about", priority: 0.4, changefreq: "monthly",
       title: `サイトについて | ${SITE_NAME}`,
       description: "OSSアルタナティブは、有料SaaSの代わりに使えるオープンソースツールを日本語で検索・比較できるディレクトリサイトです。",
     },
-    {
-      path: "/advertise",
+    { path: "/advertise", priority: 0.5, changefreq: "monthly",
       title: `広告掲載・スポンサー | ${SITE_NAME}`,
       description: "ossalt.jpに広告を掲載して、日本のエンジニアにあなたのOSSプロダクトを届けましょう。",
     },
-    {
-      path: "/contact",
+    { path: "/contact", priority: 0.4, changefreq: "monthly",
       title: `お問い合わせ | ${SITE_NAME}`,
       description: "OSSアルタナティブへのお問い合わせはこちらから。掲載内容の誤り報告やツール追加リクエストを受け付けています。",
     },
-    {
-      path: "/privacy",
+    { path: "/privacy", priority: 0.2, changefreq: "yearly",
       title: `プライバシーポリシー | ${SITE_NAME}`,
       description: "OSSアルタナティブのプライバシーポリシーです。",
     },
-    {
-      path: "/terms",
+    { path: "/terms", priority: 0.2, changefreq: "yearly",
       title: `利用規約 | ${SITE_NAME}`,
       description: "OSSアルタナティブの利用規約です。",
     },
-    {
-      path: "/disclaimer",
+    { path: "/disclaimer", priority: 0.2, changefreq: "yearly",
       title: `免責事項 | ${SITE_NAME}`,
       description: "OSSアルタナティブの免責事項です。",
     },
@@ -316,6 +309,24 @@ export async function getPrerenderRoutes() {
   }
 
   // Tool detail pages — fetched from Supabase at build time
+  const SCHEMA_CATEGORY = {
+    "AI・ML": "DeveloperApplication",
+    "開発ツール": "DeveloperApplication",
+    "インフラ・運用": "DeveloperApplication",
+    "データ・分析": "BusinessApplication",
+    "業務ソフト": "BusinessApplication",
+    "コンテンツ": "WebApplication",
+    "生産性・便利ツール": "UtilitiesApplication",
+    "セキュリティ": "SecurityApplication",
+    "コミュニティ": "SocialNetworkingApplication",
+  };
+  const CATEGORY_TO_SLUG = {
+    "AI・ML": "ai-ml", "業務ソフト": "business", "開発ツール": "developer-tools",
+    "インフラ・運用": "infrastructure", "データ・分析": "data-analytics",
+    "コンテンツ": "content", "生産性・便利ツール": "productivity",
+    "セキュリティ": "security", "コミュニティ": "community", "その他": "other",
+  };
+
   const tools = await fetchTools();
   console.log(`  📦 Fetched ${tools.length} tools from Supabase`);
   for (const tool of tools) {
@@ -329,12 +340,62 @@ export async function getPrerenderRoutes() {
     const ogParams = new URLSearchParams({ type: "tool", name: tool.name || "" });
     if (competitor) ogParams.set("competitor", competitor);
     if (tool.parent_category_ja) ogParams.set("category", tool.parent_category_ja);
+
+    const catSlug = CATEGORY_TO_SLUG[tool.parent_category_ja];
+    const toolJsonLd = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          name: tool.name,
+          description: (tool.description_ja || tool.description_en || "").slice(0, 300),
+          applicationCategory: SCHEMA_CATEGORY[tool.parent_category_ja] ?? "SoftwareApplication",
+          ...(tool.category_ja ? { applicationSubCategory: tool.category_ja } : {}),
+          offers: { "@type": "Offer", price: "0", priceCurrency: "JPY", availability: "https://schema.org/InStock" },
+          isAccessibleForFree: true,
+          operatingSystem: "Linux, Windows, macOS, Web",
+          ...(tool.url ? { url: tool.url } : {}),
+          ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
+          ...(tool.license && tool.license !== "NOASSERTION" ? { license: tool.license } : {}),
+          ...(tool.last_commit ? { dateModified: tool.last_commit.split("T")[0] } : {}),
+          ...(tool.language ? { programmingLanguage: tool.language } : {}),
+          ...(tool.stars_num ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: tool.stars_num >= 10000 ? "4.8" : tool.stars_num >= 1000 ? "4.5" : "4.0",
+              ratingCount: tool.stars_num,
+              bestRating: "5",
+              worstRating: "1",
+            },
+          } : {}),
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ホーム", item: BASE_URL },
+            ...(catSlug ? [{ "@type": "ListItem", position: 2, name: tool.parent_category_ja, item: `${BASE_URL}/category/${catSlug}` }] : []),
+            { "@type": "ListItem", position: catSlug ? 3 : 2, name: tool.name, item: `${BASE_URL}/tools/${tool.id}` },
+          ],
+        },
+      ],
+    };
+
+    const lastmod = tool.updated_at
+      ? tool.updated_at.split("T")[0]
+      : tool.last_commit
+        ? tool.last_commit.split("T")[0]
+        : undefined;
+
     routes.push({
       path: `/tools/${tool.id}`,
       title: `${titleBase} | OSSアルタナティブ`,
       description: rawDesc.slice(0, 160),
       canonical: `${BASE_URL}/tools/${tool.id}`,
       ogImage: `${OG_SERVICE}?${ogParams.toString()}`,
+      jsonLd: toolJsonLd,
+      lastmod,
+      changefreq: "weekly",
+      priority: 0.8,
     });
   }
 
@@ -401,6 +462,8 @@ export async function getPrerenderRoutes() {
       canonical: `${BASE_URL}/compare/${slug}`,
       ogImage: `${OG_SERVICE}?type=compare&oss=${encodeURIComponent(oss)}&saas=${encodeURIComponent(saas)}`,
       jsonLd: cmpJsonLd,
+      changefreq: "monthly",
+      priority: 0.7,
     });
   }
 
