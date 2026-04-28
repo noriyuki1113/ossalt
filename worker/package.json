@@ -1,0 +1,21 @@
+{
+  "name": "ossalt-worker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "OSSALT background worker — OSS discovery, SEO indexing, social drafts",
+  "main": "src/scheduler.mjs",
+  "scripts": {
+    "start": "node src/scheduler.mjs",
+    "dev": "node --watch src/scheduler.mjs",
+    "discover:github": "node src/jobs/discover-github.mjs",
+    "discover:hn": "node src/jobs/discover-hn.mjs",
+    "index:request": "node src/jobs/request-index.mjs",
+    "drafts:generate": "node src/jobs/generate-drafts.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@octokit/rest": "^21.0.2",
+    "@supabase/supabase-js": "^2.100.1",
+    "node-cron": "^3.0.3"
+  }
+}
