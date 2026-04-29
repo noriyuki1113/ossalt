@@ -24,7 +24,7 @@ export function CookieBanner() {
     <div className="fixed bottom-0 inset-x-0 z-50 p-4 animate-fade-in">
       <div className="container max-w-2xl mx-auto rounded-xl border bg-card p-4 shadow-lg flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <p className="text-sm text-muted-foreground flex-1">
-          このサイトはGoogle Analyticsを使用しています。
+          このサイトはUmamiを使用しています。
           詳細は
           <Link to="/privacy" className="text-primary hover:underline mx-1">
             プライバシーポリシー
