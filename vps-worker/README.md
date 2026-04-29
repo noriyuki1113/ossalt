@@ -1,15 +1,15 @@
 # ossalt VPS Worker
 
 OSSALT専用のバックグラウンドワーカー。  
-GitHub APIでOSSメトリクスを取得してSupabaseへ同期する。
+GitHub APIでOSSメトリクス同期・候補収集を行いSupabaseへ書き込む。
 
 ## ファイル構成
 
 ```
 vps-worker/
-├── sync_products.py    # GitHubメトリクス同期（★今ここ）
+├── sync_products.py    # GitHubメトリクス同期（毎日3時）
+├── discover_tools.py   # OSS候補収集（毎日4時）
 ├── check_seo.py        # SEOチェック（予定）
-├── discover_tools.py   # OSS候補収集（予定）
 ├── requirements.txt
 ├── .env.example
 ├── logs/               # cronログ出力先
@@ -37,6 +37,9 @@ source .venv/bin/activate
 
 # 依存インストール
 pip install -r requirements.txt
+
+# logsディレクトリ作成
+mkdir -p logs
 ```
 
 ---
@@ -64,17 +67,101 @@ nano .env
 
 ---
 
-## 手動実行
+## sync_products.py
+
+toolsテーブルの全GitHub URLに対してGitHub APIを叩き、メトリクスを更新する。
+
+### 手動実行
 
 ```bash
-cd /opt/ossalt-worker
-source .venv/bin/activate
+cd /opt/ossalt-worker && source .venv/bin/activate
 
-# 本番実行
 python sync_products.py
+DRY_RUN=true python sync_products.py   # 書き込みなし
+```
 
-# 書き込みなし（確認用）
-DRY_RUN=true python sync_products.py
+### 更新カラム
+
+`github_stars` / `github_forks` / `github_issues` / `github_watchers` /
+`github_language` / `github_license` / `github_archived` /
+`last_commit_at` / `latest_release_name` / `latest_release_published_at` / `checked_at`
+
+---
+
+## discover_tools.py
+
+GitHub Search APIで10種のSaaS代替キーワードを検索し、
+スコアが一定以上の候補を `tool_candidates` テーブルへ保存する。  
+自動掲載はしない。Supabase管理画面でレビュー → `approved` にしたものだけ `tools` へ追加する運用。
+
+### 検索キーワード
+
+| キーワード | competitor | category |
+|-----------|-----------|----------|
+| notion alternative open source | Notion | productivity |
+| slack alternative open source | Slack | communication |
+| airtable alternative open source | Airtable | database |
+| zapier alternative open source | Zapier | automation |
+| google analytics alternative open source | Google Analytics | analytics |
+| typeform alternative open source | Typeform | forms |
+| calendly alternative open source | Calendly | scheduling |
+| jira alternative open source | Jira | project-management |
+| trello alternative open source | Trello | project-management |
+| intercom alternative open source | Intercom | communication |
+
+### スコアリング
+
+| 条件 | 加点 |
+|------|------|
+| stars ≥ 10,000 | +40 |
+| stars ≥ 1,000 | +30 |
+| stars ≥ 100 | +10 |
+| forks ≥ 100 | +10 |
+| 言語あり | +5 |
+| ライセンスあり | +10 |
+| homepageあり | +10 |
+| archived=false | +20 |
+| 90日以内に更新 | +30 |
+
+**MIN_SCORE=40 未満は保存しない。**
+
+### 手動実行
+
+```bash
+cd /opt/ossalt-worker && source .venv/bin/activate
+
+python discover_tools.py
+DRY_RUN=true python discover_tools.py   # 保存予定の候補を表示するだけ
+```
+
+### tool_candidates テーブルSQL
+
+```sql
+CREATE TABLE IF NOT EXISTS public.tool_candidates (
+  id                 uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name               text NOT NULL,
+  github_url         text NOT NULL,
+  official_url       text,
+  description        text,
+  stars              integer,
+  forks              integer,
+  language           text,
+  license            text,
+  category           text,
+  competitor         text,
+  discovery_keyword  text,
+  status             text NOT NULL DEFAULT 'pending',  -- 'pending'|'approved'|'rejected'
+  score              integer NOT NULL DEFAULT 0,
+  reviewed_at        timestamptz,
+  checked_at         timestamptz,
+  created_at         timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS tool_candidates_github_url_idx
+  ON public.tool_candidates(github_url);
+
+CREATE INDEX IF NOT EXISTS tool_candidates_status_score_idx
+  ON public.tool_candidates(status, score DESC);
 ```
 
 ---
@@ -86,14 +173,11 @@ crontab -e
 ```
 
 ```cron
-# sync_products: 毎日午前3時に実行
+# sync_products: 毎日午前3時（GitHubメトリクス更新）
 0 3 * * * cd /opt/ossalt-worker && .venv/bin/python sync_products.py >> logs/sync_products.log 2>&1
-```
 
-cronに追加後、logsディレクトリを作成：
-
-```bash
-mkdir -p /opt/ossalt-worker/logs
+# discover_tools: 毎日午前4時（OSS候補収集）
+0 4 * * * cd /opt/ossalt-worker && .venv/bin/python discover_tools.py >> logs/discover_tools.log 2>&1
 ```
 
 ---
@@ -101,38 +185,15 @@ mkdir -p /opt/ossalt-worker/logs
 ## ログ確認
 
 ```bash
-# リアルタイムで確認
-tail -f /opt/ossalt-worker/logs/sync_products.log
+# リアルタイム
+tail -f logs/sync_products.log
+tail -f logs/discover_tools.log
 
-# 最新100行
-tail -100 /opt/ossalt-worker/logs/sync_products.log
+# エラーだけ
+grep ERROR logs/discover_tools.log
 
-# エラーだけ抽出
-grep ERROR /opt/ossalt-worker/logs/sync_products.log
-
-# 実行サマリーだけ確認
-grep -E "完了|成功|失敗|スキップ" /opt/ossalt-worker/logs/sync_products.log
-```
-
----
-
-## Supabaseカラム（要migration）
-
-`sync_products.py` が更新するカラムが未作成の場合は以下のmigrationを適用：
-
-```sql
-ALTER TABLE public.tools
-  ADD COLUMN IF NOT EXISTS github_stars    integer,
-  ADD COLUMN IF NOT EXISTS github_forks    integer,
-  ADD COLUMN IF NOT EXISTS github_issues   integer,
-  ADD COLUMN IF NOT EXISTS github_watchers integer,
-  ADD COLUMN IF NOT EXISTS github_language text,
-  ADD COLUMN IF NOT EXISTS github_license  text,
-  ADD COLUMN IF NOT EXISTS github_archived boolean DEFAULT false,
-  ADD COLUMN IF NOT EXISTS last_commit_at  timestamptz,
-  ADD COLUMN IF NOT EXISTS latest_release_name         text,
-  ADD COLUMN IF NOT EXISTS latest_release_published_at timestamptz,
-  ADD COLUMN IF NOT EXISTS checked_at      timestamptz;
+# 実行サマリー
+grep -E "完了|保存|スキップ|失敗" logs/discover_tools.log
 ```
 
 ---
@@ -141,6 +202,7 @@ ALTER TABLE public.tools
 
 | API | 上限 | 備考 |
 |-----|------|------|
-| GitHub（token あり） | 5,000 req/h | repo + release で 2 req/ツール → 2,500件/h |
-| GitHub（token なし） | 60 req/h | 非推奨 |
+| GitHub Search（token あり） | 30 req/min | 10キーワード × 2s間隔 ≒ 20秒で完了 |
+| GitHub REST（token あり） | 5,000 req/h | sync_products: repo + release で 2 req/ツール |
+| GitHub（token なし） | 60 req/h（REST） / 10 req/min（Search） | 非推奨 |
 | Supabase | 制限なし（実用上） | service_role使用 |
