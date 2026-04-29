@@ -22,6 +22,7 @@ from datetime import datetime, timezone
 import requests
 from dotenv import load_dotenv
 from supabase import create_client, Client
+from utils import start_worker_run, finish_worker_run
 
 # ---------------------------------------------------------------------------
 # 設定
@@ -183,97 +184,110 @@ def main() -> None:
     log.info(f"DRY_RUN={DRY_RUN}")
     log.info("=" * 60)
 
+    run_id = start_worker_run("sync_products")
+
     client  = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
     session = make_github_session()
 
-    tools = fetch_tools(client)
-    if not tools:
-        log.info("更新対象ツールなし。終了します。")
-        return
-
-    total   = len(tools)
+    total   = 0
     success = 0
     skipped = 0
     failed  = 0
 
-    for i, tool in enumerate(tools, 1):
-        tool_id    = tool["id"]
-        tool_name  = tool["name"] or f"id={tool_id}"
-        github_url = tool.get("github_url", "")
+    try:
+        tools = fetch_tools(client)
+        if not tools:
+            log.info("更新対象ツールなし。終了します。")
+            msg = "[DRY_RUN] " if DRY_RUN else ""
+            finish_worker_run(run_id, "success", 0, 0, 0, f"{msg}対象ツールなし")
+            return
 
-        log.info(f"[{i}/{total}] {tool_name}")
+        total = len(tools)
 
-        # --- owner/repo 抽出 ---
-        parsed = parse_github_repo(github_url)
-        if not parsed:
-            log.warning(f"  GitHub URL を解析できません: {github_url!r}")
-            skipped += 1
-            continue
+        for i, tool in enumerate(tools, 1):
+            tool_id    = tool["id"]
+            tool_name  = tool["name"] or f"id={tool_id}"
+            github_url = tool.get("github_url", "")
 
-        owner, repo = parsed
+            log.info(f"[{i}/{total}] {tool_name}")
 
-        # --- リポジトリ情報 ---
-        repo_data = fetch_repo(session, owner, repo)
-        if repo_data is None:
-            failed += 1
+            # --- owner/repo 抽出 ---
+            parsed = parse_github_repo(github_url)
+            if not parsed:
+                log.warning(f"  GitHub URL を解析できません: {github_url!r}")
+                skipped += 1
+                continue
+
+            owner, repo = parsed
+
+            # --- リポジトリ情報 ---
+            repo_data = fetch_repo(session, owner, repo)
+            if repo_data is None:
+                failed += 1
+                time.sleep(SLEEP_SEC)
+                continue
+
+            # --- 最新リリース情報 ---
+            release_data = fetch_latest_release(session, owner, repo)
+
+            # --- 更新ペイロード組み立て ---
+            license_spdx = None
+            if isinstance(repo_data.get("license"), dict):
+                license_spdx = repo_data["license"].get("spdx_id") or None
+                if license_spdx == "NOASSERTION":
+                    license_spdx = None
+
+            payload: dict = {
+                "github_stars":    repo_data.get("stargazers_count"),
+                "github_forks":    repo_data.get("forks_count"),
+                "github_issues":   repo_data.get("open_issues_count"),
+                "github_watchers": repo_data.get("watchers_count"),
+                "github_language": repo_data.get("language"),
+                "github_license":  license_spdx,
+                "github_archived": repo_data.get("archived", False),
+                "last_commit_at":  repo_data.get("pushed_at"),
+                "latest_release_name":         None,
+                "latest_release_published_at": None,
+                "checked_at": datetime.now(timezone.utc).isoformat(),
+            }
+
+            if release_data:
+                payload["latest_release_name"]         = release_data.get("name") or release_data.get("tag_name")
+                payload["latest_release_published_at"] = release_data.get("published_at")
+
+            log.info(
+                f"  stars={payload['github_stars']} "
+                f"forks={payload['github_forks']} "
+                f"lang={payload['github_language']} "
+                f"archived={payload['github_archived']}"
+            )
+
+            # --- Supabase更新 ---
+            if update_tool(client, tool_id, payload):
+                success += 1
+            else:
+                failed += 1
+
             time.sleep(SLEEP_SEC)
-            continue
 
-        # --- 最新リリース情報 ---
-        release_data = fetch_latest_release(session, owner, repo)
+        elapsed = (datetime.now(timezone.utc) - started_at).total_seconds()
+        log.info("=" * 60)
+        log.info(f"完了  経過時間: {elapsed:.1f}s")
+        log.info(f"  成功: {success}")
+        log.info(f"  スキップ: {skipped}")
+        log.info(f"  失敗: {failed}")
+        log.info(f"  合計: {total}")
+        log.info("=" * 60)
 
-        # --- 更新ペイロード組み立て ---
-        license_spdx = None
-        if isinstance(repo_data.get("license"), dict):
-            license_spdx = repo_data["license"].get("spdx_id") or None
-            # NOASSERTION は無意味なのでnullに
-            if license_spdx == "NOASSERTION":
-                license_spdx = None
+        msg = f"total={total}"
+        if DRY_RUN:
+            msg = f"[DRY_RUN] {msg}"
+        finish_worker_run(run_id, "success", success, skipped, failed, msg)
 
-        payload: dict = {
-            "github_stars":    repo_data.get("stargazers_count"),
-            "github_forks":    repo_data.get("forks_count"),
-            "github_issues":   repo_data.get("open_issues_count"),
-            "github_watchers": repo_data.get("watchers_count"),
-            "github_language": repo_data.get("language"),
-            "github_license":  license_spdx,
-            "github_archived": repo_data.get("archived", False),
-            "last_commit_at":  repo_data.get("pushed_at"),  # ISO8601
-            "latest_release_name":         None,
-            "latest_release_published_at": None,
-            "checked_at": datetime.now(timezone.utc).isoformat(),
-        }
-
-        if release_data:
-            payload["latest_release_name"]         = release_data.get("name") or release_data.get("tag_name")
-            payload["latest_release_published_at"] = release_data.get("published_at")
-
-        log.info(
-            f"  stars={payload['github_stars']} "
-            f"forks={payload['github_forks']} "
-            f"lang={payload['github_language']} "
-            f"archived={payload['github_archived']}"
-        )
-
-        # --- Supabase更新 ---
-        if update_tool(client, tool_id, payload):
-            success += 1
-        else:
-            failed += 1
-
-        time.sleep(SLEEP_SEC)
-
-    # ---------------------------------------------------------------------------
-    # サマリー
-    # ---------------------------------------------------------------------------
-    elapsed = (datetime.now(timezone.utc) - started_at).total_seconds()
-    log.info("=" * 60)
-    log.info(f"完了  経過時間: {elapsed:.1f}s")
-    log.info(f"  成功: {success}")
-    log.info(f"  スキップ: {skipped}")
-    log.info(f"  失敗: {failed}")
-    log.info(f"  合計: {total}")
-    log.info("=" * 60)
+    except Exception as e:
+        log.exception(f"予期しない例外: {e}")
+        finish_worker_run(run_id, "error", success, skipped, failed, str(e))
+        sys.exit(1)
 
 
 if __name__ == "__main__":

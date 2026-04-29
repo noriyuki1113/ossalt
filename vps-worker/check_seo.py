@@ -22,6 +22,7 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from supabase import create_client, Client
+from utils import start_worker_run, finish_worker_run
 
 # ---------------------------------------------------------------------------
 # 設定
@@ -350,31 +351,49 @@ def main() -> None:
     log.info(f"DRY_RUN={DRY_RUN}  対象={len(CHECK_URLS)} URL")
     log.info("=" * 60)
 
+    run_id = start_worker_run("check_seo")
+
     client  = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
     now_iso = started_at.isoformat()
+    counts  = {"ok": 0, "warn": 0, "error": 0}
 
-    counts = {"ok": 0, "warn": 0, "error": 0}
+    try:
+        for url in CHECK_URLS:
+            try:
+                status = check_one(url, client, now_iso)
+                counts[status] = counts.get(status, 0) + 1
+            except Exception as e:
+                log.error(f"予期しないエラー ({url}): {e}")
+                counts["error"] += 1
 
-    for url in CHECK_URLS:
-        try:
-            status = check_one(url, client, now_iso)
-            counts[status] = counts.get(status, 0) + 1
-        except Exception as e:
-            log.error(f"予期しないエラー ({url}): {e}")
-            counts["error"] += 1
+            time.sleep(SLEEP_SEC)
 
-        time.sleep(SLEEP_SEC)
+        elapsed = (datetime.now(timezone.utc) - started_at).total_seconds()
+        log.info("=" * 60)
+        log.info(f"完了  経過時間: {elapsed:.1f}s")
+        log.info(f"  OK:    {counts['ok']}")
+        log.info(f"  WARN:  {counts['warn']}")
+        log.info(f"  ERROR: {counts['error']}")
+        log.info("=" * 60)
 
-    elapsed = (datetime.now(timezone.utc) - started_at).total_seconds()
-    log.info("=" * 60)
-    log.info(f"完了  経過時間: {elapsed:.1f}s")
-    log.info(f"  OK:    {counts['ok']}")
-    log.info(f"  WARN:  {counts['warn']}")
-    log.info(f"  ERROR: {counts['error']}")
-    log.info("=" * 60)
+        final_status = "error" if counts["error"] > 0 else "success"
+        msg = f"ok={counts['ok']} warn={counts['warn']} error={counts['error']}"
+        if DRY_RUN:
+            msg = f"[DRY_RUN] {msg}"
+        finish_worker_run(
+            run_id, final_status,
+            success_count=counts["ok"],
+            skipped_count=counts["warn"],
+            error_count=counts["error"],
+            message=msg,
+        )
 
-    # ERROR があれば終了コード1（cron通知などに使える）
-    if counts["error"] > 0:
+        if counts["error"] > 0:
+            sys.exit(1)
+
+    except Exception as e:
+        log.exception(f"予期しない例外: {e}")
+        finish_worker_run(run_id, "error", counts["ok"], counts["warn"], counts["error"], str(e))
         sys.exit(1)
 
 

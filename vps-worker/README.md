@@ -7,6 +7,7 @@ GitHub APIでOSSメトリクス同期・候補収集、SEO事故検知を行いS
 
 ```
 vps-worker/
+├── utils.py            # 共通関数（worker_runs 記録）
 ├── sync_products.py    # GitHubメトリクス同期（毎日3時）
 ├── discover_tools.py   # OSS候補収集（毎日4時）
 ├── check_seo.py        # SEOチェック（毎日5時）
@@ -275,6 +276,59 @@ grep "WARN\|└" logs/check_seo.log
 # 実行サマリー
 grep -E "完了|OK|WARN|ERROR" logs/check_seo.log | tail -5
 ```
+
+---
+
+## worker_runs — 実行履歴
+
+各workerの開始・終了・件数・ステータスを `worker_runs` テーブルへ自動記録する。  
+`utils.py` の `start_worker_run` / `finish_worker_run` を使って全workerが共通フォーマットで保存する。
+
+### テーブルSQL
+
+```sql
+CREATE TABLE IF NOT EXISTS public.worker_runs (
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_name      text NOT NULL,
+  status        text NOT NULL DEFAULT 'running',  -- 'running' | 'success' | 'error'
+  success_count integer NOT NULL DEFAULT 0,
+  skipped_count integer NOT NULL DEFAULT 0,
+  error_count   integer NOT NULL DEFAULT 0,
+  message       text,
+  started_at    timestamptz NOT NULL DEFAULT now(),
+  finished_at   timestamptz
+);
+```
+
+### 確認用SQL
+
+```sql
+-- 直近20件の実行履歴
+SELECT * FROM worker_runs ORDER BY started_at DESC LIMIT 20;
+
+-- workerごとの最終実行
+SELECT DISTINCT ON (job_name)
+  job_name, status, success_count, skipped_count, error_count, message, started_at, finished_at
+FROM worker_runs
+ORDER BY job_name, started_at DESC;
+
+-- エラーだけ確認
+SELECT job_name, status, message, started_at
+FROM worker_runs
+WHERE status = 'error'
+ORDER BY started_at DESC LIMIT 10;
+
+-- DRY_RUN 実行の履歴
+SELECT job_name, message, started_at
+FROM worker_runs
+WHERE message LIKE '[DRY_RUN]%'
+ORDER BY started_at DESC LIMIT 10;
+```
+
+### DRY_RUN 時の挙動
+
+`DRY_RUN=true` でも `worker_runs` には書き込む（実行ログとして残す）。  
+`message` カラムに `[DRY_RUN] ...` と記録されるので区別できる。
 
 ---
 
