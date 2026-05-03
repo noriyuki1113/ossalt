@@ -26,10 +26,14 @@ export function formatRelativeDate(dateStr: string | null | undefined): string |
   }
 }
 
+const EXCLUDED_LOGO_HOSTS = new Set(["openalternative.co", "www.openalternative.co"]);
+
 export function getFaviconUrl(url: string | null | undefined): string | null {
   if (!url) return null;
   try {
-    return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=32`;
+    const host = new URL(url).hostname;
+    if (EXCLUDED_LOGO_HOSTS.has(host.toLowerCase())) return null;
+    return `https://www.google.com/s2/favicons?domain=${host}&sz=32`;
   } catch {
     return null;
   }
