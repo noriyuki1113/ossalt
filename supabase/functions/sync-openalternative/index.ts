@@ -190,9 +190,17 @@ Deno.serve(async (req) => {
       const primaryCompetitor =
         COMPETITOR_MAP[tool.parent_category_en] || "";
 
+      // Skip aggregator URLs (openalternative.co) — they would all share the same favicon
+      const isAggregatorUrl = (() => {
+        try {
+          const h = new URL(tool.url).hostname.toLowerCase();
+          return h === "openalternative.co" || h === "www.openalternative.co";
+        } catch { return false; }
+      })();
+
       const record = {
         name: tool.name,
-        url: tool.url,
+        url: isAggregatorUrl ? null : tool.url,
         description_en: tool.description,
         description_ja: tool.description, // placeholder until translated
         parent_category_en: tool.parent_category_en,
