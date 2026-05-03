@@ -189,7 +189,12 @@ export default function SelfHostVps() {
                 </div>
               </dl>
               <Button asChild className="mt-4 w-full min-h-[44px]">
-                <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
+                <a
+                  href={v.href}
+                  target="_blank"
+                  rel={AFFILIATE_REL}
+                  onClick={() => trackAffiliateClick({ provider: v.id, ctaLabel: v.cta, linkUrl: v.href })}
+                >
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
