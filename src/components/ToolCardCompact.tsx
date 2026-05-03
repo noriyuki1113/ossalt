@@ -73,11 +73,40 @@ export function ToolCardCompact({
         )}
       </div>
 
-      {/* CTA */}
-      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all duration-200">
-        詳しく見る
-        <ArrowRight className="h-3 w-3" />
-      </span>
+      {/* CTA row */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all duration-200">
+          詳しく見る
+          <ArrowRight className="h-3 w-3" />
+        </span>
+        {tool.github_url && (
+          <span
+            role="link"
+            tabIndex={0}
+            className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              try {
+                track("external_link_click", {
+                  provider: "github",
+                  tool_id: tool.id,
+                  tool_name: tool.name ?? "",
+                  link_url: tool.github_url!,
+                  cta_label: "GitHub",
+                  source: trackSource ?? "",
+                });
+              } catch {
+                /* best effort */
+              }
+              window.open(tool.github_url!, "_blank", "noopener,noreferrer");
+            }}
+          >
+            <Github className="h-3 w-3" />
+            GitHub
+          </span>
+        )}
+      </div>
     </Link>
   );
 }
