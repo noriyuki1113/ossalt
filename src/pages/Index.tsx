@@ -10,6 +10,7 @@ import { PopularAlternativesSection } from "@/components/home/PopularAlternative
 import { PopularComparisonsSection } from "@/components/home/PopularComparisonsSection";
 import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
 import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
+import { SponsorPitchSection } from "@/components/home/SponsorPitchSection";
 import { StatsBar } from "@/components/StatsBar";
 
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
@@ -377,6 +378,7 @@ export default function IndexPage() {
           <Suspense fallback={<SectionFallback />}>
             <BottomCTA />
           </Suspense>
+          <SponsorPitchSection />
         </>
       )}
     </SiteLayout>

@@ -1111,6 +1111,13 @@ export default function ToolDetailPage() {
             </Link>
           </Button>
         </div>
+
+        {/* ── Partner / Sponsor note ── */}
+        <div className="pb-12 text-center text-xs text-muted-foreground">
+          このツールの提供元・パートナー企業の方へ：掲載内容の修正や、スポンサー掲載のご相談は
+          <Link to="/sponsor" className="text-primary hover:underline mx-1">こちら</Link>
+          からお願いします。
+        </div>
       </div>
     </SiteLayout>
   );

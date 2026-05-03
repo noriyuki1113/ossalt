@@ -23,6 +23,7 @@ const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
+const SponsorPage = lazy(() => import("./pages/Sponsor"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
 const NotionAlternativesGuide = lazy(() => import("./pages/NotionAlternativesGuide"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />
             <Route path="/submit" element={<SubmitPage />} />
+            <Route path="/sponsor" element={<SponsorPage />} />
             <Route path="/workspace/*" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
