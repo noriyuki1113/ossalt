@@ -155,6 +155,7 @@ export default function AppFlowySelfhostVpsGuide() {
         description="Notion代替のAppFlowyを安定して使うには、ある程度のメモリと拡張性が必要です。OSSセルフホスト向けにまとめたVPS比較もあわせてご覧ください。"
       />
 
+      <Section title="AppFlowyとは">
         <ul className="space-y-2 list-disc pl-5">
           <li>Notion代替として使えるOSSのオールインワンワークスペース。</li>
           <li>ドキュメント、タスク管理、データベース、ナレッジ管理などをひとつにまとめられる。</li>
@@ -193,6 +194,7 @@ export default function AppFlowySelfhostVpsGuide() {
         description="軽量なn8nと比べてAppFlowyは重めです。最低2GB、できれば4GB以上のVPSが安心です。各VPSのスペックや料金はVPS比較ページで整理しています。"
       />
 
+      <Section title="基本構成">
         <p>シンプルな構成は次のようなレイヤーになります。</p>
         <ul className="space-y-1.5 list-disc pl-5">
           <li>VPS（Ubuntu LTS）</li>
