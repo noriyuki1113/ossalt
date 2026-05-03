@@ -531,23 +531,32 @@ export default function ToolDetailPage() {
 
         {/* ── Alternative-to summary ── */}
         {(() => {
-          const replaces = (tool.replaces_ja && tool.replaces_ja.length > 0)
+          const extras = (tool.replaces_ja && tool.replaces_ja.length > 0)
             ? tool.replaces_ja
             : (tool.replaces && tool.replaces.length > 0)
               ? tool.replaces
-              : (hasCompetitor ? [competitorDisplay!] : []);
-          if (!replaces.length) return null;
+              : [];
+          const primary = hasCompetitor ? competitorDisplay! : null;
+          const others = extras.filter((r) => !primary || r.toLowerCase() !== primary.toLowerCase());
+          if (!primary && others.length === 0) return null;
+          const allBadges = [primary, ...others].filter(Boolean) as string[];
           return (
             <section className="py-6">
               <div className="card-unified p-4 sm:p-5">
                 <h2 className="text-sm font-semibold text-foreground mb-2">
                   {tool.name} は何の代替として使えるOSS？
                 </h2>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
-                  {tool.name} は {replaces.join(" / ")} の代替として使えるオープンソースツールです。
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3 break-words">
+                  {tool.name} は{" "}
+                  {primary && (
+                    <span className="font-bold text-primary">{primary}</span>
+                  )}
+                  {primary && others.length > 0 && " / "}
+                  {others.join(" / ")}
+                  {" "}の代替として使えるオープンソースツールです。
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {replaces.map((r) => (
+                  {allBadges.map((r) => (
                     <AlternativeBadge key={r} competitor={r} size="sm" />
                   ))}
                 </div>
@@ -573,10 +582,10 @@ export default function ToolDetailPage() {
                   リポジトリを見る <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {tool.stars_num != null && tool.stars_num > 0 && (
                   <div className="text-center p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20">
-                    <p className="text-2xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
+                    <p className="text-xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> Stars
                     </p>
@@ -584,9 +593,17 @@ export default function ToolDetailPage() {
                 )}
                 {tool.forks_num != null && tool.forks_num > 0 && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-2xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
+                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <GitFork className="h-3 w-3" /> Forks
+                    </p>
+                  </div>
+                )}
+                {tool.language && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.language}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Code2 className="h-3 w-3" /> 言語
                     </p>
                   </div>
                 )}
@@ -600,7 +617,7 @@ export default function ToolDetailPage() {
                 )}
                 {tool.license && tool.license !== "NOASSERTION" && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-sm font-bold text-foreground leading-tight">{tool.license}</p>
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.license}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Scale className="h-3 w-3" /> ライセンス
                     </p>
@@ -663,36 +680,40 @@ export default function ToolDetailPage() {
               <div>
                 <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
-                {[415, 185, 217, 340].includes(tool.id) && (
-                  <>
-                    <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
-                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
-                    </p>
-                    <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
-                      セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
-                    </Link>
-                    {tool.id === 415 && (
-                      <Link to="/guides/n8n-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        n8nセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                {(() => {
+                  // Self-host CTA: shown for known self-hostable OSS (has GitHub + decent stars + active maintenance)
+                  const SELFHOST_GUIDES: Record<number, { slug: string; label: string }> = {
+                    415: { slug: "n8n-selfhost-vps", label: "n8nセルフホスト手順" },
+                    185: { slug: "appflowy-selfhost-vps", label: "AppFlowyセルフホスト手順" },
+                    217: { slug: "baserow-selfhost-vps", label: "Baserowセルフホスト手順" },
+                    340: { slug: "plausible-selfhost-vps", label: "Plausibleセルフホスト手順" },
+                  };
+                  // Curated allow-list of well-known self-hostable OSS (by id)
+                  const SELFHOST_TOOL_IDS = new Set([
+                    415, 185, 217, 340, // n8n, AppFlowy, Baserow, Plausible
+                    358, 418, 346, 337, // Metabase, NocoDB, Umami, Matomo
+                  ]);
+                  const isSelfHostable =
+                    SELFHOST_TOOL_IDS.has(tool.id) ||
+                    (!!tool.github_url && (tool.stars_num || 0) >= 8000 && !!tool.last_commit);
+                  if (!isSelfHostable) return null;
+                  const guide = SELFHOST_GUIDES[tool.id];
+                  return (
+                    <>
+                      <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
+                        このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
+                      </p>
+                      <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
+                        セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
                       </Link>
-                    )}
-                    {tool.id === 185 && (
-                      <Link to="/guides/appflowy-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        AppFlowyセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                    {tool.id === 217 && (
-                      <Link to="/guides/baserow-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        Baserowセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                    {tool.id === 340 && (
-                      <Link to="/guides/plausible-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        Plausibleセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                  </>
-                )}
+                      {guide && (
+                        <Link to={`/guides/${guide.slug}`} className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                          {guide.label} <ArrowRight className="h-3 w-3" />
+                        </Link>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </div>
