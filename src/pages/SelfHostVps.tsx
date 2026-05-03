@@ -4,8 +4,8 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
 
-const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Supabase代替を動かすなら？";
-const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserowなどを動かすためのVPS選びを、初心者にもわかりやすく比較します。";
+const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
+const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
 const URL = "https://ossalt.jp/selfhost-vps";
 
 interface Vps {
