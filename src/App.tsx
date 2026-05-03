@@ -32,6 +32,7 @@ const WorkspaceComparePage = lazy(() => import("./pages/WorkspaceCompare"));
 const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
+const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/alternatives/:slug" element={<AlternativesPage />} />
             <Route path="/compare" element={<CompareIndexPage />} />
             <Route path="/compare/:slug" element={<ComparePage />} />
+            <Route path="/selfhost-vps" element={<SelfHostVpsPage />} />
             <Route path="/ranking" element={<RankingPage />} />
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/news" element={<NewsPage />} />

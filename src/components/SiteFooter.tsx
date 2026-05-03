@@ -7,6 +7,7 @@ const SITE_LINKS = [
   { to: "/compare", label: "A vs B 比較一覧" },
   { to: "/quiz", label: "OSS診断ツール" },
   { to: "/savings", label: "コスト削減シミュレーター" },
+  { to: "/selfhost-vps", label: "セルフホストVPS比較" },
 ];
 
 const ACTION_LINKS = [
