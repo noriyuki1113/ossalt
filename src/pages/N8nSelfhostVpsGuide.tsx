@@ -12,6 +12,8 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AffiliateVpsCTA } from "@/components/affiliate/AffiliateVpsCTA";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "n8nをVPSでセルフホストする方法｜Zapier代替OSSを自分のサーバーで動かす";
 const DESC =
