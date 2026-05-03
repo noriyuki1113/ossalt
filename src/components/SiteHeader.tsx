@@ -116,6 +116,7 @@ export function SiteHeader() {
           {[
             { to: "/ranking", label: "人気ツール" },
             { to: "/workspace", label: "比較する" },
+            { to: "/selfhost-vps", label: "VPS比較" },
             { to: "/advertise", label: "広告掲載" },
           ].map((item) => (
             <Link
@@ -196,6 +197,7 @@ export function SiteHeader() {
             {[
               { to: "/ranking", label: "人気ツール" },
               { to: "/workspace", label: "比較する" },
+              { to: "/selfhost-vps", label: "VPS比較" },
               { to: "/advertise", label: "広告掲載" },
             ].map((item) => (
               <Link

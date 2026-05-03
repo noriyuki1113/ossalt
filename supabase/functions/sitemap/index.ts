@@ -82,6 +82,12 @@ Deno.serve(async () => {
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>${BASE_URL}/selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>${BASE_URL}/about</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
