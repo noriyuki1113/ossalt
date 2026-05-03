@@ -35,6 +35,7 @@ const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
 const N8nSelfhostVpsGuide = lazy(() => import("./pages/N8nSelfhostVpsGuide"));
 const AppFlowySelfhostVpsGuide = lazy(() => import("./pages/AppFlowySelfhostVpsGuide"));
+const BaserowSelfhostVpsGuide = lazy(() => import("./pages/BaserowSelfhostVpsGuide"));
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/guides/notion-alternatives" element={<NotionAlternativesGuide />} />
             <Route path="/guides/n8n-selfhost-vps" element={<N8nSelfhostVpsGuide />} />
             <Route path="/guides/appflowy-selfhost-vps" element={<AppFlowySelfhostVpsGuide />} />
+            <Route path="/guides/baserow-selfhost-vps" element={<BaserowSelfhostVpsGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
