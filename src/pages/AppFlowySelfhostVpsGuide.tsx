@@ -307,6 +307,11 @@ export default function AppFlowySelfhostVpsGuide() {
           ))}
         </div>
       </section>
+
+      {/* Affiliate disclosure */}
+      <section className="container pb-12">
+        <AffiliateDisclosure />
+      </section>
     </SiteLayout>
   );
 }
