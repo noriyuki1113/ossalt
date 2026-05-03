@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 interface SimilarProjectsSectionProps {
@@ -42,9 +43,35 @@ function SimilarCard({ tool }: { tool: Tool }) {
         {tool.description_ja || tool.description_en || ""}
       </p>
 
-      <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary mt-3 group-hover:gap-1.5 transition-all">
-        詳細を見る <ArrowRight className="h-3 w-3" />
-      </span>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-3">
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all">
+          詳しく見る <ArrowRight className="h-3 w-3" />
+        </span>
+        {tool.github_url && (
+          <span
+            role="link"
+            tabIndex={0}
+            className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              try {
+                track("external_link_click", {
+                  provider: "github",
+                  tool_id: tool.id,
+                  tool_name: tool.name ?? "",
+                  link_url: tool.github_url!,
+                  cta_label: "GitHub",
+                  source: "similar_projects",
+                });
+              } catch { /* best effort */ }
+              window.open(tool.github_url!, "_blank", "noopener,noreferrer");
+            }}
+          >
+            <Github className="h-3 w-3" /> GitHub
+          </span>
+        )}
+      </div>
     </Link>
   );
 }

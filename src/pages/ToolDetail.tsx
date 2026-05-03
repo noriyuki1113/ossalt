@@ -529,7 +529,34 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── GitHub Stats Card ── */}
+        {/* ── Alternative-to summary ── */}
+        {(() => {
+          const replaces = (tool.replaces_ja && tool.replaces_ja.length > 0)
+            ? tool.replaces_ja
+            : (tool.replaces && tool.replaces.length > 0)
+              ? tool.replaces
+              : (hasCompetitor ? [competitorDisplay!] : []);
+          if (!replaces.length) return null;
+          return (
+            <section className="py-6">
+              <div className="card-unified p-4 sm:p-5">
+                <h2 className="text-sm font-semibold text-foreground mb-2">
+                  {tool.name} は何の代替として使えるOSS？
+                </h2>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
+                  {tool.name} は {replaces.join(" / ")} の代替として使えるオープンソースツールです。
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {replaces.map((r) => (
+                    <AlternativeBadge key={r} competitor={r} size="sm" />
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
+
         {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
           <section className="py-6">
             <div className="card-unified p-4 sm:p-5">
@@ -639,10 +666,10 @@ export default function ToolDetailPage() {
                 {[415, 185, 217, 340].includes(tool.id) && (
                   <>
                     <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
-                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホストガイドも参考にしてください。
+                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
                     </p>
                     <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
-                      セルフホストガイドを見る <ArrowRight className="h-3 w-3" />
+                      セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
                     </Link>
                     {tool.id === 415 && (
                       <Link to="/guides/n8n-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
