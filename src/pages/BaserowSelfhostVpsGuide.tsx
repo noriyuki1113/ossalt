@@ -356,6 +356,11 @@ export default function BaserowSelfhostVpsGuide() {
           ))}
         </div>
       </section>
+
+      {/* Affiliate disclosure */}
+      <section className="container pb-12">
+        <AffiliateDisclosure />
+      </section>
     </SiteLayout>
   );
 }
