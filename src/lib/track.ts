@@ -1,10 +1,12 @@
 /**
  * Lightweight event tracking utility.
- * Sends events to the existing Supabase Edge Function (`track`).
+ * Sends events to the project's `track` Edge Function.
  * Uses sendBeacon/fetch(keepalive) so it never blocks UI.
  */
 
-const TRACK_URL = "https://wcuofgycadbydhtuevay.supabase.co/functions/v1/track";
+const PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+const TRACK_URL = `https://${PROJECT_ID}.supabase.co/functions/v1/track`;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 interface TrackPayload {
   event_type: string;
@@ -23,11 +25,22 @@ export function track(
       ...extra,
     };
     const body = JSON.stringify(payload);
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(TRACK_URL, body);
-    } else {
-      fetch(TRACK_URL, { method: "POST", body, keepalive: true });
-    }
+
+    // sendBeacon doesn't allow custom headers; fall back to fetch+keepalive
+    // so we can pass the anon apikey/Authorization headers required by the
+    // Supabase Edge Function gateway.
+    fetch(TRACK_URL, {
+      method: "POST",
+      body,
+      keepalive: true,
+      headers: {
+        "Content-Type": "application/json",
+        apikey: ANON_KEY,
+        Authorization: `Bearer ${ANON_KEY}`,
+      },
+    }).catch(() => {
+      /* best effort */
+    });
   } catch {
     // silently ignore – tracking must never break UX
   }
