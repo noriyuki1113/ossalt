@@ -26,11 +26,29 @@ const COMPARE_NAV = [
 ];
 
 export function SiteHeader() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, _setMobileOpen] = useState(false);
+  const setMobileOpen = (v: boolean | ((p: boolean) => boolean)) => {
+    _setMobileOpen((prev) => {
+      const next = typeof v === "function" ? (v as (p: boolean) => boolean)(prev) : v;
+      mobileMenuStore.set(next);
+      return next;
+    });
+  };
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [headerSearch, setHeaderSearch] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    _setMobileOpen(false);
+    mobileMenuStore.set(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    return () => {
+      mobileMenuStore.set(false);
+    };
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
