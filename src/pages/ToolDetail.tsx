@@ -654,6 +654,11 @@ export default function ToolDetailPage() {
                     Baserowセルフホスト手順 <ArrowRight className="h-3 w-3" />
                   </Link>
                 )}
+                {tool.id === 340 && (
+                  <Link to="/guides/plausible-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                    Plausibleセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
