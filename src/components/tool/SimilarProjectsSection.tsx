@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 interface SimilarProjectsSectionProps {
