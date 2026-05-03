@@ -7,6 +7,7 @@ import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
@@ -104,8 +105,23 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           {tool.github_url && (
             <span role="link"
               className="inline-flex items-center h-7 px-2.5 text-[11px] gap-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.github_url!, "_blank", "noopener,noreferrer"); }}>
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                try {
+                  track("external_link_click", {
+                    provider: "github",
+                    tool_id: tool.id,
+                    tool_name: tool.name ?? "",
+                    link_url: tool.github_url!,
+                    cta_label: "GitHub",
+                    source: "tool_card",
+                  });
+                } catch { /* best effort */ }
+                window.open(tool.github_url!, "_blank", "noopener,noreferrer");
+              }}>
               <Github className="h-3 w-3" />
+              GitHub
             </span>
           )}
         </div>
