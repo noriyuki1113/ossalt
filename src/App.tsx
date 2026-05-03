@@ -56,6 +56,7 @@ const App = () => (
             <Route path="/guides/n8n-selfhost-vps" element={<N8nSelfhostVpsGuide />} />
             <Route path="/guides/appflowy-selfhost-vps" element={<AppFlowySelfhostVpsGuide />} />
             <Route path="/guides/baserow-selfhost-vps" element={<BaserowSelfhostVpsGuide />} />
+            <Route path="/guides/plausible-selfhost-vps" element={<PlausibleSelfhostVpsGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
