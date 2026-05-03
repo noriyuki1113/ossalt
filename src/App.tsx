@@ -36,6 +36,7 @@ const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
 const N8nSelfhostVpsGuide = lazy(() => import("./pages/N8nSelfhostVpsGuide"));
 const AppFlowySelfhostVpsGuide = lazy(() => import("./pages/AppFlowySelfhostVpsGuide"));
 const BaserowSelfhostVpsGuide = lazy(() => import("./pages/BaserowSelfhostVpsGuide"));
+const PlausibleSelfhostVpsGuide = lazy(() => import("./pages/PlausibleSelfhostVpsGuide"));
 
 const queryClient = new QueryClient();
 
