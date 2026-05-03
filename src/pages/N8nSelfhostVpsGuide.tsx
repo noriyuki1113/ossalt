@@ -255,22 +255,11 @@ export default function N8nSelfhostVpsGuide() {
         </ul>
       </Section>
 
-      {/* CTA to VPS comparison */}
-      <section className="container pb-10">
-        <div className="card-unified p-6 md:p-8 max-w-3xl">
-          <h2 className="text-xl font-semibold text-foreground mb-2">おすすめVPS</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            n8nを常時稼働させるなら、2GB以上のVPSから始めるのがおすすめです。VPSごとの違いは以下で比較しています。
-          </p>
-          <div className="mt-4">
-            <Button asChild>
-              <Link to="/selfhost-vps">
-                OSSセルフホスト向けVPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* CTA #3: end-of-article */}
+      <AffiliateVpsCTA
+        heading="まだVPSを決めていませんか？"
+        description="n8nを動かすVPSは、料金・スペック・サポートで選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+      />
 
       {/* Related */}
       <section className="container pb-10">
@@ -348,6 +337,11 @@ export default function N8nSelfhostVpsGuide() {
             </details>
           ))}
         </div>
+      </section>
+
+      {/* Affiliate disclosure */}
+      <section className="container pb-12">
+        <AffiliateDisclosure />
       </section>
     </SiteLayout>
   );
