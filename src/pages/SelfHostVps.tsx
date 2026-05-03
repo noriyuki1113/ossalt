@@ -7,6 +7,7 @@ import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref, type AffiliateVps } fro
 import { VpsRecommendationCards } from "@/components/affiliate/VpsRecommendationCards";
 import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 import { AffiliateTrackingPixel } from "@/components/affiliate/AffiliateTrackingPixel";
+import { trackAffiliateClick } from "@/lib/affiliate";
 
 const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
 const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
