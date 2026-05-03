@@ -168,7 +168,12 @@ export default function N8nSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* What is n8n */}
+      {/* CTA #1: after intro */}
+      <AffiliateVpsCTA
+        heading="n8nを動かすVPSを比較して選ぶ"
+        description="n8nを安定して常時稼働させるなら、用途に合ったVPS選びが重要です。OSSセルフホスト向けにまとめた比較ページもあわせてご覧ください。"
+      />
+
       <Section title="n8nとは">
         <ul className="space-y-2 list-disc pl-5">
           <li>Zapier / Make 代替の OSS ワークフロー自動化ツール。</li>
@@ -203,7 +208,13 @@ export default function N8nSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* Architecture */}
+      {/* CTA #2: after specs */}
+      <AffiliateVpsCTA
+        heading="2GB以上のVPSが安心です"
+        description="n8nを実運用するなら2GB以上のメモリが目安。料金や日本語サポート、海外リージョンの違いはVPS比較ページで整理しています。"
+        ctaLabel="OSSセルフホスト向けVPSを比較する"
+      />
+
       <Section title="基本構成">
         <p>シンプルな構成は次のようなレイヤーになります。</p>
         <ul className="space-y-1.5 list-disc pl-5">
