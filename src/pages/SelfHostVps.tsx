@@ -311,6 +311,18 @@ export default function SelfHostVps() {
               Zapier代替のn8nを自分のサーバーで動かす基本構成と注意点
             </p>
           </Link>
+          <Link
+            to="/guides/appflowy-selfhost-vps"
+            className="card-unified p-5 hover:border-primary/40 transition-colors group"
+          >
+            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              AppFlowyをVPSでセルフホストする方法
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Notion代替のAppFlowyを自分のサーバーで動かす構成と運用ポイント
+            </p>
+          </Link>
         </div>
       </section>
 
