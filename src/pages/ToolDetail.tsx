@@ -680,36 +680,40 @@ export default function ToolDetailPage() {
               <div>
                 <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
-                {[415, 185, 217, 340].includes(tool.id) && (
-                  <>
-                    <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
-                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
-                    </p>
-                    <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
-                      セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
-                    </Link>
-                    {tool.id === 415 && (
-                      <Link to="/guides/n8n-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        n8nセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                {(() => {
+                  // Self-host CTA: shown for known self-hostable OSS (has GitHub + decent stars + active maintenance)
+                  const SELFHOST_GUIDES: Record<number, { slug: string; label: string }> = {
+                    415: { slug: "n8n-selfhost-vps", label: "n8nセルフホスト手順" },
+                    185: { slug: "appflowy-selfhost-vps", label: "AppFlowyセルフホスト手順" },
+                    217: { slug: "baserow-selfhost-vps", label: "Baserowセルフホスト手順" },
+                    340: { slug: "plausible-selfhost-vps", label: "Plausibleセルフホスト手順" },
+                  };
+                  // Curated allow-list of well-known self-hostable OSS (by id)
+                  const SELFHOST_TOOL_IDS = new Set([
+                    415, 185, 217, 340, // n8n, AppFlowy, Baserow, Plausible
+                    358, 418, 346, 337, // Metabase, NocoDB, Umami, Matomo
+                  ]);
+                  const isSelfHostable =
+                    SELFHOST_TOOL_IDS.has(tool.id) ||
+                    (!!tool.github_url && (tool.stars_num || 0) >= 8000 && !!tool.last_commit);
+                  if (!isSelfHostable) return null;
+                  const guide = SELFHOST_GUIDES[tool.id];
+                  return (
+                    <>
+                      <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
+                        このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
+                      </p>
+                      <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
+                        セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
                       </Link>
-                    )}
-                    {tool.id === 185 && (
-                      <Link to="/guides/appflowy-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        AppFlowyセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                    {tool.id === 217 && (
-                      <Link to="/guides/baserow-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        Baserowセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                    {tool.id === 340 && (
-                      <Link to="/guides/plausible-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                        Plausibleセルフホスト手順 <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                  </>
-                )}
+                      {guide && (
+                        <Link to={`/guides/${guide.slug}`} className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                          {guide.label} <ArrowRight className="h-3 w-3" />
+                        </Link>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </div>
