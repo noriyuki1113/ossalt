@@ -68,12 +68,12 @@ const RECOMMEND = [
 ];
 
 const RELATED_TOOLS = [
-  { name: "AppFlowy", desc: "Notion代替のオールインワンワークスペース", href: "/tools/appflowy" },
-  { name: "n8n", desc: "Zapier代替のワークフロー自動化", href: "/tools/n8n" },
-  { name: "Baserow", desc: "Airtable代替のノーコードDB", href: "/tools/baserow" },
-  { name: "Supabase代替", desc: "Firebase代替のBaaS群", href: "/alternatives/firebase" },
-  { name: "Metabase", desc: "Tableau代替のBIダッシュボード", href: "/tools/metabase" },
-  { name: "Plausible Analytics", desc: "Google Analytics代替の軽量解析", href: "/tools/plausible" },
+  { name: "AppFlowy", desc: "Notion代替のオールインワンワークスペース", href: "/tools/185" },
+  { name: "n8n", desc: "Zapier代替のワークフロー自動化", href: "/tools/415" },
+  { name: "Baserow", desc: "Airtable代替のノーコードDB", href: "/tools/217" },
+  { name: "Plausible Analytics", desc: "Google Analytics代替の軽量解析", href: "/tools/340" },
+  { name: "Metabase", desc: "Tableau代替のBIダッシュボード", href: "/tools/358" },
+  { name: "Supabase代替を探す", desc: "Firebase代替のBaaS群を比較", href: "/alternatives/firebase" },
 ];
 
 const FAQ = [
