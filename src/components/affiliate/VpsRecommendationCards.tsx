@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref } from "@/config/affiliateLinks";
 import { AffiliateTrackingPixel } from "./AffiliateTrackingPixel";
+import { trackAffiliateClick } from "@/lib/affiliate";
 
 interface Props {
   heading?: string;
