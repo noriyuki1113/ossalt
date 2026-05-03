@@ -142,6 +142,45 @@ export type Database = {
           },
         ]
       }
+      analytics_events: {
+        Row: {
+          created_at: string
+          cta_label: string | null
+          event_type: string
+          id: string
+          link_url: string | null
+          page_path: string | null
+          payload: Json | null
+          provider: string | null
+          referer: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          cta_label?: string | null
+          event_type: string
+          id?: string
+          link_url?: string | null
+          page_path?: string | null
+          payload?: Json | null
+          provider?: string | null
+          referer?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          cta_label?: string | null
+          event_type?: string
+          id?: string
+          link_url?: string | null
+          page_path?: string | null
+          payload?: Json | null
+          provider?: string | null
+          referer?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       articles: {
         Row: {
           content: string | null
