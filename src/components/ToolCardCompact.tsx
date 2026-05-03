@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
