@@ -693,9 +693,7 @@ export default function ToolDetailPage() {
                     415, 185, 217, 340, // n8n, AppFlowy, Baserow, Plausible
                     358, 418, 346, 337, // Metabase, NocoDB, Umami, Matomo
                   ]);
-                  const isSelfHostable =
-                    SELFHOST_TOOL_IDS.has(tool.id) ||
-                    (!!tool.github_url && (tool.stars_num || 0) >= 8000 && !!tool.last_commit);
+                  const isSelfHostable = SELFHOST_TOOL_IDS.has(tool.id);
                   if (!isSelfHostable) return null;
                   const guide = SELFHOST_GUIDES[tool.id];
                   return (
