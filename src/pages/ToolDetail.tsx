@@ -639,6 +639,11 @@ export default function ToolDetailPage() {
                 <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
                   おすすめのVPSを見る <ArrowRight className="h-3 w-3" />
                 </Link>
+                {tool.id === 415 && (
+                  <Link to="/guides/n8n-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                    n8nセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
