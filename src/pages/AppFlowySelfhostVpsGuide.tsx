@@ -12,6 +12,8 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AffiliateVpsCTA } from "@/components/affiliate/AffiliateVpsCTA";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "AppFlowyをVPSでセルフホストする方法｜Notion代替OSSを自分のサーバーで動かす";
 const DESC =
@@ -147,7 +149,12 @@ export default function AppFlowySelfhostVpsGuide() {
         </div>
       </section>
 
-      <Section title="AppFlowyとは">
+      {/* CTA #1: after intro */}
+      <AffiliateVpsCTA
+        heading="AppFlowyを動かすVPSを比較する"
+        description="Notion代替のAppFlowyを安定して使うには、ある程度のメモリと拡張性が必要です。OSSセルフホスト向けにまとめたVPS比較もあわせてご覧ください。"
+      />
+
         <ul className="space-y-2 list-disc pl-5">
           <li>Notion代替として使えるOSSのオールインワンワークスペース。</li>
           <li>ドキュメント、タスク管理、データベース、ナレッジ管理などをひとつにまとめられる。</li>
@@ -180,7 +187,12 @@ export default function AppFlowySelfhostVpsGuide() {
         </div>
       </section>
 
-      <Section title="基本構成">
+      {/* CTA #2: after specs */}
+      <AffiliateVpsCTA
+        heading="AppFlowyは2GB以上のVPSが目安"
+        description="軽量なn8nと比べてAppFlowyは重めです。最低2GB、できれば4GB以上のVPSが安心です。各VPSのスペックや料金はVPS比較ページで整理しています。"
+      />
+
         <p>シンプルな構成は次のようなレイヤーになります。</p>
         <ul className="space-y-1.5 list-disc pl-5">
           <li>VPS（Ubuntu LTS）</li>
@@ -210,22 +222,11 @@ export default function AppFlowySelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container pb-10">
-        <div className="card-unified p-6 md:p-8 max-w-3xl">
-          <h2 className="text-xl font-semibold text-foreground mb-2">おすすめVPS</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            AppFlowyをセルフホストするなら、最低2GB、できれば4GB以上のVPSから始めるのがおすすめです。VPSごとの違いは以下で比較しています。
-          </p>
-          <div className="mt-4">
-            <Button asChild>
-              <Link to="/selfhost-vps">
-                OSSセルフホスト向けVPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* CTA #3: end-of-article */}
+      <AffiliateVpsCTA
+        heading="まだVPSを決めていませんか？"
+        description="AppFlowyのセルフホスト先は、メモリ、サポート、料金で選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+      />
 
       {/* Related tools */}
       <section className="container pb-10">
