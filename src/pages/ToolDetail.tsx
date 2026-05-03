@@ -644,6 +644,11 @@ export default function ToolDetailPage() {
                     n8nセルフホスト手順 <ArrowRight className="h-3 w-3" />
                   </Link>
                 )}
+                {tool.id === 185 && (
+                  <Link to="/guides/appflowy-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                    AppFlowyセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
