@@ -256,6 +256,7 @@ export default function SelfHostVps() {
                 href={r.href}
                 target="_blank"
                 rel={AFFILIATE_REL}
+                onClick={() => trackAffiliateClick({ provider: r.id, ctaLabel: `${r.tag}なら${r.name}`, linkUrl: r.href })}
                 className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
               >
                 <div>
