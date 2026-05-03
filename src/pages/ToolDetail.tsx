@@ -666,10 +666,10 @@ export default function ToolDetailPage() {
                 {[415, 185, 217, 340].includes(tool.id) && (
                   <>
                     <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
-                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホストガイドも参考にしてください。
+                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
                     </p>
                     <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
-                      セルフホストガイドを見る <ArrowRight className="h-3 w-3" />
+                      セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
                     </Link>
                     {tool.id === 415 && (
                       <Link to="/guides/n8n-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
