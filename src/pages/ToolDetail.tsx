@@ -529,7 +529,34 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── GitHub Stats Card ── */}
+        {/* ── Alternative-to summary ── */}
+        {(() => {
+          const replaces = (tool.replaces_ja && tool.replaces_ja.length > 0)
+            ? tool.replaces_ja
+            : (tool.replaces && tool.replaces.length > 0)
+              ? tool.replaces
+              : (hasCompetitor ? [competitorDisplay!] : []);
+          if (!replaces.length) return null;
+          return (
+            <section className="py-6">
+              <div className="card-unified p-4 sm:p-5">
+                <h2 className="text-sm font-semibold text-foreground mb-2">
+                  {tool.name} は何の代替として使えるOSS？
+                </h2>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
+                  {tool.name} は {replaces.join(" / ")} の代替として使えるオープンソースツールです。
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {replaces.map((r) => (
+                    <AlternativeBadge key={r} competitor={r} size="sm" />
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
+
         {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
           <section className="py-6">
             <div className="card-unified p-4 sm:p-5">
