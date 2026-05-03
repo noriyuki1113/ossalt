@@ -3,6 +3,9 @@ import { ArrowRight, Server, Cpu, Box, Globe2, TrendingUp, ExternalLink, Chevron
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref } from "@/config/affiliateLinks";
+import { VpsRecommendationCards } from "@/components/affiliate/VpsRecommendationCards";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
 const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
