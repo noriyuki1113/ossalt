@@ -825,13 +825,15 @@ export default function ToolDetailPage() {
               <Box className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">Docker対応</p>
               <p className="text-xs font-semibold text-foreground text-center">
-                {(tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
+                {tool.github_url && (tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
               </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Server className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">セルフホスト</p>
-              <p className="text-xs font-semibold text-foreground">可能</p>
+              <p className="text-xs font-semibold text-foreground">
+                {tool.github_url ? "可能" : "要確認"}
+              </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Users className="h-5 w-5 text-primary/70" />
