@@ -7,6 +7,7 @@ import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref, type AffiliateVps } fro
 import { VpsRecommendationCards } from "@/components/affiliate/VpsRecommendationCards";
 import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 import { AffiliateTrackingPixel } from "@/components/affiliate/AffiliateTrackingPixel";
+import { trackAffiliateClick } from "@/lib/affiliate";
 
 const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
 const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
@@ -188,7 +189,12 @@ export default function SelfHostVps() {
                 </div>
               </dl>
               <Button asChild className="mt-4 w-full min-h-[44px]">
-                <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
+                <a
+                  href={v.href}
+                  target="_blank"
+                  rel={AFFILIATE_REL}
+                  onClick={() => trackAffiliateClick({ provider: v.id, ctaLabel: v.cta, linkUrl: v.href })}
+                >
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
@@ -218,7 +224,12 @@ export default function SelfHostVps() {
                   <td className="px-4 py-4 text-muted-foreground">{v.bestFor}</td>
                   <td className="px-4 py-4 text-right">
                     <Button asChild size="sm">
-                      <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
+                      <a
+                        href={v.href}
+                        target="_blank"
+                        rel={AFFILIATE_REL}
+                        onClick={() => trackAffiliateClick({ provider: v.id, ctaLabel: v.cta, linkUrl: v.href })}
+                      >
                         {v.cta} <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
@@ -245,6 +256,7 @@ export default function SelfHostVps() {
                 href={r.href}
                 target="_blank"
                 rel={AFFILIATE_REL}
+                onClick={() => trackAffiliateClick({ provider: r.id, ctaLabel: `${r.tag}なら${r.name}`, linkUrl: r.href })}
                 className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
               >
                 <div>
