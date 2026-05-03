@@ -33,6 +33,7 @@ const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
+const N8nSelfhostVpsGuide = lazy(() => import("./pages/N8nSelfhostVpsGuide"));
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/category/:slug" element={<Index />} />
             <Route path="/tools/:id" element={<ToolDetail />} />
             <Route path="/guides/notion-alternatives" element={<NotionAlternativesGuide />} />
+            <Route path="/guides/n8n-selfhost-vps" element={<N8nSelfhostVpsGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
