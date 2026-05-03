@@ -531,23 +531,32 @@ export default function ToolDetailPage() {
 
         {/* ── Alternative-to summary ── */}
         {(() => {
-          const replaces = (tool.replaces_ja && tool.replaces_ja.length > 0)
+          const extras = (tool.replaces_ja && tool.replaces_ja.length > 0)
             ? tool.replaces_ja
             : (tool.replaces && tool.replaces.length > 0)
               ? tool.replaces
-              : (hasCompetitor ? [competitorDisplay!] : []);
-          if (!replaces.length) return null;
+              : [];
+          const primary = hasCompetitor ? competitorDisplay! : null;
+          const others = extras.filter((r) => !primary || r.toLowerCase() !== primary.toLowerCase());
+          if (!primary && others.length === 0) return null;
+          const allBadges = [primary, ...others].filter(Boolean) as string[];
           return (
             <section className="py-6">
               <div className="card-unified p-4 sm:p-5">
                 <h2 className="text-sm font-semibold text-foreground mb-2">
                   {tool.name} は何の代替として使えるOSS？
                 </h2>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
-                  {tool.name} は {replaces.join(" / ")} の代替として使えるオープンソースツールです。
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3 break-words">
+                  {tool.name} は{" "}
+                  {primary && (
+                    <span className="font-bold text-primary">{primary}</span>
+                  )}
+                  {primary && others.length > 0 && " / "}
+                  {others.join(" / ")}
+                  {" "}の代替として使えるオープンソースツールです。
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {replaces.map((r) => (
+                  {allBadges.map((r) => (
                     <AlternativeBadge key={r} competitor={r} size="sm" />
                   ))}
                 </div>
