@@ -54,14 +54,14 @@ export function PopularAlternatives() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tools")
-        .select("id, name, primary_competitor, primary_competitor_ja, stars_num")
+        .select("id, slug, name, primary_competitor, primary_competitor_ja, stars_num")
         .not("primary_competitor", "is", null)
         .not("primary_competitor", "eq", "有料SaaS")
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
 
       const map = new Map<string, {
-        count: number; topTool: string; topToolId: number;
+        count: number; topTool: string; topToolId: number; topToolSlug: string | null;
         key: string; secondTool?: string;
       }>();
 
@@ -69,7 +69,7 @@ export function PopularAlternatives() {
         const key = t.primary_competitor!;
         const existing = map.get(key);
         if (!existing) {
-          map.set(key, { count: 1, topTool: t.name || "", topToolId: t.id, key });
+          map.set(key, { count: 1, topTool: t.name || "", topToolId: t.id, topToolSlug: t.slug ?? null, key });
         } else {
           existing.count++;
           if (!existing.secondTool) existing.secondTool = t.name || "";
@@ -87,7 +87,7 @@ export function PopularAlternatives() {
 
       return sorted.slice(0, 5).map((v) => ({
         competitor: v.key, count: v.count,
-        topTool: v.topTool, topToolId: v.topToolId, secondTool: v.secondTool,
+        topTool: v.topTool, topToolId: v.topToolId, topToolSlug: v.topToolSlug, secondTool: v.secondTool,
       }));
     },
   });
@@ -105,7 +105,7 @@ export function PopularAlternatives() {
           return (
             <Link
               key={g.competitor}
-              to={`/tools/${g.topToolId}`}
+              to={`/tools/${g.topToolSlug || g.topToolId}`}
               className="group card-unified-hover p-4 md:p-5 min-w-[180px] md:min-w-[210px] flex-1 flex flex-col snap-start"
               onClick={() => track("popular_alt_click", { competitor: g.competitor, tool: g.topTool })}
             >

@@ -17,7 +17,7 @@ const ACTION_LINKS = [
 ];
 
 const LEGAL_LINKS = [
-  { to: "/terms", label: "掲載ポリシー" },
+  { to: "/terms", label: "利用規約" },
   { to: "/privacy", label: "プライバシーポリシー" },
   { to: "/disclaimer", label: "免責事項" },
   { to: "/contact", label: "お問い合わせ" },

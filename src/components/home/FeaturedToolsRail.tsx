@@ -15,7 +15,7 @@ export function FeaturedToolsRail() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tools")
-        .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, stars_num")
+        .select("id, slug, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, stars_num")
         .order("stars_num", { ascending: false, nullsFirst: false })
         .limit(16);
       if (error) throw error;
@@ -67,7 +67,7 @@ export function FeaturedToolsRail() {
           {tools.map((tool) => (
             <Link
               key={tool.id}
-              to={`/tools/${tool.id}`}
+              to={`/tools/${tool.slug || tool.id}`}
               className="group shrink-0 snap-start w-52 rounded-xl border border-border bg-card p-4 flex flex-col gap-2 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
             >
               <div className="flex items-center gap-2.5">

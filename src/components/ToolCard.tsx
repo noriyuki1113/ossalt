@@ -26,7 +26,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
 
   return (
     <Link
-      to={`/tools/${tool.id}`}
+      to={`/tools/${tool.slug || tool.id}`}
       className="group card-unified-hover p-5 flex flex-col relative animate-fade-in-up"
       style={{ animationDelay: `${Math.min(index * 40, 400)}ms`, animationFillMode: "both" }}
     >

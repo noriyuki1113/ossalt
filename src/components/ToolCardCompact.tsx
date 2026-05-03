@@ -27,7 +27,7 @@ export function ToolCardCompact({
 
   return (
     <Link
-      to={`/tools/${tool.id}`}
+      to={`/tools/${tool.slug || tool.id}`}
       className="group card-unified-hover p-4 flex flex-col"
       onClick={() =>
         trackSource &&

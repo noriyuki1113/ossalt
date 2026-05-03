@@ -171,7 +171,7 @@ async function fetchTools() {
   }
   try {
     const resp = await fetch(
-      `${SUPABASE_URL}/rest/v1/tools?select=id,name,description_ja,description_en,parent_category_ja,category_ja,primary_competitor,url,github_url,license,last_commit,language,stars_num,updated_at&order=id`,
+      `${SUPABASE_URL}/rest/v1/tools?select=id,slug,name,description_ja,description_en,parent_category_ja,category_ja,primary_competitor,url,github_url,license,last_commit,language,stars_num,updated_at&order=id`,
       {
         headers: {
           apikey: SUPABASE_KEY,
@@ -374,7 +374,7 @@ export async function getPrerenderRoutes() {
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "ホーム", item: BASE_URL },
             ...(catSlug ? [{ "@type": "ListItem", position: 2, name: tool.parent_category_ja, item: `${BASE_URL}/category/${catSlug}` }] : []),
-            { "@type": "ListItem", position: catSlug ? 3 : 2, name: tool.name, item: `${BASE_URL}/tools/${tool.id}` },
+            { "@type": "ListItem", position: catSlug ? 3 : 2, name: tool.name, item: `${BASE_URL}/tools/${tool.slug || tool.id}` },
           ],
         },
       ],
@@ -386,11 +386,12 @@ export async function getPrerenderRoutes() {
         ? tool.last_commit.split("T")[0]
         : undefined;
 
+    const toolPath = tool.slug || tool.id;
     routes.push({
-      path: `/tools/${tool.id}`,
+      path: `/tools/${toolPath}`,
       title: `${titleBase} | OSSアルタナティブ`,
       description: rawDesc.slice(0, 160),
-      canonical: `${BASE_URL}/tools/${tool.id}`,
+      canonical: `${BASE_URL}/tools/${toolPath}`,
       ogImage: `${OG_SERVICE}?${ogParams.toString()}`,
       jsonLd: toolJsonLd,
       lastmod,

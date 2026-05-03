@@ -21,7 +21,7 @@ function SimilarCard({ tool }: { tool: Tool }) {
 
   return (
     <Link
-      to={`/tools/${tool.id}`}
+      to={`/tools/${tool.slug || tool.id}`}
       className="group flex flex-col rounded-xl border border-border/60 bg-card p-4 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
     >
       <div className="flex items-center gap-2.5 mb-2 min-w-0">

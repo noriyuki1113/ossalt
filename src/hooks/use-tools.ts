@@ -4,6 +4,7 @@ import { CATEGORY_MAP } from "@/components/CategoryFilter";
 
 export interface Tool {
   id: number;
+  slug: string | null;
   name: string | null;
   url: string | null;
   description_en: string | null;
