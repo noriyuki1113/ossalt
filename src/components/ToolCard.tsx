@@ -7,6 +7,7 @@ import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
