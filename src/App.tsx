@@ -1,12 +1,11 @@
 import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { StickyCompareTray } from "@/components/workspace/StickyCompareTray";
 import Index from "./pages/Index";
 
 const ToolDetail = lazy(() => import("./pages/ToolDetail"));
@@ -26,10 +25,6 @@ const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
 const NotionAlternativesGuide = lazy(() => import("./pages/NotionAlternativesGuide"));
-const WorkspacePage = lazy(() => import("./pages/Workspace"));
-const WorkspaceSavedPage = lazy(() => import("./pages/WorkspaceSaved"));
-const WorkspaceComparePage = lazy(() => import("./pages/WorkspaceCompare"));
-const WorkspaceSharedPage = lazy(() => import("./pages/WorkspaceShared"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
@@ -74,15 +69,11 @@ const App = () => (
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />
             <Route path="/submit" element={<SubmitPage />} />
-            <Route path="/workspace" element={<WorkspacePage />} />
-            <Route path="/workspace/saved" element={<WorkspaceSavedPage />} />
-            <Route path="/workspace/compare/:id" element={<WorkspaceComparePage />} />
-            <Route path="/workspace/shared/:token" element={<WorkspaceSharedPage />} />
+            <Route path="/workspace/*" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
         <CookieBanner />
-        <StickyCompareTray />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
