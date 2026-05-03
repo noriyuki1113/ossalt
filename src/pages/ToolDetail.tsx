@@ -28,8 +28,6 @@ import { EditorialInsightCard } from "@/components/EditorialInsightCard";
 import { RelatedGuideCard } from "@/components/RelatedGuideCard";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
-import { AddToCompareButton } from "@/components/workspace/AddToCompareButton";
 import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
@@ -487,13 +485,6 @@ export default function ToolDetailPage() {
                     </p>
                   )}
                 </div>
-
-                {/* Workspace actions */}
-                <div className="border-t border-border/60 pt-3 space-y-2">
-                  <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
-                  <AddToCompareButton toolId={tool.id} toolName={tool.name || undefined} source="tool_detail" className="w-full justify-center" />
-                </div>
-
                 {/* Alternative link */}
                 {altSlug && (
                   <Link

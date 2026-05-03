@@ -13,8 +13,6 @@ import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
 import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
-import { AlternativesCompareEntrypoint } from "@/components/workspace/AlternativesCompareEntrypoint";
 import { useSeo } from "@/hooks/use-seo";
 import { useAlternativeContent } from "@/hooks/use-alternative-content";
 import { formatCount } from "@/lib/format";
@@ -292,9 +290,6 @@ export default function AlternativesPage() {
           <p className="text-muted-foreground py-12 text-center">該当するツールが見つかりませんでした</p>
         ) : (
           <>
-            {/* ── Workspace: Compare all entry point ── */}
-            <AlternativesCompareEntrypoint competitor={competitor} tools={tools} />
-
             {/* ── 2. Top Picks (featured cards) ── */}
             {topPicks.length > 0 && (
               <section className="mb-10">
@@ -324,7 +319,7 @@ export default function AlternativesPage() {
                           <StarCount count={tool.stars_num} size="sm" />
                         </div>
                       </div>
-                      <SaveToWorkspaceButton toolId={tool.id} toolName={tool.name || undefined} variant="icon" source="alternatives_top" />
+                      
 
                       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1">
                         {tool.description_ja || tool.description_en || ""}

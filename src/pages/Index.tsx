@@ -11,7 +11,7 @@ import { PopularComparisonsSection } from "@/components/home/PopularComparisonsS
 import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
 import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
 import { StatsBar } from "@/components/StatsBar";
-import { CategoryCompareEntrypoint } from "@/components/workspace/CategoryCompareEntrypoint";
+
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
 import { FilterToolbar } from "@/components/discovery/FilterToolbar";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
@@ -317,12 +317,6 @@ export default function IndexPage() {
             <div className="text-center py-20">
               <p className="text-muted-foreground">ツールが見つかりませんでした</p>
               <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
-            </div>
-          )}
-
-          {selectedCategory !== "すべて" && !debouncedSearch && (
-            <div className="mt-6">
-              <CategoryCompareEntrypoint category={selectedCategory} />
             </div>
           )}
 
