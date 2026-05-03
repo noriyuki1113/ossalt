@@ -34,6 +34,7 @@ const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
 const SelfHostVpsPage = lazy(() => import("./pages/SelfHostVps"));
 const N8nSelfhostVpsGuide = lazy(() => import("./pages/N8nSelfhostVpsGuide"));
+const AppFlowySelfhostVpsGuide = lazy(() => import("./pages/AppFlowySelfhostVpsGuide"));
 
 const queryClient = new QueryClient();
 
