@@ -3,56 +3,70 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
 import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
-import { Mail, ArrowRight } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function SponsorPage() {
   useSeo({
-    title: "スポンサー掲載・タイアップのご案内",
+    title: "ossalt.jp への掲載について",
     description:
-      "ossalt.jp ではOSSベンダー・SaaS企業向けにスポンサー掲載やタイアップ記事を受け付けています。掲載内容の修正もこちらから。",
+      "ossalt.jp はNotion・Zapier・Airtable・Google Analyticsなどの代替OSSを比較検討する読者が集まる日本語ディレクトリです。スポンサー掲載・タイアップのご相談はこちら。",
     canonical: "https://ossalt.jp/sponsor",
   });
 
   return (
     <SiteLayout>
       <PageBackTop />
-      <div className="container max-w-2xl mx-auto py-12 px-4 animate-fade-in">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6">
-          スポンサー掲載・タイアップのご案内
+      <article className="container max-w-2xl mx-auto py-12 px-4 animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 w-full min-w-0 whitespace-normal break-words">
+          ossalt.jp への掲載について
         </h1>
-        <div className="space-y-4 text-foreground/90 leading-relaxed">
-          <p>
-            ossalt.jp は、有料SaaSの代替となるオープンソースツールを日本語で紹介するディレクトリです。
-            開発者・スタートアップ・情シス担当者など、技術選定の比較検討段階にいる読者にリーチできます。
-          </p>
-          <p>
-            OSSベンダー・SaaS企業の方向けに、以下のようなご相談を受け付けています。
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>カテゴリ・比較ページへのスポンサー掲載</li>
-            <li>タイアップ記事・導入事例の制作</li>
-            <li>掲載内容の修正・情報の追加リクエスト</li>
-            <li>その他、提携・パートナーシップのご相談</li>
-          </ul>
-          <p className="text-sm text-muted-foreground">
-            詳細な掲載メニュー・料金は広告掲載ページをご覧ください。
-          </p>
-        </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+        <p className="text-foreground/90 leading-relaxed mb-10 w-full min-w-0 whitespace-normal break-words">
+          ossalt.jp は、有料SaaSの代わりに使えるOSSを日本語で探せるサイトです。
+          Notion、Zapier、Airtable、Google Analytics などの代替を、具体的に比較検討中の読者が中心です。
+        </p>
+
+        <section className="mb-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-3">こんな方におすすめです</h2>
+          <ul className="list-disc pl-6 space-y-1.5 text-foreground/90 leading-relaxed">
+            <li>日本市場でOSSプロダクトの認知を広げたい海外ベンダー</li>
+            <li>自社プロダクトを「○○の代替」として候補に入れてほしい企業</li>
+            <li>OSS導入支援・構築代行・マネージドホスティングを提供する事業者</li>
+          </ul>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-3">ご相談いただける掲載枠</h2>
+          <ul className="list-disc pl-6 space-y-1.5 text-foreground/90 leading-relaxed">
+            <li>ホームページのスポンサー表示</li>
+            <li>「○○の代替OSS」ページへの固定掲載</li>
+            <li>カテゴリページでの優先表示</li>
+            <li>ニュースレターでの紹介</li>
+            <li>導入ガイド・タイアップ記事の共同制作</li>
+          </ul>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-xl md:text-2xl font-bold mb-3">料金について</h2>
+          <p className="text-foreground/90 leading-relaxed">
+            掲載面・期間・ご要望に応じて個別にご案内しています。月額固定でのご提案が基本です。
+            お気軽にご相談ください。
+          </p>
+        </section>
+
+        <section className="mb-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-3">お問い合わせ</h2>
+          <p className="text-foreground/90 leading-relaxed mb-5">
+            ご相談・お見積りはメールでお受けしています。3営業日以内に返信いたします。
+          </p>
           <Button asChild size="lg" className="gap-2 rounded-xl">
             <Link to="/advertise">
               <Mail className="h-4 w-4" />
-              広告・スポンサー掲載について問い合わせる
+              メールで相談する
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="gap-2 rounded-xl">
-            <Link to="/contact">
-              掲載内容の修正を依頼する <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </div>
+        </section>
+      </article>
       <PageBackBottom />
     </SiteLayout>
   );
