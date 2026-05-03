@@ -140,20 +140,14 @@ export default function AppFlowySelfhostVpsGuide() {
             Notion代替として人気のOSSツール AppFlowy を、自分のVPSで動かすための基本構成を解説します。
           </p>
           <div className="mt-6">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="outline">
               <Link to="/selfhost-vps">
-                VPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
+                セルフホストに必要な環境を見る <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
-
-      {/* CTA #1: after intro */}
-      <AffiliateVpsCTA
-        heading="AppFlowyを動かすVPSを比較する"
-        description="Notion代替のAppFlowyを安定して使うには、ある程度のメモリと拡張性が必要です。OSSセルフホスト向けにまとめたVPS比較もあわせてご覧ください。"
-      />
 
       <Section title="AppFlowyとは">
         <ul className="space-y-2 list-disc pl-5">
@@ -188,10 +182,11 @@ export default function AppFlowySelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #2: after specs */}
+      {/* CTA: after specs */}
       <AffiliateVpsCTA
-        heading="AppFlowyは2GB以上のVPSが目安"
-        description="軽量なn8nと比べてAppFlowyは重めです。最低2GB、できれば4GB以上のVPSが安心です。各VPSのスペックや料金はVPS比較ページで整理しています。"
+        heading="セルフホストに必要な環境を確認する"
+        description="AppFlowyは2GB以上、できれば4GB以上のメモリが安心です。OSSセルフホスト向けの運用環境ガイドで料金やサポートを確認できます。"
+        ctaLabel="OSSセルフホスト向けの環境を確認する"
       />
 
       <Section title="基本構成">
@@ -224,10 +219,11 @@ export default function AppFlowySelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #3: end-of-article */}
+      {/* CTA: end-of-article */}
       <AffiliateVpsCTA
-        heading="まだVPSを決めていませんか？"
-        description="AppFlowyのセルフホスト先は、メモリ、サポート、料金で選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+        heading="VPS運用ガイドで環境を確認する"
+        description="AppFlowyのセルフホスト先は、メモリ、サポート、料金で選び方が変わります。OSSセルフホスト向けの運用環境ガイドから探せます。"
+        ctaLabel="VPS運用ガイドを見る"
       />
 
       {/* Related tools */}
