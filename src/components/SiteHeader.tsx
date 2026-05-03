@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { mobileMenuStore } from "@/lib/mobile-menu";
 
 const ALTERNATIVES_NAV = [
   { to: "/alternatives/notion",           label: "Notion の代替" },
