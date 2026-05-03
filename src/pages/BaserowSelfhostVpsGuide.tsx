@@ -323,6 +323,18 @@ export default function BaserowSelfhostVpsGuide() {
               Notion代替のAppFlowyを自分のサーバーで動かす構成と運用ポイント
             </p>
           </Link>
+          <Link
+            to="/guides/plausible-selfhost-vps"
+            className="card-unified p-5 hover:border-primary/40 transition-colors group"
+          >
+            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              PlausibleをVPSでセルフホストする方法
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Google Analytics代替のPlausibleを自分のサーバーで動かす構成と注意点
+            </p>
+          </Link>
         </div>
       </section>
 
