@@ -485,10 +485,6 @@ export default function ToolDetailPage() {
                     </p>
                   )}
                 </div>
-
-                <div className="border-t border-border/60 pt-3 space-y-2">
-                </div>
-
                 {/* Alternative link */}
                 {altSlug && (
                   <Link
