@@ -2,14 +2,17 @@ import { Link } from "react-router-dom";
 import { Bookmark, GitCompareArrows } from "lucide-react";
 import { useSavedTools, useComparisonLists } from "@/hooks/use-workspace";
 import { track } from "@/lib/track";
+import { useMobileMenuOpen } from "@/lib/mobile-menu";
 
 export function StickyCompareTray() {
   const { savedTools } = useSavedTools();
   const { lists } = useComparisonLists();
+  const mobileMenuOpen = useMobileMenuOpen();
 
   const savedCount = savedTools.length;
   const compareCount = lists.length;
 
+  if (mobileMenuOpen) return null;
   if (savedCount === 0 && compareCount === 0) return null;
 
   return (
