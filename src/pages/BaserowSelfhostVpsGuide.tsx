@@ -12,6 +12,8 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AffiliateVpsCTA } from "@/components/affiliate/AffiliateVpsCTA";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "BaserowをVPSでセルフホストする方法｜Airtable代替OSSを自分のサーバーで動かす";
 const DESC =
@@ -182,6 +184,12 @@ export default function BaserowSelfhostVpsGuide() {
         </div>
       </section>
 
+      {/* CTA #1: after intro */}
+      <AffiliateVpsCTA
+        heading="Baserowを動かすVPSを比較する"
+        description="Airtable代替のBaserowは業務データを扱うので、信頼できるVPSを選ぶことが大切です。OSSセルフホスト向けVPS比較もあわせてご覧ください。"
+      />
+
       <Section title="Baserowとは">
         <ul className="space-y-2 list-disc pl-5">
           <li>Airtable代替として使えるOSSのデータベースツール。</li>
@@ -215,6 +223,12 @@ export default function BaserowSelfhostVpsGuide() {
           ))}
         </div>
       </section>
+
+      {/* CTA #2: after specs */}
+      <AffiliateVpsCTA
+        heading="Baserowは2GB以上のVPSが目安"
+        description="PostgreSQLと同居させるBaserowは、最低2GB、利用ユーザーが増えるなら4GB以上のVPSが安心です。料金やサポートはVPS比較ページで比較できます。"
+      />
 
       <Section title="基本構成">
         <p>シンプルな構成は次のようなレイヤーになります。</p>
@@ -259,22 +273,11 @@ export default function BaserowSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container pb-10">
-        <div className="card-unified p-6 md:p-8 max-w-3xl">
-          <h2 className="text-xl font-semibold text-foreground mb-2">おすすめVPS</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Baserowをセルフホストするなら、最低2GB、できれば4GB以上のVPSから始めるのがおすすめです。VPSごとの違いは以下で比較しています。
-          </p>
-          <div className="mt-4">
-            <Button asChild>
-              <Link to="/selfhost-vps">
-                OSSセルフホスト向けVPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* CTA #3: end-of-article */}
+      <AffiliateVpsCTA
+        heading="まだVPSを決めていませんか？"
+        description="Baserowをセルフホストするなら、料金・サポート・拡張性で選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+      />
 
       {/* Related tools */}
       <section className="container pb-10">
@@ -352,6 +355,11 @@ export default function BaserowSelfhostVpsGuide() {
             </details>
           ))}
         </div>
+      </section>
+
+      {/* Affiliate disclosure */}
+      <section className="container pb-12">
+        <AffiliateDisclosure />
       </section>
     </SiteLayout>
   );

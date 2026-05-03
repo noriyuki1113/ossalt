@@ -12,6 +12,8 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AffiliateVpsCTA } from "@/components/affiliate/AffiliateVpsCTA";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "PlausibleをVPSでセルフホストする方法｜Google Analytics代替OSSを自分のサーバーで動かす";
 const DESC =
@@ -186,6 +188,12 @@ export default function PlausibleSelfhostVpsGuide() {
         </div>
       </section>
 
+      {/* CTA #1: after intro */}
+      <AffiliateVpsCTA
+        heading="Plausibleを動かすVPSを比較する"
+        description="ClickHouseを含むPlausibleは構成が少し重めです。安定して動かせるVPS選びは、OSSセルフホスト向けVPS比較で確認できます。"
+      />
+
       <Section title="Plausibleとは">
         <ul className="space-y-2 list-disc pl-5">
           <li>Google Analytics代替として使えるOSSアクセス解析ツール。</li>
@@ -219,6 +227,12 @@ export default function PlausibleSelfhostVpsGuide() {
           ))}
         </div>
       </section>
+
+      {/* CTA #2: after specs */}
+      <AffiliateVpsCTA
+        heading="PlausibleはClickHouseを含む構成"
+        description="PlausibleはPostgreSQL + ClickHouseを使うため、メモリは最低2GB、できれば4GB以上が安心です。各VPSの料金とサポートはVPS比較ページで整理しています。"
+      />
 
       <Section title="基本構成">
         <p>シンプルな構成は次のようなレイヤーになります。</p>
@@ -264,22 +278,11 @@ export default function PlausibleSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="container pb-10">
-        <div className="card-unified p-6 md:p-8 max-w-3xl">
-          <h2 className="text-xl font-semibold text-foreground mb-2">おすすめVPS</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Plausibleをセルフホストするなら、最低2GB、できれば4GB以上のVPSから始めるのがおすすめです。VPSごとの違いは以下で比較しています。
-          </p>
-          <div className="mt-4">
-            <Button asChild>
-              <Link to="/selfhost-vps">
-                OSSセルフホスト向けVPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* CTA #3: end-of-article */}
+      <AffiliateVpsCTA
+        heading="まだVPSを決めていませんか？"
+        description="Plausibleをセルフホストするなら、メモリ・ストレージ・サポートで選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+      />
 
       {/* ossalt note */}
       <Section title="ossalt.jpとの相性">
@@ -346,6 +349,11 @@ export default function PlausibleSelfhostVpsGuide() {
             </details>
           ))}
         </div>
+      </section>
+
+      {/* Affiliate disclosure */}
+      <section className="container pb-12">
+        <AffiliateDisclosure />
       </section>
     </SiteLayout>
   );

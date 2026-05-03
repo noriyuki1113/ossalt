@@ -3,6 +3,9 @@ import { ArrowRight, Server, Cpu, Box, Globe2, TrendingUp, ExternalLink, Chevron
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
+import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref } from "@/config/affiliateLinks";
+import { VpsRecommendationCards } from "@/components/affiliate/VpsRecommendationCards";
+import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
 
 const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
 const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
@@ -17,40 +20,21 @@ interface Vps {
   cta: string;
 }
 
-const VPS_LIST: Vps[] = [
-  {
-    name: "DigitalOcean",
-    audience: "開発者・OSS好き",
-    features: "ドキュメント豊富、API充実、Dockerワンクリック",
-    bestFor: "n8n / AppFlowy / Baserow",
-    href: "https://www.digitalocean.com/",
-    cta: "公式サイト",
-  },
-  {
-    name: "Vultr",
-    audience: "海外VPSを安く試したい人",
-    features: "キャンペーンが強く時間課金、リージョン多数",
-    bestFor: "n8n / 軽量OSS",
-    href: "https://www.vultr.com/",
-    cta: "公式サイト",
-  },
-  {
-    name: "Xserver VPS",
-    audience: "日本語サポート重視の初心者",
-    features: "国内サポート、Docker / WordPressテンプレ",
-    bestFor: "AppFlowy / Baserow / WordPress系",
-    href: "https://vps.xserver.ne.jp/",
-    cta: "公式サイト",
-  },
-  {
-    name: "ConoHa VPS",
-    audience: "国内サービスで始めたい人",
-    features: "管理画面がわかりやすい、時間課金、国内データセンター",
-    bestFor: "n8n / Metabase / 小規模OSS",
-    href: "https://www.conoha.jp/vps/",
-    cta: "公式サイト",
-  },
-];
+const VPS_META: Record<string, { features: string; bestFor: string }> = {
+  digitalocean: { features: "ドキュメント豊富、API充実、Dockerワンクリック", bestFor: "n8n / AppFlowy / Baserow" },
+  vultr: { features: "キャンペーンが強く時間課金、リージョン多数", bestFor: "n8n / 軽量OSS" },
+  xserver: { features: "国内サポート、Docker / WordPressテンプレ", bestFor: "AppFlowy / Baserow / WordPress系" },
+  conoha: { features: "管理画面がわかりやすい、時間課金、国内データセンター", bestFor: "n8n / Metabase / 小規模OSS" },
+};
+
+const VPS_LIST: Vps[] = AFFILIATE_VPS.map((v) => ({
+  name: v.name,
+  audience: v.recommendedFor,
+  features: VPS_META[v.id].features,
+  bestFor: VPS_META[v.id].bestFor,
+  href: getAffiliateHref(v),
+  cta: v.ctaLabel,
+}));
 
 const POINTS = [
   { icon: TrendingUp, title: "料金", desc: "月額1,000円前後から。時間課金もチェック。" },
@@ -199,7 +183,7 @@ export default function SelfHostVps() {
                 </div>
               </dl>
               <Button asChild className="mt-4 w-full min-h-[44px]">
-                <a href={v.href} target="_blank" rel="noopener noreferrer sponsored">
+                <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
@@ -228,7 +212,7 @@ export default function SelfHostVps() {
                   <td className="px-4 py-4 text-muted-foreground">{v.bestFor}</td>
                   <td className="px-4 py-4 text-right">
                     <Button asChild size="sm">
-                      <a href={v.href} target="_blank" rel="noopener noreferrer sponsored">
+                      <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
                         {v.cta} <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
@@ -240,7 +224,11 @@ export default function SelfHostVps() {
         </div>
       </section>
 
-      {/* Recommendation */}
+      {/* VPS recommendation cards (affiliate) */}
+      <VpsRecommendationCards
+        heading="用途別おすすめVPS"
+        description="ここまで紹介したVPSを、用途別にカード形式でまとめました。気になるVPSの公式サイトから詳細を確認できます。"
+      />
       <section className="container pb-10">
         <h2 className="text-2xl font-bold text-foreground mb-5">ossalt.jp的おすすめ結論</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -249,7 +237,7 @@ export default function SelfHostVps() {
               key={r.tag}
               href={r.href}
               target="_blank"
-              rel="noopener noreferrer sponsored"
+              rel={AFFILIATE_REL}
               className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
             >
               <div>
@@ -352,9 +340,7 @@ export default function SelfHostVps() {
 
       {/* Affiliate disclosure */}
       <section className="container pb-12">
-        <p className="text-xs text-muted-foreground/80 max-w-3xl border-t border-border/60 pt-4">
-          この記事にはアフィリエイトリンクが含まれる場合があります。ただし、掲載内容はossalt.jpの編集方針に基づいて選定しています。
-        </p>
+        <AffiliateDisclosure />
       </section>
     </SiteLayout>
   );
