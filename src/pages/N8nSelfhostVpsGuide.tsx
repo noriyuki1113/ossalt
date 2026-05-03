@@ -278,6 +278,25 @@ export default function N8nSelfhostVpsGuide() {
         </div>
       </section>
 
+      {/* Related guide */}
+      <section className="container pb-10">
+        <h2 className="text-2xl font-bold text-foreground mb-5">関連ガイド</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+          <Link
+            to="/guides/appflowy-selfhost-vps"
+            className="card-unified p-5 hover:border-primary/40 transition-colors group"
+          >
+            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              AppFlowyをVPSでセルフホストする方法
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Notion代替のAppFlowyを自分のサーバーで動かす構成と運用ポイント
+            </p>
+          </Link>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="container pb-12">
         <h2 className="text-2xl font-bold text-foreground mb-5">よくある質問</h2>
