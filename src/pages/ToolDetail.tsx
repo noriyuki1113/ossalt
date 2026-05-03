@@ -573,10 +573,10 @@ export default function ToolDetailPage() {
                   リポジトリを見る <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {tool.stars_num != null && tool.stars_num > 0 && (
                   <div className="text-center p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20">
-                    <p className="text-2xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
+                    <p className="text-xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> Stars
                     </p>
@@ -584,9 +584,17 @@ export default function ToolDetailPage() {
                 )}
                 {tool.forks_num != null && tool.forks_num > 0 && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-2xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
+                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <GitFork className="h-3 w-3" /> Forks
+                    </p>
+                  </div>
+                )}
+                {tool.language && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.language}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      <Code2 className="h-3 w-3" /> 言語
                     </p>
                   </div>
                 )}
@@ -600,7 +608,7 @@ export default function ToolDetailPage() {
                 )}
                 {tool.license && tool.license !== "NOASSERTION" && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-sm font-bold text-foreground leading-tight">{tool.license}</p>
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.license}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Scale className="h-3 w-3" /> ライセンス
                     </p>
