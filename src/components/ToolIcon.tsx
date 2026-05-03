@@ -7,16 +7,32 @@ interface ToolIconProps {
   size?: number;
 }
 
+/** Domains that are aggregator/directory sites — never use as a tool's own logo source */
+const EXCLUDED_LOGO_DOMAINS = new Set([
+  "openalternative.co",
+  "www.openalternative.co",
+]);
+
+function isExcludedDomain(hostname: string): boolean {
+  return EXCLUDED_LOGO_DOMAINS.has(hostname.toLowerCase());
+}
+
 function getClearbitUrl(url: string | null | undefined): string | null {
   if (!url) return null;
-  try { return `https://logo.clearbit.com/${new URL(url).hostname}`; }
-  catch { return null; }
+  try {
+    const host = new URL(url).hostname;
+    if (isExcludedDomain(host)) return null;
+    return `https://logo.clearbit.com/${host}`;
+  } catch { return null; }
 }
 
 function getFaviconUrl(url: string | null | undefined): string | null {
   if (!url) return null;
-  try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`; }
-  catch { return null; }
+  try {
+    const host = new URL(url).hostname;
+    if (isExcludedDomain(host)) return null;
+    return `https://www.google.com/s2/favicons?domain=${host}&sz=64`;
+  } catch { return null; }
 }
 
 function getGithubAvatarUrl(githubUrl: string | null | undefined): string | null {
