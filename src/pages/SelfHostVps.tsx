@@ -91,7 +91,7 @@ export default function SelfHostVps() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp/" },
-          { "@type": "ListItem", position: 2, name: "OSSセルフホストVPS比較", item: URL },
+          { "@type": "ListItem", position: 2, name: "OSSセルフホスト環境ガイド", item: URL },
         ],
       },
       {
