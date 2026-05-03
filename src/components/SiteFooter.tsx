@@ -2,26 +2,17 @@ import { Link } from "react-router-dom";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 const SITE_LINKS = [
-  { to: "/about", label: "OSSアルタナティブについて" },
-  { to: "/ranking", label: "人気ランキング" },
-  { to: "/compare", label: "A vs B 比較一覧" },
-  { to: "/quiz", label: "OSS診断ツール" },
-  { to: "/savings", label: "コスト削減シミュレーター" },
-  { to: "/selfhost-vps", label: "セルフホストVPS比較" },
-];
-
-const ACTION_LINKS = [
-  { to: "/submit", label: "OSSを掲載する（無料）" },
-  { to: "/advertise", label: "広告掲載・スポンサー" },
-  { to: "/contact", label: "情報修正リクエスト" },
-  { to: "/contact", label: "ツール追加リクエスト" },
+  { to: "/", label: "OSSを探す" },
+  { to: "/ranking", label: "代替カテゴリ" },
+  { to: "/selfhost-vps", label: "セルフホストガイド" },
+  { to: "/about", label: "このサイトについて" },
+  { to: "/contact", label: "お問い合わせ" },
 ];
 
 const LEGAL_LINKS = [
   { to: "/terms", label: "掲載ポリシー" },
   { to: "/privacy", label: "プライバシーポリシー" },
   { to: "/disclaimer", label: "免責事項" },
-  { to: "/contact", label: "お問い合わせ" },
 ];
 
 export function SiteFooter() {
