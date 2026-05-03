@@ -3,21 +3,24 @@ import { ArrowRight, Server, Cpu, Box, Globe2, TrendingUp, ExternalLink, Chevron
 import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
-import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref } from "@/config/affiliateLinks";
+import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref, type AffiliateVps } from "@/config/affiliateLinks";
 import { VpsRecommendationCards } from "@/components/affiliate/VpsRecommendationCards";
 import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
+import { AffiliateTrackingPixel } from "@/components/affiliate/AffiliateTrackingPixel";
 
 const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
 const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
 const URL = "https://ossalt.jp/selfhost-vps";
 
 interface Vps {
+  id: AffiliateVps["id"];
   name: string;
   audience: string;
   features: string;
   bestFor: string;
   href: string;
   cta: string;
+  trackingImageUrl?: string;
 }
 
 const VPS_META: Record<string, { features: string; bestFor: string }> = {
@@ -28,12 +31,14 @@ const VPS_META: Record<string, { features: string; bestFor: string }> = {
 };
 
 const VPS_LIST: Vps[] = AFFILIATE_VPS.map((v) => ({
+  id: v.id,
   name: v.name,
   audience: v.recommendedFor,
   features: VPS_META[v.id].features,
   bestFor: VPS_META[v.id].bestFor,
   href: getAffiliateHref(v),
   cta: v.ctaLabel,
+  trackingImageUrl: v.trackingImageUrl,
 }));
 
 const POINTS = [
@@ -44,12 +49,12 @@ const POINTS = [
   { icon: Server, title: "拡張性", desc: "後からCPU・メモリ・ストレージを増やせるか。" },
 ];
 
-const RECOMMEND = [
-  { tag: "初心者", name: "Xserver VPS", href: "https://vps.xserver.ne.jp/" },
-  { tag: "開発者", name: "DigitalOcean", href: "https://www.digitalocean.com/" },
-  { tag: "安く海外VPSを試したい", name: "Vultr", href: "https://www.vultr.com/" },
-  { tag: "国内サービスで安心したい", name: "ConoHa VPS", href: "https://www.conoha.jp/vps/" },
-];
+const RECOMMEND: { tag: string; id: AffiliateVps["id"]; name: string; href: string; trackingImageUrl?: string }[] =
+  (["xserver", "digitalocean", "vultr", "conoha"] as const).map((id, i) => {
+    const v = AFFILIATE_VPS.find((x) => x.id === id)!;
+    const tags = ["初心者", "開発者", "安く海外VPSを試したい", "国内サービスで安心したい"];
+    return { tag: tags[i], id: v.id, name: v.name, href: getAffiliateHref(v), trackingImageUrl: v.trackingImageUrl };
+  });
 
 const RELATED_TOOLS = [
   { name: "AppFlowy", desc: "Notion代替のオールインワンワークスペース", href: "/tools/185" },
@@ -187,6 +192,7 @@ export default function SelfHostVps() {
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
+              <AffiliateTrackingPixel src={v.trackingImageUrl} />
             </div>
           ))}
         </div>
@@ -216,6 +222,7 @@ export default function SelfHostVps() {
                         {v.cta} <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
+                    <AffiliateTrackingPixel src={v.trackingImageUrl} />
                   </td>
                 </tr>
               ))}
@@ -233,19 +240,21 @@ export default function SelfHostVps() {
         <h2 className="text-2xl font-bold text-foreground mb-5">ossalt.jp的おすすめ結論</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {RECOMMEND.map((r) => (
-            <a
-              key={r.tag}
-              href={r.href}
-              target="_blank"
-              rel={AFFILIATE_REL}
-              className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
-            >
-              <div>
-                <p className="text-xs text-muted-foreground">{r.tag}なら</p>
-                <p className="text-lg font-semibold text-foreground mt-0.5">{r.name}</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-            </a>
+            <div key={r.tag} className="relative">
+              <a
+                href={r.href}
+                target="_blank"
+                rel={AFFILIATE_REL}
+                className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
+              >
+                <div>
+                  <p className="text-xs text-muted-foreground">{r.tag}なら</p>
+                  <p className="text-lg font-semibold text-foreground mt-0.5">{r.name}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </a>
+              <AffiliateTrackingPixel src={r.trackingImageUrl} />
+            </div>
           ))}
         </div>
       </section>

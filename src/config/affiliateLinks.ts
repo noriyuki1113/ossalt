@@ -9,6 +9,7 @@ export interface AffiliateVps {
   name: string;
   officialUrl: string;
   affiliateUrl: string; // 空文字の場合は officialUrl を使用
+  trackingImageUrl?: string; // A8.net等の1x1計測img
   description: string;
   recommendedFor: string;
   ctaLabel: string;
@@ -37,7 +38,8 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     id: "xserver",
     name: "Xserver VPS",
     officialUrl: "https://vps.xserver.ne.jp/",
-    affiliateUrl: "",
+    affiliateUrl: "https://px.a8.net/svt/ejp?a8mat=4B3HQJ+2LH2R6+CO4+25ES2Q",
+    trackingImageUrl: "https://www19.a8.net/0.gif?a8mat=4B3HQJ+2LH2R6+CO4+25ES2Q",
     description: "国内サポート・日本語管理画面。テンプレートからの導入も簡単。",
     recommendedFor: "日本語サポート重視の初心者",
     ctaLabel: "初心者向けVPSを見る",
@@ -46,7 +48,8 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     id: "conoha",
     name: "ConoHa VPS",
     officialUrl: "https://www.conoha.jp/vps/",
-    affiliateUrl: "",
+    affiliateUrl: "https://px.a8.net/svt/ejp?a8mat=4B3HQJ+LFMK2+50+4YQYYA",
+    trackingImageUrl: "https://www17.a8.net/0.gif?a8mat=4B3HQJ+LFMK2+50+4YQYYA",
     description: "国内データセンター・時間課金。管理画面が分かりやすい。",
     recommendedFor: "国内サービスで安心して始めたい人",
     ctaLabel: "国内VPSを見る",
@@ -56,6 +59,11 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
 /** 実際に使うリンクURLを取得（affiliateUrlがあればそちら、なければofficial） */
 export function getAffiliateHref(v: AffiliateVps): string {
   return v.affiliateUrl?.trim() ? v.affiliateUrl : v.officialUrl;
+}
+
+/** id から計測ピクセルURLを取得 */
+export function getTrackingImageUrl(id: AffiliateVps["id"]): string | undefined {
+  return AFFILIATE_VPS.find((v) => v.id === id)?.trackingImageUrl;
 }
 
 /** 外部アフィリエイトリンクに付与する rel 属性 */

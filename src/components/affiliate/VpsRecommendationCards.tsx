@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AFFILIATE_REL, AFFILIATE_VPS, getAffiliateHref } from "@/config/affiliateLinks";
+import { AffiliateTrackingPixel } from "./AffiliateTrackingPixel";
 
 interface Props {
   heading?: string;
@@ -36,6 +37,7 @@ export function VpsRecommendationCards({
                 {v.ctaLabel} <ExternalLink className="ml-1 h-3.5 w-3.5" />
               </a>
             </Button>
+            <AffiliateTrackingPixel src={v.trackingImageUrl} />
           </div>
         ))}
       </div>
