@@ -51,18 +51,6 @@ export function SiteFooter() {
               ))}
             </nav>
             <nav className="space-y-2">
-              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">参加する</p>
-              {ACTION_LINKS.map((l, i) => (
-                <Link
-                  key={`${l.to}-${i}`}
-                  to={l.to}
-                  className="block text-xs text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-            <nav className="space-y-2">
               <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">法的情報</p>
               {LEGAL_LINKS.map((l) => (
                 <Link
