@@ -295,6 +295,25 @@ export default function SelfHostVps() {
         </div>
       </section>
 
+      {/* Related guides */}
+      <section className="container pb-10">
+        <h2 className="text-2xl font-bold text-foreground mb-5">関連ガイド</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+          <Link
+            to="/guides/n8n-selfhost-vps"
+            className="card-unified p-5 hover:border-primary/40 transition-colors group"
+          >
+            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              n8nをVPSでセルフホストする方法
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Zapier代替のn8nを自分のサーバーで動かす基本構成と注意点
+            </p>
+          </Link>
+        </div>
+      </section>
+
       {/* Affiliate disclosure */}
       <section className="container pb-12">
         <p className="text-xs text-muted-foreground/80 max-w-3xl border-t border-border/60 pt-4">
