@@ -20,40 +20,21 @@ interface Vps {
   cta: string;
 }
 
-const VPS_LIST: Vps[] = [
-  {
-    name: "DigitalOcean",
-    audience: "開発者・OSS好き",
-    features: "ドキュメント豊富、API充実、Dockerワンクリック",
-    bestFor: "n8n / AppFlowy / Baserow",
-    href: "https://www.digitalocean.com/",
-    cta: "公式サイト",
-  },
-  {
-    name: "Vultr",
-    audience: "海外VPSを安く試したい人",
-    features: "キャンペーンが強く時間課金、リージョン多数",
-    bestFor: "n8n / 軽量OSS",
-    href: "https://www.vultr.com/",
-    cta: "公式サイト",
-  },
-  {
-    name: "Xserver VPS",
-    audience: "日本語サポート重視の初心者",
-    features: "国内サポート、Docker / WordPressテンプレ",
-    bestFor: "AppFlowy / Baserow / WordPress系",
-    href: "https://vps.xserver.ne.jp/",
-    cta: "公式サイト",
-  },
-  {
-    name: "ConoHa VPS",
-    audience: "国内サービスで始めたい人",
-    features: "管理画面がわかりやすい、時間課金、国内データセンター",
-    bestFor: "n8n / Metabase / 小規模OSS",
-    href: "https://www.conoha.jp/vps/",
-    cta: "公式サイト",
-  },
-];
+const VPS_META: Record<string, { features: string; bestFor: string }> = {
+  digitalocean: { features: "ドキュメント豊富、API充実、Dockerワンクリック", bestFor: "n8n / AppFlowy / Baserow" },
+  vultr: { features: "キャンペーンが強く時間課金、リージョン多数", bestFor: "n8n / 軽量OSS" },
+  xserver: { features: "国内サポート、Docker / WordPressテンプレ", bestFor: "AppFlowy / Baserow / WordPress系" },
+  conoha: { features: "管理画面がわかりやすい、時間課金、国内データセンター", bestFor: "n8n / Metabase / 小規模OSS" },
+};
+
+const VPS_LIST: Vps[] = AFFILIATE_VPS.map((v) => ({
+  name: v.name,
+  audience: v.recommendedFor,
+  features: VPS_META[v.id].features,
+  bestFor: VPS_META[v.id].bestFor,
+  href: getAffiliateHref(v),
+  cta: v.ctaLabel,
+}));
 
 const POINTS = [
   { icon: TrendingUp, title: "料金", desc: "月額1,000円前後から。時間課金もチェック。" },
