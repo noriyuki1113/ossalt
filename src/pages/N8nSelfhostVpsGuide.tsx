@@ -294,6 +294,18 @@ export default function N8nSelfhostVpsGuide() {
               Notion代替のAppFlowyを自分のサーバーで動かす構成と運用ポイント
             </p>
           </Link>
+          <Link
+            to="/guides/baserow-selfhost-vps"
+            className="card-unified p-5 hover:border-primary/40 transition-colors group"
+          >
+            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+              BaserowをVPSでセルフホストする方法
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Airtable代替のBaserowを自分のサーバーで動かす構成と運用ポイント
+            </p>
+          </Link>
         </div>
       </section>
 
