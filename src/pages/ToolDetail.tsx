@@ -649,6 +649,11 @@ export default function ToolDetailPage() {
                     AppFlowyセルフホスト手順 <ArrowRight className="h-3 w-3" />
                   </Link>
                 )}
+                {tool.id === 217 && (
+                  <Link to="/guides/baserow-selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                    Baserowセルフホスト手順 <ArrowRight className="h-3 w-3" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
