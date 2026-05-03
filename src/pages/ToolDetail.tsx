@@ -481,6 +481,11 @@ export default function ToolDetailPage() {
                       </a>
                     </Button>
                   )}
+                  {!tool.url && !tool.github_url && (
+                    <p className="text-xs text-muted-foreground text-center py-2">
+                      公式サイト・GitHub情報は確認中
+                    </p>
+                  )}
                 </div>
 
                 {/* Workspace actions */}
