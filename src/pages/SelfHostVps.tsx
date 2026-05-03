@@ -183,7 +183,7 @@ export default function SelfHostVps() {
                 </div>
               </dl>
               <Button asChild className="mt-4 w-full min-h-[44px]">
-                <a href={v.href} target="_blank" rel="noopener noreferrer sponsored">
+                <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
@@ -212,7 +212,7 @@ export default function SelfHostVps() {
                   <td className="px-4 py-4 text-muted-foreground">{v.bestFor}</td>
                   <td className="px-4 py-4 text-right">
                     <Button asChild size="sm">
-                      <a href={v.href} target="_blank" rel="noopener noreferrer sponsored">
+                      <a href={v.href} target="_blank" rel={AFFILIATE_REL}>
                         {v.cta} <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
@@ -224,7 +224,11 @@ export default function SelfHostVps() {
         </div>
       </section>
 
-      {/* Recommendation */}
+      {/* VPS recommendation cards (affiliate) */}
+      <VpsRecommendationCards
+        heading="用途別おすすめVPS"
+        description="ここまで紹介したVPSを、用途別にカード形式でまとめました。気になるVPSの公式サイトから詳細を確認できます。"
+      />
       <section className="container pb-10">
         <h2 className="text-2xl font-bold text-foreground mb-5">ossalt.jp的おすすめ結論</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -233,7 +237,7 @@ export default function SelfHostVps() {
               key={r.tag}
               href={r.href}
               target="_blank"
-              rel="noopener noreferrer sponsored"
+              rel={AFFILIATE_REL}
               className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
             >
               <div>
