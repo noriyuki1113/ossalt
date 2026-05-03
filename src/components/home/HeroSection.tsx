@@ -29,10 +29,10 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
       <div className="container relative pt-12 pb-8 md:pt-28 md:pb-24 text-center px-4">
         {/* Headline — visible on all breakpoints */}
         <h1 className="text-[1.75rem] md:text-5xl font-black leading-[1.15] text-foreground">
-          有料SaaS、もういらない。
+          有料SaaSの代わりに使えるOSSを探す
         </h1>
         <p className="text-xs md:text-base text-muted-foreground mt-2 md:mt-3">
-          有料SaaSの代替OSSを日本語で検索・比較
+          Notion、Zapier、Airtable、Google Analyticsなどの代替になるオープンソースツールを日本語で探せます。
         </p>
 
         {/* Search bar — the hero */}
