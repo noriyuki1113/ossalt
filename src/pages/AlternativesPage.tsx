@@ -13,8 +13,6 @@ import { AdvertiseCTA } from "@/components/ads/AdvertiseCTA";
 import { AlternativeSponsorCTA } from "@/components/ads/AlternativeSponsorCTA";
 import { CommunityParticipationCTA } from "@/components/CommunityParticipationCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { SaveToWorkspaceButton } from "@/components/workspace/SaveToWorkspaceButton";
-import { AlternativesCompareEntrypoint } from "@/components/workspace/AlternativesCompareEntrypoint";
 import { useSeo } from "@/hooks/use-seo";
 import { useAlternativeContent } from "@/hooks/use-alternative-content";
 import { formatCount } from "@/lib/format";
