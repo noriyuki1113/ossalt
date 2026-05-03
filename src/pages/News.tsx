@@ -17,7 +17,9 @@ function formatStars(num: number | null): string {
 function getFaviconUrl(url: string | null): string | null {
   if (!url) return null;
   try {
-    return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=32`;
+    const host = new URL(url).hostname;
+    if (host === 'openalternative.co' || host === 'www.openalternative.co') return null;
+    return `https://www.google.com/s2/favicons?domain=${host}&sz=32`;
   } catch {
     return null;
   }
