@@ -192,6 +192,7 @@ export default function SelfHostVps() {
                   {v.cta} <ExternalLink className="ml-1 h-3.5 w-3.5" />
                 </a>
               </Button>
+              <AffiliateTrackingPixel src={v.trackingImageUrl} />
             </div>
           ))}
         </div>
@@ -221,6 +222,7 @@ export default function SelfHostVps() {
                         {v.cta} <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </Button>
+                    <AffiliateTrackingPixel src={v.trackingImageUrl} />
                   </td>
                 </tr>
               ))}
@@ -238,19 +240,21 @@ export default function SelfHostVps() {
         <h2 className="text-2xl font-bold text-foreground mb-5">ossalt.jp的おすすめ結論</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {RECOMMEND.map((r) => (
-            <a
-              key={r.tag}
-              href={r.href}
-              target="_blank"
-              rel={AFFILIATE_REL}
-              className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
-            >
-              <div>
-                <p className="text-xs text-muted-foreground">{r.tag}なら</p>
-                <p className="text-lg font-semibold text-foreground mt-0.5">{r.name}</p>
-              </div>
-              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-            </a>
+            <div key={r.tag} className="relative">
+              <a
+                href={r.href}
+                target="_blank"
+                rel={AFFILIATE_REL}
+                className="card-unified p-5 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
+              >
+                <div>
+                  <p className="text-xs text-muted-foreground">{r.tag}なら</p>
+                  <p className="text-lg font-semibold text-foreground mt-0.5">{r.name}</p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </a>
+              <AffiliateTrackingPixel src={r.trackingImageUrl} />
+            </div>
           ))}
         </div>
       </section>
