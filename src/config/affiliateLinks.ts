@@ -23,7 +23,7 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     affiliateUrl: "",
     description: "ドキュメントが豊富でAPI・CLIも充実。Docker前提のOSS運用に強い。",
     recommendedFor: "OSSを触り慣れた開発者向け",
-    ctaLabel: "開発者向けVPSを見る",
+    ctaLabel: "公式サイトで詳細を見る",
   },
   {
     id: "vultr",
@@ -32,7 +32,7 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     affiliateUrl: "",
     description: "海外リージョンが豊富で時間課金。検証用にも本番にも使いやすい。",
     recommendedFor: "海外リージョン・時間課金で試したい人",
-    ctaLabel: "海外VPSを試す",
+    ctaLabel: "公式サイトで詳細を見る",
   },
   {
     id: "xserver",
@@ -42,7 +42,7 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     trackingImageUrl: "https://www19.a8.net/0.gif?a8mat=4B3HQJ+2LH2R6+CO4+25ES2Q",
     description: "国内サポート・日本語管理画面。テンプレートからの導入も簡単。",
     recommendedFor: "日本語サポート重視の初心者",
-    ctaLabel: "初心者向けVPSを見る",
+    ctaLabel: "公式サイトで詳細を見る",
   },
   {
     id: "conoha",
@@ -52,7 +52,7 @@ export const AFFILIATE_VPS: AffiliateVps[] = [
     trackingImageUrl: "https://www17.a8.net/0.gif?a8mat=4B3HQJ+LFMK2+50+4YQYYA",
     description: "国内データセンター・時間課金。管理画面が分かりやすい。",
     recommendedFor: "国内サービスで安心して始めたい人",
-    ctaLabel: "国内VPSを見る",
+    ctaLabel: "公式サイトで詳細を見る",
   },
 ];
 

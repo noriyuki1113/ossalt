@@ -175,20 +175,14 @@ export default function BaserowSelfhostVpsGuide() {
             Airtable代替として使えるOSSデータベースツール Baserow を、自分のVPSで動かすための基本構成を解説します。
           </p>
           <div className="mt-6">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="outline">
               <Link to="/selfhost-vps">
-                VPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
+                セルフホストに必要な環境を見る <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
-
-      {/* CTA #1: after intro */}
-      <AffiliateVpsCTA
-        heading="Baserowを動かすVPSを比較する"
-        description="Airtable代替のBaserowは業務データを扱うので、信頼できるVPSを選ぶことが大切です。OSSセルフホスト向けVPS比較もあわせてご覧ください。"
-      />
 
       <Section title="Baserowとは">
         <ul className="space-y-2 list-disc pl-5">
@@ -224,10 +218,11 @@ export default function BaserowSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #2: after specs */}
+      {/* CTA: after specs */}
       <AffiliateVpsCTA
-        heading="Baserowは2GB以上のVPSが目安"
-        description="PostgreSQLと同居させるBaserowは、最低2GB、利用ユーザーが増えるなら4GB以上のVPSが安心です。料金やサポートはVPS比較ページで比較できます。"
+        heading="セルフホストに必要な環境を確認する"
+        description="PostgreSQLと同居させるBaserowは、最低2GB、ユーザーが増えるなら4GB以上が安心です。OSSセルフホスト向けの運用環境ガイドで料金やサポートを確認できます。"
+        ctaLabel="OSSセルフホスト向けの環境を確認する"
       />
 
       <Section title="基本構成">
@@ -273,10 +268,11 @@ export default function BaserowSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #3: end-of-article */}
+      {/* CTA: end-of-article */}
       <AffiliateVpsCTA
-        heading="まだVPSを決めていませんか？"
-        description="Baserowをセルフホストするなら、料金・サポート・拡張性で選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+        heading="VPS運用ガイドで環境を確認する"
+        description="Baserowをセルフホストするなら、料金・サポート・拡張性で選び方が変わります。OSSセルフホスト向けの運用環境ガイドから探せます。"
+        ctaLabel="VPS運用ガイドを見る"
       />
 
       {/* Related tools */}

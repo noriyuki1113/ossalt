@@ -159,20 +159,14 @@ export default function N8nSelfhostVpsGuide() {
             Zapier代替として人気のOSS自動化ツール n8n を、自分のVPSで動かすための基本構成を解説します。
           </p>
           <div className="mt-6">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="outline">
               <Link to="/selfhost-vps">
-                VPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
+                セルフホストに必要な環境を見る <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
-
-      {/* CTA #1: after intro */}
-      <AffiliateVpsCTA
-        heading="n8nを動かすVPSを比較して選ぶ"
-        description="n8nを安定して常時稼働させるなら、用途に合ったVPS選びが重要です。OSSセルフホスト向けにまとめた比較ページもあわせてご覧ください。"
-      />
 
       <Section title="n8nとは">
         <ul className="space-y-2 list-disc pl-5">
@@ -208,11 +202,11 @@ export default function N8nSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #2: after specs */}
+      {/* CTA: after specs */}
       <AffiliateVpsCTA
-        heading="2GB以上のVPSが安心です"
-        description="n8nを実運用するなら2GB以上のメモリが目安。料金や日本語サポート、海外リージョンの違いはVPS比較ページで整理しています。"
-        ctaLabel="OSSセルフホスト向けVPSを比較する"
+        heading="セルフホストに必要な環境を確認する"
+        description="n8nを実運用するなら2GB以上のメモリが目安。OSSセルフホスト向けに整理した運用環境ガイドで、料金やサポートの違いを比較できます。"
+        ctaLabel="OSSセルフホスト向けの環境を確認する"
       />
 
       <Section title="基本構成">
@@ -255,10 +249,11 @@ export default function N8nSelfhostVpsGuide() {
         </ul>
       </Section>
 
-      {/* CTA #3: end-of-article */}
+      {/* CTA: end-of-article */}
       <AffiliateVpsCTA
-        heading="まだVPSを決めていませんか？"
-        description="n8nを動かすVPSは、料金・スペック・サポートで選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+        heading="VPS運用ガイドで環境を確認する"
+        description="n8nを動かすVPSは、料金・スペック・サポートで選び方が変わります。OSSセルフホスト向けに整理した運用環境ガイドから探せます。"
+        ctaLabel="VPS運用ガイドを見る"
       />
 
       {/* Related */}

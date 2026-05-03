@@ -133,10 +133,9 @@ export function SiteHeader() {
             allLabel="比較一覧を見る →"
           />
           {[
-            { to: "/ranking", label: "人気ツール" },
-            { to: "/workspace", label: "比較する" },
-            { to: "/selfhost-vps", label: "VPS比較" },
-            { to: "/advertise", label: "広告掲載" },
+            { to: "/", label: "OSSを探す" },
+            { to: "/ranking", label: "代替カテゴリ" },
+            { to: "/selfhost-vps", label: "セルフホスト" },
           ].map((item) => (
             <Link
               key={item.to}
@@ -150,6 +149,14 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="https://github.com/ossalt-jp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md"
+          >
+            GitHub
+          </a>
         </nav>
 
         {/* Desktop search */}
@@ -233,10 +240,9 @@ export function SiteHeader() {
             </div>
             <div className="border-t border-border pt-2 mt-2 space-y-1">
               {[
-                { to: "/ranking", label: "人気ツール" },
-                { to: "/workspace", label: "比較する" },
-                { to: "/selfhost-vps", label: "VPS比較" },
-                { to: "/advertise", label: "広告掲載" },
+                { to: "/", label: "OSSを探す" },
+                { to: "/ranking", label: "代替カテゴリ" },
+                { to: "/selfhost-vps", label: "セルフホスト" },
               ].map((item) => (
                 <Link
                   key={item.to}

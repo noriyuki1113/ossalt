@@ -9,8 +9,8 @@ import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure"
 import { AffiliateTrackingPixel } from "@/components/affiliate/AffiliateTrackingPixel";
 import { trackAffiliateClick } from "@/lib/affiliate";
 
-const TITLE = "OSSセルフホストにおすすめのVPS比較｜n8n・AppFlowy・Baserowを動かすなら？";
-const DESC = "OSSツールをセルフホストするならどのVPSを選ぶべきか。n8n、AppFlowy、Baserow、Plausibleなどを動かすためのVPS選びを初心者にもわかりやすく比較します。";
+const TITLE = "OSSセルフホストの環境選びガイド｜n8n・AppFlowy・Baserowを動かすなら？";
+const DESC = "OSSツールをセルフホストするための運用環境の選び方を、n8n・AppFlowy・Baserow・Plausibleなどの代表的なOSSを例に初心者向けに解説します。";
 const URL = "https://ossalt.jp/selfhost-vps";
 
 interface Vps {
@@ -91,7 +91,7 @@ export default function SelfHostVps() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp/" },
-          { "@type": "ListItem", position: 2, name: "OSSセルフホストVPS比較", item: URL },
+          { "@type": "ListItem", position: 2, name: "OSSセルフホスト環境ガイド", item: URL },
         ],
       },
       {
@@ -114,7 +114,7 @@ export default function SelfHostVps() {
         <nav className="text-xs text-muted-foreground flex items-center gap-1">
           <Link to="/" className="hover:text-foreground">ホーム</Link>
           <ChevronRight className="h-3 w-3" />
-          <span className="text-foreground">OSSセルフホストVPS比較</span>
+          <span className="text-foreground">OSSセルフホスト環境ガイド</span>
         </nav>
       </div>
 
@@ -125,15 +125,15 @@ export default function SelfHostVps() {
             <Server className="h-3.5 w-3.5" /> セルフホストガイド
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            OSSセルフホストにおすすめのVPS比較
+            OSSセルフホストの環境選びガイド
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed">
-            Notion代替、Zapier代替、Airtable代替などのOSSツールを自分のサーバーで動かすためのVPS選びを解説します。
+            Notion代替、Zapier代替、Airtable代替などのOSSツールを自分のサーバーで動かすときに、どんな運用環境を選べばよいかを整理します。
           </p>
           <div className="mt-6">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="outline">
               <a href="#vps-list">
-                おすすめVPSを見る <ArrowRight className="ml-1 h-4 w-4" />
+                運用環境を比較する <ArrowRight className="ml-1 h-4 w-4" />
               </a>
             </Button>
           </div>

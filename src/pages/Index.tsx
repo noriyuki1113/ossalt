@@ -23,6 +23,8 @@ const FeaturedToolsRailLazy = lazy(() => import("@/components/home/FeaturedTools
 const NewToolsSection = lazy(() => import("@/components/home/NewToolsSection").then(m => ({ default: m.NewToolsSection })));
 const FAQSection = lazy(() => import("@/components/home/FAQSection").then(m => ({ default: m.FAQSection })));
 const BottomCTA = lazy(() => import("@/components/home/BottomCTA").then(m => ({ default: m.BottomCTA })));
+const SelfHostHomeSection = lazy(() => import("@/components/home/SelfHostHomeSection").then(m => ({ default: m.SelfHostHomeSection })));
+const NewGuidesSection = lazy(() => import("@/components/home/NewGuidesSection").then(m => ({ default: m.NewGuidesSection })));
 
 /* ── Category slug mapping for /category/:slug URLs ── */
 
@@ -365,6 +367,12 @@ export default function IndexPage() {
           {/* 4. 既存セクション群 */}
           <Suspense fallback={<SectionFallback />}>
             <NewToolsSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <SelfHostHomeSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <NewGuidesSection />
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <WhyOSSSection />

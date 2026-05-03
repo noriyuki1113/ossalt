@@ -179,20 +179,14 @@ export default function PlausibleSelfhostVpsGuide() {
             Google Analytics代替として使えるプライバシー重視のOSSアクセス解析ツール Plausible を、自分のVPSで動かすための基本構成を解説します。
           </p>
           <div className="mt-6">
-            <Button asChild size="lg">
+            <Button asChild size="lg" variant="outline">
               <Link to="/selfhost-vps">
-                VPS比較を見る <ArrowRight className="ml-1 h-4 w-4" />
+                セルフホストに必要な環境を見る <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
-
-      {/* CTA #1: after intro */}
-      <AffiliateVpsCTA
-        heading="Plausibleを動かすVPSを比較する"
-        description="ClickHouseを含むPlausibleは構成が少し重めです。安定して動かせるVPS選びは、OSSセルフホスト向けVPS比較で確認できます。"
-      />
 
       <Section title="Plausibleとは">
         <ul className="space-y-2 list-disc pl-5">
@@ -228,10 +222,11 @@ export default function PlausibleSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #2: after specs */}
+      {/* CTA: after specs */}
       <AffiliateVpsCTA
-        heading="PlausibleはClickHouseを含む構成"
-        description="PlausibleはPostgreSQL + ClickHouseを使うため、メモリは最低2GB、できれば4GB以上が安心です。各VPSの料金とサポートはVPS比較ページで整理しています。"
+        heading="セルフホストに必要な環境を確認する"
+        description="PlausibleはPostgreSQL + ClickHouseを使うため、メモリは最低2GB、できれば4GB以上が安心です。OSSセルフホスト向けの運用環境ガイドで料金やサポートを確認できます。"
+        ctaLabel="OSSセルフホスト向けの環境を確認する"
       />
 
       <Section title="基本構成">
@@ -278,10 +273,11 @@ export default function PlausibleSelfhostVpsGuide() {
         </div>
       </section>
 
-      {/* CTA #3: end-of-article */}
+      {/* CTA: end-of-article */}
       <AffiliateVpsCTA
-        heading="まだVPSを決めていませんか？"
-        description="Plausibleをセルフホストするなら、メモリ・ストレージ・サポートで選び方が変わります。OSSセルフホスト向けに比較した一覧から探せます。"
+        heading="VPS運用ガイドで環境を確認する"
+        description="Plausibleをセルフホストするなら、メモリ・ストレージ・サポートで選び方が変わります。OSSセルフホスト向けの運用環境ガイドから探せます。"
+        ctaLabel="VPS運用ガイドを見る"
       />
 
       {/* ossalt note */}
