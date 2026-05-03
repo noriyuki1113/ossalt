@@ -636,6 +636,9 @@ export default function ToolDetailPage() {
               <div>
                 <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
+                <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
+                  おすすめのVPSを見る <ArrowRight className="h-3 w-3" />
+                </Link>
               </div>
             </div>
           </div>
