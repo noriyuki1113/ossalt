@@ -41,9 +41,9 @@ export function PopularCategoriesGrid() {
 
   return (
     <section id="categories" className="container py-14 md:py-20">
-      <div className="mb-6">
+      <div className="mb-6 text-center">
         <h2 className="section-title">カテゴリから探す</h2>
-        <p className="section-subtitle !text-left !mx-0">
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
           用途別にOSSを絞り込み。
         </p>
       </div>
