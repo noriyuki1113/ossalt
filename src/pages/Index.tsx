@@ -9,6 +9,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { PopularAlternativesSection } from "@/components/home/PopularAlternativesSection";
 import { PopularComparisonsSection } from "@/components/home/PopularComparisonsSection";
 import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
+import { QuickAlternativesPills } from "@/components/home/QuickAlternativesPills";
 import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
 import { SponsorPitchSection } from "@/components/home/SponsorPitchSection";
 import { StatsBar } from "@/components/StatsBar";
