@@ -60,10 +60,10 @@ export default function SponsorPage() {
             ご相談・お見積りはメールでお受けしています。3営業日以内に返信いたします。
           </p>
           <Button asChild size="lg" className="gap-2 rounded-xl">
-            <Link to="/advertise">
+            <a href="mailto:your-email@example.com">
               <Mail className="h-4 w-4" />
               メールで相談する
-            </Link>
+            </a>
           </Button>
         </section>
       </article>
