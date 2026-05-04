@@ -1114,11 +1114,22 @@ export default function ToolDetailPage() {
           </Button>
         </div>
 
-        {/* ── Partner / Sponsor note ── */}
-        <div className="pb-12 text-center text-xs text-muted-foreground">
-          このツールの提供元・パートナー企業の方へ：掲載内容の修正や、スポンサー掲載のご相談は
-          <Link to="/sponsor" className="text-primary hover:underline mx-1">こちら</Link>
-          からお願いします。
+        {/* ── Partner / Sponsor pitch ── */}
+        <div className="pb-12">
+          <div className="card-unified p-6 md:p-8 max-w-3xl mx-auto text-center bg-secondary/30">
+            <h2 className="text-lg md:text-xl font-bold mb-2.5">
+              このツールの提供元・パートナー企業の方へ
+            </h2>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              掲載内容の修正リクエスト、スポンサー掲載のご相談を受け付けています。
+            </p>
+            <Button asChild size="lg" variant="outline" className="gap-2 rounded-xl">
+              <Link to="/sponsor">
+                <Mail className="h-4 w-4" />
+                掲載について相談する
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </SiteLayout>
