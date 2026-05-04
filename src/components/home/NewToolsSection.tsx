@@ -38,6 +38,8 @@ export function NewToolsSection() {
   const visible = expanded ? tools : tools?.slice(0, initialCount);
   const hasMore = tools && tools.length > initialCount && !expanded;
 
+  if (!isLoading && (!tools || tools.length < 6)) return null;
+
   return (
     <section className="container py-14 md:py-20">
       <SectionHeader title="新着OSS" subtitle="最近データベースに追加されたツール。" />
