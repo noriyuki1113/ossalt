@@ -31,8 +31,8 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         <h1 className="text-[1.75rem] md:text-5xl font-black leading-[1.15] text-foreground">
           有料SaaSの代わりに使えるOSSを探す
         </h1>
-        <p className="text-xs md:text-base text-muted-foreground mt-2 md:mt-3">
-          Notion、Zapier、Airtable、Google Analyticsなどの代替になるオープンソースツールを日本語で探せます。
+        <p className="text-sm md:text-base text-muted-foreground mt-3 md:mt-3 leading-relaxed max-w-md md:max-w-xl mx-auto">
+          Notion・Zapier・Figmaなどの代替OSSを、日本語で検索・比較できます。
         </p>
 
         {/* Search bar — the hero */}
@@ -67,7 +67,7 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
           </div>
 
           {/* Value badges */}
-          <div className="flex items-center justify-center gap-4 mt-4 text-[10px] text-muted-foreground/60">
+          <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-muted-foreground">
             <span>✓ 完全無料</span>
             <span>✓ 日本語対応</span>
             <span>✓ OSS限定</span>
