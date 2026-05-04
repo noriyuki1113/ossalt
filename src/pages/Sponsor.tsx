@@ -23,7 +23,7 @@ export default function SponsorPage() {
 
         <p className="text-foreground/90 leading-relaxed mb-10 w-full min-w-0 whitespace-normal break-words">
           ossalt.jp は、有料SaaSの代わりに使えるOSSを日本語で探せるサイトです。
-          Notion、Zapier、Airtable、Google Analytics などの代替を、具体的に比較検討中の読者が中心です。
+          Notion、Zapier、Airtable、Figmaなどの代替を、具体的に比較検討中の読者が中心です。
         </p>
 
         <section className="mb-10">
@@ -60,10 +60,10 @@ export default function SponsorPage() {
             ご相談・お見積りはメールでお受けしています。3営業日以内に返信いたします。
           </p>
           <Button asChild size="lg" className="gap-2 rounded-xl">
-            <Link to="/advertise">
+            <a href="mailto:your-email@example.com">
               <Mail className="h-4 w-4" />
               メールで相談する
-            </Link>
+            </a>
           </Button>
         </section>
       </article>
