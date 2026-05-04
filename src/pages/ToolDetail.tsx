@@ -185,6 +185,7 @@ export default function ToolDetailPage() {
           .from("tools").select("*")
           .eq("primary_competitor", tool!.primary_competitor)
           .neq("id", tool!.id)
+          .or("url.not.is.null,github_url.not.is.null")
           .order("stars_num", { ascending: false, nullsFirst: false })
           .limit(6);
         if (data) results.push(...(data as Tool[]));
@@ -196,6 +197,7 @@ export default function ToolDetailPage() {
         const { data } = await supabase
           .from("tools").select("*")
           .eq("parent_category_ja", tool!.parent_category_ja!)
+          .or("url.not.is.null,github_url.not.is.null")
           .order("stars_num", { ascending: false, nullsFirst: false })
           .limit(10);
         if (data) {
