@@ -9,6 +9,7 @@ const GUIDES = [
 ];
 
 export function NewGuidesSection() {
+  if (GUIDES.length < 3) return null;
   return (
     <section className="container py-10 md:py-14">
       <div className="flex items-center gap-2 mb-5">
