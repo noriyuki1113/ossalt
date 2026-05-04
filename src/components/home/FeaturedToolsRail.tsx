@@ -16,6 +16,7 @@ export function FeaturedToolsRail() {
       const { data, error } = await supabase
         .from("tools")
         .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, stars_num")
+        .or("url.not.is.null,github_url.not.is.null")
         .order("stars_num", { ascending: false, nullsFirst: false })
         .limit(16);
       if (error) throw error;
