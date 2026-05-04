@@ -56,7 +56,8 @@ export function PopularCategoriesGrid() {
             <Link
               key={slug}
               to={`/category/${slug}`}
-              className={`group flex items-center gap-3 rounded-xl border ${border} ${bg} px-3.5 py-3 hover:shadow-sm hover:scale-[1.02] transition-all duration-150`}
+              onClick={() => track("category_click", { category: slug })}
+              className={`group flex items-center gap-3 rounded-xl border ${border} ${bg} px-3.5 py-3 hover:shadow-sm hover:scale-[1.02] active:scale-[0.99] transition-all duration-150 cursor-pointer touch-manipulation min-h-[56px]`}
             >
               <div className={`shrink-0 ${color}`}>
                 <Icon className="h-4 w-4" />
