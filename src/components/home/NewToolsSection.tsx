@@ -39,8 +39,8 @@ export function NewToolsSection() {
   const hasMore = tools && tools.length > initialCount && !expanded;
 
   return (
-    <section className="container py-12 md:py-20">
-      <SectionHeader title="最近追加されたツール" subtitle="新しく掲載されたOSSツール" />
+    <section className="container py-14 md:py-20">
+      <SectionHeader title="新着OSS" subtitle="最近データベースに追加されたツール。" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-5xl mx-auto">
         {isLoading

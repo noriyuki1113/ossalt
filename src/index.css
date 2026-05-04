@@ -22,7 +22,7 @@
     --secondary-foreground: 220 20% 14%;
 
     --muted: 210 18% 95%;
-    --muted-foreground: 215 14% 46%;
+    --muted-foreground: 217 15% 38%;
 
     --accent: 210 100% 52%;
     --accent-foreground: 0 0% 100%;
@@ -62,11 +62,17 @@
     font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  p {
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
     @apply font-bold tracking-tight;
+    line-height: 1.25;
   }
 }
 
@@ -85,7 +91,7 @@
   }
 
   .section-subtitle {
-    @apply mt-2 text-sm text-muted-foreground;
+    @apply mt-2 text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed line-clamp-2;
   }
 
   /* ── Unified card ── */

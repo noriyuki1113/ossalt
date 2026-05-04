@@ -16,9 +16,9 @@ const FAQ_ITEMS = [
 
 export function FAQSection() {
   return (
-    <section className="container py-12 md:py-20">
+    <section className="container py-14 md:py-24">
       <div className="max-w-2xl mx-auto">
-        <SectionHeader title="よくある質問" />
+        <SectionHeader title="よくある質問" subtitle="導入前に多いご質問をまとめました。" />
 
         <Accordion type="single" collapsible className="space-y-2">
           {FAQ_ITEMS.map((item, i) => (
