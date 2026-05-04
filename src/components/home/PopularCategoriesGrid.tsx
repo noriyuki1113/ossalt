@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Brain, Code2, Server, BarChart2, FileText, Zap, Shield, Users, Box, ArrowRight } from "lucide-react";
 import { useToolCategories } from "@/hooks/use-tools";
+import { track } from "@/lib/track";
 
 const CATEGORIES = [
   { slug: "ai-ml",            label: "AI・ML",          icon: Brain,    color: "text-violet-500",  bg: "bg-violet-50 dark:bg-violet-950/30",  border: "border-violet-100 dark:border-violet-900/40" },
