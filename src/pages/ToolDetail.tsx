@@ -5,7 +5,7 @@ import {
   ExternalLink, Github, Star, ArrowRight, Copy,
   Users, Zap, Shield, GitFork, Clock, Code2, Scale,
   CheckCircle2, XCircle, Twitter, ChevronRight,
-  Server, HardDrive, Settings, MessageSquare, Box, Building2,
+  Server, HardDrive, Settings, MessageSquare, Box, Building2, Mail,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
