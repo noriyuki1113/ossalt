@@ -249,6 +249,8 @@ export default function IndexPage() {
         onCategorySelect={handleCategoryChange}
       />
 
+      <QuickAlternativesPills />
+
       <section className="sticky top-14 z-40 bg-background/80 backdrop-blur-xl border-b border-border py-2.5">
         <div className="container">
           <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
