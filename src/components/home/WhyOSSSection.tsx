@@ -1,10 +1,10 @@
 import { DollarSign, Database, Unlock, Globe } from "lucide-react";
 
 const REASONS = [
+  { icon: Globe, title: "日本語で意思決定できる", description: "海外OSSのREADMEを翻訳して読む手間を省きます。導入難易度・日本語UI対応・商用サポートの有無まで、日本のチームが知りたい情報を整理しています。" },
   { icon: DollarSign, title: "コスト削減", description: "ライセンス費用ゼロ。チーム規模が増えても追加課金なし。" },
   { icon: Database, title: "データ主権", description: "自社サーバーで運用し、顧客データを外部に渡さない。" },
   { icon: Unlock, title: "ベンダーロックイン回避", description: "いつでも移行・カスタマイズ可能。特定企業に依存しない。" },
-  { icon: Globe, title: "日本語で探せる", description: "海外OSSの情報を日本語で整理。導入判断がスムーズに。" },
 ];
 
 export function WhyOSSSection() {
