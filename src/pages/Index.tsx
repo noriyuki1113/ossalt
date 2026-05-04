@@ -116,6 +116,20 @@ export default function IndexPage() {
     }
   }, [searchParams, categorySlug, navigate]);
 
+  // Sync selectedCategory when URL slug changes (e.g. user clicks a category card)
+  useEffect(() => {
+    const next = slugCategory || "すべて";
+    setSelectedCategory((prev) => {
+      if (prev === next) return prev;
+      setPage(0);
+      setAllTools([]);
+      return next;
+    });
+    if (slugCategory) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [slugCategory]);
+
   const [search, setSearch] = useState(urlSearch);
   const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
