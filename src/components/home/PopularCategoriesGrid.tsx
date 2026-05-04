@@ -40,16 +40,12 @@ export function PopularCategoriesGrid() {
   }
 
   return (
-    <section id="categories" className="container py-10 md:py-14">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-base md:text-lg font-bold text-foreground tracking-tight">
-            カテゴリから探す
-          </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            用途別にOSSを絞り込む
-          </p>
-        </div>
+    <section id="categories" className="container py-14 md:py-20">
+      <div className="mb-6">
+        <h2 className="section-title">カテゴリから探す</h2>
+        <p className="section-subtitle !text-left !mx-0">
+          用途別にOSSを絞り込み。
+        </p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
@@ -65,11 +61,11 @@ export function PopularCategoriesGrid() {
                 <Icon className="h-4 w-4" />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-foreground leading-tight truncate group-hover:text-primary transition-colors">
+                <p className="text-sm font-semibold text-foreground leading-tight truncate group-hover:text-primary transition-colors">
                   {label}
                 </p>
                 {count != null && (
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{count}件</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{count}件</p>
                 )}
               </div>
             </Link>

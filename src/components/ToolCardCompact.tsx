@@ -55,7 +55,7 @@ export function ToolCardCompact({
       )}
 
       {/* Short description */}
-      <p className="text-[11px] text-muted-foreground line-clamp-1 leading-relaxed mb-2 flex-1">
+      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-2 flex-1">
         {tool.description_ja || tool.description_en || "説明なし"}
       </p>
 
