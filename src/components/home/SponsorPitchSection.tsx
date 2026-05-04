@@ -13,9 +13,9 @@ export function SponsorPitchSection() {
           ossalt.jp では、スポンサー掲載・タイアップ記事のご相談を受け付けています。
         </p>
         <Button asChild size="lg" className="gap-2 rounded-xl">
-          <Link to="/advertise">
+          <Link to="/sponsor">
             <Mail className="h-4 w-4" />
-            メールで問い合わせる
+            掲載について見る
           </Link>
         </Button>
       </div>
