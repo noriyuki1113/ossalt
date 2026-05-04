@@ -32,7 +32,9 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
           有料SaaSの代わりに使えるOSSを探す
         </h1>
         <p className="text-sm md:text-base text-muted-foreground mt-3 md:mt-3 leading-relaxed max-w-md md:max-w-xl mx-auto">
-          Notion・Zapier・Figmaなどの代替OSSを、日本語で検索・比較できます。
+          Notion・Zapier・Figmaなどの代替OSSを、
+          <br className="hidden sm:inline" />
+          日本語で検索・比較できます。
         </p>
 
         {/* Search bar — the hero */}
