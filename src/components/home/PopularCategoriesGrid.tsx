@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Brain, Code2, Server, BarChart2, FileText, Zap, Shield, Users, Box, ArrowRight } from "lucide-react";
 import { useToolCategories } from "@/hooks/use-tools";
+import { track } from "@/lib/track";
 
 const CATEGORIES = [
   { slug: "ai-ml",            label: "AI・ML",          icon: Brain,    color: "text-violet-500",  bg: "bg-violet-50 dark:bg-violet-950/30",  border: "border-violet-100 dark:border-violet-900/40" },
@@ -55,7 +56,8 @@ export function PopularCategoriesGrid() {
             <Link
               key={slug}
               to={`/category/${slug}`}
-              className={`group flex items-center gap-3 rounded-xl border ${border} ${bg} px-3.5 py-3 hover:shadow-sm hover:scale-[1.02] transition-all duration-150`}
+              onClick={() => track("category_click", { category: slug })}
+              className={`group flex items-center gap-3 rounded-xl border ${border} ${bg} px-3.5 py-3 hover:shadow-sm hover:scale-[1.02] active:scale-[0.99] transition-all duration-150 cursor-pointer touch-manipulation min-h-[56px]`}
             >
               <div className={`shrink-0 ${color}`}>
                 <Icon className="h-4 w-4" />
