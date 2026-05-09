@@ -6,19 +6,23 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-// altstackHQ/altstack-data の tools.json
 const ALTSTACK_DATA_URL =
   "https://raw.githubusercontent.com/altstackHQ/altstack-data/main/data/tools.json";
 
+const DOCKER_BASE_URL =
+  "https://github.com/altstackHQ/altstack-data/tree/main/docker-deploy";
+
+interface AltstackDeployment {
+  type?: string;
+  local_path?: string;
+}
+
 interface AltstackTool {
+  slug?: string;
   name?: string;
-  github?: string;
-  github_url?: string;
-  repository?: string;
-  docker_compose?: string;
-  docker_compose_url?: string;
-  has_docker?: boolean;
-  docker?: boolean;
+  is_open_source?: boolean;
+  github_repo?: string;
+  deployment?: AltstackDeployment;
   [key: string]: unknown;
 }
 
@@ -35,17 +39,13 @@ function normalizeGithubUrl(raw: string | undefined | null): string | null {
   }
 }
 
-function hasDockerCompose(tool: AltstackTool): boolean {
-  return !!(
-    tool.docker_compose ||
-    tool.docker_compose_url ||
-    tool.has_docker ||
-    tool.docker
-  );
-}
-
-function getDockerComposeUrl(tool: AltstackTool): string | null {
-  return tool.docker_compose_url ?? tool.docker_compose ?? null;
+function buildDockerComposeUrl(tool: AltstackTool): string | null {
+  const localPath = tool.deployment?.local_path;
+  if (!localPath) return null;
+  // "./docker-deploy/n8n" → "n8n"
+  const toolDir = localPath.replace(/^\.\/docker-deploy\//, "").replace(/\/$/, "");
+  if (!toolDir) return null;
+  return `${DOCKER_BASE_URL}/${toolDir}`;
 }
 
 Deno.serve(async (req) => {
@@ -58,47 +58,34 @@ Deno.serve(async (req) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // altstack-data のJSONを取得
     const res = await fetch(ALTSTACK_DATA_URL, {
       headers: { "User-Agent": "ossalt-bot" },
     });
-    if (!res.ok) {
-      throw new Error(`Failed to fetch altstack-data: ${res.status}`);
-    }
+    if (!res.ok) throw new Error(`Failed to fetch altstack-data: ${res.status}`);
 
     const raw = await res.json();
+    const altstackTools: AltstackTool[] = Array.isArray(raw) ? raw : (raw.tools ?? []);
 
-    // レスポンスが配列か、{ tools: [] } 形式かを吸収
-    const altstackTools: AltstackTool[] = Array.isArray(raw)
-      ? raw
-      : (raw.tools ?? raw.data ?? []);
+    console.log(`Fetched ${altstackTools.length} items from altstack-data`);
 
-    console.log(`Fetched ${altstackTools.length} tools from altstack-data`);
-
-    // github_url → docker情報 のマップを構築
-    const dockerMap = new Map<
-      string,
-      { docker_available: boolean; docker_compose_url: string | null }
-    >();
+    // OSS かつ Docker Compose ありのツールだけ抽出
+    const dockerMap = new Map<string, { docker_compose_url: string | null }>();
 
     for (const t of altstackTools) {
-      const ghUrl = normalizeGithubUrl(
-        (t.github_url ?? t.github ?? t.repository) as string | undefined
-      );
-      if (!ghUrl) continue;
+      if (!t.is_open_source) continue;
+      if (!t.github_repo) continue;
+      if (t.deployment?.type !== "docker-compose") continue;
 
-      const docker_available = hasDockerCompose(t);
-      if (!docker_available) continue; // Docker情報なしはスキップ
+      const normalized = normalizeGithubUrl(t.github_repo);
+      if (!normalized) continue;
 
-      dockerMap.set(ghUrl, {
-        docker_available: true,
-        docker_compose_url: getDockerComposeUrl(t),
+      dockerMap.set(normalized, {
+        docker_compose_url: buildDockerComposeUrl(t),
       });
     }
 
-    console.log(`Docker info available for ${dockerMap.size} tools`);
+    console.log(`Docker Compose available for ${dockerMap.size} OSS tools`);
 
-    // ossalt の tools テーブルと突合して更新
     const { data: ossTools, error } = await supabase
       .from("tools")
       .select("id, github_url");
@@ -122,7 +109,7 @@ Deno.serve(async (req) => {
       const { error: updateError } = await supabase
         .from("tools")
         .update({
-          docker_available: dockerInfo.docker_available,
+          docker_available: true,
           docker_compose_url: dockerInfo.docker_compose_url,
         })
         .eq("id", tool.id);
