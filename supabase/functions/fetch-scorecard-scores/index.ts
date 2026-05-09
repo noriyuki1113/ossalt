@@ -6,6 +6,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+const SCORECARD_API = "https://api.securityscorecards.dev/projects/github.com";
+
 function extractOwnerRepo(githubUrl: string): string | null {
   try {
     const url = new URL(githubUrl);
@@ -18,33 +20,31 @@ function extractOwnerRepo(githubUrl: string): string | null {
   }
 }
 
-async function fetchGitHubRepo(
-  ownerRepo: string,
-  token?: string
-): Promise<{
-  stargazers_count: number;
-  forks_count: number;
-  pushed_at: string;
-  language: string | null;
-  license: { name: string; spdx_id: string } | null;
-  open_issues_count: number;
-  subscribers_count: number;
-} | null> {
-  const headers: Record<string, string> = {
-    Accept: "application/vnd.github.v3+json",
-    "User-Agent": "ossalt-bot",
-  };
-  if (token) headers["Authorization"] = `Bearer ${token}`;
+interface ScorecardCheck {
+  name: string;
+  score: number;
+}
 
-  const res = await fetch(`https://api.github.com/repos/${ownerRepo}`, {
-    headers,
-  });
-  if (!res.ok) {
-    console.error(`GitHub API error for ${ownerRepo}: ${res.status}`);
-    await res.text();
+interface ScorecardResponse {
+  score: number;
+  checks: ScorecardCheck[];
+}
+
+async function fetchScorecardScore(ownerRepo: string): Promise<ScorecardResponse | null> {
+  try {
+    const res = await fetch(`${SCORECARD_API}/${ownerRepo}`, {
+      headers: { "User-Agent": "ossalt-bot" },
+    });
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      console.error(`Scorecard API error for ${ownerRepo}: ${res.status}`);
+      return null;
+    }
+    return res.json();
+  } catch (e) {
+    console.error(`Scorecard fetch failed for ${ownerRepo}: ${e}`);
     return null;
   }
-  return res.json();
 }
 
 function sleep(ms: number) {
@@ -59,21 +59,19 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const githubToken = Deno.env.get("GITHUB_TOKEN") || undefined;
     const supabase = createClient(supabaseUrl, serviceKey);
 
-    // Support offset/limit via query params for batch processing
     const url = new URL(req.url);
     const offset = parseInt(url.searchParams.get("offset") || "0", 10);
     const limit = parseInt(url.searchParams.get("limit") || "50", 10);
 
-    // Fetch tools with github_url, prioritizing those not yet updated
+    // stale-first: 未取得 → 古い順
     const { data: tools, error } = await supabase
       .from("tools")
-      .select("id, github_url, github_stars_updated_at")
+      .select("id, github_url, scorecard_updated_at")
       .not("github_url", "is", null)
       .neq("github_url", "")
-      .order("github_stars_updated_at", { ascending: true, nullsFirst: true })
+      .order("scorecard_updated_at", { ascending: true, nullsFirst: true })
       .range(offset, offset + limit - 1);
 
     if (error) throw error;
@@ -84,9 +82,10 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`Processing ${tools.length} tools (offset=${offset}, limit=${limit})`);
+    console.log(`Processing ${tools.length} tools for Scorecard (offset=${offset})`);
 
     let updated = 0;
+    let notFound = 0;
     let errors = 0;
 
     for (const tool of tools) {
@@ -96,26 +95,24 @@ Deno.serve(async (req) => {
         continue;
       }
 
-      const data = await fetchGitHubRepo(ownerRepo, githubToken);
+      const data = await fetchScorecardScore(ownerRepo);
+
       if (!data) {
-        errors++;
-        await sleep(50);
+        // 404は notFound としてカウントし、updated_at だけ更新して再試行を抑制
+        notFound++;
+        await supabase
+          .from("tools")
+          .update({ scorecard_updated_at: new Date().toISOString() })
+          .eq("id", tool.id);
+        await sleep(200);
         continue;
       }
-
-      const licenseValue = data.license?.spdx_id || data.license?.name || null;
 
       const { error: updateError } = await supabase
         .from("tools")
         .update({
-          stars_num: data.stargazers_count,
-          forks_num: data.forks_count,
-          last_commit: data.pushed_at,
-          language: data.language,
-          license: licenseValue,
-          open_issues_count: data.open_issues_count,
-          subscriber_count: data.subscribers_count,
-          github_stars_updated_at: new Date().toISOString(),
+          scorecard_score: Math.round(data.score * 10) / 10,
+          scorecard_updated_at: new Date().toISOString(),
         })
         .eq("id", tool.id);
 
@@ -124,12 +121,22 @@ Deno.serve(async (req) => {
         errors++;
       } else {
         updated++;
+        console.log(`${ownerRepo}: score=${data.score}`);
       }
 
-      await sleep(50);
+      // Scorecard APIはrate limitがゆるいが念のため間隔を空ける
+      await sleep(300);
     }
 
-    const result = { message: "GitHub stats update complete", updated, errors, total: tools.length, offset, limit };
+    const result = {
+      message: "Scorecard fetch complete",
+      updated,
+      notFound,
+      errors,
+      total: tools.length,
+      offset,
+      limit,
+    };
     console.log(JSON.stringify(result));
 
     return new Response(JSON.stringify(result), {

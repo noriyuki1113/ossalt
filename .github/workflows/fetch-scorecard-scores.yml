@@ -1,0 +1,39 @@
+name: Fetch Scorecard Scores (Weekly)
+
+on:
+  schedule:
+    # 月曜 04:30 JST = 日曜 19:30 UTC（openalternative sync の 30 分後）
+    - cron: '30 19 * * 0'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Number of tools to process per batch'
+        default: '50'
+        required: false
+      offset:
+        description: 'Offset (for manual partial runs)'
+        default: '0'
+        required: false
+
+jobs:
+  fetch-scores:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call fetch-scorecard-scores Edge Function
+        run: |
+          LIMIT="${{ github.event.inputs.limit || '50' }}"
+          OFFSET="${{ github.event.inputs.offset || '0' }}"
+          HTTP_STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST \
+            "${{ secrets.SUPABASE_URL }}/functions/v1/fetch-scorecard-scores?offset=${OFFSET}&limit=${LIMIT}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{}")
+
+          echo "HTTP Status: $HTTP_STATUS"
+          cat /tmp/response.json
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Edge Function returned error status: $HTTP_STATUS"
+            exit 1
+          fi

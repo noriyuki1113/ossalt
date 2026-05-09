@@ -1,0 +1,28 @@
+name: Sync Altstack Data (Monthly)
+
+on:
+  schedule:
+    # 毎月1日 05:00 JST = 毎月1日 20:00 UTC
+    - cron: '0 20 1 * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call sync-altstack-data Edge Function
+        run: |
+          HTTP_STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST \
+            "${{ secrets.SUPABASE_URL }}/functions/v1/sync-altstack-data" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{}")
+
+          echo "HTTP Status: $HTTP_STATUS"
+          cat /tmp/response.json
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Edge Function returned error status: $HTTP_STATUS"
+            exit 1
+          fi

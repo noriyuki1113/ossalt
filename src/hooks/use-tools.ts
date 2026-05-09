@@ -25,6 +25,12 @@ export interface Tool {
   last_commit: string | null;
   language: string | null;
   github_stars_updated_at: string | null;
+  scorecard_score: number | null;
+  scorecard_updated_at: string | null;
+  open_issues_count: number | null;
+  subscriber_count: number | null;
+  docker_available: boolean | null;
+  docker_compose_url: string | null;
 }
 
 export type SortOption = "stars" | "recent" | "name" | "newest";
