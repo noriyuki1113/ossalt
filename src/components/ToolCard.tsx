@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ExternalLink, Github, ArrowRight, GitFork, Clock } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, GitFork, Clock, Container, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
@@ -10,7 +10,20 @@ import { isKnownCompetitor } from "@/lib/competitors";
 import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
+function getScorecardBadgeClass(score: number): string {
+  if (score >= 7) return "bg-emerald-50 text-emerald-700 border-emerald-200";
+  if (score >= 5) return "bg-amber-50 text-amber-700 border-amber-200";
+  return "bg-red-50 text-red-700 border-red-200";
+}
+
+function isInactive(tool: Tool): boolean {
+  if (!tool.last_commit) return false;
+  const daysSince = (Date.now() - new Date(tool.last_commit).getTime()) / 86400000;
+  return daysSince > 365;
+}
+
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
+  if (isInactive(tool)) return { text: "⚠️ 非活発", cls: "bg-zinc-100 text-zinc-500 border border-zinc-200" };
   if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-50 text-orange-600 border border-orange-200" };
   if (tool.created_at) {
     const days = Math.floor((Date.now() - new Date(tool.created_at).getTime()) / 86400000);
@@ -83,6 +96,18 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
           <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5">
             <Clock className="h-2.5 w-2.5" />
             {formatRelativeDate(tool.last_commit)}
+          </Badge>
+        )}
+        {tool.scorecard_score != null && (
+          <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 gap-0.5 ${getScorecardBadgeClass(tool.scorecard_score)}`}>
+            <ShieldCheck className="h-2.5 w-2.5" />
+            {tool.scorecard_score.toFixed(1)}
+          </Badge>
+        )}
+        {tool.docker_available && (
+          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5 text-sky-600 border-sky-200 bg-sky-50">
+            <Container className="h-2.5 w-2.5" />
+            Docker
           </Badge>
         )}
       </div>

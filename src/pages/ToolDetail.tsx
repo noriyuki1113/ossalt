@@ -6,6 +6,7 @@ import {
   Users, Zap, Shield, GitFork, Clock, Code2, Scale,
   CheckCircle2, XCircle, Twitter, ChevronRight,
   Server, HardDrive, Settings, MessageSquare, Box, Building2, Mail,
+  ShieldCheck, Container,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
@@ -277,6 +278,19 @@ export default function ToolDetailPage() {
           bestRating: "5",
           worstRating: "1",
         }} : {}),
+        ...(tool.scorecard_score != null ? {
+          review: {
+            "@type": "Review",
+            reviewBody: `OpenSSF Scorecardによるセキュリティ評価スコア: ${tool.scorecard_score.toFixed(1)}/10`,
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: tool.scorecard_score.toFixed(1),
+              bestRating: "10",
+              worstRating: "0",
+            },
+            author: { "@type": "Organization", name: "OpenSSF Scorecard" },
+          },
+        } : {}),
       },
       {
         "@type": "BreadcrumbList",
@@ -621,9 +635,102 @@ export default function ToolDetailPage() {
                     </p>
                   </div>
                 )}
+                {tool.open_issues_count != null && tool.open_issues_count > 0 && (
+                  <div className="text-center p-3 rounded-xl bg-secondary/60">
+                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(tool.open_issues_count)}</p>
+                    <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
+                      Issues
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </section>
+        )}
+
+        {/* ── OSS健全性スコア（OpenSSF Scorecard） ── */}
+        {tool.scorecard_score != null && (
+          <>
+            <div className="border-t border-border/60" />
+            <section className="py-6">
+              <div className="card-unified p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                    OSS健全性スコア
+                    <span className="text-[10px] text-muted-foreground font-normal">powered by OpenSSF Scorecard</span>
+                  </h2>
+                  {tool.github_url && (
+                    <a
+                      href={`https://scorecard.dev/viewer/?uri=github.com/${tool.github_url.replace(/^https?:\/\/github\.com\//, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
+                    >
+                      詳細を見る <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
+                </div>
+                <div className="flex items-center gap-5">
+                  {/* スコアリング */}
+                  <div className="flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 shrink-0
+                    bg-gradient-to-br
+                    ${tool.scorecard_score >= 7
+                      ? 'border-emerald-200 from-emerald-50 to-emerald-100/50'
+                      : tool.scorecard_score >= 5
+                      ? 'border-amber-200 from-amber-50 to-amber-100/50'
+                      : 'border-red-200 from-red-50 to-red-100/50'
+                    }"
+                    style={{
+                      background: tool.scorecard_score >= 7
+                        ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
+                        : tool.scorecard_score >= 5
+                        ? 'linear-gradient(135deg, #fffbeb, #fef3c7)'
+                        : 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+                      borderColor: tool.scorecard_score >= 7 ? '#bbf7d0'
+                        : tool.scorecard_score >= 5 ? '#fde68a'
+                        : '#fecaca',
+                    }}
+                  >
+                    <span className={`text-2xl font-black tabular-nums ${
+                      tool.scorecard_score >= 7
+                        ? "text-emerald-700"
+                        : tool.scorecard_score >= 5
+                        ? "text-amber-700"
+                        : "text-red-700"
+                    }`}>
+                      {tool.scorecard_score.toFixed(1)}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground">/ 10</span>
+                  </div>
+                  {/* 説明 */}
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-sm font-semibold mb-1 ${
+                      tool.scorecard_score >= 7
+                        ? "text-emerald-700"
+                        : tool.scorecard_score >= 5
+                        ? "text-amber-700"
+                        : "text-red-600"
+                    }`}>
+                      {tool.scorecard_score >= 7
+                        ? "セキュリティ対応が充実しています"
+                        : tool.scorecard_score >= 5
+                        ? "セキュリティ対応は標準的です"
+                        : "セキュリティ対応の改善が必要です"}
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      OpenSSF Scorecardによるセキュリティ自動評価。コードレビュー体制・ブランチ保護・脆弱性対応などを0〜10点で採点。
+                      {tool.scorecard_updated_at && (
+                        <span className="ml-1">
+                          （{new Date(tool.scorecard_updated_at).toLocaleDateString("ja-JP")}時点）
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
         )}
 
         <div className="border-t border-border/60" />
@@ -839,11 +946,25 @@ export default function ToolDetailPage() {
           <h2 className="text-lg font-bold text-foreground mb-4">導入環境</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="card-unified p-4 flex flex-col items-center gap-2">
-              <Box className="h-5 w-5 text-primary/70" />
+              <Container className="h-5 w-5 text-sky-500" />
               <p className="text-[10px] text-muted-foreground">Docker対応</p>
               <p className="text-xs font-semibold text-foreground text-center">
-                {tool.github_url && (tool.stars_num || 0) > 5000 ? "対応（推定）" : "要確認"}
+                {tool.docker_available
+                  ? "対応"
+                  : tool.github_url && (tool.stars_num || 0) > 5000
+                  ? "対応（推定）"
+                  : "要確認"}
               </p>
+              {tool.docker_compose_url && (
+                <a
+                  href={tool.docker_compose_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] text-primary hover:underline"
+                >
+                  Compose設定
+                </a>
+              )}
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Server className="h-5 w-5 text-primary/70" />
