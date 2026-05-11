@@ -99,7 +99,7 @@ function getBenefits(tool: Tool): { title: string; desc: string }[] {
   if (cat.includes("ai")) {
     benefits.push({ title: "モデル選択の自由", desc: "好きなAIモデルを統合し、用途に合わせて最適化可能" });
   } else if (cat.includes("開発")) {
-    benefits.push({ title: "豊富なAPI連携", desc: "CI/CDや既存ツールチェーンとスムーズに統合可能" });
+    benefits.push({ title: "豊富API連携", desc: "CI/CDや既存ツールチェーンとスムーズに統合可能" });
   } else if (cat.includes("インフラ")) {
     benefits.push({ title: "マルチクラウド対応", desc: "AWS・GCP・Azure等、特定ベンダーにロックインされない" });
   } else if (cat.includes("データ")) {
@@ -145,7 +145,7 @@ function getDifficultyInfo(tool: Tool) {
     selfHostLabel = "比較的かんたん";
     selfHostDesc = "ワンクリックデプロイや公式Helmチャートが用意されている可能性が高い";
   } else if (stars > 10000) {
-    setupDesc = "公式ドキュメントに沿って進めれば、30分〜1時間程度で導入可能";
+    setupDesc = "公式ドキュメントに沿って進めれば、30分～1時間程度で導入可能";
     selfHostDesc = "Docker Composeでの運用が一般的。バックアップ設計は自前で必要";
   } else if (stars < 3000) {
     setupLevel = "hard";
@@ -174,13 +174,11 @@ export default function ToolDetailPage() {
     enabled: !!id,
   });
 
-  // Related tools: same competitor first, then same category
   const { data: relatedTools } = useQuery({
     queryKey: ["related-tools", tool?.primary_competitor, tool?.parent_category_ja, tool?.id],
     queryFn: async () => {
       const results: Tool[] = [];
 
-      // Same competitor
       if (tool!.primary_competitor && tool!.primary_competitor !== "有料SaaS") {
         const { data } = await supabase
           .from("tools").select("*")
@@ -192,7 +190,6 @@ export default function ToolDetailPage() {
         if (data) results.push(...(data as Tool[]));
       }
 
-      // Fill with same category if needed
       if (results.length < 6 && tool!.parent_category_ja) {
         const existingIds = new Set([tool!.id, ...results.map(t => t.id)]);
         const { data } = await supabase
@@ -219,11 +216,9 @@ export default function ToolDetailPage() {
 
   const competitorJa = tool?.primary_competitor_ja || null;
   const competitorEn = tool?.primary_competitor || "";
-  // Use English name for short display; it's always a clean name like "Notion", "Zapier"
   const competitorDisplay = competitorEn || competitorJa || null;
   const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
 
-  // Map Japanese parent category → schema.org applicationCategory
   const SCHEMA_CATEGORY: Record<string, string> = {
     "AI・ML": "DeveloperApplication",
     "開発ツール": "DeveloperApplication",
@@ -378,7 +373,6 @@ export default function ToolDetailPage() {
     <SiteLayout>
       <div className="container max-w-4xl mx-auto px-4 md:px-8">
 
-        {/* ── 2. Breadcrumb ── */}
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground pt-6 pb-6 overflow-x-auto">
           <Link to="/" className="hover:text-foreground transition-colors shrink-0">ホーム</Link>
           <ChevronRight className="h-3 w-3 shrink-0" />
@@ -396,33 +390,23 @@ export default function ToolDetailPage() {
           <span className="text-foreground font-medium truncate">{tool.name}</span>
         </nav>
 
-        {/* ── 3. Hero ── */}
         <section className="pb-10 -mx-4 md:-mx-8 px-4 md:px-8 pt-4 rounded-2xl bg-gradient-to-b from-primary/[0.04] to-transparent">
           <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
-
-            {/* Left: Identity */}
             <div className="flex-1 min-w-0">
-              {/* Competitor context — always first */}
               {hasCompetitor && (
                 <div className="mb-3">
                   <AlternativeBadge competitor={competitorDisplay!} />
                 </div>
               )}
-
-              {/* Tool name + icon */}
               <div className="flex items-center gap-3.5 mb-3">
                 <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={44} />
                 <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground leading-tight">
                   {tool.name}
                 </h1>
               </div>
-
-              {/* One-line summary */}
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5 max-w-xl">
                 {tool.description_ja || tool.description_en || `${tool.name}は${tool.category_ja || tool.parent_category_ja || "多用途"}のオープンソースツールです。`}
               </p>
-
-              {/* Metadata row */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground mb-5">
                 {tool.stars_num && (
                   <span className="inline-flex items-center gap-1">
@@ -444,8 +428,6 @@ export default function ToolDetailPage() {
                   </span>
                 )}
               </div>
-
-              {/* Tags */}
               <div className="flex flex-wrap items-center gap-1.5">
                 {tool.language && langClass && (
                   <Badge className={`text-[11px] font-normal border px-2.5 py-0.5 h-6 ${langClass}`}>
@@ -472,10 +454,8 @@ export default function ToolDetailPage() {
               </div>
             </div>
 
-            {/* Right: CTAs */}
             <div className="lg:w-[260px] shrink-0">
               <div className="card-unified p-5 space-y-3">
-                {/* Primary external CTAs — most important first */}
                 <div className="space-y-2">
                   {tool.url && (
                     <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
@@ -501,7 +481,6 @@ export default function ToolDetailPage() {
                     </p>
                   )}
                 </div>
-                {/* Alternative link */}
                 {altSlug && (
                   <Link
                     to={`/alternatives/${altSlug}`}
@@ -510,8 +489,6 @@ export default function ToolDetailPage() {
                     {competitorDisplay}の代替を比較 <ArrowRight className="h-3 w-3" />
                   </Link>
                 )}
-
-                {/* Share row */}
                 <div className="flex items-center gap-2 pt-2 border-t border-border/60">
                   <span className="text-[10px] text-muted-foreground mr-auto">共有</span>
                   <button
@@ -541,7 +518,6 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── Alternative-to summary ── */}
         {(() => {
           const extras = (tool.replaces_ja && tool.replaces_ja.length > 0)
             ? tool.replaces_ja
@@ -576,7 +552,6 @@ export default function ToolDetailPage() {
             </section>
           );
         })()}
-
 
         {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
           <section className="py-6">
@@ -648,7 +623,6 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {/* ── OSS健全性スコア（OpenSSF Scorecard） ── */}
         {tool.scorecard_score != null && (
           <>
             <div className="border-t border-border/60" />
@@ -672,15 +646,7 @@ export default function ToolDetailPage() {
                   )}
                 </div>
                 <div className="flex items-center gap-5">
-                  {/* スコアリング */}
-                  <div className="flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 shrink-0
-                    bg-gradient-to-br
-                    ${tool.scorecard_score >= 7
-                      ? 'border-emerald-200 from-emerald-50 to-emerald-100/50'
-                      : tool.scorecard_score >= 5
-                      ? 'border-amber-200 from-amber-50 to-amber-100/50'
-                      : 'border-red-200 from-red-50 to-red-100/50'
-                    }"
+                  <div className="flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 shrink-0"
                     style={{
                       background: tool.scorecard_score >= 7
                         ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
@@ -703,7 +669,6 @@ export default function ToolDetailPage() {
                     </span>
                     <span className="text-[10px] text-muted-foreground">/ 10</span>
                   </div>
-                  {/* 説明 */}
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm font-semibold mb-1 ${
                       tool.scorecard_score >= 7
@@ -735,7 +700,6 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 4. Quick Decision Summary ── */}
         <section className="py-8">
           <h2 className="text-lg font-bold text-foreground mb-4">導入判断サマリー</h2>
           <div className="card-unified p-4 sm:p-5">
@@ -786,7 +750,6 @@ export default function ToolDetailPage() {
                 <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
                 {(() => {
-                  // Self-host CTA: shown for known self-hostable OSS (has GitHub + decent stars + active maintenance)
                   const SELFHOST_GUIDES: Record<number, { slug: string; label: string }> = {
                     415: { slug: "n8n-selfhost-vps", label: "n8nセルフホスト手順" },
                     185: { slug: "appflowy-selfhost-vps", label: "AppFlowyセルフホスト手順" },
@@ -796,7 +759,6 @@ export default function ToolDetailPage() {
                     418: { slug: "nocodb-selfhost-vps", label: "NocoDBセルフホスト手順" },
                     346: { slug: "umami-selfhost-vps", label: "Umamiセルフホスト手順" },
                   };
-                  // docker_availableフラグ優先、なければgithub_url + stars閾値でフォールバック
                   const isSelfHostable =
                     tool.docker_available === true ||
                     (!!tool.github_url && (tool.stars_num || 0) >= 1000);
@@ -825,7 +787,6 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 5. Who it's for + Not good for ── */}
         <section className="py-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
@@ -865,7 +826,6 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 6. Benefits ── */}
         <section className="py-8">
           <h2 className="text-lg font-bold text-foreground mb-4">主なメリット</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -882,11 +842,8 @@ export default function ToolDetailPage() {
         </section>
 
         <div className="border-t border-border/60" />
-
-        {/* ── 6b. Key Features ── */}
         <KeyFeaturesList tool={tool} />
 
-        {/* ── 6. Comparison table ── */}
         {hasCompetitor && (
           <>
             <div className="border-t border-border/60" />
@@ -926,7 +883,6 @@ export default function ToolDetailPage() {
                   </tbody>
                 </table>
               </div>
-
               {altSlug && (
                 <Link
                   to={`/alternatives/${altSlug}`}
@@ -942,7 +898,6 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 7. Deployment details (compact, no duplication) ── */}
         <section className="py-8">
           <h2 className="text-lg font-bold text-foreground mb-4">導入環境</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -993,7 +948,6 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
 
-        {/* ── 8. Overview / Description ── */}
         <section className="py-10">
           <h2 className="text-lg font-bold text-foreground mb-5">概要</h2>
           <div className="card-unified p-6">
@@ -1005,8 +959,6 @@ export default function ToolDetailPage() {
                 {tool.description_en}
               </p>
             )}
-
-            {/* Technical meta */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-4 border-t border-border/60">
               {tool.language && (
                 <div>
@@ -1044,7 +996,6 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── Affiliate CTA ── */}
         {partnerCards.length > 0 && (
           <>
             <div className="border-t border-border/60" />
@@ -1054,13 +1005,11 @@ export default function ToolDetailPage() {
           </>
         )}
 
-        {/* ── Ad slot before related tools ── */}
         <div className="border-t border-border/60" />
         <div className="py-6">
           <AdSlot slotId="detail-before-related" format="horizontal" />
         </div>
 
-        {/* ── 9. Similar projects ── */}
         {relatedTools && relatedTools.length > 0 && (
           <>
             <div className="border-t border-border/60" />
@@ -1074,7 +1023,6 @@ export default function ToolDetailPage() {
           </>
         )}
 
-        {/* ── 10. Links ── */}
         <div className="border-t border-border/60" />
         <section className="py-10">
           <h2 className="text-lg font-bold text-foreground mb-5">公式リンク</h2>
@@ -1111,13 +1059,11 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── 11. Editorial Insight ── */}
         <div className="border-t border-border/60" />
         <section className="py-8">
           <EditorialInsightCard tool={tool} />
         </section>
 
-        {/* ── 12. Related Guides ── */}
         {hasCompetitor && altSlug && (
           <section className="pb-8">
             <RelatedGuideCard
@@ -1144,28 +1090,23 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {/* ── 13. Community Participation ── */}
         <div className="border-t border-border/60" />
         <section className="py-8">
           <CommunityParticipationCTA toolName={tool.name || undefined} context="detail" />
         </section>
 
-        {/* ── 14. Newsletter ── */}
         <section className="pb-8">
           <NewsletterSignup />
         </section>
 
-        {/* ── Partner CTA ── */}
         <div className="pb-4">
           <PartnerCTA toolName={tool.name || undefined} />
         </div>
 
-        {/* ── Consultation CTA ── */}
         <div className="pb-4">
           <ConsultationCTA toolName={tool.name || undefined} />
         </div>
 
-        {/* ── Share Bar ── */}
         <div className="border-t border-border/60" />
         <section className="py-6">
           <p className="text-xs text-muted-foreground text-center mb-3">このページをシェア</p>
@@ -1191,7 +1132,6 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ── Compare page links ── */}
         {(() => {
           const altSlug = hasCompetitor && competitorEn ? COMPETITOR_TO_SLUG[competitorEn] : null;
           const compareItems = altSlug ? (COMPARE_LINKS[altSlug] ?? []) : [];
@@ -1220,7 +1160,6 @@ export default function ToolDetailPage() {
           );
         })()}
 
-        {/* ── Bottom CTAs ── */}
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
@@ -1236,7 +1175,6 @@ export default function ToolDetailPage() {
           </Button>
         </div>
 
-        {/* ── Partner / Sponsor pitch ── */}
         <div className="pb-12">
           <div className="card-unified p-6 md:p-8 max-w-3xl mx-auto text-center bg-secondary/30">
             <h2 className="text-lg md:text-xl font-bold mb-2.5">
