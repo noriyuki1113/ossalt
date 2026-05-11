@@ -58,12 +58,25 @@ const RECOMMEND: { tag: string; id: AffiliateVps["id"]; name: string; href: stri
   });
 
 const RELATED_TOOLS = [
-  { name: "AppFlowy", desc: "Notion代替のオールインワンワークスペース", href: "/tools/185" },
   { name: "n8n", desc: "Zapier代替のワークフロー自動化", href: "/tools/415" },
+  { name: "AppFlowy", desc: "Notion代替のオールインワンワークスペース", href: "/tools/185" },
   { name: "Baserow", desc: "Airtable代替のノーコードDB", href: "/tools/217" },
-  { name: "Plausible Analytics", desc: "Google Analytics代替の軽量解析", href: "/tools/340" },
+  { name: "NocoDB", desc: "Airtable代替。既存DBをスプレッドシートUIで操作", href: "/tools/418" },
   { name: "Metabase", desc: "Tableau代替のBIダッシュボード", href: "/tools/358" },
+  { name: "Umami", desc: "Google Analytics代替の軽量プライバシー解析", href: "/tools/346" },
+  { name: "Plausible Analytics", desc: "Google Analytics代替のシンプル解析", href: "/tools/340" },
+  { name: "Matomo", desc: "Google Analytics代替の高機能解析", href: "/tools/337" },
   { name: "Supabase代替を探す", desc: "Firebase代替のBaaS群を比較", href: "/alternatives/firebase" },
+];
+
+const SELFHOST_GUIDES = [
+  { slug: "n8n-selfhost-vps", name: "n8n", desc: "Zapier代替のワークフロー自動化をセルフホスト" },
+  { slug: "appflowy-selfhost-vps", name: "AppFlowy", desc: "Notion代替のワークスペースをセルフホスト" },
+  { slug: "baserow-selfhost-vps", name: "Baserow", desc: "Airtable代替のノーコードDBをセルフホスト" },
+  { slug: "plausible-selfhost-vps", name: "Plausible", desc: "Google Analytics代替をセルフホスト" },
+  { slug: "metabase-selfhost-vps", name: "Metabase", desc: "Tableau代替のBIダッシュボードをセルフホスト" },
+  { slug: "nocodb-selfhost-vps", name: "NocoDB", desc: "Airtable代替のノーコードDBをセルフホスト" },
+  { slug: "umami-selfhost-vps", name: "Umami", desc: "Google Analytics代替の軽量解析をセルフホスト" },
 ];
 
 const FAQ = [
@@ -304,7 +317,27 @@ export default function SelfHostVps() {
         </div>
       </section>
 
-      {/* Related guides */}
+      {/* Selfhost guides grid */}
+      <section className="container pb-10">
+        <h2 className="text-2xl font-bold text-foreground mb-5">ツール別セルフホストガイド</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {SELFHOST_GUIDES.map((g) => (
+            <Link
+              key={g.slug}
+              to={`/guides/${g.slug}`}
+              className="card-unified p-5 hover:border-primary/40 transition-colors group"
+            >
+              <p className="text-xs text-primary mb-1">セルフホストガイド</p>
+              <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                {g.name}をVPSでセルフホストする方法
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{g.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Related guides (legacy — keeping for backward compat) */}
       <section className="container pb-10">
         <h2 className="text-2xl font-bold text-foreground mb-5">関連ガイド</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">

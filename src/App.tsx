@@ -33,6 +33,9 @@ const N8nSelfhostVpsGuide = lazy(() => import("./pages/N8nSelfhostVpsGuide"));
 const AppFlowySelfhostVpsGuide = lazy(() => import("./pages/AppFlowySelfhostVpsGuide"));
 const BaserowSelfhostVpsGuide = lazy(() => import("./pages/BaserowSelfhostVpsGuide"));
 const PlausibleSelfhostVpsGuide = lazy(() => import("./pages/PlausibleSelfhostVpsGuide"));
+const MetabaseSelfhostVpsGuide = lazy(() => import("./pages/MetabaseSelfhostVpsGuide"));
+const NocodbSelfhostVpsGuide = lazy(() => import("./pages/NocodbSelfhostVpsGuide"));
+const UmamiSelfhostVpsGuide = lazy(() => import("./pages/UmamiSelfhostVpsGuide"));
 
 const queryClient = new QueryClient();
 
@@ -53,6 +56,9 @@ const App = () => (
             <Route path="/guides/appflowy-selfhost-vps" element={<AppFlowySelfhostVpsGuide />} />
             <Route path="/guides/baserow-selfhost-vps" element={<BaserowSelfhostVpsGuide />} />
             <Route path="/guides/plausible-selfhost-vps" element={<PlausibleSelfhostVpsGuide />} />
+            <Route path="/guides/metabase-selfhost-vps" element={<MetabaseSelfhostVpsGuide />} />
+            <Route path="/guides/nocodb-selfhost-vps" element={<NocodbSelfhostVpsGuide />} />
+            <Route path="/guides/umami-selfhost-vps" element={<UmamiSelfhostVpsGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
