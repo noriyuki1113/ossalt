@@ -3,7 +3,7 @@ type: tool
 slug: hermes
 name: Hermes Agent
 category: ai-agent
-github: https://github.com/NousResearch/hermes
+github: https://github.com/NousResearch/hermes-agent
 stars: "140k"
 stars_num: 140000
 language: Python
@@ -91,7 +91,7 @@ OpenAI Assistants・Zapier AI・n8n の代替として紹介する。「サー�
 
 ## Open questions
 
-- NousResearch の Hermes モデルシリーズ（LLM）とエージェントフレームワークの関係性の整理
+- NousResearch の Hermes モデルシリーズ（LLM）と hermes-agent フレームワークの関係性の整理
 - OpenClaw（350K stars）との機能差の最新状況（2026年時点）
 - 日本語UIサポートの有無
 
