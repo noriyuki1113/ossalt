@@ -792,13 +792,14 @@ export default function ToolDetailPage() {
                     185: { slug: "appflowy-selfhost-vps", label: "AppFlowyセルフホスト手順" },
                     217: { slug: "baserow-selfhost-vps", label: "Baserowセルフホスト手順" },
                     340: { slug: "plausible-selfhost-vps", label: "Plausibleセルフホスト手順" },
+                    358: { slug: "metabase-selfhost-vps", label: "Metabaseセルフホスト手順" },
+                    418: { slug: "nocodb-selfhost-vps", label: "NocoDBセルフホスト手順" },
+                    346: { slug: "umami-selfhost-vps", label: "Umamiセルフホスト手順" },
                   };
-                  // Curated allow-list of well-known self-hostable OSS (by id)
-                  const SELFHOST_TOOL_IDS = new Set([
-                    415, 185, 217, 340, // n8n, AppFlowy, Baserow, Plausible
-                    358, 418, 346, 337, // Metabase, NocoDB, Umami, Matomo
-                  ]);
-                  const isSelfHostable = SELFHOST_TOOL_IDS.has(tool.id);
+                  // docker_availableフラグ優先、なければgithub_url + stars閾値でフォールバック
+                  const isSelfHostable =
+                    tool.docker_available === true ||
+                    (!!tool.github_url && (tool.stars_num || 0) >= 1000);
                   if (!isSelfHostable) return null;
                   const guide = SELFHOST_GUIDES[tool.id];
                   return (
