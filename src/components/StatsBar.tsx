@@ -8,7 +8,7 @@ export function StatsBar() {
   const { data } = useToolStats();
 
   return (
-    <section className="container relative z-10 -mt-8 pb-6">
+    <section className="container py-10">
       <div className="glass rounded-2xl grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
         <StatCell
           icon={Package}
