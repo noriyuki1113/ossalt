@@ -33,6 +33,27 @@ export interface Tool {
   docker_compose_url: string | null;
 }
 
+// Columns required to render a ToolCard — avoids fetching the full row (~34 cols → 18 cols)
+const TOOL_CARD_COLUMNS = [
+  "id",
+  "name",
+  "url",
+  "github_url",
+  "description_ja",
+  "description_en",
+  "parent_category_ja",
+  "primary_competitor",
+  "primary_competitor_ja",
+  "stars_num",
+  "language",
+  "license",
+  "forks_num",
+  "last_commit",
+  "scorecard_score",
+  "docker_available",
+  "created_at",
+].join(", ");
+
 export type SortOption = "stars" | "recent" | "name" | "newest";
 
 interface UseToolsOptions {
@@ -51,13 +72,14 @@ export function useTools(options?: UseToolsOptions) {
 
   return useQuery({
     queryKey: ["tools", options],
+    // Tools list can stay fresh for 3 minutes — balances freshness vs network cost
+    staleTime: 3 * 60 * 1000,
     queryFn: async () => {
       const sort = options?.sort ?? "stars";
       let query = supabase
         .from("tools")
-        .select("*", { count: "exact" });
+        .select(TOOL_CARD_COLUMNS, { count: "exact" });
 
-      // Apply sort
       if (sort === "recent") {
         query = query.order("last_commit", { ascending: false, nullsFirst: false });
       } else if (sort === "name") {
@@ -99,6 +121,9 @@ export function useTools(options?: UseToolsOptions) {
 export function useToolCategories() {
   return useQuery({
     queryKey: ["tool-categories"],
+    // Category counts rarely change — cache for 30 minutes
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tools")
@@ -121,17 +146,26 @@ export function useToolCategories() {
 export function useToolStats() {
   return useQuery({
     queryKey: ["tool-stats"],
+    // Stats are aggregates that rarely change — cache for 1 hour
+    staleTime: 60 * 60 * 1000,
+    gcTime: 2 * 60 * 60 * 1000,
     queryFn: async () => {
-      const { data, error, count } = await supabase
-        .from("tools")
-        .select("stars_num, parent_category_ja", { count: "exact" });
-      if (error) throw error;
+      // Parallel: count-only head query + lightweight data query
+      const [headResult, dataResult] = await Promise.all([
+        supabase.from("tools").select("*", { count: "exact", head: true }),
+        supabase.from("tools").select("stars_num, parent_category_ja"),
+      ]);
 
-      const totalStars = data?.reduce((sum, t) => sum + (t.stars_num || 0), 0) || 0;
-      const categories = new Set(data?.map((t) => t.parent_category_ja).filter(Boolean));
+      if (headResult.error) throw headResult.error;
+      if (dataResult.error) throw dataResult.error;
+
+      const totalStars = dataResult.data?.reduce((sum, t) => sum + (t.stars_num || 0), 0) || 0;
+      const categories = new Set(
+        dataResult.data?.map((t) => t.parent_category_ja).filter(Boolean)
+      );
 
       return {
-        toolCount: count || 0,
+        toolCount: headResult.count || 0,
         categoryCount: categories.size,
         totalStars,
       };

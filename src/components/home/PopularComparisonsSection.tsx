@@ -23,6 +23,9 @@ function Logo({ url, name }: { url: string; name: string }) {
       src={`https://logo.clearbit.com/${domain}`}
       alt={name}
       className="w-5 h-5 rounded object-contain bg-white"
+      loading="lazy"
+      width={20}
+      height={20}
       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
     />
   ) : null;

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, ArrowRight, GitFork, Clock, Container, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +33,7 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
   return null;
 }
 
-export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
+export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
   const competitor = isKnownCompetitor(tool.primary_competitor)
     ? (tool.primary_competitor_ja || tool.primary_competitor)
     : null;
@@ -152,7 +153,7 @@ export function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
       </div>
     </Link>
   );
-}
+});
 
 export function ToolCardSkeleton() {
   return (

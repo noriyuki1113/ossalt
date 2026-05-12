@@ -6,23 +6,23 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
-import { PopularAlternativesSection } from "@/components/home/PopularAlternativesSection";
-import { PopularComparisonsSection } from "@/components/home/PopularComparisonsSection";
-import { PopularCategoriesGrid } from "@/components/home/PopularCategoriesGrid";
 import { QuickAlternativesPills } from "@/components/home/QuickAlternativesPills";
-import { FeaturedToolsRail } from "@/components/home/FeaturedToolsRail";
 import { SponsorPitchSection } from "@/components/home/SponsorPitchSection";
 import { StatsBar } from "@/components/StatsBar";
+import { LazySection } from "@/components/LazySection";
 
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
 import { FilterToolbar } from "@/components/discovery/FilterToolbar";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
 import { useSeo } from "@/hooks/use-seo";
 
-// Lazy load below-fold sections
-const WhyOSSSection = lazy(() => import("@/components/home/WhyOSSSection").then(m => ({ default: m.WhyOSSSection })));
-const FeaturedToolsRailLazy = lazy(() => import("@/components/home/FeaturedToolsRail").then(m => ({ default: m.FeaturedToolsRail })));
+// Lazy-load all below-fold sections (code + data deferred until near viewport)
+const PopularAlternativesSection = lazy(() => import("@/components/home/PopularAlternativesSection").then(m => ({ default: m.PopularAlternativesSection })));
+const PopularComparisonsSection = lazy(() => import("@/components/home/PopularComparisonsSection").then(m => ({ default: m.PopularComparisonsSection })));
+const PopularCategoriesGrid = lazy(() => import("@/components/home/PopularCategoriesGrid").then(m => ({ default: m.PopularCategoriesGrid })));
+const FeaturedToolsRail = lazy(() => import("@/components/home/FeaturedToolsRail").then(m => ({ default: m.FeaturedToolsRail })));
 const NewToolsSection = lazy(() => import("@/components/home/NewToolsSection").then(m => ({ default: m.NewToolsSection })));
+const WhyOSSSection = lazy(() => import("@/components/home/WhyOSSSection").then(m => ({ default: m.WhyOSSSection })));
 const FAQSection = lazy(() => import("@/components/home/FAQSection").then(m => ({ default: m.FAQSection })));
 const BottomCTA = lazy(() => import("@/components/home/BottomCTA").then(m => ({ default: m.BottomCTA })));
 const SelfHostHomeSection = lazy(() => import("@/components/home/SelfHostHomeSection").then(m => ({ default: m.SelfHostHomeSection })));
@@ -365,36 +365,70 @@ export default function IndexPage() {
         </section>
       ) : (
         <>
+          {/* Above-fold: stats only — no extra network requests */}
           <StatsBar />
-          {/* 1. 人気SaaS代替チップ（最重要導線） */}
-          <PopularAlternativesSection />
-          {/* 2. OSS vs SaaS 比較 */}
-          <PopularComparisonsSection />
-          {/* 3. カテゴリグリッド */}
-          <PopularCategoriesGrid />
-          {/* 3. 注目ツール横スクロールレール */}
-          <Suspense fallback={<SectionFallback />}>
-            <FeaturedToolsRailLazy />
-          </Suspense>
-          {/* 4. 既存セクション群 */}
-          <Suspense fallback={<SectionFallback />}>
-            <NewToolsSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <SelfHostHomeSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <NewGuidesSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <WhyOSSSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <FAQSection />
-          </Suspense>
-          <Suspense fallback={<SectionFallback />}>
-            <BottomCTA />
-          </Suspense>
+
+          {/* Below-fold: deferred via IntersectionObserver (code + data) */}
+          <LazySection placeholderHeight="200px">
+            <Suspense fallback={<SectionFallback />}>
+              <PopularAlternativesSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="300px">
+            <Suspense fallback={<SectionFallback />}>
+              <PopularComparisonsSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="350px">
+            <Suspense fallback={<SectionFallback />}>
+              <PopularCategoriesGrid />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="240px">
+            <Suspense fallback={<SectionFallback />}>
+              <FeaturedToolsRail />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="400px">
+            <Suspense fallback={<SectionFallback />}>
+              <NewToolsSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="200px">
+            <Suspense fallback={<SectionFallback />}>
+              <SelfHostHomeSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="200px">
+            <Suspense fallback={<SectionFallback />}>
+              <NewGuidesSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="200px">
+            <Suspense fallback={<SectionFallback />}>
+              <WhyOSSSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="200px">
+            <Suspense fallback={<SectionFallback />}>
+              <FAQSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection placeholderHeight="120px">
+            <Suspense fallback={<SectionFallback />}>
+              <BottomCTA />
+            </Suspense>
+          </LazySection>
+
           <SponsorPitchSection />
         </>
       )}

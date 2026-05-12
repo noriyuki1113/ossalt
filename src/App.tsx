@@ -38,7 +38,23 @@ const MetabaseSelfhostVpsGuide = lazy(() => import("./pages/MetabaseSelfhostVpsG
 const NocodbSelfhostVpsGuide = lazy(() => import("./pages/NocodbSelfhostVpsGuide"));
 const UmamiSelfhostVpsGuide = lazy(() => import("./pages/UmamiSelfhostVpsGuide"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Data is considered fresh for 5 minutes — prevents redundant refetches on navigation
+      staleTime: 5 * 60 * 1000,
+      // Keep unused data in cache for 10 minutes
+      gcTime: 10 * 60 * 1000,
+      // Don't retry on 4xx errors
+      retry: (failureCount, error: unknown) => {
+        const status = (error as { status?: number })?.status;
+        if (status && status >= 400 && status < 500) return false;
+        return failureCount < 2;
+      },
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <ThemeProvider>
