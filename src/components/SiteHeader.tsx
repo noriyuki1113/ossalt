@@ -1,7 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Search, Menu, X, ChevronDown } from "lucide-react";
+import { Search, Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { mobileMenuStore } from "@/lib/mobile-menu";
+import { useTheme } from "@/hooks/use-theme";
 
 const ALTERNATIVES_NAV = [
   { to: "/alternatives/notion",           label: "Notion の代替" },
@@ -26,6 +27,7 @@ const COMPARE_NAV = [
 ];
 
 export function SiteHeader() {
+  const { theme, toggle } = useTheme();
   const [mobileOpen, _setMobileOpen] = useState(false);
   const setMobileOpen = (v: boolean | ((p: boolean) => boolean)) => {
     _setMobileOpen((prev) => {
@@ -110,7 +112,7 @@ export function SiteHeader() {
       <div className="container flex h-14 items-center justify-between gap-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0" onClick={() => setMobileOpen(false)}>
-          <img src="/logo.png" alt="OSSアルタナティブ" className="h-7 w-7 rounded-lg" width={28} height={28} />
+          <img src="/logo.png" alt="OSSアルタナティブ" className="h-7 w-7 rounded-lg dark:ring-1 dark:ring-white/20" width={28} height={28} />
           <span className="font-semibold text-sm sm:text-base tracking-tight text-foreground">
             OSSアルタナティブ
           </span>
@@ -171,6 +173,15 @@ export function SiteHeader() {
           />
         </form>
 
+        {/* Theme toggle */}
+        <button
+          onClick={toggle}
+          aria-label={theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"}
+          className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
+
         {/* Mobile toggle */}
         <button
           className="md:hidden h-8 w-8 flex items-center justify-center rounded-md hover:bg-secondary transition-colors"
@@ -186,7 +197,7 @@ export function SiteHeader() {
         <div className="md:hidden fixed inset-0 z-[9999] bg-card flex flex-col h-[100dvh]">
           <div className="flex h-14 items-center justify-between px-4 border-b border-border shrink-0">
             <Link to="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-              <img src="/logo.png" alt="OSSアルタナティブ" className="h-7 w-7 rounded-lg" width={28} height={28} />
+              <img src="/logo.png" alt="OSSアルタナティブ" className="h-7 w-7 rounded-lg dark:ring-1 dark:ring-white/20" width={28} height={28} />
               <span className="font-semibold text-sm tracking-tight text-foreground">
                 OSSアルタナティブ
               </span>

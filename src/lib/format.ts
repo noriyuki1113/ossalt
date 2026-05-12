@@ -48,20 +48,20 @@ export function getGithubAvatarUrl(githubUrl: string | null | undefined): string
   return null;
 }
 
-/** Language → Tailwind badge classes */
+/** Language → Tailwind badge classes (light + dark variants) */
 export const LANG_COLORS: Record<string, string> = {
-  Python: "bg-blue-50 text-blue-600 border-blue-200",
-  TypeScript: "bg-teal-50 text-teal-600 border-teal-200",
-  JavaScript: "bg-yellow-50 text-yellow-700 border-yellow-200",
-  Go: "bg-cyan-50 text-cyan-600 border-cyan-200",
-  Rust: "bg-orange-50 text-orange-600 border-orange-200",
-  Ruby: "bg-red-50 text-red-600 border-red-200",
-  Java: "bg-amber-50 text-amber-700 border-amber-200",
-  Kotlin: "bg-purple-50 text-purple-600 border-purple-200",
-  Swift: "bg-orange-50 text-orange-500 border-orange-200",
-  "C++": "bg-pink-50 text-pink-600 border-pink-200",
-  C: "bg-gray-50 text-gray-600 border-gray-200",
-  PHP: "bg-indigo-50 text-indigo-600 border-indigo-200",
+  Python:     "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30",
+  TypeScript: "bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/15 dark:text-teal-300 dark:border-teal-500/30",
+  JavaScript: "bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-500/15 dark:text-yellow-300 dark:border-yellow-500/30",
+  Go:         "bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-500/15 dark:text-cyan-300 dark:border-cyan-500/30",
+  Rust:       "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-500/15 dark:text-orange-300 dark:border-orange-500/30",
+  Ruby:       "bg-red-50 text-red-700 border-red-200 dark:bg-red-500/15 dark:text-red-300 dark:border-red-500/30",
+  Java:       "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30",
+  Kotlin:     "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/15 dark:text-purple-300 dark:border-purple-500/30",
+  Swift:      "bg-orange-50 text-orange-600 border-orange-200 dark:bg-orange-500/15 dark:text-orange-300 dark:border-orange-500/30",
+  "C++":      "bg-pink-50 text-pink-700 border-pink-200 dark:bg-pink-500/15 dark:text-pink-300 dark:border-pink-500/30",
+  C:          "bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-500/15 dark:text-slate-300 dark:border-slate-500/30",
+  PHP:        "bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-300 dark:border-indigo-500/30",
 };
 
 export function getLanguageBadgeClass(lang: string): string {
