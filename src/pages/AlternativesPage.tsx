@@ -164,12 +164,14 @@ export default function AlternativesPage() {
     [tools]
   );
 
+  const CURRENT_YEAR = new Date().getFullYear();
+
   // Build dynamic description: include top 2 tool names once data is loaded
   const topToolNames = topPicks.slice(0, 2).map(t => t.name).filter(Boolean).join("・");
   const dynamicDescription = competitor
     ? topToolNames
-      ? `${competitor}より安く使えるオープンソース代替ツールを比較。${topToolNames}など自己ホスト可能なツールを日本語で紹介。無料で使えるものも。`
-      : `${competitor}より安く使えるオープンソース代替ツールを比較。自己ホスト可能なツールや日本語対応含め紹介。ossalt.jpで無料で探せます。`
+      ? `【${CURRENT_YEAR}年版】${competitor}の代替OSSツール${count > 0 ? count + "件" : ""}を徹底比較。${topToolNames}など月額0円・セルフホスト可能なオープンソースを日本語で紹介。`
+      : `【${CURRENT_YEAR}年版】${competitor}より安く使えるOSS代替ツールを比較。セルフホスト可能なオープンソースツールを日本語で検索・比較できます。`
     : "";
 
   const jsonLd = competitor ? {
@@ -211,7 +213,7 @@ export default function AlternativesPage() {
 
   useSeo({
     title: editorial?.metaTitle || (competitor
-      ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"} | 無料・自己ホスト可`
+      ? `${competitor}の代替OSSツール${count > 0 ? count + "選" : "比較"}【${CURRENT_YEAR}年版・無料】`
       : "代替ツール | OSSアルタナティブ"),
     description: editorial?.metaDescription || dynamicDescription,
     canonical: competitor
@@ -250,6 +252,7 @@ export default function AlternativesPage() {
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
             {competitor} の代替OSSツール{!isLoading && count > 0 ? `${count}選` : "一覧"}
+            <span className="ml-2 text-sm font-semibold text-primary/70 align-middle">【{CURRENT_YEAR}年版】</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
             {editorial?.heroDescription || (
@@ -295,7 +298,7 @@ export default function AlternativesPage() {
               <section className="mb-10">
                 <h2 className="text-base font-bold text-foreground mb-4 flex items-center gap-2">
                   <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-                  おすすめトップ{topPicks.length}
+                  {competitor}代替OSS おすすめトップ{topPicks.length}（{CURRENT_YEAR}年）
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {topPicks.map((tool, i) => (
@@ -340,51 +343,79 @@ export default function AlternativesPage() {
             {tools.length >= 2 && (
               <section className="mb-10">
                 <h2 className="text-base font-bold text-foreground mb-4">
-                  {competitor}代替の比較表
+                  {competitor}代替OSS 機能・ライセンス比較表（{CURRENT_YEAR}年版）
                 </h2>
                 <div className="card-unified overflow-hidden overflow-x-auto">
-                  <table className="w-full text-sm min-w-[500px]">
+                  <table className="w-full text-sm min-w-[640px]">
                     <thead>
                       <tr className="border-b border-border/60 bg-muted/30">
                         <th className="text-left p-3 text-xs font-medium text-muted-foreground w-8">#</th>
                         <th className="text-left p-3 text-xs font-medium text-muted-foreground">ツール名</th>
-                        <th className="text-left p-3 text-xs font-medium text-muted-foreground">スター数</th>
-                        <th className="text-left p-3 text-xs font-medium text-muted-foreground hidden sm:table-cell">言語</th>
-                        <th className="text-left p-3 text-xs font-medium text-muted-foreground hidden sm:table-cell">ライセンス</th>
-                        <th className="text-left p-3 text-xs font-medium text-muted-foreground">特徴</th>
+                        <th className="text-left p-3 text-xs font-medium text-muted-foreground">⭐ Stars</th>
+                        <th className="text-left p-3 text-xs font-medium text-muted-foreground hidden md:table-cell">ライセンス</th>
+                        <th className="text-left p-3 text-xs font-medium text-muted-foreground hidden sm:table-cell">料金</th>
+                        <th className="text-left p-3 text-xs font-medium text-muted-foreground hidden sm:table-cell">セルフホスト</th>
+                        <th className="text-left p-3 text-xs font-medium text-muted-foreground">用途</th>
                         <th className="p-3"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {tools.slice(0, 10).map((tool, i) => (
-                        <tr key={tool.id} className="border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors">
-                          <td className="p-3 text-xs text-muted-foreground font-medium">{i + 1}</td>
-                          <td className="p-3">
-                            <div className="flex items-center gap-2 min-w-0">
-                              <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} />
-                              <span className="text-xs font-semibold text-foreground truncate">{tool.name}</span>
-                            </div>
-                          </td>
-                          <td className="p-3">
-                            <StarCount count={tool.stars_num} size="sm" />
-                          </td>
-                          <td className="p-3 text-xs text-muted-foreground hidden sm:table-cell">{tool.language || "—"}</td>
-                          <td className="p-3 text-xs text-muted-foreground hidden sm:table-cell">{tool.license && tool.license !== "NOASSERTION" ? tool.license : "—"}</td>
-                          <td className="p-3 text-[11px] text-muted-foreground">{getBestFor(tool)}</td>
-                          <td className="p-3">
-                            <Link
-                              to={`/tools/${tool.id}`}
-                              className="text-[11px] text-primary hover:underline font-medium whitespace-nowrap"
-                              onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "table" })}
-                            >
-                              詳細 →
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
+                      {tools.slice(0, 10).map((tool, i) => {
+                        const difficulty = tool.docker_available
+                          ? "Docker対応"
+                          : tool.language === "Go" || tool.language === "Rust"
+                            ? "やや難"
+                            : "中程度";
+                        return (
+                          <tr key={tool.id} className="border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors">
+                            <td className="p-3 text-xs text-muted-foreground font-medium">{i + 1}</td>
+                            <td className="p-3">
+                              <div className="flex items-center gap-2 min-w-0">
+                                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} />
+                                <span className="text-xs font-semibold text-foreground truncate">{tool.name}</span>
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <StarCount count={tool.stars_num} size="sm" />
+                            </td>
+                            <td className="p-3 hidden md:table-cell">
+                              {tool.license && tool.license !== "NOASSERTION" ? (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-secondary/60 text-muted-foreground font-mono">
+                                  {tool.license}
+                                </span>
+                              ) : <span className="text-xs text-muted-foreground/50">—</span>}
+                            </td>
+                            <td className="p-3 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium hidden sm:table-cell">
+                              セルフホスト無料
+                            </td>
+                            <td className="p-3 hidden sm:table-cell">
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                                tool.docker_available
+                                  ? "bg-sky-500/10 text-sky-600 dark:text-sky-400"
+                                  : "bg-muted/60 text-muted-foreground"
+                              }`}>
+                                {difficulty}
+                              </span>
+                            </td>
+                            <td className="p-3 text-[11px] text-muted-foreground">{getBestFor(tool)}</td>
+                            <td className="p-3">
+                              <Link
+                                to={`/tools/${tool.id}`}
+                                className="text-[11px] text-primary hover:underline font-medium whitespace-nowrap"
+                                onClick={() => track("alt_to_detail", { competitor, tool: tool.name || "", rank: i + 1, source: "table" })}
+                              >
+                                詳細 →
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
+                <p className="mt-2 text-[11px] text-muted-foreground/60">
+                  ※ 料金はセルフホスト版の場合。クラウド版は各公式サイトをご確認ください。スター数はGitHub上の値（{CURRENT_YEAR}年時点）。
+                </p>
               </section>
             )}
 
@@ -392,7 +423,7 @@ export default function AlternativesPage() {
             {/* Uses editorial JSON reasons if available, otherwise generic fallback */}
             <section className="mb-10">
               <h2 className="text-base font-bold text-foreground mb-3">
-                なぜ{competitor}からOSSに乗り換えるのか？
+                {CURRENT_YEAR}年に{competitor}からOSSに乗り換える理由
               </h2>
               <div className="card-unified p-5">
                 {editorial?.whySwitchReasons ? (
@@ -450,7 +481,7 @@ export default function AlternativesPage() {
             {restTools.length > 0 && (
               <section className="mb-10">
                 <h2 className="text-base font-bold text-foreground mb-4">
-                  すべての{competitor}代替ツール
+                  すべての{competitor}代替OSSツール一覧（{count}件）
                 </h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {restTools.map((tool, i) => (

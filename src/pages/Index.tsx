@@ -156,27 +156,66 @@ export default function IndexPage() {
     : "https://ossalt.jp/";
 
   const jsonLd = useMemo(() => {
-    if (!categorySeo || selectedCategory === "すべて") return undefined;
+    // Homepage: WebSite + SiteLinksSearchBox + Organization
+    if (selectedCategory === "すべて" && !debouncedSearch) {
+      return {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://ossalt.jp/#website",
+            "url": "https://ossalt.jp",
+            "name": "OSSアルタナティブ",
+            "description": "有料SaaSの代替となるオープンソースツールを日本語で検索・比較できるサイト",
+            "inLanguage": "ja",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://ossalt.jp/?search={search_term_string}",
+              },
+              "query-input": "required name=search_term_string",
+            },
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://ossalt.jp/#organization",
+            "url": "https://ossalt.jp",
+            "name": "OSSアルタナティブ",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://ossalt.jp/logo.png",
+              "width": 512,
+              "height": 512,
+            },
+            "sameAs": ["https://github.com/ossalt-jp"],
+          },
+        ],
+      };
+    }
+
+    // Category page: CollectionPage + BreadcrumbList
+    if (!categorySeo) return undefined;
     return {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: categorySeo.title,
-      description: categorySeo.description,
-      url: seoCanonical,
-      isPartOf: {
-        "@type": "WebSite",
-        name: "OSSアルタナティブ",
-        url: "https://ossalt.jp",
-      },
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
-          { "@type": "ListItem", position: 2, name: categorySeo.title, item: seoCanonical },
-        ],
-      },
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          name: categorySeo.title,
+          description: categorySeo.description,
+          url: seoCanonical,
+          isPartOf: { "@type": "WebSite", name: "OSSアルタナティブ", url: "https://ossalt.jp" },
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
+            { "@type": "ListItem", position: 2, name: categorySeo.title, item: seoCanonical },
+          ],
+        },
+      ],
     };
-  }, [categorySeo, selectedCategory, seoCanonical]);
+  }, [categorySeo, selectedCategory, seoCanonical, debouncedSearch]);
 
   useSeo({
     title: seoTitle,
