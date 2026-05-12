@@ -1,4 +1,5 @@
-import { Package, Tags, Star } from "lucide-react";
+import type { ElementType } from "react";
+import { Package, Tags, Star, Server } from "lucide-react";
 import { useToolStats } from "@/hooks/use-tools";
 import { CountUp } from "@/components/CountUp";
 import { formatLargeNumber } from "@/lib/format";
@@ -6,32 +7,76 @@ import { formatLargeNumber } from "@/lib/format";
 export function StatsBar() {
   const { data } = useToolStats();
 
-  const stats = [
-    { icon: Package, value: data?.toolCount, suffix: "件", label: "ツール数", formatter: undefined },
-    { icon: Tags, value: data?.categoryCount, suffix: "", label: "カテゴリ", formatter: undefined },
-    { icon: Star, value: data?.totalStars, suffix: "", label: "総スター数", formatter: formatLargeNumber },
-  ];
+  return (
+    <section className="container relative z-10 -mt-8 pb-6">
+      <div className="glass rounded-2xl grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border">
+        <StatCell
+          icon={Package}
+          label="OSSツール"
+          value={data?.toolCount}
+          suffix="件"
+        />
+        <StatCell
+          icon={Tags}
+          label="カテゴリ"
+          value={data?.categoryCount}
+        />
+        <StatCell
+          icon={Star}
+          label="総スター数"
+          value={data?.totalStars}
+          formatter={formatLargeNumber}
+          highlight
+        />
+        <StatCell
+          icon={Server}
+          label="セルフホストガイド"
+          value={7}
+          isStatic
+        />
+      </div>
+    </section>
+  );
+}
+
+function StatCell({
+  icon: Icon,
+  label,
+  value,
+  suffix,
+  formatter,
+  highlight,
+  isStatic,
+}: {
+  icon: ElementType;
+  label: string;
+  value?: number;
+  suffix?: string;
+  formatter?: (n: number) => string;
+  highlight?: boolean;
+  isStatic?: boolean;
+}) {
+  const displayValue = () => {
+    if (value == null) return "—";
+    if (formatter) {
+      return isStatic ? formatter(value) : <CountUp end={value} formatter={formatter} />;
+    }
+    return isStatic ? `${value}${suffix ?? ""}` : <><CountUp end={value} />{suffix}</>;
+  };
 
   return (
-    <section className="container py-10 md:py-20">
-      <div className="grid grid-cols-3 gap-2.5 md:gap-4 max-w-2xl mx-auto">
-        {stats.map(({ icon: Icon, value, suffix, label, formatter }) => (
-          <div key={label} className="text-center card-unified p-3 md:p-5">
-            <div className="flex items-center justify-center gap-1.5 md:gap-2 mb-1">
-              <Icon className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
-              <span className="font-bold text-lg md:text-2xl text-foreground tabular-nums">
-                {value != null ? (
-                  formatter ? <CountUp end={value} formatter={formatter} /> : <><CountUp end={value} />{suffix}</>
-                ) : "—"}
-              </span>
-            </div>
-            <span className="text-xs text-muted-foreground">{label}</span>
-          </div>
-        ))}
+    <div className="text-center py-6 px-4">
+      <div
+        className={`font-display text-2xl md:text-3xl font-extrabold tabular-nums ${
+          highlight ? "text-gradient" : "text-foreground"
+        }`}
+      >
+        {displayValue()}
       </div>
-      <p className="text-center text-[11px] text-muted-foreground/50 mt-3">
-        GitHubデータをもとに集計
-      </p>
-    </section>
+      <div className="flex items-center justify-center gap-1.5 mt-1.5">
+        <Icon className="h-3 w-3 text-muted-foreground/60" />
+        <span className="text-xs text-muted-foreground">{label}</span>
+      </div>
+    </div>
   );
 }

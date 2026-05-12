@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,49 +6,54 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 20% 14%;
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 14%;
+    --card: 240 4% 10%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 14%;
+    --popover: 240 4% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 173 58% 39%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 18% 95%;
-    --secondary-foreground: 220 20% 14%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 210 18% 95%;
-    --muted-foreground: 217 15% 38%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 4% 64%;
 
-    --accent: 210 100% 52%;
+    --accent: 263 70% 65%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 173 58% 39%;
+    --border: 240 4% 24%;
+    --input: 240 4% 18%;
+    --ring: 239 84% 67%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 14% 46%;
-    --sidebar-primary: 173 58% 39%;
+    --sidebar-background: 240 4% 10%;
+    --sidebar-foreground: 240 4% 64%;
+    --sidebar-primary: 239 84% 67%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 18% 95%;
-    --sidebar-accent-foreground: 220 20% 14%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 173 58% 39%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 24%;
+    --sidebar-ring: 239 84% 67%;
 
-    --surface: 210 20% 98%;
-    --surface-elevated: 0 0% 100%;
-    --hero-gradient: linear-gradient(135deg, hsl(173 58% 39%), hsl(210 100% 52%));
-    --card-glow: 173 58% 39%;
+    --surface: 240 4% 10%;
+    --surface-elevated: 240 4% 16%;
+    --hero-gradient: linear-gradient(135deg, hsl(239 84% 67%), hsl(263 70% 65%));
+    --card-glow: 239 84% 67%;
+
+    --badge-green: 142 71% 45%;
+    --badge-amber: 38 92% 50%;
+    --text-tertiary: 240 4% 44%;
+    --accent-2: 263 70% 65%;
   }
 }
 
@@ -70,14 +75,13 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Inter', 'Noto Sans JP', system-ui, sans-serif;
     @apply font-bold tracking-tight;
     line-height: 1.25;
   }
 }
 
 @layer components {
-  /* ── Unified section header ── */
   .section-badge {
     @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium mb-4;
   }
@@ -87,6 +91,7 @@
   }
 
   .section-title {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
     @apply text-2xl md:text-3xl font-bold tracking-tight text-foreground;
   }
 
@@ -94,7 +99,6 @@
     @apply mt-2 text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed line-clamp-2;
   }
 
-  /* ── Unified card ── */
   .card-unified {
     @apply rounded-xl border border-border bg-card transition-all duration-200;
   }
@@ -102,12 +106,23 @@
   .card-unified-hover {
     @apply card-unified hover:border-primary/40 hover:shadow-lg hover:-translate-y-1;
   }
+
+  .glass {
+    background: rgba(18, 18, 20, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border));
+  }
 }
 
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background-image: var(--hero-gradient);
+  }
+
+  .font-display {
+    font-family: 'Space Grotesk', 'Inter', 'Noto Sans JP', system-ui, sans-serif;
   }
 
   .scrollbar-hide {
@@ -121,6 +136,10 @@
   .animate-fade-in-up {
     animation: fadeInUp 0.35s ease both;
   }
+
+  .animate-float {
+    animation: floatY 6s ease-in-out infinite;
+  }
 }
 
 @keyframes fadeInUp {
@@ -132,4 +151,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
