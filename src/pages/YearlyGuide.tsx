@@ -259,7 +259,7 @@ export default function YearlyGuide() {
                     >
                       <div className="flex-shrink-0 flex flex-col items-center gap-1 pt-0.5">
                         <span className="text-lg font-black text-primary/40">#{i + 1}</span>
-                        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={32} />
+                        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={32} id={tool.id} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-3 mb-1.5">
@@ -334,7 +334,7 @@ export default function YearlyGuide() {
                               className="flex items-center gap-2 min-w-0 group"
                               onClick={() => track("yearly_guide_table", { competitor, tool: tool.name || "", rank: i + 1 })}
                             >
-                              <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={18} />
+                              <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={18} id={tool.id} />
                               <span className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors truncate">
                                 {tool.name}
                               </span>

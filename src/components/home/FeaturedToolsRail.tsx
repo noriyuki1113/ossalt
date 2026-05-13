@@ -72,7 +72,7 @@ export function FeaturedToolsRail() {
               className="group shrink-0 snap-start w-52 rounded-xl border border-border bg-card p-4 flex flex-col gap-2 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
             >
               <div className="flex items-center gap-2.5">
-                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={28} />
+                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={28} id={tool.id} />
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold text-foreground leading-tight line-clamp-1 group-hover:text-primary transition-colors">
                     {tool.name}

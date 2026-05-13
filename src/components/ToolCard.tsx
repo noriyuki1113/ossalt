@@ -59,7 +59,7 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
 
       <div className="flex items-start gap-3 mb-2 min-w-0">
         <div className="flex-1 min-w-0 flex items-center gap-2.5">
-          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={22} />
+          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={22} id={tool.id} />
           <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
             {tool.name}
           </h3>

@@ -18,6 +18,9 @@ import { useAlternativeContent } from "@/hooks/use-alternative-content";
 import { formatCount } from "@/lib/format";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { Tool } from "@/hooks/use-tools";
+import { TOOL_CARD_COLUMNS } from "@/hooks/use-tools";
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 const SLUG_MAP: Record<string, string> = {
   notion: "Notion",
@@ -145,7 +148,7 @@ export default function AlternativesPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("tools")
-        .select("*")
+        .select(TOOL_CARD_COLUMNS)
         .eq("primary_competitor", competitor!)
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
@@ -314,7 +317,7 @@ export default function AlternativesPage() {
                       </span>
 
                       <div className="flex items-center gap-2.5 mb-2">
-                        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={28} />
+                        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={28} id={tool.id} />
                         <div className="min-w-0 flex-1">
                           <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors truncate">
                             {tool.name}
@@ -371,7 +374,7 @@ export default function AlternativesPage() {
                             <td className="p-3 text-xs text-muted-foreground font-medium">{i + 1}</td>
                             <td className="p-3">
                               <div className="flex items-center gap-2 min-w-0">
-                                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} />
+                                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} id={tool.id} />
                                 <span className="text-xs font-semibold text-foreground truncate">{tool.name}</span>
                               </div>
                             </td>

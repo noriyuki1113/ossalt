@@ -399,7 +399,7 @@ export default function ToolDetailPage() {
                 </div>
               )}
               <div className="flex items-center gap-3.5 mb-3">
-                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={44} />
+                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={44} id={tool.id} />
                 <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground leading-tight">
                   {tool.name}
                 </h1>

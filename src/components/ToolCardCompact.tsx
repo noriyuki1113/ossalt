@@ -36,7 +36,7 @@ export function ToolCardCompact({
     >
       {/* Header: icon + name + stars */}
       <div className="flex items-center gap-2 mb-1.5 min-w-0">
-        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} />
+        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={20} id={tool.id} />
         <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 flex-1 min-w-0 break-all group-hover:text-primary transition-colors">
           {tool.name}
         </h3>

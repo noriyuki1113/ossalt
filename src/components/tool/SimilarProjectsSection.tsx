@@ -26,7 +26,7 @@ function SimilarCard({ tool }: { tool: Tool }) {
       className="group flex flex-col rounded-xl border border-border/60 bg-card p-4 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
     >
       <div className="flex items-center gap-2.5 mb-2 min-w-0">
-        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} />
+        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} id={tool.id} />
         <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate flex-1 min-w-0">
           {tool.name}
         </h4>

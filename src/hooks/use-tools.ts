@@ -33,8 +33,7 @@ export interface Tool {
   docker_compose_url: string | null;
 }
 
-// Columns required to render a ToolCard — avoids fetching the full row (~34 cols → 18 cols)
-const TOOL_CARD_COLUMNS = [
+export const TOOL_CARD_COLUMNS = [
   "id",
   "name",
   "url",

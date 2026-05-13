@@ -1,10 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 interface ToolIconProps {
   url?: string | null;
   githubUrl?: string | null;
   name?: string | null;
   size?: number;
+  /** Tool DB id — used to serve /logos/{id}.webp when available */
+  id?: number | null;
 }
 
 /** Domains that are aggregator/directory sites — never use as a tool's own logo source */
@@ -12,6 +14,25 @@ const EXCLUDED_LOGO_DOMAINS = new Set([
   "openalternative.co",
   "www.openalternative.co",
 ]);
+
+// Runtime index of which tool ids have a local logo (populated from /logos/index.json)
+let logoIndex: Record<string, boolean> | null = null;
+let indexLoading = false;
+const indexCallbacks: Array<() => void> = [];
+
+function loadLogoIndex(onReady: () => void) {
+  if (logoIndex !== null) { onReady(); return; }
+  indexCallbacks.push(onReady);
+  if (indexLoading) return;
+  indexLoading = true;
+  fetch("/logos/index.json")
+    .then((r) => (r.ok ? r.json() : {}))
+    .catch(() => ({}))
+    .then((data: Record<string, boolean>) => {
+      logoIndex = data;
+      indexCallbacks.splice(0).forEach((cb) => cb());
+    });
+}
 
 function isExcludedDomain(hostname: string): boolean {
   return EXCLUDED_LOGO_DOMAINS.has(hostname.toLowerCase());
@@ -63,30 +84,46 @@ function getColorClass(name: string | null | undefined): string {
   return FALLBACK_COLORS[Math.abs(hash) % FALLBACK_COLORS.length];
 }
 
-export function ToolIcon({ url, githubUrl, name, size = 22 }: ToolIconProps) {
+export function ToolIcon({ url, githubUrl, name, size = 22, id }: ToolIconProps) {
+  const [indexReady, setIndexReady] = useState(logoIndex !== null);
+
+  useEffect(() => {
+    if (id == null || logoIndex !== null) return;
+    loadLogoIndex(() => setIndexReady(true));
+  }, [id]);
+
+  const hasLocalLogo = id != null && indexReady && logoIndex?.[String(id)] === true;
+
   const clearbit = getClearbitUrl(url);
   const favicon = getFaviconUrl(url);
   const ghAvatar = getGithubAvatarUrl(githubUrl);
 
-  // Priority: Clearbit → Favicon → GitHub avatar
-  const sources = [clearbit, favicon, ghAvatar].filter(Boolean) as string[];
+  // Priority: local WebP → Clearbit → Favicon → GitHub avatar
+  const sources = [
+    hasLocalLogo ? `/logos/${id}.webp` : null,
+    clearbit,
+    favicon,
+    ghAvatar,
+  ].filter(Boolean) as string[];
 
   const [srcIndex, setSrcIndex] = useState(0);
   const [loaded, setLoaded] = useState(false);
+
+  // Reset when sources change (e.g. index loaded mid-render)
+  useEffect(() => {
+    setSrcIndex(0);
+    setLoaded(false);
+  }, [hasLocalLogo, url, githubUrl]);
+
   const s = `${size}px`;
   const colorClass = getColorClass(name);
   const src = sources[srcIndex] ?? null;
 
   const handleError = useCallback(() => {
-    if (srcIndex < sources.length - 1) {
-      setSrcIndex(srcIndex + 1);
-      setLoaded(false);
-    } else {
-      setSrcIndex(sources.length); // triggers null fallback
-    }
-  }, [srcIndex, sources.length]);
+    setSrcIndex((prev) => prev + 1);
+    setLoaded(false);
+  }, []);
 
-  // Initial fallback (no src or all failed)
   if (!src) {
     return (
       <span
@@ -101,7 +138,6 @@ export function ToolIcon({ url, githubUrl, name, size = 22 }: ToolIconProps) {
 
   return (
     <span className="relative shrink-0" style={{ width: s, height: s }}>
-      {/* Placeholder visible while loading */}
       {!loaded && (
         <span
           className={`absolute inset-0 rounded-md flex items-center justify-center uppercase select-none ${colorClass}`}
