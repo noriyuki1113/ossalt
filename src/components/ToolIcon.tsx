@@ -137,7 +137,10 @@ export function ToolIcon({ url, githubUrl, name, size = 22, id }: ToolIconProps)
   }
 
   return (
-    <span className="relative shrink-0" style={{ width: s, height: s }}>
+    <span
+      className="relative shrink-0"
+      style={{ width: s, height: s, aspectRatio: "1 / 1" }}
+    >
       {!loaded && (
         <span
           className={`absolute inset-0 rounded-md flex items-center justify-center uppercase select-none ${colorClass}`}
@@ -154,6 +157,7 @@ export function ToolIcon({ url, githubUrl, name, size = 22, id }: ToolIconProps)
         height={size}
         className={`rounded-md relative z-10 transition-opacity duration-150 ${loaded ? "opacity-100" : "opacity-0"}`}
         loading="lazy"
+        decoding="async"
         onLoad={() => setLoaded(true)}
         onError={handleError}
       />

@@ -12,8 +12,10 @@ import { StatsBar } from "@/components/StatsBar";
 import { LazySection } from "@/components/LazySection";
 
 import { CategorySponsorCTA } from "@/components/ads/CategorySponsorCTA";
-import { FilterToolbar } from "@/components/discovery/FilterToolbar";
 import { useTools, type Tool, type SortOption } from "@/hooks/use-tools";
+
+// FilterToolbar uses @radix-ui/react-select (352 kB) — lazy-load to keep it out of initial bundle
+const FilterToolbar = lazy(() => import("@/components/discovery/FilterToolbar").then(m => ({ default: m.FilterToolbar })));
 import { useSeo } from "@/hooks/use-seo";
 
 // Lazy-load all below-fold sections (code + data deferred until near viewport)
@@ -332,12 +334,14 @@ export default function IndexPage() {
 
           {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
             <>
-              <FilterToolbar
-                sort={sort} onSortChange={handleSortChange}
-                license={license} onLicenseChange={handleLicenseChange}
-                hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
-                totalCount={0}
-              />
+              <Suspense fallback={<div className="h-10" />}>
+                <FilterToolbar
+                  sort={sort} onSortChange={handleSortChange}
+                  license={license} onLicenseChange={handleLicenseChange}
+                  hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                  totalCount={0}
+                />
+              </Suspense>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {Array.from({ length: 12 }).map((_, i) => (
                   <ToolCardSkeleton key={i} />
@@ -346,12 +350,14 @@ export default function IndexPage() {
             </>
           ) : allTools.length > 0 ? (
             <>
-              <FilterToolbar
-                sort={sort} onSortChange={handleSortChange}
-                license={license} onLicenseChange={handleLicenseChange}
-                hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
-                totalCount={data?.totalCount ?? allTools.length}
-              />
+              <Suspense fallback={<div className="h-10" />}>
+                <FilterToolbar
+                  sort={sort} onSortChange={handleSortChange}
+                  license={license} onLicenseChange={handleLicenseChange}
+                  hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                  totalCount={data?.totalCount ?? allTools.length}
+                />
+              </Suspense>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                 {allTools.map((tool, i) => (
                   <ToolCard key={tool.id} tool={tool} index={i} />

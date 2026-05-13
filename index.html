@@ -31,28 +31,55 @@
     <link rel="canonical" href="https://ossalt.jp/">
 
     <!-- Preconnect to critical origins -->
-    <link rel="preconnect" href="https://wcuofgycadbydhtuevay.supabase.co" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://logo.clearbit.com">
+    <link rel="dns-prefetch" href="https://logo.clearbit.com">
     <link rel="dns-prefetch" href="https://www.google.com">
 
-    <!-- Fonts with display=swap to prevent FOIT -->
+    <!-- Fonts: reduced to 3 weights (was 6). Non-blocking via print→all swap trick. -->
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap">
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    >
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap"
+      rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZB4JT8HYQM"></script>
+    <!-- Google tag: deferred until after page is interactive -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-ZB4JT8HYQM');
+      gtag('config', 'G-ZB4JT8HYQM', { send_page_view: false });
+      // Load gtag script after LCP to avoid TBT impact
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZB4JT8HYQM';
+        s.async = true;
+        s.onload = function() { gtag('event', 'page_view'); };
+        document.head.appendChild(s);
+      });
     </script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545568883714689" crossorigin="anonymous"></script>
+    <!-- AdSense: load after interaction to prevent render blocking -->
+    <script>
+      (function() {
+        function loadAds() {
+          var s = document.createElement('script');
+          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545568883714689';
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          document.head.appendChild(s);
+          window.removeEventListener('scroll', loadAds);
+          window.removeEventListener('pointerdown', loadAds);
+        }
+        window.addEventListener('scroll', loadAds, { once: true, passive: true });
+        window.addEventListener('pointerdown', loadAds, { once: true });
+        // Fallback: load after 4s even without interaction
+        setTimeout(loadAds, 4000);
+      })();
+    </script>
 
     <script defer src="https://cloud.umami.is/script.js" data-website-id="e1003fc4-1a2c-404c-abb9-ac669e5e8e94"></script>
   </head>

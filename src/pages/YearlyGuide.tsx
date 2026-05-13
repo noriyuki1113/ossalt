@@ -29,7 +29,9 @@ import { formatCount } from "@/lib/format";
 import { track } from "@/lib/track";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { Tool } from "@/hooks/use-tools";
-import { SLUG_MAP, COMPETITOR_TO_SLUG } from "@/pages/AlternativesPage";
+import { SLUG_MAP } from "@/pages/AlternativesPage";
+
+const YEAR = new Date().getFullYear();
 
 // ── 移行難易度ラベル ────────────────────────────────────────────────────────
 
@@ -73,7 +75,6 @@ function buildFaq(competitor: string, count: number) {
 export default function YearlyGuide() {
   const { slug } = useParams<{ slug: string }>();
   const competitor = slug ? SLUG_MAP[slug] : undefined;
-  const YEAR = new Date().getFullYear();
 
   const { data, isLoading } = useQuery({
     queryKey: ["yearly-guide", competitor],

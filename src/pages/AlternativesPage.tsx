@@ -167,8 +167,6 @@ export default function AlternativesPage() {
     [tools]
   );
 
-  const CURRENT_YEAR = new Date().getFullYear();
-
   // Build dynamic description: include top 2 tool names once data is loaded
   const topToolNames = topPicks.slice(0, 2).map(t => t.name).filter(Boolean).join("・");
   const dynamicDescription = competitor
@@ -395,7 +393,9 @@ export default function AlternativesPage() {
                               <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
                                 tool.docker_available
                                   ? "bg-sky-500/10 text-sky-600 dark:text-sky-400"
-                                  : "bg-muted/60 text-muted-foreground"
+                                  : tool.language === "Go" || tool.language === "Rust"
+                                    ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                                    : "bg-muted/60 text-muted-foreground"
                               }`}>
                                 {difficulty}
                               </span>

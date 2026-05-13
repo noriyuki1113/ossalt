@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_MAP } from "@/components/CategoryFilter";
+
+// Dynamic import breaks supabase out of the initial modulepreload chain.
+// The promise is cached after first resolution so repeated calls are free.
+let _sbPromise: ReturnType<typeof import("@/integrations/supabase/client")> | null = null;
+const sb = () => (_sbPromise ??= import("@/integrations/supabase/client")).then(m => m.supabase);
 
 export interface Tool {
   id: number;
@@ -75,7 +79,7 @@ export function useTools(options?: UseToolsOptions) {
     staleTime: 3 * 60 * 1000,
     queryFn: async () => {
       const sort = options?.sort ?? "stars";
-      let query = supabase
+      let query = (await sb())
         .from("tools")
         .select(TOOL_CARD_COLUMNS, { count: "exact" });
 
@@ -124,7 +128,7 @@ export function useToolCategories() {
     staleTime: 30 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (await sb())
         .from("tools")
         .select("parent_category_ja");
       if (error) throw error;
@@ -149,7 +153,7 @@ export function useToolStats() {
     staleTime: 60 * 60 * 1000,
     gcTime: 2 * 60 * 60 * 1000,
     queryFn: async () => {
-      // Parallel: count-only head query + lightweight data query
+      const supabase = await sb();
       const [headResult, dataResult] = await Promise.all([
         supabase.from("tools").select("*", { count: "exact", head: true }),
         supabase.from("tools").select("stars_num, parent_category_ja"),
