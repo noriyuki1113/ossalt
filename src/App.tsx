@@ -23,6 +23,7 @@ const QuizPage = lazy(() => import("./pages/Quiz"));
 const NewsPage = lazy(() => import("./pages/News"));
 const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
+const AdminAgentPage = lazy(() => import("./pages/AdminAgent"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
 const SponsorPage = lazy(() => import("./pages/Sponsor"));
@@ -95,6 +96,7 @@ const App = () => (
             <Route path="/news" element={<NewsPage />} />
             <Route path="/savings" element={<SavingsPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/agent" element={<AdminAgentPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />
             <Route path="/submit" element={<SubmitPage />} />
             <Route path="/sponsor" element={<SponsorPage />} />

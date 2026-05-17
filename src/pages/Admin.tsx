@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3 } from "lucide-react";
+import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3, Bot } from "lucide-react";
 
 interface SyncResult {
   message: string;
@@ -135,6 +136,23 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold mb-8">管理画面</h1>
 
         <AdminMetrics />
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Bot className="h-5 w-5" />
+              AIツールカード生成
+            </CardTitle>
+            <CardDescription>
+              GitHub URLを入力するだけで、Claudeがossalt用のツールカード下書きを自動生成します。
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button asChild className="w-full">
+              <Link to="/admin/agent">エージェントを起動する →</Link>
+            </Button>
+          </CardContent>
+        </Card>
 
         <Card>
           <CardHeader>
