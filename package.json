@@ -12,7 +12,9 @@
     "fetch-logos": "node scripts/fetch-logos.mjs",
     "fetch-logos:force": "node scripts/fetch-logos.mjs --force",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --project=local",
+    "test:e2e:prod": "playwright test --project=production"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

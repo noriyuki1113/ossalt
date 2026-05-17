@@ -40,14 +40,18 @@ interface DraftData {
   created_at?: string;
 }
 
-// ── ユーティリティ ──────────────────────────────────────────────────────────
-
-function arrToText(arr: string[] | null | undefined): string {
+// ── ユーティリティ（テスト用にエクスポート） ──────────────────────────────
+export function arrToText(arr: string[] | null | undefined): string {
   return (arr || []).join("\n");
 }
 
-function textToArr(text: string): string[] {
+export function textToArr(text: string): string[] {
   return text.split("\n").map(s => s.trim()).filter(Boolean);
+}
+
+export function isGitHubUrl(url: string): boolean {
+  try { return new URL(url).hostname.includes("github.com"); }
+  catch { return false; }
 }
 
 // ── DraftFormの1フィールド ──────────────────────────────────────────────────
