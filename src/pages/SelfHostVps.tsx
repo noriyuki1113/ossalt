@@ -70,6 +70,7 @@ const RELATED_TOOLS = [
 ];
 
 const SELFHOST_GUIDES = [
+  { slug: "coolify-selfhost-vps", name: "Coolify", desc: "Heroku/Vercel代替のPaaS。これ1つで他のOSSをまとめて管理" },
   { slug: "n8n-selfhost-vps", name: "n8n", desc: "Zapier代替のワークフロー自動化をセルフホスト" },
   { slug: "appflowy-selfhost-vps", name: "AppFlowy", desc: "Notion代替のワークスペースをセルフホスト" },
   { slug: "baserow-selfhost-vps", name: "Baserow", desc: "Airtable代替のノーコードDBをセルフホスト" },

@@ -39,6 +39,7 @@ const PlausibleSelfhostVpsGuide = lazy(() => import("./pages/PlausibleSelfhostVp
 const MetabaseSelfhostVpsGuide = lazy(() => import("./pages/MetabaseSelfhostVpsGuide"));
 const NocodbSelfhostVpsGuide = lazy(() => import("./pages/NocodbSelfhostVpsGuide"));
 const UmamiSelfhostVpsGuide = lazy(() => import("./pages/UmamiSelfhostVpsGuide"));
+const CoolifySelfhostVpsGuide = lazy(() => import("./pages/CoolifySelfhostVpsGuide"));
 const YearlyGuide = lazy(() => import("./pages/YearlyGuide"));
 
 const queryClient = new QueryClient({
@@ -80,6 +81,7 @@ const App = () => (
             <Route path="/guides/metabase-selfhost-vps" element={<MetabaseSelfhostVpsGuide />} />
             <Route path="/guides/nocodb-selfhost-vps" element={<NocodbSelfhostVpsGuide />} />
             <Route path="/guides/umami-selfhost-vps" element={<UmamiSelfhostVpsGuide />} />
+            <Route path="/guides/coolify-selfhost-vps" element={<CoolifySelfhostVpsGuide />} />
             <Route path="/guides/yearly/:slug" element={<YearlyGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
