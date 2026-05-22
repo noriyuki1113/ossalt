@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useState } from "react";
 import { track } from "@/lib/track";
@@ -52,6 +51,7 @@ export function PopularAlternatives() {
   const { data: groups } = useQuery({
     queryKey: ["popular-alternatives"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("id, name, primary_competitor, primary_competitor_ja, stars_num")

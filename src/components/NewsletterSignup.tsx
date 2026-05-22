@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/track";
-import { supabase } from "@/integrations/supabase/client";
 
 interface NewsletterSignupProps {
   className?: string;
@@ -24,6 +23,7 @@ export function NewsletterSignup({ className, compact = false }: NewsletterSignu
     setError("");
     setSubmitting(true);
 
+    const { supabase } = await import("@/integrations/supabase/client");
     const { error: dbError } = await supabase
       .from("newsletter_subscribers" as any)
       .insert({ email: trimmed } as any);
