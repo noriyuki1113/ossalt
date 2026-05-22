@@ -44,7 +44,7 @@ export function getGithubAvatarUrl(githubUrl: string | null | undefined): string
   try {
     const parts = new URL(githubUrl).pathname.split("/").filter(Boolean);
     if (parts.length > 0) return `https://github.com/${parts[0]}.png?size=64`;
-  } catch {}
+  } catch (_) { /* invalid URL */ }
   return null;
 }
 
