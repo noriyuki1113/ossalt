@@ -40,6 +40,9 @@ const MetabaseSelfhostVpsGuide = lazy(() => import("./pages/MetabaseSelfhostVpsG
 const NocodbSelfhostVpsGuide = lazy(() => import("./pages/NocodbSelfhostVpsGuide"));
 const UmamiSelfhostVpsGuide = lazy(() => import("./pages/UmamiSelfhostVpsGuide"));
 const CoolifySelfhostVpsGuide = lazy(() => import("./pages/CoolifySelfhostVpsGuide"));
+const NextcloudSelfhostVpsGuide = lazy(() => import("./pages/NextcloudSelfhostVpsGuide"));
+const VaultwardenSelfhostVpsGuide = lazy(() => import("./pages/VaultwardenSelfhostVpsGuide"));
+const GiteaSelfhostVpsGuide = lazy(() => import("./pages/GiteaSelfhostVpsGuide"));
 const YearlyGuide = lazy(() => import("./pages/YearlyGuide"));
 
 const queryClient = new QueryClient({
@@ -82,6 +85,9 @@ const App = () => (
             <Route path="/guides/nocodb-selfhost-vps" element={<NocodbSelfhostVpsGuide />} />
             <Route path="/guides/umami-selfhost-vps" element={<UmamiSelfhostVpsGuide />} />
             <Route path="/guides/coolify-selfhost-vps" element={<CoolifySelfhostVpsGuide />} />
+            <Route path="/guides/nextcloud-selfhost-vps" element={<NextcloudSelfhostVpsGuide />} />
+            <Route path="/guides/vaultwarden-selfhost-vps" element={<VaultwardenSelfhostVpsGuide />} />
+            <Route path="/guides/gitea-selfhost-vps" element={<GiteaSelfhostVpsGuide />} />
             <Route path="/guides/yearly/:slug" element={<YearlyGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />

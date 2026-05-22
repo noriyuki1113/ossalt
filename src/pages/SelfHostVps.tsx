@@ -71,6 +71,9 @@ const RELATED_TOOLS = [
 
 const SELFHOST_GUIDES = [
   { slug: "coolify-selfhost-vps", name: "Coolify", desc: "Heroku/Vercel代替のPaaS。これ1つで他のOSSをまとめて管理" },
+  { slug: "nextcloud-selfhost-vps", name: "Nextcloud", desc: "Google Drive代替のファイル共有・カレンダー・オフィス環境" },
+  { slug: "vaultwarden-selfhost-vps", name: "Vaultwarden", desc: "1Password/Bitwarden代替の超軽量パスワードマネージャー" },
+  { slug: "gitea-selfhost-vps", name: "Gitea", desc: "GitHub代替のセルフホストGitサービス。Issues・PR・CI対応" },
   { slug: "n8n-selfhost-vps", name: "n8n", desc: "Zapier代替のワークフロー自動化をセルフホスト" },
   { slug: "appflowy-selfhost-vps", name: "AppFlowy", desc: "Notion代替のワークスペースをセルフホスト" },
   { slug: "baserow-selfhost-vps", name: "Baserow", desc: "Airtable代替のノーコードDBをセルフホスト" },
