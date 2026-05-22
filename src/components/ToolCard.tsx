@@ -12,9 +12,9 @@ import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
 function getScorecardBadgeClass(score: number): string {
-  if (score >= 7) return "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30";
-  if (score >= 5) return "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30";
-  return "bg-red-50 text-red-700 border-red-200 dark:bg-red-500/15 dark:text-red-300 dark:border-red-500/30";
+  if (score >= 7) return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+  if (score >= 5) return "bg-amber-500/10 text-amber-400 border-amber-500/20";
+  return "bg-red-500/10 text-red-400 border-red-500/20";
 }
 
 function isInactive(tool: Tool): boolean {
@@ -24,11 +24,11 @@ function isInactive(tool: Tool): boolean {
 }
 
 function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
-  if (isInactive(tool)) return { text: "⚠️ 非活発", cls: "bg-zinc-100 text-zinc-600 border border-zinc-200 dark:bg-zinc-500/15 dark:text-zinc-400 dark:border-zinc-500/30" };
-  if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-500/15 dark:text-orange-300 dark:border-orange-500/30" };
+  if (isInactive(tool)) return { text: "⚠️ 非活発", cls: "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20" };
+  if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-500/10 text-orange-400 border border-orange-500/20" };
   if (tool.created_at) {
     const days = Math.floor((Date.now() - new Date(tool.created_at).getTime()) / 86400000);
-    if (days <= 30) return { text: "🆕 新着", cls: "bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30" };
+    if (days <= 30) return { text: "🆕 新着", cls: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" };
   }
   return null;
 }
@@ -106,7 +106,7 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
           </Badge>
         )}
         {tool.docker_available && (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5 text-sky-600 border-sky-200 bg-sky-50 dark:bg-sky-500/15 dark:text-sky-300 dark:border-sky-500/30">
+          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5 text-sky-400 border-sky-500/20 bg-sky-500/10">
             <Container className="h-2.5 w-2.5" />
             Docker
           </Badge>

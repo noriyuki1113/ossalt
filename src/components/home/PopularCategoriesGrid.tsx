@@ -4,16 +4,16 @@ import { useToolCategories } from "@/hooks/use-tools";
 import { track } from "@/lib/track";
 
 const CATEGORIES = [
-  { slug: "ai-ml",            label: "AI・ML",          icon: Brain,    color: "text-violet-500",  bg: "bg-violet-50 dark:bg-violet-950/30",  border: "border-violet-100 dark:border-violet-900/40" },
-  { slug: "developer-tools",  label: "開発ツール",      icon: Code2,    color: "text-blue-500",    bg: "bg-blue-50 dark:bg-blue-950/30",      border: "border-blue-100 dark:border-blue-900/40" },
-  { slug: "infrastructure",   label: "インフラ・運用",  icon: Server,   color: "text-orange-500",  bg: "bg-orange-50 dark:bg-orange-950/30",  border: "border-orange-100 dark:border-orange-900/40" },
-  { slug: "data-analytics",   label: "データ・分析",    icon: BarChart2,color: "text-cyan-500",    bg: "bg-cyan-50 dark:bg-cyan-950/30",      border: "border-cyan-100 dark:border-cyan-900/40" },
-  { slug: "content",          label: "コンテンツ",      icon: FileText, color: "text-green-500",   bg: "bg-green-50 dark:bg-green-950/30",    border: "border-green-100 dark:border-green-900/40" },
-  { slug: "productivity",     label: "生産性・便利",    icon: Zap,      color: "text-yellow-500",  bg: "bg-yellow-50 dark:bg-yellow-950/30",  border: "border-yellow-100 dark:border-yellow-900/40" },
-  { slug: "security",         label: "セキュリティ",    icon: Shield,   color: "text-red-500",     bg: "bg-red-50 dark:bg-red-950/30",        border: "border-red-100 dark:border-red-900/40" },
-  { slug: "community",        label: "コミュニティ",    icon: Users,    color: "text-pink-500",    bg: "bg-pink-50 dark:bg-pink-950/30",      border: "border-pink-100 dark:border-pink-900/40" },
-  { slug: "business",         label: "業務ソフト",      icon: Box,      color: "text-indigo-500",  bg: "bg-indigo-50 dark:bg-indigo-950/30",  border: "border-indigo-100 dark:border-indigo-900/40" },
-  { slug: "other",            label: "その他",          icon: ArrowRight,color: "text-slate-500", bg: "bg-slate-50 dark:bg-slate-950/30",    border: "border-slate-100 dark:border-slate-900/40" },
+  { slug: "ai-ml",           label: "AI・ML",         icon: Brain,     color: "text-violet-400",  bg: "bg-violet-500/10"  },
+  { slug: "developer-tools", label: "開発ツール",     icon: Code2,     color: "text-blue-400",    bg: "bg-blue-500/10"    },
+  { slug: "infrastructure",  label: "インフラ・運用", icon: Server,    color: "text-orange-400",  bg: "bg-orange-500/10"  },
+  { slug: "data-analytics",  label: "データ・分析",   icon: BarChart2, color: "text-cyan-400",    bg: "bg-cyan-500/10"    },
+  { slug: "content",         label: "コンテンツ",     icon: FileText,  color: "text-green-400",   bg: "bg-green-500/10"   },
+  { slug: "productivity",    label: "生産性・便利",   icon: Zap,       color: "text-yellow-400",  bg: "bg-yellow-500/10"  },
+  { slug: "security",        label: "セキュリティ",   icon: Shield,    color: "text-red-400",     bg: "bg-red-500/10"     },
+  { slug: "community",       label: "コミュニティ",   icon: Users,     color: "text-pink-400",    bg: "bg-pink-500/10"    },
+  { slug: "business",        label: "業務ソフト",     icon: Box,       color: "text-indigo-400",  bg: "bg-indigo-500/10"  },
+  { slug: "other",           label: "その他",         icon: ArrowRight, color: "text-slate-400", bg: "bg-slate-500/10"   },
 ];
 
 const JA_TO_SLUG: Record<string, string> = {
@@ -42,32 +42,33 @@ export function PopularCategoriesGrid() {
 
   return (
     <section id="categories" className="container py-14 md:py-20">
-      <div className="mb-6 text-center">
-        <h2 className="section-title">カテゴリから探す</h2>
-        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-          用途別にOSSを絞り込み。
-        </p>
+      <div className="mb-8 text-center">
+        <div className="section-badge-primary">
+          <span>カテゴリ</span>
+        </div>
+        <h2 className="section-title">どのSaaSを<span className="text-gradient">置き換えたい</span>？</h2>
+        <p className="section-subtitle">用途別にOSSを絞り込めます</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-        {CATEGORIES.map(({ slug, label, icon: Icon, color, bg, border }) => {
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        {CATEGORIES.map(({ slug, label, icon: Icon, color, bg }) => {
           const count = countMap[slug];
           return (
             <Link
               key={slug}
               to={`/category/${slug}`}
               onClick={() => track("category_click", { category: slug })}
-              className={`group flex items-center gap-3 rounded-xl border ${border} ${bg} px-3.5 py-3 hover:shadow-sm hover:scale-[1.02] active:scale-[0.99] transition-all duration-150 cursor-pointer touch-manipulation min-h-[56px]`}
+              className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_16px_40px_rgba(0,0,0,0.5)] transition-all duration-200"
             >
-              <div className={`shrink-0 ${color}`}>
-                <Icon className="h-4 w-4" />
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${bg} flex-shrink-0`}>
+                <Icon className={`h-5 w-5 ${color}`} />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground leading-tight truncate group-hover:text-primary transition-colors">
+                <p className="font-display font-semibold text-sm text-foreground leading-tight group-hover:text-primary transition-colors">
                   {label}
                 </p>
                 {count != null && (
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{count}件</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{count}件</p>
                 )}
               </div>
             </Link>

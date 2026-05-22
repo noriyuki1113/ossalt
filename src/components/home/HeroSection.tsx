@@ -1,5 +1,4 @@
 import { SearchBar } from "@/components/SearchBar";
-import { Search } from "lucide-react";
 import { track } from "@/lib/track";
 
 interface HeroSectionProps {
@@ -9,71 +8,85 @@ interface HeroSectionProps {
 }
 
 const QUICK_CHIPS = [
-  { label: "Notion", search: "Notion" },
-  { label: "Slack", search: "Slack" },
-  { label: "Zapier", search: "Zapier" },
-  { label: "GA", search: "Google Analytics" },
-  { label: "Figma", search: "Figma" },
-  { label: "Jira", search: "Jira" },
+  { label: "Notion代替", search: "Notion" },
+  { label: "Airtable代替", search: "Airtable" },
+  { label: "Google Analytics代替", search: "Google Analytics" },
+  { label: "Slack代替", search: "Slack" },
+  { label: "Zapier代替", search: "Zapier" },
+  { label: "Figma代替", search: "Figma" },
 ];
 
 export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden">
-      {/* Background accent blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-8 left-1/4 w-[400px] h-[400px] bg-primary/[0.07] rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-accent/[0.06] rounded-full blur-[90px]" />
+    <section className="relative overflow-hidden flex items-center min-h-[88vh] md:min-h-[80vh]">
+      {/* Mesh gradient blobs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-20 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-primary/[0.13] rounded-full blur-[130px] animate-float" />
+        <div className="absolute -top-20 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-accent/[0.10] rounded-full blur-[110px] animate-float [animation-delay:2.5s]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-blue-600/[0.06] rounded-full blur-[100px]" />
       </div>
 
-      <div className="container relative pt-12 pb-8 md:pt-28 md:pb-24 text-center px-4">
-        {/* Headline — visible on all breakpoints */}
-        <h1 className="text-[1.75rem] md:text-5xl font-black leading-[1.15] text-foreground">
-          有料SaaSの代わりに使えるOSSを探す
+      <div className="container relative z-10 py-20 md:py-28 text-center">
+        {/* Eyebrow */}
+        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-full px-4 py-1.5 mb-8">
+          <span
+            className="w-1.5 h-1.5 bg-green-500 rounded-full"
+            style={{ boxShadow: "0 0 6px #22c55e" }}
+          />
+          <span className="text-xs text-primary font-medium tracking-wide">280+ OSSツールを収録</span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto">
+          高額SaaSを<br />
+          <span className="text-gradient">OSSで代替する</span><br />
+          最短ルートを探す
         </h1>
-        <p className="text-sm md:text-base text-muted-foreground mt-3 md:mt-3 leading-relaxed max-w-md md:max-w-xl mx-auto">
-          Notion・Zapier・Figmaなどの代替OSSを、
-          <br className="hidden sm:inline" />
-          日本語で検索・比較できます。
+
+        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-10">
+          Notion・Airtable・Google Analytics…<br />
+          使い続けるのか、OSSに切り替えるのか。<br />
+          日本語で比較・検討できる唯一のディレクトリ。
         </p>
 
-        {/* Search bar — the hero */}
-        <div className="mt-5 md:mt-10 max-w-[640px] mx-auto">
+        {/* Search */}
+        <div className="max-w-[620px] mx-auto mb-5">
           <SearchBar
             value={search}
             onChange={onSearchChange}
-            placeholder="Notion の代替を探す…"
+            placeholder="「Notion 代替」「セルフホスト」「無料 BI」など..."
             size="hero"
-            onSubmit={() => {
-              track("hero_search", { keyword: search });
-              const el = document.getElementById("popular-alternatives");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
+            onSubmit={() => track("hero_search", { keyword: search })}
           />
+        </div>
 
-          {/* Quick chips */}
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5 md:gap-2">
-            <span className="text-[11px] text-muted-foreground/50 mr-0.5 flex items-center gap-0.5">
-              <Search className="h-2.5 w-2.5" />
-              人気:
-            </span>
-            {QUICK_CHIPS.map((chip) => (
-              <button
-                key={chip.label}
-                onClick={() => { track("quick_chip_click", { chip: chip.label }); onSearchChange(chip.search); }}
-                className="text-[11px] md:text-xs px-2.5 py-1 rounded-full border border-border bg-card text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all"
-              >
-                {chip.label}
-              </button>
-            ))}
-          </div>
+        {/* Tag pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {QUICK_CHIPS.map((chip) => (
+            <button
+              key={chip.label}
+              onClick={() => {
+                track("quick_chip_click", { chip: chip.label });
+                onSearchChange(chip.search);
+              }}
+              className="inline-flex items-center rounded-full border border-border bg-card px-3.5 py-1.5 text-xs text-muted-foreground hover:border-primary/50 hover:bg-primary/[0.06] hover:text-primary hover:-translate-y-0.5 transition-all duration-150"
+            >
+              {chip.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Value badges */}
-          <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-muted-foreground">
-            <span>✓ 完全無料</span>
-            <span>✓ 日本語対応</span>
-            <span>✓ OSS限定</span>
-          </div>
+        {/* Value props */}
+        <div className="flex items-center justify-center gap-6 mt-8 text-xs text-muted-foreground/50">
+          <span className="flex items-center gap-1.5">
+            <span className="text-green-500/80">✓</span> 完全無料
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-green-500/80">✓</span> 日本語対応
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-green-500/80">✓</span> OSS限定
+          </span>
         </div>
       </div>
     </section>
