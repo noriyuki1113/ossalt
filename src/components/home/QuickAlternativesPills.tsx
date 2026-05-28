@@ -11,8 +11,8 @@ const PILLS = [
 
 export function QuickAlternativesPills() {
   return (
-    <section className="container pt-4 pb-2">
-      <div className="flex gap-2 overflow-x-auto sm:flex-wrap sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+    <section className="container pt-4 pb-2 min-h-[52px]">
+      <div className="flex gap-2 overflow-x-auto sm:flex-wrap sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide min-h-[34px]">
         {PILLS.map((p) => (
           <Link
             key={p.slug}
