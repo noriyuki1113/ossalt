@@ -116,7 +116,7 @@ export function useTools(options?: UseToolsOptions) {
 
       const { data, error, count } = await query;
       if (error) throw error;
-      return { tools: (data as Tool[]) || [], totalCount: count || 0 };
+      return { tools: (data as unknown as Tool[]) || [], totalCount: count || 0 };
     },
   });
 }
