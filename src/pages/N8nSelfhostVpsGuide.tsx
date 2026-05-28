@@ -241,6 +241,13 @@ export default function N8nSelfhostVpsGuide() {
         </div>
       </section>
 
+      {/* HTTPS化 */}
+      <HttpsCaddySection
+        domain="n8n.example.com"
+        upstream="n8n:5678"
+        note="WebhookエンドポイントもHTTPS必須です。Caddyを経由させることで、外部サービスからのWebhook受信もそのまま動作します。"
+      />
+
       {/* Operations */}
       <Section title="運用時の注意点">
         <ul className="space-y-2 list-disc pl-5">
