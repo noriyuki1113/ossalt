@@ -129,7 +129,7 @@ class SupabaseSearchClient implements SearchClient {
     if (error) throw error;
 
     return {
-      hits: (data as ToolSearchHit[]) || [],
+      hits: (data as unknown as ToolSearchHit[]) || [],
       totalCount: count || 0,
       backend: "supabase",
     };
