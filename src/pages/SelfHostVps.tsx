@@ -81,6 +81,10 @@ const SELFHOST_GUIDES = [
   { slug: "metabase-selfhost-vps", name: "Metabase", desc: "Tableau代替のBIダッシュボードをセルフホスト" },
   { slug: "nocodb-selfhost-vps", name: "NocoDB", desc: "Airtable代替のノーコードDBをセルフホスト" },
   { slug: "umami-selfhost-vps", name: "Umami", desc: "Google Analytics代替の軽量解析をセルフホスト" },
+  { slug: "mattermost-selfhost-vps", name: "Mattermost", desc: "Slack代替のチームチャットをセルフホスト" },
+  { slug: "vikunja-selfhost-vps", name: "Vikunja", desc: "Asana/Todoist代替の軽量タスク管理をセルフホスト" },
+  { slug: "plane-selfhost-vps", name: "Plane", desc: "Jira代替のプロジェクト管理をセルフホスト" },
+  { slug: "outline-selfhost-vps", name: "Outline", desc: "Confluence/Notion代替のナレッジベースをセルフホスト" },
 ];
 
 const FAQ = [

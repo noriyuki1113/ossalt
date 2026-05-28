@@ -43,6 +43,10 @@ const CoolifySelfhostVpsGuide = lazy(() => import("./pages/CoolifySelfhostVpsGui
 const NextcloudSelfhostVpsGuide = lazy(() => import("./pages/NextcloudSelfhostVpsGuide"));
 const VaultwardenSelfhostVpsGuide = lazy(() => import("./pages/VaultwardenSelfhostVpsGuide"));
 const GiteaSelfhostVpsGuide = lazy(() => import("./pages/GiteaSelfhostVpsGuide"));
+const MattermostSelfhostVpsGuide = lazy(() => import("./pages/MattermostSelfhostVpsGuide"));
+const VikunjaSelfhostVpsGuide = lazy(() => import("./pages/VikunjaSelfhostVpsGuide"));
+const PlaneSelfhostVpsGuide = lazy(() => import("./pages/PlaneSelfhostVpsGuide"));
+const OutlineSelfhostVpsGuide = lazy(() => import("./pages/OutlineSelfhostVpsGuide"));
 const YearlyGuide = lazy(() => import("./pages/YearlyGuide"));
 
 const queryClient = new QueryClient({
@@ -88,6 +92,10 @@ const App = () => (
             <Route path="/guides/nextcloud-selfhost-vps" element={<NextcloudSelfhostVpsGuide />} />
             <Route path="/guides/vaultwarden-selfhost-vps" element={<VaultwardenSelfhostVpsGuide />} />
             <Route path="/guides/gitea-selfhost-vps" element={<GiteaSelfhostVpsGuide />} />
+            <Route path="/guides/mattermost-selfhost-vps" element={<MattermostSelfhostVpsGuide />} />
+            <Route path="/guides/vikunja-selfhost-vps" element={<VikunjaSelfhostVpsGuide />} />
+            <Route path="/guides/plane-selfhost-vps" element={<PlaneSelfhostVpsGuide />} />
+            <Route path="/guides/outline-selfhost-vps" element={<OutlineSelfhostVpsGuide />} />
             <Route path="/guides/yearly/:slug" element={<YearlyGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />
