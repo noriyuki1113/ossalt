@@ -85,7 +85,7 @@ export default function YearlyGuide() {
         .eq("primary_competitor", competitor!)
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
-      return (data as Tool[]) || [];
+      return (data as unknown as Tool[]) || [];
     },
     enabled: !!competitor,
     staleTime: 10 * 60 * 1000,

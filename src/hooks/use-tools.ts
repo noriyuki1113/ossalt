@@ -3,7 +3,7 @@ import { CATEGORY_MAP } from "@/components/CategoryFilter";
 
 // Dynamic import breaks supabase out of the initial modulepreload chain.
 // The promise is cached after first resolution so repeated calls are free.
-let _sbPromise: ReturnType<typeof import("@/integrations/supabase/client")> | null = null;
+let _sbPromise: Promise<typeof import("@/integrations/supabase/client")> | null = null;
 const sb = () => (_sbPromise ??= import("@/integrations/supabase/client")).then(m => m.supabase);
 
 export interface Tool {
