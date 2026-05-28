@@ -37,13 +37,13 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         </div>
 
         {/* Headline */}
-        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto">
+        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto min-h-[8.4rem] sm:min-h-[11rem] md:min-h-[14rem]">
           高額SaaSを<br />
           <span className="text-gradient">OSSで代替する</span><br />
           最短ルートを探す
         </h1>
 
-        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-10">
+        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-10 min-h-[4.5rem] md:min-h-[5.5rem]">
           Notion・Airtable・Google Analytics…<br />
           使い続けるのか、OSSに切り替えるのか。<br />
           日本語で比較・検討できる唯一のディレクトリ。
