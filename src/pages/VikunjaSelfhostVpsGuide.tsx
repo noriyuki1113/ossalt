@@ -70,10 +70,10 @@ const config: SelfHostGuideConfig = {
     { q: "Notion / AppFlowy のようにドキュメントも管理できますか？", a: "Vikunjaはタスク管理に特化しています。ドキュメントもまとめたい場合はAppFlowy、スプリント管理が必要ならPlaneを検討してください。" },
   ],
   related: [
-    { name: "Vikunja", desc: "本記事の対象ツール", href: "/alternatives/asana" },
+    { name: "Vikunja", desc: "本記事の対象ツール", href: "/tools/213" },
     { name: "Asana の代替を比較", desc: "Asana代替OSSをまとめて見る", href: "/alternatives/asana" },
     { name: "AppFlowy", desc: "Notion代替。ドキュメント+タスク統合", href: "/tools/185" },
-    { name: "Plane", desc: "Jira代替。スプリント管理が必要なら", href: "/alternatives/jira" },
+    { name: "Plane", desc: "Jira代替。スプリント管理が必要なら", href: "/tools/204" },
   ],
   relatedGuides: [
     { slug: "appflowy-selfhost-vps", title: "AppFlowyをVPSでセルフホストする方法", desc: "Notion代替。ドキュメント中心のワークスペース" },

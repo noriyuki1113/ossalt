@@ -107,9 +107,9 @@ const config: SelfHostGuideConfig = {
     { q: "MinIOの代わりにS3を使えますか？", a: "はい、環境変数でAWS S3やCloudflare R2などS3互換ストレージを指定できます。" },
   ],
   related: [
-    { name: "Plane", desc: "本記事の対象ツール", href: "/alternatives/jira" },
+    { name: "Plane", desc: "本記事の対象ツール", href: "/tools/204" },
     { name: "Jira の代替を比較", desc: "Jira代替OSSをまとめて見る", href: "/alternatives/jira" },
-    { name: "Vikunja", desc: "もっとシンプルなタスク管理がいいなら", href: "/alternatives/asana" },
+    { name: "Vikunja", desc: "もっとシンプルなタスク管理がいいなら", href: "/tools/213" },
     { name: "Gitea", desc: "コード+Issueを統合したいなら", href: "/tools" },
   ],
   relatedGuides: [
