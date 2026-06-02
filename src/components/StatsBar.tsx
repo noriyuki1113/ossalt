@@ -31,7 +31,7 @@ export function StatsBar() {
         <StatCell
           icon={Server}
           label="セルフホストガイド"
-          value={7}
+          value={15}
           isStatic
         />
       </div>
