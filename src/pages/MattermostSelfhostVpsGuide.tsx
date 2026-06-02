@@ -90,9 +90,9 @@ const config: SelfHostGuideConfig = {
     { q: "音声通話はできますか？", a: "Calls プラグインで音声・画面共有が可能ですが、別途TURNサーバーの設定が必要です。" },
   ],
   related: [
-    { name: "Mattermost", desc: "Slack代替の本記事ツール", href: "/alternatives/slack" },
-    { name: "Rocket.Chat", desc: "もう一つの主要なSlack代替OSS", href: "/alternatives/slack" },
-    { name: "Zulip", desc: "スレッド中心のSlack代替", href: "/alternatives/slack" },
+    { name: "Mattermost", desc: "Slack代替の本記事ツール", href: "/tools/228" },
+    { name: "Rocket.Chat", desc: "もう一つの主要なSlack代替OSS", href: "/tools/232" },
+    { name: "Zulip", desc: "スレッド中心のSlack代替", href: "/tools/241" },
     { name: "Slack の代替を比較", desc: "Slack代替OSSをまとめて見る", href: "/alternatives/slack" },
   ],
   relatedGuides: [

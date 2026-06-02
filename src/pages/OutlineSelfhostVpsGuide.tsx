@@ -99,7 +99,7 @@ const config: SelfHostGuideConfig = {
     { q: "Notionからデータを移行できますか？", a: "Notion からのMarkdown ZIPエクスポートをインポートできますが、データベース構造などは完全には移行できません。" },
   ],
   related: [
-    { name: "Outline", desc: "本記事の対象ツール", href: "/tools/421" },
+    { name: "Outline", desc: "本記事の対象ツール", href: "/tools/303" },
     { name: "AppFlowy", desc: "Notion代替。ローカルファースト系", href: "/tools/185" },
     { name: "Notion の代替を比較", desc: "Notion代替OSSをまとめて見る", href: "/alternatives/notion" },
     { name: "n8n", desc: "Outline + Slack連携を自動化", href: "/tools/415" },
