@@ -32,3 +32,8 @@ jobs:
             echo "Edge Function returned error status: $HTTP_STATUS"
             exit 1
           fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::fetch-github-stats Edge Function failed. Check Supabase logs."

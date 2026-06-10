@@ -399,6 +399,14 @@ export async function getPrerenderRoutes() {
     });
   }
 
+  // 404 page (noindex — for Vercel's fallback HTML)
+  routes.push({
+    path: "/404",
+    title: `ページが見つかりません（404） | ${SITE_NAME}`,
+    description: "お探しのページは存在しないか、移動した可能性があります。",
+    canonical: `${BASE_URL}/404`,
+  });
+
   // Selfhost VPS hub page
   routes.push({
     path: "/selfhost-vps",

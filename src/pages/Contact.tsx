@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
-import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
@@ -20,14 +19,26 @@ import { Send } from "lucide-react";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 import { track } from "@/lib/track";
 
-const contactSchema = z.object({
-  name: z.string().max(100).optional(),
-  email: z.string().trim().email("有効なメールアドレスを入力してください").max(320),
-  category: z.string().min(1),
-  message: z.string().trim().min(1, "メッセージを入力してください").max(5000, "メッセージは5000文字以内で入力してください"),
-});
-
 const CATEGORIES = ["掲載内容の誤り", "ツールの追加リクエスト", "その他"] as const;
+
+function validate(form: { name: string; email: string; category: string; message: string }) {
+  const errors: Record<string, string> = {};
+  if (form.email) {
+    const trimmed = form.email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      errors.email = "有効なメールアドレスを入力してください";
+    } else if (trimmed.length > 320) {
+      errors.email = "メールアドレスが長すぎます";
+    }
+  }
+  const msg = form.message.trim();
+  if (!msg) {
+    errors.message = "メッセージを入力してください";
+  } else if (msg.length > 5000) {
+    errors.message = "メッセージは5000文字以内で入力してください";
+  }
+  return errors;
+}
 
 export default function ContactPage() {
   useSeo({
@@ -45,13 +56,8 @@ export default function ContactPage() {
     e.preventDefault();
     setErrors({});
 
-    const result = contactSchema.safeParse(form);
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.issues.forEach((issue) => {
-        const key = issue.path[0] as string;
-        fieldErrors[key] = issue.message;
-      });
+    const fieldErrors = validate(form);
+    if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
     }
