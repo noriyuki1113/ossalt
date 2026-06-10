@@ -110,7 +110,7 @@ const config: SelfHostGuideConfig = {
     { name: "Plane", desc: "本記事の対象ツール", href: "/tools/204" },
     { name: "Jira の代替を比較", desc: "Jira代替OSSをまとめて見る", href: "/alternatives/jira" },
     { name: "Vikunja", desc: "もっとシンプルなタスク管理がいいなら", href: "/tools/213" },
-    { name: "Gitea", desc: "コード+Issueを統合したいなら", href: "/tools" },
+    { name: "Gitea", desc: "コード+Issueを統合したいなら", href: "/tools/453" },
   ],
   relatedGuides: [
     { slug: "vikunja-selfhost-vps", title: "VikunjaをVPSでセルフホストする方法", desc: "もっと軽量なタスク管理OSS" },
