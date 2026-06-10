@@ -21,7 +21,7 @@ export default defineConfig({
       testMatch: /(admin-agent|guides)\.spec\.ts/,
       use: {
         baseURL: 'http://localhost:8080',
-        ...devices['iPhone 14'],
+        ...devices['Pixel 5'],
       },
     },
   ],
