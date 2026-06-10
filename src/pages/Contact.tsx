@@ -98,6 +98,7 @@ export default function ContactPage() {
     } finally {
       setSubmitting(false);
     }
+  };
 
   if (submitted) {
     return (

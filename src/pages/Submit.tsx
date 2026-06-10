@@ -108,6 +108,7 @@ export default function Submit() {
     } finally {
       setSubmitting(false);
     }
+  };
 
   if (submitted) {
     return (
