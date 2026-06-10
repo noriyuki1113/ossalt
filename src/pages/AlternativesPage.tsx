@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, ChevronRight, Star, CheckCircle2, Users, Server, Zap, Shield, Settings, HelpCircle, ExternalLink } from "lucide-react";
 import { track } from "@/lib/track";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
@@ -146,6 +145,7 @@ export default function AlternativesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["alternatives-page", competitor],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select(TOOL_CARD_COLUMNS)

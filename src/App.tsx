@@ -8,7 +8,7 @@ const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default:
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Index from "./pages/Index";
+const Index = lazy(() => import("./pages/Index"));
 
 const ToolDetail = lazy(() => import("./pages/ToolDetail"));
 const About = lazy(() => import("./pages/About"));

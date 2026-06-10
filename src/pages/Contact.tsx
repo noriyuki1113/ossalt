@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
@@ -63,6 +62,7 @@ export default function ContactPage() {
     }
 
     setSubmitting(true);
+    const { supabase } = await import("@/integrations/supabase/client");
     const { error } = await supabase.from("contacts").insert({
       name: form.name || null,
       email: form.email,

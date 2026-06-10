@@ -11,7 +11,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
 import {
   CheckCircle2, ArrowRight, Star, Zap, Megaphone,
   Mail, Clock, AlertTriangle, ArrowLeft,
@@ -79,6 +78,7 @@ export default function Submit() {
     }
     setSubmitting(true);
 
+    const { supabase } = await import("@/integrations/supabase/client");
     const { error: dbError } = await supabase.from("listing_requests").insert({
       name: form.name.trim(),
       website_url: form.website_url.trim(),

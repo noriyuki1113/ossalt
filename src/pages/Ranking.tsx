@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Star, ArrowLeft, Trophy, Flame, Crown } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -199,6 +198,7 @@ function OverallTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-overall"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -230,6 +230,7 @@ function CategoryTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-category", category],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -279,6 +280,7 @@ function TrendingTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-trending"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -308,21 +310,28 @@ function AnnualBestTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-annual-best"],
     queryFn: async () => {
-      // Fetch top tools per category — get enough to cover all categories
-      const results: { category: string; tools: Tool[] }[] = [];
-      for (const cat of CATEGORIES) {
-        const { data, error } = await supabase
-          .from("tools")
-          .select("*")
-          .eq("parent_category_ja", cat)
-          .order("stars_num", { ascending: false, nullsFirst: false })
-          .limit(3);
-        if (error) throw error;
-        if (data && data.length > 0) {
-          results.push({ category: cat, tools: data as Tool[] });
+      const { supabase } = await import("@/integrations/supabase/client");
+      // Single query for all categories, then group client-side
+      const { data, error } = await supabase
+        .from("tools")
+        .select("*")
+        .in("parent_category_ja", CATEGORIES)
+        .not("parent_category_ja", "is", null)
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .limit(150);
+      if (error) throw error;
+      const grouped = new Map<string, Tool[]>();
+      for (const tool of (data as Tool[])) {
+        if (!tool.parent_category_ja) continue;
+        const arr = grouped.get(tool.parent_category_ja) ?? [];
+        if (arr.length < 3) {
+          arr.push(tool);
+          grouped.set(tool.parent_category_ja, arr);
         }
       }
-      return results;
+      return CATEGORIES
+        .filter((cat) => grouped.has(cat))
+        .map((cat) => ({ category: cat, tools: grouped.get(cat)! }));
     },
   });
 

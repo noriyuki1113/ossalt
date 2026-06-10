@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, RotateCcw, Star, Sparkles } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -190,6 +189,7 @@ export default function QuizPage() {
   const { data: results, isLoading } = useQuery({
     queryKey: ["quiz-results", uniqueCategories, targetCompetitors],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       // Strategy: try competitor match first, then category match
       let tools: Tool[] = [];
 

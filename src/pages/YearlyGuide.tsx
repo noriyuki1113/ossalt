@@ -24,7 +24,6 @@ import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { ToolCardSkeleton } from "@/components/ToolCard";
 import { useSeo } from "@/hooks/use-seo";
-import { supabase } from "@/integrations/supabase/client";
 import { formatCount } from "@/lib/format";
 import { track } from "@/lib/track";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -79,6 +78,7 @@ export default function YearlyGuide() {
   const { data, isLoading } = useQuery({
     queryKey: ["yearly-guide", competitor],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, primary_competitor_ja, stars_num, language, license, forks_num, last_commit, scorecard_score, docker_available, created_at")
