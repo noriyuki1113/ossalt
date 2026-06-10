@@ -91,25 +91,67 @@ Deno.serve(async () => {
     <loc>${BASE_URL}/guides/n8n-selfhost-vps</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${BASE_URL}/guides/appflowy-selfhost-vps</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${BASE_URL}/guides/baserow-selfhost-vps</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${BASE_URL}/guides/plausible-selfhost-vps</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/coolify-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/nextcloud-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/vaultwarden-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/gitea-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/metabase-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/nocodb-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/umami-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>${BASE_URL}/about</loc>
@@ -150,7 +192,8 @@ Deno.serve(async () => {
     "intercom","retool","postman","webflow","evernote","chatgpt","devin",
     "stripe-billing","pinecone","bitly","canny","zendesk",
     "linear","asana","confluence","sentry","miro","mixpanel","hubspot",
-    "clickup","pagerduty","sendgrid",
+    "clickup","pagerduty","sendgrid","heroku","calendly","mailchimp",
+    "discord","monday","loom","vercel","doodle","github-actions","circleci",
   ];
   for (const slug of altSlugs) {
     xml += `

@@ -4,8 +4,8 @@
   "description": "有料SaaSの代替となるオープンソースツールを日本語で検索・比較",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8f9fb",
-  "theme_color": "#2f9e8f",
+  "background_color": "#09090b",
+  "theme_color": "#6366f1",
   "icons": [
     {
       "src": "/favicon-32x32.png",
