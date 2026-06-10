@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +7,7 @@ const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ defaul
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { NavigationProgress } from "@/components/NavigationProgress";
 import { ThemeProvider } from "@/components/ThemeProvider";
 const Index = lazy(() => import("./pages/Index"));
 
@@ -67,6 +68,18 @@ const queryClient = new QueryClient({
   },
 });
 
+// Preload common page chunks after initial render to eliminate navigation freeze
+function IdlePreloader() {
+  useEffect(() => {
+    const id = setTimeout(() => {
+      void import("./pages/ToolDetail");
+      void import("./pages/AlternativesPage");
+    }, 3000);
+    return () => clearTimeout(id);
+  }, []);
+  return null;
+}
+
 const App = () => (
   <ThemeProvider>
   <QueryClientProvider client={queryClient}>
@@ -75,6 +88,8 @@ const App = () => (
       <Suspense fallback={null}><Sonner /></Suspense>
       <BrowserRouter>
         <ScrollToTop />
+        <NavigationProgress />
+        <IdlePreloader />
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
           <Routes>
             <Route path="/" element={<Index />} />

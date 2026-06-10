@@ -44,6 +44,7 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
       to={`/tools/${tool.id}`}
       className="group card-unified-hover p-5 flex flex-col relative animate-fade-in-up"
       style={{ animationDelay: `${Math.min(index * 40, 400)}ms`, animationFillMode: "both" }}
+      onMouseEnter={() => { void import("@/pages/ToolDetail"); }}
     >
       {highlightLabel && (
         <span className={`absolute -top-2.5 right-4 text-[10px] font-bold px-2 py-0.5 rounded-full ${highlightLabel.cls}`}>
