@@ -18,7 +18,7 @@ export default defineConfig({
     // ローカル dev server 向け（admin/agent テスト）
     {
       name: 'local',
-      testMatch: /admin-agent\.spec\.ts/,
+      testMatch: /(admin-agent|guides)\.spec\.ts/,
       use: {
         baseURL: 'http://localhost:8080',
         ...devices['iPhone 14'],
