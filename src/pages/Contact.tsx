@@ -22,13 +22,13 @@ const CATEGORIES = ["掲載内容の誤り", "ツールの追加リクエスト"
 
 function validate(form: { name: string; email: string; category: string; message: string }) {
   const errors: Record<string, string> = {};
-  if (form.email) {
-    const trimmed = form.email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      errors.email = "有効なメールアドレスを入力してください";
-    } else if (trimmed.length > 320) {
-      errors.email = "メールアドレスが長すぎます";
-    }
+  const trimmedEmail = form.email.trim();
+  if (!trimmedEmail) {
+    errors.email = "メールアドレスを入力してください";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    errors.email = "有効なメールアドレスを入力してください";
+  } else if (trimmedEmail.length > 320) {
+    errors.email = "メールアドレスが長すぎます";
   }
   const msg = form.message.trim();
   if (!msg) {
@@ -62,38 +62,42 @@ export default function ContactPage() {
     }
 
     setSubmitting(true);
-    const { supabase } = await import("@/integrations/supabase/client");
-    const { error } = await supabase.from("contacts").insert({
-      name: form.name || null,
-      email: form.email,
-      category: form.category,
-      message: form.message,
-    });
-    setSubmitting(false);
-
-    if (error) {
-      toast.error("送信に失敗しました。もう一度お試しください。");
-      return;
-    }
-
-    // Send email notification (fire-and-forget, DB save already succeeded)
-    supabase.functions.invoke("send-contact-email", {
-      body: {
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.from("contacts").insert({
         name: form.name || null,
         email: form.email,
         category: form.category,
         message: form.message,
-        inquiry_type: "contact",
-      },
-    }).then(({ data, error: fnErr }) => {
-      if (fnErr) console.error("Email notification failed:", fnErr);
-      else console.log("Email notification result:", data);
-    });
+      });
 
-    setSubmitted(true);
-    track("form_submit", { form: "contact", category: form.category });
-    toast.success("お問い合わせを送信しました。");
-  };
+      if (error) {
+        toast.error("送信に失敗しました。もう一度お試しください。");
+        return;
+      }
+
+      // Send email notification (fire-and-forget, DB save already succeeded)
+      supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: form.name || null,
+          email: form.email,
+          category: form.category,
+          message: form.message,
+          inquiry_type: "contact",
+        },
+      }).then(({ data, error: fnErr }) => {
+        if (fnErr) console.error("Email notification failed:", fnErr);
+        else console.log("Email notification result:", data);
+      });
+
+      setSubmitted(true);
+      track("form_submit", { form: "contact", category: form.category });
+      toast.success("お問い合わせを送信しました。");
+    } catch {
+      toast.error("送信に失敗しました。もう一度お試しください。");
+    } finally {
+      setSubmitting(false);
+    }
 
   if (submitted) {
     return (

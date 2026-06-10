@@ -5,7 +5,6 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
 import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3, Bot } from "lucide-react";
 
 interface SyncResult {
@@ -30,6 +29,7 @@ function AdminMetrics() {
   const { data: toolCount } = useQuery({
     queryKey: ["admin-tool-count"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { count } = await supabase.from("tools").select("*", { count: "exact", head: true });
       return count || 0;
     },
@@ -37,6 +37,7 @@ function AdminMetrics() {
   const { data: subscriberCount } = useQuery({
     queryKey: ["admin-subscriber-count"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { count } = await supabase.from("newsletter_subscribers" as any).select("*", { count: "exact", head: true });
       return count || 0;
     },
@@ -44,6 +45,7 @@ function AdminMetrics() {
   const { data: listingCount } = useQuery({
     queryKey: ["admin-listing-count"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { count } = await supabase.from("listing_requests").select("*", { count: "exact", head: true });
       return count || 0;
     },
@@ -51,6 +53,7 @@ function AdminMetrics() {
   const { data: leadCount } = useQuery({
     queryKey: ["admin-lead-count"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { count } = await supabase.from("monetization_leads").select("*", { count: "exact", head: true });
       return count || 0;
     },
@@ -105,6 +108,7 @@ export default function AdminPage() {
     setResult(null);
     setError(null);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error: fnError } = await supabase.functions.invoke("sync-openalternative");
       if (fnError) throw fnError;
       setResult(data as SyncResult);
@@ -120,6 +124,7 @@ export default function AdminPage() {
     setRefineResult(null);
     setRefineError(null);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error: fnError } = await supabase.functions.invoke("refine-alternatives");
       if (fnError) throw fnError;
       setRefineResult(data as RefineResult);

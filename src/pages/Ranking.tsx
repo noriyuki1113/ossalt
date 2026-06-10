@@ -311,27 +311,20 @@ function AnnualBestTab() {
     queryKey: ["ranking-annual-best"],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
-      // Single query for all categories, then group client-side
-      const { data, error } = await supabase
-        .from("tools")
-        .select("*")
-        .in("parent_category_ja", CATEGORIES)
-        .not("parent_category_ja", "is", null)
-        .order("stars_num", { ascending: false, nullsFirst: false })
-        .limit(150);
-      if (error) throw error;
-      const grouped = new Map<string, Tool[]>();
-      for (const tool of (data as Tool[])) {
-        if (!tool.parent_category_ja) continue;
-        const arr = grouped.get(tool.parent_category_ja) ?? [];
-        if (arr.length < 3) {
-          arr.push(tool);
-          grouped.set(tool.parent_category_ja, arr);
-        }
-      }
-      return CATEGORIES
-        .filter((cat) => grouped.has(cat))
-        .map((cat) => ({ category: cat, tools: grouped.get(cat)! }));
+      // Parallel per-category queries — guarantees top-3 for every category
+      const categoryResults = await Promise.all(
+        CATEGORIES.map(async (cat) => {
+          const { data, error } = await supabase
+            .from("tools")
+            .select("*")
+            .eq("parent_category_ja", cat)
+            .order("stars_num", { ascending: false, nullsFirst: false })
+            .limit(3);
+          if (error) throw error;
+          return { category: cat, tools: (data as Tool[]) || [] };
+        })
+      );
+      return categoryResults.filter((r) => r.tools.length > 0);
     },
   });
 

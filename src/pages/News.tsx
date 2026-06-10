@@ -141,27 +141,20 @@ export default function NewsPage() {
     queryKey: ["news-category-picks"],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
-      // Single query: top 10 per category, pick randomly client-side
-      const { data } = await supabase
-        .from("tools")
-        .select("*")
-        .in("parent_category_ja", CATEGORIES)
-        .not("parent_category_ja", "is", null)
-        .order("stars_num", { ascending: false, nullsFirst: false })
-        .limit(120);
-      if (!data) return [];
-      const grouped = new Map<string, Tool[]>();
-      for (const tool of data as Tool[]) {
-        if (!tool.parent_category_ja) continue;
-        const arr = grouped.get(tool.parent_category_ja) ?? [];
-        if (arr.length < 12) { arr.push(tool); grouped.set(tool.parent_category_ja, arr); }
-      }
-      return CATEGORIES
-        .filter((cat) => grouped.has(cat))
-        .map((cat) => {
-          const arr = grouped.get(cat)!;
-          return { category: cat, tool: arr[Math.floor(Math.random() * arr.length)] };
-        });
+      // Parallel per-category queries — guarantees every category is represented
+      const results = await Promise.all(
+        CATEGORIES.map(async (cat) => {
+          const { data } = await supabase
+            .from("tools")
+            .select("*")
+            .eq("parent_category_ja", cat)
+            .order("stars_num", { ascending: false, nullsFirst: false })
+            .limit(15);
+          if (!data?.length) return null;
+          return { category: cat, tool: (data as Tool[])[Math.floor(Math.random() * data.length)] };
+        })
+      );
+      return results.filter((r): r is { category: string; tool: Tool } => r !== null);
     },
   });
 
@@ -174,13 +167,15 @@ export default function NewsPage() {
         .from("tools")
         .select("*")
         .gte("stars_num", 100000)
-        .order("stars_num", { ascending: false, nullsFirst: false });
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .limit(20);
       const { data: club50k } = await supabase
         .from("tools")
         .select("*")
         .gte("stars_num", 50000)
         .lt("stars_num", 100000)
-        .order("stars_num", { ascending: false, nullsFirst: false });
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .limit(20);
       const { data: club10k } = await supabase
         .from("tools")
         .select("*")

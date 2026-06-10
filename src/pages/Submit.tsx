@@ -77,34 +77,37 @@ export default function Submit() {
       return;
     }
     setSubmitting(true);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error: dbError } = await supabase.from("listing_requests").insert({
+        name: form.name.trim(),
+        website_url: form.website_url.trim(),
+        github_url: form.github_url.trim() || null,
+        category: form.category || null,
+        description: form.description.trim() || null,
+        contact_name: form.contact_name.trim(),
+        contact_email: form.contact_email.trim(),
+        message: form.message.trim() || null,
+        agreed_policy: form.agreed_policy,
+      });
+      if (dbError) { setError("送信に失敗しました。もう一度お試しください。"); return; }
 
-    const { supabase } = await import("@/integrations/supabase/client");
-    const { error: dbError } = await supabase.from("listing_requests").insert({
-      name: form.name.trim(),
-      website_url: form.website_url.trim(),
-      github_url: form.github_url.trim() || null,
-      category: form.category || null,
-      description: form.description.trim() || null,
-      contact_name: form.contact_name.trim(),
-      contact_email: form.contact_email.trim(),
-      message: form.message.trim() || null,
-      agreed_policy: form.agreed_policy,
-    });
-    setSubmitting(false);
-    if (dbError) { setError("送信に失敗しました。もう一度お試しください。"); return; }
+      supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: form.contact_name.trim(),
+          email: form.contact_email.trim(),
+          message: `掲載申請: ${form.name.trim()} (${form.website_url.trim()})`,
+          inquiry_type: "listing",
+        },
+      }).catch(() => {});
 
-    supabase.functions.invoke("send-contact-email", {
-      body: {
-        name: form.contact_name.trim(),
-        email: form.contact_email.trim(),
-        message: `掲載申請: ${form.name.trim()} (${form.website_url.trim()})`,
-        inquiry_type: "listing",
-      },
-    }).catch(() => {});
-
-    track("form_submit", { form: "listing_request", category: form.category || "none", referrer: document.referrer });
-    setSubmitted(true);
-  };
+      track("form_submit", { form: "listing_request", category: form.category || "none", referrer: document.referrer });
+      setSubmitted(true);
+    } catch {
+      setError("送信に失敗しました。もう一度お試しください。");
+    } finally {
+      setSubmitting(false);
+    }
 
   if (submitted) {
     return (

@@ -61,6 +61,7 @@ export default function SavingsPage() {
   const [toolIdMap, setToolIdMap] = useState<Record<string, number>>({});
 
   useEffect(() => {
+    let cancelled = false;
     const ossNames = SAAS_LIST.map((s) => s.ossName);
     import("@/integrations/supabase/client").then(({ supabase }) => {
       supabase
@@ -68,13 +69,13 @@ export default function SavingsPage() {
         .select("id, name")
         .in("name", ossNames)
         .then(({ data }) => {
-          if (data) {
-            const map: Record<string, number> = {};
-            data.forEach((t) => { if (t.name) map[t.name] = t.id; });
-            setToolIdMap(map);
-          }
+          if (cancelled || !data) return;
+          const map: Record<string, number> = {};
+          data.forEach((t) => { if (t.name) map[t.name] = t.id; });
+          setToolIdMap(map);
         });
     });
+    return () => { cancelled = true; };
   }, []);
 
   const [teamSize, setTeamSize] = useState(10);
