@@ -98,7 +98,7 @@ const COMPARE_LINKS: Record<string, { slug: string; ossName: string }[]> = {
   sendgrid: [{ slug: "listmonk-vs-sendgrid", ossName: "Listmonk" }],
   asana: [{ slug: "vikunja-vs-asana", ossName: "Vikunja" }],
   "google-drive": [{ slug: "nextcloud-vs-google-drive", ossName: "Nextcloud" }],
-  "github-copilot": [{ slug: "gitea-vs-github", ossName: "Gitea" }],
+  "github-copilot": [],
   intercom: [{ slug: "chatwoot-vs-intercom", ossName: "Chatwoot" }],
   jira: [{ slug: "taiga-vs-jira", ossName: "Taiga" }],
   firebase: [{ slug: "supabase-vs-firebase", ossName: "Supabase" }],

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
-import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
@@ -14,20 +13,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { InquirySuccessMessage } from "@/components/InquirySuccessMessage";
 import { track } from "@/lib/track";
 
-const contactSchema = z.object({
-  name: z.string().max(100).optional(),
-  email: z.string().trim().email("有効なメールアドレスを入力してください").max(320),
-  category: z.string().min(1),
-  message: z.string().trim().min(1, "メッセージを入力してください").max(5000, "メッセージは5000文字以内で入力してください"),
-});
-
 const CATEGORIES = ["掲載内容の誤り", "ツールの追加リクエスト", "その他"] as const;
+
+function validate(form: { name: string; email: string; category: string; message: string }) {
+  const errors: Record<string, string> = {};
+  const trimmedEmail = form.email.trim();
+  if (!trimmedEmail) {
+    errors.email = "メールアドレスを入力してください";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    errors.email = "有効なメールアドレスを入力してください";
+  } else if (trimmedEmail.length > 320) {
+    errors.email = "メールアドレスが長すぎます";
+  }
+  const msg = form.message.trim();
+  if (!msg) {
+    errors.message = "メッセージを入力してください";
+  } else if (msg.length > 5000) {
+    errors.message = "メッセージは5000文字以内で入力してください";
+  }
+  return errors;
+}
 
 export default function ContactPage() {
   useSeo({
@@ -45,48 +55,49 @@ export default function ContactPage() {
     e.preventDefault();
     setErrors({});
 
-    const result = contactSchema.safeParse(form);
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.issues.forEach((issue) => {
-        const key = issue.path[0] as string;
-        fieldErrors[key] = issue.message;
-      });
+    const fieldErrors = validate(form);
+    if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from("contacts").insert({
-      name: form.name || null,
-      email: form.email,
-      category: form.category,
-      message: form.message,
-    });
-    setSubmitting(false);
-
-    if (error) {
-      toast.error("送信に失敗しました。もう一度お試しください。");
-      return;
-    }
-
-    // Send email notification (fire-and-forget, DB save already succeeded)
-    supabase.functions.invoke("send-contact-email", {
-      body: {
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.from("contacts").insert({
         name: form.name || null,
         email: form.email,
         category: form.category,
         message: form.message,
-        inquiry_type: "contact",
-      },
-    }).then(({ data, error: fnErr }) => {
-      if (fnErr) console.error("Email notification failed:", fnErr);
-      else console.log("Email notification result:", data);
-    });
+      });
 
-    setSubmitted(true);
-    track("form_submit", { form: "contact", category: form.category });
-    toast.success("お問い合わせを送信しました。");
+      if (error) {
+        toast.error("送信に失敗しました。もう一度お試しください。");
+        return;
+      }
+
+      // Send email notification (fire-and-forget, DB save already succeeded)
+      supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: form.name || null,
+          email: form.email,
+          category: form.category,
+          message: form.message,
+          inquiry_type: "contact",
+        },
+      }).then(({ data, error: fnErr }) => {
+        if (fnErr) console.error("Email notification failed:", fnErr);
+        else console.log("Email notification result:", data);
+      });
+
+      setSubmitted(true);
+      track("form_submit", { form: "contact", category: form.category });
+      toast.success("お問い合わせを送信しました。");
+    } catch {
+      toast.error("送信に失敗しました。もう一度お試しください。");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {

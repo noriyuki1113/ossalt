@@ -48,16 +48,17 @@ function timeAgo(dateStr: string | null): string {
   return `${Math.floor(days / 365)}年前`;
 }
 
+// Must match parent_category_ja values in DB (same values used in Index.tsx and Submit.tsx)
 const CATEGORIES = [
-  "AI・機械学習",
-  "ビジネスソフトウェア",
-  "開発者ツール",
+  "AI・ML",
+  "業務ソフト",
+  "開発ツール",
   "インフラ・運用",
   "データ・分析",
-  "コンテンツ・パブリッシング",
-  "生産性・ユーティリティ",
-  "セキュリティ・プライバシー",
-  "コミュニティ・ソーシャル",
+  "コンテンツ",
+  "生産性・便利ツール",
+  "セキュリティ",
+  "コミュニティ",
   "その他",
 ];
 

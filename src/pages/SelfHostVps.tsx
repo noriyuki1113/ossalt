@@ -44,7 +44,7 @@ const VPS_LIST: Vps[] = AFFILIATE_VPS.map((v) => ({
 
 const POINTS = [
   { icon: TrendingUp, title: "料金", desc: "月額1,000円前後から。時間課金もチェック。" },
-  { icon: Cpu, title: "メモリ", desc: "実運用は2GB以上が安心。複数OSS同居ならめ4GB～。" },
+  { icon: Cpu, title: "メモリ", desc: "実運用は2GB以上が安心。複数OSS同居なら4GB～。" },
   { icon: Box, title: "Docker対応", desc: "Docker Composeで動かせVPSが運用ラク。" },
   { icon: Globe2, title: "日本語サポート", desc: "初心者は国内VPSの管理画面・サポートが安心。" },
   { icon: Server, title: "拡張性", desc: "後からCPU・メモリ・ストレージを増やせるか。" },
@@ -66,7 +66,7 @@ const RELATED_TOOLS = [
   { name: "Umami", desc: "Google Analytics代替の軽量プライバシー解析", href: "/tools/346" },
   { name: "Plausible Analytics", desc: "Google Analytics代替のシンプル解析", href: "/tools/340" },
   { name: "Matomo", desc: "Google Analytics代替の高機能解析", href: "/tools/337" },
-  { name: "Supabase代替を探す", desc: "Firebase代替のBaaS群を比較", href: "/alternatives/firebase" },
+  { name: "Firebase代替を探す", desc: "Firebase代替のBaaS群を比較", href: "/alternatives/firebase" },
 ];
 
 const SELFHOST_GUIDES = [
@@ -160,7 +160,7 @@ export default function SelfHostVps() {
       {/* Intro */}
       <section className="container pb-10">
         <div className="card-unified p-6 md:p-8 max-w-3xl">
-          <h2 className="text-xl font-semibold text-foreground mb-3">なぞVPSが必要なのか</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-3">なぜVPSが必要なのか</h2>
           <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed list-disc pl-5">
             <li>OSSツールは無料で使えますが、セルフホストする場合は動かすサーバーが必要です。</li>
             <li>VPSを使えば、月額コストを抑えつつ、複数のOSSツールを1台にまとめて運用できます。</li>
@@ -338,33 +338,6 @@ export default function SelfHostVps() {
               <p className="mt-1 text-xs text-muted-foreground">{g.desc}</p>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* Related guides (legacy) */}
-      <section className="container pb-10">
-        <h2 className="text-2xl font-bold text-foreground mb-5">関連ガイド</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
-          <Link to="/guides/n8n-selfhost-vps" className="card-unified p-5 hover:border-primary/40 transition-colors group">
-            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
-            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">n8nをVPSでセルフホストする方法</p>
-            <p className="mt-1 text-xs text-muted-foreground">Zapier代替のn8nを自分のサーバーで動かす基本構成と注意点</p>
-          </Link>
-          <Link to="/guides/appflowy-selfhost-vps" className="card-unified p-5 hover:border-primary/40 transition-colors group">
-            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
-            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">AppFlowyをVPSでセルフホストする方法</p>
-            <p className="mt-1 text-xs text-muted-foreground">Notion代替のAppFlowyを自分のサーバーで動かす構成と運用ポイント</p>
-          </Link>
-          <Link to="/guides/baserow-selfhost-vps" className="card-unified p-5 hover:border-primary/40 transition-colors group">
-            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
-            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">BaserowをVPSでセルフホストする方法</p>
-            <p className="mt-1 text-xs text-muted-foreground">Airtable代替のBaserowを自分のサーバーで動かす構成と運用ポイント</p>
-          </Link>
-          <Link to="/guides/plausible-selfhost-vps" className="card-unified p-5 hover:border-primary/40 transition-colors group">
-            <p className="text-xs text-primary mb-1">セルフホストガイド</p>
-            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">PlausibleをVPSでセルフホストする方法</p>
-            <p className="mt-1 text-xs text-muted-foreground">Google Analytics代替のPlausibleを自分のサーバーで動かす構成と注意点</p>
-          </Link>
         </div>
       </section>
 

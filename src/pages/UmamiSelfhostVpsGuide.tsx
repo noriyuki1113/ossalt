@@ -31,7 +31,7 @@ const RELATED = [
   { name: "Matomo", desc: "高機能なGA代替OSS。GDPR対応", href: "/tools/337" },
   { name: "n8n", desc: "Zapier代替。Umamiのデータを使った自動化も", href: "/tools/415" },
   { name: "Metabase", desc: "アクセスデータをBIダッシュボードで可視化", href: "/tools/358" },
-  { name: "Google Analytics の代替を比較", href: "/?search=analytics", desc: "アクセス解析のOSS代替をまとめて見る" },
+  { name: "Google Analytics の代替を比較", href: "/alternatives/google-analytics", desc: "アクセス解析のOSS代替をまとめて見る" },
 ];
 
 const FAQ = [

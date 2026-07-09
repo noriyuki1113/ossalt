@@ -173,6 +173,7 @@ export default function NotionAlternativesGuide() {
     title: "Notionの代替おすすめ10選【無料・OSSあり】| ossalt",
     description:
       "Notionの代替ツールを探している方向けに、無料・オープンソース・高機能なSaaSまで厳選して紹介。比較表付き。",
+    canonical: "https://ossalt.jp/guides/notion-alternatives",
   });
 
   const top3 = ALL_TOOLS.slice(0, 3);

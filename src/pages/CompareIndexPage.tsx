@@ -41,6 +41,7 @@ export default function CompareIndexPage() {
   useSeo({
     title: "OSS vs SaaS 比較一覧 | OSSアルタナティブ",
     description: "AppFlowy vs Notion、Mattermost vs SlackなどOSSと有料SaaSを項目別に徹底比較。コスト・機能・セルフホスト対応を一覧で確認できます。",
+    canonical: "https://ossalt.jp/compare",
   });
 
   return (

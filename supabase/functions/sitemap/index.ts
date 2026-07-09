@@ -136,6 +136,36 @@ Deno.serve(async () => {
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>${BASE_URL}/guides/mattermost-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/vikunja-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/plane-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/outline-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/notion-alternatives</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>${BASE_URL}/guides/metabase-selfhost-vps</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>

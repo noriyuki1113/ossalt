@@ -27,16 +27,13 @@ const FEATURES = [
   { icon: Lock, title: "緊急アクセス・組織機能", desc: "緊急時に信頼できる人にアクセス権を委任する機能や、組織でのパスワード共有が可能。" },
 ];
 
-const COMPOSE = `version: "3.8"
-
-services:
+const COMPOSE = `services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     restart: always
     environment:
       DOMAIN: "https://vault.example.com"      # 実際のドメインに変更
-      WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "false"                 # 初期設定後は必ず false に
       ADMIN_TOKEN: "\${VAULTWARDEN_ADMIN_TOKEN}"  # 長いランダム文字列を設定
       SMTP_HOST: "\${SMTP_HOST}"               # メール通知を使う場合
@@ -49,7 +46,6 @@ services:
       - vw_data:/data
     ports:
       - "3000:80"
-      - "3012:3012"
 
 volumes:
   vw_data:`;
@@ -127,7 +123,7 @@ export default function VaultwardenSelfhostVpsGuide() {
             VaultwardenをVPSでセルフホストする方法
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed">
-            1Password・LastPassの代替OSSとして注目される「Vaultwarden」を
+            1Password・Bitwarden代替のOSSとして注目される「Vaultwarden」を
             自分のVPSで動かす方法を解説します。
             <strong className="text-foreground">256MBのメモリで動く超軽量サーバー</strong>で、
             Bitwardenの公式アプリをそのまま使えます。

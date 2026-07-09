@@ -136,7 +136,7 @@ export function SiteHeader() {
           />
           {[
             { to: "/", label: "OSSを探す" },
-            { to: "/ranking", label: "代替カテゴリ" },
+            { to: "/ranking", label: "人気ランキング" },
             { to: "/selfhost-vps", label: "セルフホスト" },
           ].map((item) => (
             <Link
@@ -252,7 +252,7 @@ export function SiteHeader() {
             <div className="border-t border-border pt-2 mt-2 space-y-1">
               {[
                 { to: "/", label: "OSSを探す" },
-                { to: "/ranking", label: "代替カテゴリ" },
+                { to: "/ranking", label: "人気ランキング" },
                 { to: "/selfhost-vps", label: "セルフホスト" },
               ].map((item) => (
                 <Link
