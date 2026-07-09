@@ -9,13 +9,12 @@ const GUIDES = [
 ];
 
 export function NewGuidesSection() {
-  if (GUIDES.length < 3) return null;
   return (
     <section className="container py-10 md:py-14">
       <div className="flex items-center gap-2 mb-5">
         <BookOpen className="h-4 w-4 text-primary" />
         <h2 className="text-base md:text-lg font-bold text-foreground tracking-tight">
-          新着ガイド
+          おすすめガイド
         </h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

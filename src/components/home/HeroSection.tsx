@@ -5,7 +5,6 @@ import { track } from "@/lib/track";
 interface HeroSectionProps {
   search: string;
   onSearchChange: (value: string) => void;
-  onCategorySelect: (category: string) => void;
 }
 
 const QUICK_CHIPS = [

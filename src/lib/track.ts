@@ -5,8 +5,8 @@
  */
 
 const PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-const TRACK_URL = `https://${PROJECT_ID}.supabase.co/functions/v1/track`;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const TRACK_URL = PROJECT_ID ? `https://${PROJECT_ID}.supabase.co/functions/v1/track` : null;
 
 interface TrackPayload {
   event_type: string;
@@ -18,6 +18,7 @@ export function track(
   eventType: string,
   extra: Record<string, string | number | boolean | null | undefined> = {},
 ) {
+  if (!TRACK_URL || !ANON_KEY) return;
   try {
     const payload: TrackPayload = {
       event_type: eventType,
