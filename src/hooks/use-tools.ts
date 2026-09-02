@@ -37,6 +37,13 @@ export interface Tool {
   docker_compose_url: string | null;
 }
 
+// NOTE: every column here must actually exist on the live `tools` table.
+// scorecard_score/docker_available (added by
+// supabase/migrations/20260509000001_oss_health_scorecard.sql) were once
+// live in code for weeks while missing from production — PostgREST then
+// rejects every query using this select list with a 42703 error, silently
+// breaking all tool browsing and search. If you add a column here, apply
+// the migration to production first (or in the same change).
 export const TOOL_CARD_COLUMNS = [
   "id",
   "name",
