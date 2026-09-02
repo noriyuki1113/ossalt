@@ -1073,18 +1073,12 @@ export default function ToolDetailPage() {
                   title: `${competitorDisplay}代替を選ぶときのポイント`,
                   description: `${competitorDisplay}の代わりに使えるOSSを比較・選定するための観点を解説`,
                   href: competitorDisplay === "Notion" ? "/guides/notion-alternatives"
-                    : competitorDisplay === "Slack" ? "/guides/slack-alternatives"
                     : `/alternatives/${altSlug}`,
                 },
                 {
-                  title: "セルフホスト前提で見るべき観点",
+                  title: "セルフホストガイド一覧",
                   description: "サーバー運用・バックアップ・セキュリティの基本を確認",
-                  href: "/guides/self-hosting",
-                },
-                {
-                  title: "OSS導入でコストを削減する方法",
-                  description: "SaaSからOSSへの移行で期待できるコスト削減シミュレーション",
-                  href: "/savings",
+                  href: "/selfhost-vps",
                 },
               ]}
             />

@@ -22,15 +22,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const AlternativesPage = lazy(() => import("./pages/AlternativesPage"));
 const AlternativesIndexPage = lazy(() => import("./pages/AlternativesIndexPage"));
 const RankingPage = lazy(() => import("./pages/Ranking"));
-const QuizPage = lazy(() => import("./pages/Quiz"));
 const NewsPage = lazy(() => import("./pages/News"));
-const SavingsPage = lazy(() => import("./pages/Savings"));
 const AdminPage = lazy(() => import("./pages/Admin"));
 const AdminAgentPage = lazy(() => import("./pages/AdminAgent"));
 const AdvertisePage = lazy(() => import("./pages/Advertise"));
 const SubmitPage = lazy(() => import("./pages/Submit"));
 const SponsorPage = lazy(() => import("./pages/Sponsor"));
-const GuidePage = lazy(() => import("./pages/GuidePage"));
 const NotionAlternativesGuide = lazy(() => import("./pages/NotionAlternativesGuide"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const CompareIndexPage = lazy(() => import("./pages/CompareIndexPage"));
@@ -116,7 +113,8 @@ const App = () => (
             <Route path="/guides/plane-selfhost-vps" element={<PlaneSelfhostVpsGuide />} />
             <Route path="/guides/outline-selfhost-vps" element={<OutlineSelfhostVpsGuide />} />
             <Route path="/guides/yearly/:slug" element={<YearlyGuide />} />
-            <Route path="/guides/:slug" element={<GuidePage />} />
+            <Route path="/guides/self-hosting" element={<Navigate to="/" replace />} />
+            <Route path="/guides/slack-alternatives" element={<Navigate to="/" replace />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
@@ -127,9 +125,9 @@ const App = () => (
             <Route path="/compare/:slug" element={<ComparePage />} />
             <Route path="/selfhost-vps" element={<SelfHostVpsPage />} />
             <Route path="/ranking" element={<RankingPage />} />
-            <Route path="/quiz" element={<QuizPage />} />
+            <Route path="/quiz" element={<Navigate to="/" replace />} />
             <Route path="/news" element={<NewsPage />} />
-            <Route path="/savings" element={<SavingsPage />} />
+            <Route path="/savings" element={<Navigate to="/" replace />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/admin/agent" element={<AdminAgentPage />} />
             <Route path="/advertise" element={<AdvertisePage />} />

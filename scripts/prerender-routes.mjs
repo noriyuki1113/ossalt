@@ -271,16 +271,6 @@ export async function getPrerenderRoutes() {
       description: "今週の注目OSSツールとGitHubトレンドを毎週更新。人気のオープンソースツールをいち早くチェック。",
     },
     {
-      path: "/quiz",
-      title: `私に合うOSSを診断 | ${SITE_NAME}`,
-      description: "質問に答えるだけであなたに最適なオープンソースツールが見つかる診断ツール。",
-    },
-    {
-      path: "/savings",
-      title: `SaaS→OSS コスト削減シミュレーター | ${SITE_NAME}`,
-      description: "NotionやSlackなど有料SaaSをOSSに切り替えた場合の年間節約額を無料で計算。",
-    },
-    {
       path: "/about",
       title: `サイトについて | ${SITE_NAME}`,
       description: "OSSアルタナティブは、有料SaaSの代わりに使えるオープンソースツールを日本語で検索・比較できるディレクトリサイトです。",
