@@ -43,7 +43,9 @@ export interface Tool {
 // live in code for weeks while missing from production — PostgREST then
 // rejects every query using this select list with a 42703 error, silently
 // breaking all tool browsing and search. If you add a column here, apply
-// the migration to production first (or in the same change).
+// the migration to production first (or in the same change), then run
+// `NOTIFY pgrst, 'reload schema';` — PostgREST caches the schema and won't
+// see a column added via a manual ALTER TABLE until that cache is reloaded.
 export const TOOL_CARD_COLUMNS = [
   "id",
   "name",
