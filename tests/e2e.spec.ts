@@ -1,4 +1,20 @@
-import { test, expect } from "../playwright-fixture";
+import { test, expect, type Page } from "../playwright-fixture";
+
+// Fills the hero search box and waits for the underlying Supabase `tools`
+// query to complete, asserting it actually succeeded. This turns a vague
+// "locator not visible" timeout into a clear "API returned 401/500/etc."
+// failure when something upstream (network, RLS, credentials) is broken,
+// which is otherwise very hard to diagnose from CI logs alone.
+async function searchAndWaitForApi(page: Page, query: string) {
+  const responsePromise = page.waitForResponse(
+    (res) => res.url().includes("/rest/v1/tools") && res.url().includes("ilike"),
+    { timeout: 10000 },
+  );
+  await page.getByLabel("OSSツールを検索").fill(query);
+  const response = await responsePromise;
+  expect(response.ok(), `tools API request failed: ${response.status()} ${response.url()}`).toBeTruthy();
+  return response;
+}
 
 test.describe("OSSアルタナティブ Core Flows", () => {
   test.beforeEach(async ({ page }) => {
@@ -38,10 +54,8 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("search for 'Notion' shows results", async ({ page }) => {
-    const searchInput = page.getByLabel("OSSツールを検索");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
-    // Wait for debounce + results to load
     const resultCards = page.locator('a[href*="/tools/"]');
     await expect(resultCards.first()).toBeVisible({ timeout: 10000 });
 
@@ -50,10 +64,8 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("card navigation to detail page", async ({ page }) => {
-    const searchInput = page.getByLabel("OSSツールを検索");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
-    // Wait for results
     const firstCard = page.locator('a[href*="/tools/"]').first();
     await expect(firstCard).toBeVisible({ timeout: 10000 });
 
@@ -65,8 +77,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("detail page has title and links", async ({ page }) => {
-    const searchInput = page.getByLabel("OSSツールを検索");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
     const firstCard = page.locator('a[href*="/tools/"]').first();
     await expect(firstCard).toBeVisible({ timeout: 10000 });
