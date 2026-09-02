@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Brain, Code2, Server, BarChart2, FileText, Zap, Shield, Users, Box, ArrowRight } from "lucide-react";
 import { useToolCategories } from "@/hooks/use-tools";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import { track } from "@/lib/track";
 
 const CATEGORIES = [
@@ -16,26 +17,13 @@ const CATEGORIES = [
   { slug: "other",           label: "その他",         icon: ArrowRight, color: "text-slate-400", bg: "bg-slate-500/10"   },
 ];
 
-const JA_TO_SLUG: Record<string, string> = {
-  "AI・ML": "ai-ml",
-  "開発ツール": "developer-tools",
-  "インフラ・運用": "infrastructure",
-  "データ・分析": "data-analytics",
-  "コンテンツ": "content",
-  "生産性・便利ツール": "productivity",
-  "セキュリティ": "security",
-  "コミュニティ": "community",
-  "業務ソフト": "business",
-  "その他": "other",
-};
-
 export function PopularCategoriesGrid() {
   const { data: categoryData } = useToolCategories();
 
   const countMap: Record<string, number> = {};
   if (categoryData) {
     for (const c of categoryData) {
-      const slug = JA_TO_SLUG[c.name];
+      const slug = CATEGORY_JA_TO_SLUG[c.name];
       if (slug) countMap[slug] = c.count;
     }
   }

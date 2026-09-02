@@ -7,17 +7,17 @@ const corsHeaders = {
 
 const BASE_URL = "https://ossalt.jp";
 
-// Maps parent_category_ja (from DB) → clean URL slug
+// Maps parent_category_ja (from DB, long form) → clean URL slug
 const CATEGORY_SLUG_MAP: Record<string, string> = {
-  "AI・ML": "ai-ml",
-  "業務ソフト": "business",
-  "開発ツール": "developer-tools",
+  "AI・機械学習": "ai-ml",
+  "ビジネスソフトウェア": "business",
+  "開発者ツール": "developer-tools",
   "インフラ・運用": "infrastructure",
   "データ・分析": "data-analytics",
-  "コンテンツ": "content",
-  "生産性・便利ツール": "productivity",
-  "セキュリティ": "security",
-  "コミュニティ": "community",
+  "コンテンツ・パブリッシング": "content",
+  "生産性・ユーティリティ": "productivity",
+  "セキュリティ・プライバシー": "security",
+  "コミュニティ・ソーシャル": "community",
   "その他": "other",
 };
 
