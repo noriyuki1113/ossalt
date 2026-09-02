@@ -261,19 +261,14 @@ export async function getPrerenderRoutes() {
       description: "GitHubスター数で見るOSSツール人気ランキング。AI・開発・生産性など全カテゴリのトップツールを一覧で確認。",
     },
     {
+      path: "/alternatives",
+      title: `代替OSSツール一覧 | ${SITE_NAME}`,
+      description: "Notion・Slack・Figmaなど、有料SaaSごとの代替OSSツール一覧ページへのリンク集。目的のSaaSを選んで、無料でセルフホスト可能なOSS代替を探せます。",
+    },
+    {
       path: "/news",
       title: `OSSニュース・注目ツール | ${SITE_NAME}`,
       description: "今週の注目OSSツールとGitHubトレンドを毎週更新。人気のオープンソースツールをいち早くチェック。",
-    },
-    {
-      path: "/quiz",
-      title: `私に合うOSSを診断 | ${SITE_NAME}`,
-      description: "質問に答えるだけであなたに最適なオープンソースツールが見つかる診断ツール。",
-    },
-    {
-      path: "/savings",
-      title: `SaaS→OSS コスト削減シミュレーター | ${SITE_NAME}`,
-      description: "NotionやSlackなど有料SaaSをOSSに切り替えた場合の年間節約額を無料で計算。",
     },
     {
       path: "/about",

@@ -7,17 +7,17 @@ const corsHeaders = {
 
 const BASE_URL = "https://ossalt.jp";
 
-// Maps parent_category_ja (from DB) → clean URL slug
+// Maps parent_category_ja (from DB, long form) → clean URL slug
 const CATEGORY_SLUG_MAP: Record<string, string> = {
-  "AI・ML": "ai-ml",
-  "業務ソフト": "business",
-  "開発ツール": "developer-tools",
+  "AI・機械学習": "ai-ml",
+  "ビジネスソフトウェア": "business",
+  "開発者ツール": "developer-tools",
   "インフラ・運用": "infrastructure",
   "データ・分析": "data-analytics",
-  "コンテンツ": "content",
-  "生産性・便利ツール": "productivity",
-  "セキュリティ": "security",
-  "コミュニティ": "community",
+  "コンテンツ・パブリッシング": "content",
+  "生産性・ユーティリティ": "productivity",
+  "セキュリティ・プライバシー": "security",
+  "コミュニティ・ソーシャル": "community",
   "その他": "other",
 };
 
@@ -58,22 +58,16 @@ Deno.serve(async () => {
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>${BASE_URL}/alternatives</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>${BASE_URL}/news</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/quiz</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${BASE_URL}/savings</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>${BASE_URL}/compare</loc>
@@ -131,6 +125,36 @@ Deno.serve(async () => {
   </url>
   <url>
     <loc>${BASE_URL}/guides/gitea-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/mattermost-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/vikunja-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/plane-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/outline-selfhost-vps</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>${BASE_URL}/guides/notion-alternatives</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

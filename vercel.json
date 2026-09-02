@@ -7,6 +7,26 @@
       "statusCode": 301
     },
     {
+      "source": "/quiz",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/savings",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/self-hosting",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/guides/slack-alternatives",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
       "source": "/",
       "has": [{ "type": "query", "key": "category", "value": "AI%E3%83%BBML" }],
       "destination": "/category/ai-ml",

@@ -3,7 +3,7 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 const SITE_LINKS = [
   { to: "/", label: "OSSを探す" },
-  { to: "/ranking", label: "代替カテゴリ" },
+  { to: "/ranking", label: "人気ランキング" },
   { to: "/selfhost-vps", label: "セルフホストガイド" },
   { to: "/about", label: "このサイトについて" },
   { to: "/contact", label: "お問い合わせ" },

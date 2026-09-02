@@ -69,14 +69,12 @@ const FAQ = [
 ];
 
 const COMPOSE = `# 構成イメージ（本番運用には環境変数・SSL・バックアップ等の追加設定が必要）
-version: "3.8"
-
 services:
   baserow:
     image: baserow/baserow:latest
     restart: always
-    ports:
-      - "80:80"
+    expose:
+      - "80"
     environment:
       - BASEROW_PUBLIC_URL=https://baserow.example.com
       - DATABASE_HOST=db

@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
-import { ExternalLink, Github, ArrowRight, GitFork, Clock, Container, ShieldCheck } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ExternalLink, Github, ArrowRight, GitFork, Clock, Container, ShieldCheck, Server } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
@@ -8,6 +8,7 @@ import { AlternativeBadge } from "@/components/AlternativeBadge";
 
 import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { getSelfhostGuideLink } from "@/lib/selfhost-guides";
 import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
@@ -34,10 +35,12 @@ function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
 }
 
 export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
+  const navigate = useNavigate();
   const competitor = isKnownCompetitor(tool.primary_competitor)
     ? (tool.primary_competitor_ja || tool.primary_competitor)
     : null;
   const highlightLabel = getHighlightLabel(tool);
+  const guideLink = getSelfhostGuideLink(tool.name);
 
   return (
     <Link
@@ -113,6 +116,23 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
           </Badge>
         )}
       </div>
+
+      {guideLink && (
+        <span
+          role="link"
+          tabIndex={0}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            track("tool_card_guide_click", { tool_id: tool.id, tool_name: tool.name ?? "" });
+            navigate(guideLink);
+          }}
+          className="mb-3 -mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline w-fit cursor-pointer"
+        >
+          <Server className="h-3 w-3" />
+          セルフホストガイドを見る
+        </span>
+      )}
 
       <div className="flex items-center gap-2 pt-3 border-t border-border/60">
         <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">

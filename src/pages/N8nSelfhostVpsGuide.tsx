@@ -64,9 +64,7 @@ const FAQ = [
   },
 ];
 
-const COMPOSE = `version: "3.8"
-
-services:
+const COMPOSE = `services:
   n8n:
     image: n8nio/n8n:latest
     restart: always
@@ -78,9 +76,7 @@ services:
       - N8N_PROTOCOL=https
       - WEBHOOK_URL=https://n8n.example.com/
       - GENERIC_TIMEZONE=Asia/Tokyo
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=\${N8N_USER}
-      - N8N_BASIC_AUTH_PASSWORD=\${N8N_PASSWORD}
+      # 管理者アカウントは初回起動後にブラウザからセットアップ画面で設定します
     volumes:
       - n8n_data:/home/node/.n8n
 

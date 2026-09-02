@@ -301,7 +301,6 @@ export default function IndexPage() {
       <HeroSection
         search={search}
         onSearchChange={setSearch}
-        onCategorySelect={handleCategoryChange}
       />
 
       <QuickAlternativesPills />

@@ -27,9 +27,7 @@ const FEATURES = [
   { icon: Users, title: "組織・チーム管理", desc: "Organization・Teamを作成し、リポジトリへのアクセス権限を細かく制御。社内GitHubとして活用できる。" },
 ];
 
-const COMPOSE = `version: "3.8"
-
-services:
+const COMPOSE = `services:
   gitea:
     image: gitea/gitea:latest
     container_name: gitea

@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, Github } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Github, Server } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ToolIcon } from "@/components/ToolIcon";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { isKnownCompetitor } from "@/lib/competitors";
+import { getSelfhostGuideLink } from "@/lib/selfhost-guides";
 import type { Tool } from "@/hooks/use-tools";
 import { track } from "@/lib/track";
 
@@ -21,9 +22,11 @@ export function ToolCardCompact({
   trackSource?: string;
 }) {
   // Validate using the English canonical name; display Japanese name if available
+  const navigate = useNavigate();
   const competitor = isKnownCompetitor(tool.primary_competitor)
     ? (tool.primary_competitor_ja || tool.primary_competitor)
     : null;
+  const guideLink = getSelfhostGuideLink(tool.name);
 
   return (
     <Link
@@ -104,6 +107,22 @@ export function ToolCardCompact({
           >
             <Github className="h-3 w-3" />
             GitHub
+          </span>
+        )}
+        {guideLink && (
+          <span
+            role="link"
+            tabIndex={0}
+            className="inline-flex items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              track("tool_card_guide_click", { tool_id: tool.id, tool_name: tool.name ?? "", source: trackSource ?? "" });
+              navigate(guideLink);
+            }}
+          >
+            <Server className="h-3 w-3" />
+            ガイド
           </span>
         )}
       </div>

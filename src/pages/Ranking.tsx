@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
+import { CATEGORY_MAP } from "@/components/CategoryFilter";
 import type { Tool } from "@/hooks/use-tools";
 
 /* ---------- helpers ---------- */
@@ -47,18 +48,9 @@ function timeAgo(dateStr: string | null): string {
   return `${Math.floor(days / 365)}年前`;
 }
 
-const CATEGORIES = [
-  "AI・機械学習",
-  "ビジネスソフトウェア",
-  "開発者ツール",
-  "インフラ・運用",
-  "データ・分析",
-  "コンテンツ・パブリッシング",
-  "生産性・ユーティリティ",
-  "セキュリティ・プライバシー",
-  "コミュニティ・ソーシャル",
-  "その他",
-];
+// UI labels (short form). Query against the DB with CATEGORY_MAP[label], which
+// resolves to the actual parent_category_ja value (long form, e.g. "AI・機械学習").
+const CATEGORIES = Object.keys(CATEGORY_MAP).filter((c) => c !== "すべて");
 
 /* ---------- Rank Badge ---------- */
 
@@ -234,7 +226,7 @@ function CategoryTab() {
       const { data, error } = await supabase
         .from("tools")
         .select("*")
-        .eq("parent_category_ja", category)
+        .eq("parent_category_ja", CATEGORY_MAP[category] || category)
         .order("stars_num", { ascending: false, nullsFirst: false })
         .limit(20);
       if (error) throw error;
@@ -317,7 +309,7 @@ function AnnualBestTab() {
           const { data, error } = await supabase
             .from("tools")
             .select("*")
-            .eq("parent_category_ja", cat)
+            .eq("parent_category_ja", CATEGORY_MAP[cat] || cat)
             .order("stars_num", { ascending: false, nullsFirst: false })
             .limit(3);
           if (error) throw error;

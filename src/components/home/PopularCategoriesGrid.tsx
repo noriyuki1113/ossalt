@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Brain, Code2, Server, BarChart2, FileText, Zap, Shield, Users, Box, ArrowRight } from "lucide-react";
 import { useToolCategories } from "@/hooks/use-tools";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import { track } from "@/lib/track";
 
 const CATEGORIES = [
@@ -9,25 +10,12 @@ const CATEGORIES = [
   { slug: "infrastructure",  label: "インフラ・運用", icon: Server,    color: "text-orange-400",  bg: "bg-orange-500/10"  },
   { slug: "data-analytics",  label: "データ・分析",   icon: BarChart2, color: "text-cyan-400",    bg: "bg-cyan-500/10"    },
   { slug: "content",         label: "コンテンツ",     icon: FileText,  color: "text-green-400",   bg: "bg-green-500/10"   },
-  { slug: "productivity",    label: "生産性・便利",   icon: Zap,       color: "text-yellow-400",  bg: "bg-yellow-500/10"  },
+  { slug: "productivity",    label: "生産性・便利ツール", icon: Zap,    color: "text-yellow-400",  bg: "bg-yellow-500/10"  },
   { slug: "security",        label: "セキュリティ",   icon: Shield,    color: "text-red-400",     bg: "bg-red-500/10"     },
   { slug: "community",       label: "コミュニティ",   icon: Users,     color: "text-pink-400",    bg: "bg-pink-500/10"    },
   { slug: "business",        label: "業務ソフト",     icon: Box,       color: "text-indigo-400",  bg: "bg-indigo-500/10"  },
   { slug: "other",           label: "その他",         icon: ArrowRight, color: "text-slate-400", bg: "bg-slate-500/10"   },
 ];
-
-const JA_TO_SLUG: Record<string, string> = {
-  "AI・ML": "ai-ml",
-  "開発ツール": "developer-tools",
-  "インフラ・運用": "infrastructure",
-  "データ・分析": "data-analytics",
-  "コンテンツ": "content",
-  "生産性・便利ツール": "productivity",
-  "セキュリティ": "security",
-  "コミュニティ": "community",
-  "業務ソフト": "business",
-  "その他": "other",
-};
 
 export function PopularCategoriesGrid() {
   const { data: categoryData } = useToolCategories();
@@ -35,7 +23,7 @@ export function PopularCategoriesGrid() {
   const countMap: Record<string, number> = {};
   if (categoryData) {
     for (const c of categoryData) {
-      const slug = JA_TO_SLUG[c.name];
+      const slug = CATEGORY_JA_TO_SLUG[c.name];
       if (slug) countMap[slug] = c.count;
     }
   }

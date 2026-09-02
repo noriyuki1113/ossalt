@@ -31,7 +31,7 @@ const RELATED = [
   { name: "Redash", desc: "SQLベースのOSSダッシュボード", href: "/?search=redash" },
   { name: "Baserow", desc: "Airtable代替のノーコードDB", href: "/tools/217" },
   { name: "n8n", desc: "Zapier代替。Metabaseと連携してレポート自動送信も", href: "/tools/415" },
-  { name: "Tableau の代替を比較", desc: "BIツールのOSS代替をまとめて見る", href: "/?search=BI" },
+  { name: "Tableau の代替を比較", desc: "BIツールのOSS代替をまとめて見る", href: "/alternatives/tableau" },
 ];
 
 const FAQ = [

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import {
   Bot, Loader2, CheckCircle, AlertCircle, Save,
   ExternalLink, Trash2, FileText, Send, RefreshCw,
@@ -81,8 +82,9 @@ function DraftForm({ draft, onChange, onSave, onPublish, saving, publishing }: D
   const set = (key: keyof DraftData, value: unknown) =>
     onChange({ ...draft, [key]: value });
 
-  const CATEGORIES = ["生産性", "開発ツール", "インフラ", "AI/ML", "コミュニケーション",
-    "データ分析", "セキュリティ", "ファイル管理", "CMS", "ECサイト", "その他"];
+  // Must exactly match parent_category_ja values in the DB — this is written
+  // directly to tools.parent_category_ja on publish, with no conversion step.
+  const CATEGORIES = Object.keys(CATEGORY_JA_TO_SLUG);
   const DIFFICULTIES = ["簡単", "中程度", "難しい"];
 
   return (

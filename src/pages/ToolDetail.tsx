@@ -19,7 +19,7 @@ import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG, COMPARE_LINKS } from "./AlternativesPage";
-import { CATEGORY_TO_SLUG } from "./Index";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
@@ -221,15 +221,15 @@ export default function ToolDetailPage() {
   const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
 
   const SCHEMA_CATEGORY: Record<string, string> = {
-    "AI・ML": "DeveloperApplication",
-    "開発ツール": "DeveloperApplication",
+    "AI・機械学習": "DeveloperApplication",
+    "開発者ツール": "DeveloperApplication",
     "インフラ・運用": "DeveloperApplication",
     "データ・分析": "BusinessApplication",
-    "業務ソフト": "BusinessApplication",
-    "コンテンツ": "WebApplication",
-    "生産性・便利ツール": "UtilitiesApplication",
-    "セキュリティ": "SecurityApplication",
-    "コミュニティ": "SocialNetworkingApplication",
+    "ビジネスソフトウェア": "BusinessApplication",
+    "コンテンツ・パブリッシング": "WebApplication",
+    "生産性・ユーティリティ": "UtilitiesApplication",
+    "セキュリティ・プライバシー": "SecurityApplication",
+    "コミュニティ・ソーシャル": "SocialNetworkingApplication",
   };
 
   const seoTitle = tool
@@ -292,15 +292,15 @@ export default function ToolDetailPage() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
-          ...(tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? [{
+          ...(tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? [{
             "@type": "ListItem",
             position: 2,
             name: tool.parent_category_ja,
-            item: `https://ossalt.jp/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}`,
+            item: `https://ossalt.jp/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}`,
           }] : []),
           {
             "@type": "ListItem",
-            position: tool.parent_category_ja && CATEGORY_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
+            position: tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
             name: tool.name || "",
             item: `https://ossalt.jp/tools/${tool.id}`,
           },
@@ -380,7 +380,7 @@ export default function ToolDetailPage() {
           {tool.parent_category_ja && (
             <>
               <Link
-                to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/`}
+                to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
                 {tool.parent_category_ja}
@@ -1073,18 +1073,12 @@ export default function ToolDetailPage() {
                   title: `${competitorDisplay}代替を選ぶときのポイント`,
                   description: `${competitorDisplay}の代わりに使えるOSSを比較・選定するための観点を解説`,
                   href: competitorDisplay === "Notion" ? "/guides/notion-alternatives"
-                    : competitorDisplay === "Slack" ? "/guides/slack-alternatives"
                     : `/alternatives/${altSlug}`,
                 },
                 {
-                  title: "セルフホスト前提で見るべき観点",
+                  title: "セルフホストガイド一覧",
                   description: "サーバー運用・バックアップ・セキュリティの基本を確認",
-                  href: "/guides/self-hosting",
-                },
-                {
-                  title: "OSS導入でコストを削減する方法",
-                  description: "SaaSからOSSへの移行で期待できるコスト削減シミュレーション",
-                  href: "/savings",
+                  href: "/selfhost-vps",
                 },
               ]}
             />
@@ -1164,7 +1158,7 @@ export default function ToolDetailPage() {
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={CATEGORY_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_TO_SLUG[tool.parent_category_ja]}` : `/`}>
+              <Link to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}>
                 {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
