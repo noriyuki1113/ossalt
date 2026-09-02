@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import {
   Bot, Loader2, CheckCircle, AlertCircle, Save,
@@ -258,6 +257,7 @@ function DraftList({ onLoad }: DraftListProps) {
   const { data: drafts, isLoading } = useQuery({
     queryKey: ["agent-drafts"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await (supabase as any)
         .from("oss_tool_drafts")
         .select("id, name, category, status, source_url, github_url, created_at")
@@ -274,11 +274,13 @@ function DraftList({ onLoad }: DraftListProps) {
 
   const deleteDraft = async (id: string) => {
     if (!confirm("この下書きを削除しますか？")) return;
+    const { supabase } = await import("@/integrations/supabase/client");
     await (supabase as any).from("oss_tool_drafts").delete().eq("id", id);
     qc.invalidateQueries({ queryKey: ["agent-drafts"] });
   };
 
   const loadDraft = async (id: string) => {
+    const { supabase } = await import("@/integrations/supabase/client");
     const { data } = await (supabase as any)
       .from("oss_tool_drafts")
       .select("*")
@@ -356,6 +358,7 @@ export default function AdminAgentPage() {
     setDraft(null);
     setSaveMsg(null);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.functions.invoke("generate-tool-draft", {
         body: { url: url.trim() },
       });
@@ -375,6 +378,7 @@ export default function AdminAgentPage() {
     setSaving(true);
     setSaveMsg(null);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       if (draft.id) {
         const { error } = await (supabase as any)
           .from("oss_tool_drafts")
@@ -405,6 +409,7 @@ export default function AdminAgentPage() {
     setPublishing(true);
     setSaveMsg(null);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data: inserted, error: insertErr } = await (supabase as any)
         .from("tools")
         .insert({

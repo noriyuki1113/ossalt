@@ -106,6 +106,35 @@ for (const route of routes) {
 
 console.log(`\n✨ Prerendered ${count} pages.\n`);
 
+// --- Sitemap generation ---
+
+const BASE_URL = "https://ossalt.jp";
+const today = new Date().toISOString().slice(0, 10);
+
+const sitemapRoutes = routes.map((r) => {
+  // Higher priority for top-level pages, lower for legal pages
+  const isHome = r.path === "/";
+  const isGuide = r.path.startsWith("/guides/") || r.path === "/selfhost-vps";
+  const isLegal = ["/privacy", "/terms", "/disclaimer"].includes(r.path);
+  const priority = isHome ? "1.0" : isGuide ? "0.8" : isLegal ? "0.3" : "0.6";
+  const changefreq = isHome ? "daily" : isGuide ? "monthly" : "weekly";
+
+  return `  <url>
+    <loc>${r.canonical || `${BASE_URL}${r.path}`}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+});
+
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapRoutes.join("\n")}
+</urlset>`;
+
+writeFileSync(join(DIST, "sitemap.xml"), sitemap, "utf-8");
+console.log(`🗺️  sitemap.xml generated (${sitemapRoutes.length} URLs)\n`);
+
 // --- Helpers ---
 
 function escapeHtml(str) {

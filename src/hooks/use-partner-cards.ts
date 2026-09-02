@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
 export interface PartnerCard {
   id: string;
@@ -22,6 +21,7 @@ export function usePartnerCards(toolId: number, toolName: string | null) {
   return useQuery({
     queryKey: ["partner-cards", toolId],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const identifiers: string[] = [String(toolId)];
       if (toolSlug) identifiers.push(toolSlug);
 

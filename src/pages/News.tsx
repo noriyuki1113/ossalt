@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, Star, Flame, Crown, Gem } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -126,6 +125,7 @@ export default function NewsPage() {
   const { data: featured } = useQuery({
     queryKey: ["news-featured"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -140,26 +140,21 @@ export default function NewsPage() {
   const { data: categoryPicks } = useQuery({
     queryKey: ["news-category-picks"],
     queryFn: async () => {
-      const picks: { category: string; tool: Tool }[] = [];
-      for (const cat of CATEGORIES) {
-        const { count } = await supabase
-          .from("tools")
-          .select("*", { count: "exact", head: true })
-          .eq("parent_category_ja", cat);
-        const total = count || 0;
-        if (total === 0) continue;
-        const offset = Math.floor(Math.random() * Math.min(total, 20));
-        const { data } = await supabase
-          .from("tools")
-          .select("*")
-          .eq("parent_category_ja", cat)
-          .order("stars_num", { ascending: false, nullsFirst: false })
-          .range(offset, offset);
-        if (data && data.length > 0) {
-          picks.push({ category: cat, tool: data[0] as Tool });
-        }
-      }
-      return picks;
+      const { supabase } = await import("@/integrations/supabase/client");
+      // Parallel per-category queries — guarantees every category is represented
+      const results = await Promise.all(
+        CATEGORIES.map(async (cat) => {
+          const { data } = await supabase
+            .from("tools")
+            .select("*")
+            .eq("parent_category_ja", cat)
+            .order("stars_num", { ascending: false, nullsFirst: false })
+            .limit(15);
+          if (!data?.length) return null;
+          return { category: cat, tool: (data as Tool[])[Math.floor(Math.random() * data.length)] };
+        })
+      );
+      return results.filter((r): r is { category: string; tool: Tool } => r !== null);
     },
   });
 
@@ -167,17 +162,20 @@ export default function NewsPage() {
   const { data: milestones } = useQuery({
     queryKey: ["news-milestones"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data: club100k } = await supabase
         .from("tools")
         .select("*")
         .gte("stars_num", 100000)
-        .order("stars_num", { ascending: false, nullsFirst: false });
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .limit(20);
       const { data: club50k } = await supabase
         .from("tools")
         .select("*")
         .gte("stars_num", 50000)
         .lt("stars_num", 100000)
-        .order("stars_num", { ascending: false, nullsFirst: false });
+        .order("stars_num", { ascending: false, nullsFirst: false })
+        .limit(20);
       const { data: club10k } = await supabase
         .from("tools")
         .select("*")

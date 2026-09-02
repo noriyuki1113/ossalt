@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { ToolIcon } from "@/components/ToolIcon";
 import { formatCount } from "@/lib/format";
 import type { Tool } from "@/hooks/use-tools";
@@ -13,6 +12,7 @@ export function FeaturedToolsRail() {
   const { data: tools } = useQuery({
     queryKey: ["featured-tools-rail"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, stars_num")

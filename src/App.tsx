@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,9 +7,10 @@ const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ defaul
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { NavigationProgress } from "@/components/NavigationProgress";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import Index from "./pages/Index";
+const Index = lazy(() => import("./pages/Index"));
 
 const ToolDetail = lazy(() => import("./pages/ToolDetail"));
 const About = lazy(() => import("./pages/About"));
@@ -45,6 +46,10 @@ const CoolifySelfhostVpsGuide = lazy(() => import("./pages/CoolifySelfhostVpsGui
 const NextcloudSelfhostVpsGuide = lazy(() => import("./pages/NextcloudSelfhostVpsGuide"));
 const VaultwardenSelfhostVpsGuide = lazy(() => import("./pages/VaultwardenSelfhostVpsGuide"));
 const GiteaSelfhostVpsGuide = lazy(() => import("./pages/GiteaSelfhostVpsGuide"));
+const MattermostSelfhostVpsGuide = lazy(() => import("./pages/MattermostSelfhostVpsGuide"));
+const VikunjaSelfhostVpsGuide = lazy(() => import("./pages/VikunjaSelfhostVpsGuide"));
+const PlaneSelfhostVpsGuide = lazy(() => import("./pages/PlaneSelfhostVpsGuide"));
+const OutlineSelfhostVpsGuide = lazy(() => import("./pages/OutlineSelfhostVpsGuide"));
 const YearlyGuide = lazy(() => import("./pages/YearlyGuide"));
 
 const queryClient = new QueryClient({
@@ -65,6 +70,18 @@ const queryClient = new QueryClient({
   },
 });
 
+// Preload common page chunks after initial render to eliminate navigation freeze
+function IdlePreloader() {
+  useEffect(() => {
+    const id = setTimeout(() => {
+      void import("./pages/ToolDetail");
+      void import("./pages/AlternativesPage");
+    }, 3000);
+    return () => clearTimeout(id);
+  }, []);
+  return null;
+}
+
 const App = () => (
   <ThemeProvider>
   <QueryClientProvider client={queryClient}>
@@ -73,6 +90,8 @@ const App = () => (
       <Suspense fallback={null}><Sonner /></Suspense>
       <BrowserRouter>
         <ScrollToTop />
+        <NavigationProgress />
+        <IdlePreloader />
         <ErrorBoundary>
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
           <Routes>
@@ -92,6 +111,10 @@ const App = () => (
             <Route path="/guides/nextcloud-selfhost-vps" element={<NextcloudSelfhostVpsGuide />} />
             <Route path="/guides/vaultwarden-selfhost-vps" element={<VaultwardenSelfhostVpsGuide />} />
             <Route path="/guides/gitea-selfhost-vps" element={<GiteaSelfhostVpsGuide />} />
+            <Route path="/guides/mattermost-selfhost-vps" element={<MattermostSelfhostVpsGuide />} />
+            <Route path="/guides/vikunja-selfhost-vps" element={<VikunjaSelfhostVpsGuide />} />
+            <Route path="/guides/plane-selfhost-vps" element={<PlaneSelfhostVpsGuide />} />
+            <Route path="/guides/outline-selfhost-vps" element={<OutlineSelfhostVpsGuide />} />
             <Route path="/guides/yearly/:slug" element={<YearlyGuide />} />
             <Route path="/guides/:slug" element={<GuidePage />} />
             <Route path="/about" element={<About />} />

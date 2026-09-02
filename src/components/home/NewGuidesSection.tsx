@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 
 const GUIDES = [
-  { to: "/guides/n8n-selfhost-vps", title: "n8nをVPSでセルフホストする方法", desc: "Zapier代替のn8nを自分のサーバーで動かす基本構成" },
-  { to: "/guides/appflowy-selfhost-vps", title: "AppFlowyをVPSでセルフホストする方法", desc: "Notion代替のAppFlowyの構成と運用ポイント" },
-  { to: "/guides/baserow-selfhost-vps", title: "BaserowをVPSでセルフホストする方法", desc: "Airtable代替のBaserowの構成と運用ポイント" },
-  { to: "/guides/plausible-selfhost-vps", title: "PlausibleをVPSでセルフホストする方法", desc: "Google Analytics代替のPlausibleの構成と注意点" },
+  { to: "/guides/mattermost-selfhost-vps", title: "MattermostをVPSでセルフホストする方法", desc: "Slack代替のチームチャットを内製化" },
+  { to: "/guides/outline-selfhost-vps", title: "OutlineをVPSでセルフホストする方法", desc: "Confluence/Notion代替のナレッジベース" },
+  { to: "/guides/vikunja-selfhost-vps", title: "VikunjaをVPSでセルフホストする方法", desc: "Asana/Todoist代替の軽量タスク管理" },
+  { to: "/guides/plane-selfhost-vps", title: "PlaneをVPSでセルフホストする方法", desc: "Jira代替のプロジェクト管理" },
 ];
 
 export function NewGuidesSection() {

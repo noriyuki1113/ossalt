@@ -13,7 +13,6 @@ import {
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@/components/ui/accordion";
-import { supabase } from "@/integrations/supabase/client";
 import {
   Check, Users, Code2, Building, Globe,
   LayoutGrid, FileText, Shield, ArrowRight,
@@ -147,6 +146,7 @@ export default function Advertise() {
       return;
     }
     setSubmitting(true);
+    const { supabase } = await import("@/integrations/supabase/client");
     const { error: dbError } = await supabase.from("advertise_inquiries").insert({
       name: form.name.trim(),
       email: form.email.trim(),

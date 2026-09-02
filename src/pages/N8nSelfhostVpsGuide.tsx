@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useSeo } from "@/hooks/use-seo";
 import { AffiliateVpsCTA } from "@/components/affiliate/AffiliateVpsCTA";
 import { AffiliateDisclosure } from "@/components/affiliate/AffiliateDisclosure";
+import { HttpsCaddySection } from "@/components/guides/HttpsCaddySection";
 
 const TITLE = "n8nをVPSでセルフホストする方法｜Zapier代替OSSを自分のサーバーで動かす";
 const DESC =
@@ -235,6 +236,13 @@ export default function N8nSelfhostVpsGuide() {
           </p>
         </div>
       </section>
+
+      {/* HTTPS化 */}
+      <HttpsCaddySection
+        domain="n8n.example.com"
+        upstream="n8n:5678"
+        note="WebhookエンドポイントもHTTPS必須です。Caddyを経由させることで、外部サービスからのWebhook受信もそのまま動作します。"
+      />
 
       {/* Operations */}
       <Section title="運用時の注意点">

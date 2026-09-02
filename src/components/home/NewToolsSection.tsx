@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ToolCardCompact, ToolCardCompactSkeleton } from "@/components/ToolCardCompact";
@@ -17,6 +16,7 @@ export function NewToolsSection() {
   const { data: tools, isLoading } = useQuery({
     queryKey: ["new-tools"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, primary_competitor_ja, stars_num, language, created_at")

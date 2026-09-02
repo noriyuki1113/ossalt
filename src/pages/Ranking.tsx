@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Star, ArrowLeft, Trophy, Flame, Crown } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -191,6 +190,7 @@ function OverallTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-overall"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -222,6 +222,7 @@ function CategoryTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-category", category],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -271,6 +272,7 @@ function TrendingTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-trending"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
@@ -300,21 +302,21 @@ function AnnualBestTab() {
   const { data, isLoading } = useQuery({
     queryKey: ["ranking-annual-best"],
     queryFn: async () => {
-      // Fetch top tools per category — get enough to cover all categories
-      const results: { category: string; tools: Tool[] }[] = [];
-      for (const cat of CATEGORIES) {
-        const { data, error } = await supabase
-          .from("tools")
-          .select("*")
-          .eq("parent_category_ja", CATEGORY_MAP[cat] || cat)
-          .order("stars_num", { ascending: false, nullsFirst: false })
-          .limit(3);
-        if (error) throw error;
-        if (data && data.length > 0) {
-          results.push({ category: cat, tools: data as Tool[] });
-        }
-      }
-      return results;
+      const { supabase } = await import("@/integrations/supabase/client");
+      // Parallel per-category queries — guarantees top-3 for every category
+      const categoryResults = await Promise.all(
+        CATEGORIES.map(async (cat) => {
+          const { data, error } = await supabase
+            .from("tools")
+            .select("*")
+            .eq("parent_category_ja", CATEGORY_MAP[cat] || cat)
+            .order("stars_num", { ascending: false, nullsFirst: false })
+            .limit(3);
+          if (error) throw error;
+          return { category: cat, tools: (data as Tool[]) || [] };
+        })
+      );
+      return categoryResults.filter((r) => r.tools.length > 0);
     },
   });
 

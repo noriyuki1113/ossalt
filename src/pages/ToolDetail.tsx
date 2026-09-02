@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { ja } from "date-fns/locale";
-import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
@@ -167,6 +166,7 @@ export default function ToolDetailPage() {
   const { data: tool, isLoading } = useQuery({
     queryKey: ["tool", id],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.from("tools").select("*").eq("id", Number(id)).single();
       if (error) throw error;
       return data as Tool;
@@ -177,6 +177,7 @@ export default function ToolDetailPage() {
   const { data: relatedTools } = useQuery({
     queryKey: ["related-tools", tool?.primary_competitor, tool?.parent_category_ja, tool?.id],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const results: Tool[] = [];
 
       if (tool!.primary_competitor && tool!.primary_competitor !== "有料SaaS") {

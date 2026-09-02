@@ -404,5 +404,89 @@ export async function getPrerenderRoutes() {
     });
   }
 
+  // 404 page (noindex — for Vercel's fallback HTML)
+  routes.push({
+    path: "/404",
+    title: `ページが見つかりません（404） | ${SITE_NAME}`,
+    description: "お探しのページは存在しないか、移動した可能性があります。",
+    canonical: `${BASE_URL}/404`,
+  });
+
+  // Selfhost VPS hub page
+  routes.push({
+    path: "/selfhost-vps",
+    title: `VPSでOSSをセルフホストする方法まとめ | ${SITE_NAME}`,
+    description: "Nextcloud・Gitea・n8nなど人気OSSをVPSでセルフホストするためのステップバイステップガイド集。Docker Compose構成例・必要スペック・運用ポイントを日本語で解説。",
+    canonical: `${BASE_URL}/selfhost-vps`,
+  });
+
+  // Selfhost guide pages
+  const SELFHOST_GUIDES = [
+    {
+      slug: "coolify-selfhost-vps",
+      oss: "Coolify", saas: "Heroku/Vercel",
+      desc: "Heroku・Vercel代替のPaaS「Coolify」をVPSでセルフホストする方法。Docker ComposeでOSSをGUIから管理できる環境を構築。",
+    },
+    {
+      slug: "nextcloud-selfhost-vps",
+      oss: "Nextcloud", saas: "Google Drive",
+      desc: "Google Drive代替の「Nextcloud」をVPSでセルフホストする方法。All-in-Oneイメージで手軽に構築し、ファイル共有・カレンダー・オフィスを自前サーバーで運用。",
+    },
+    {
+      slug: "vaultwarden-selfhost-vps",
+      oss: "Vaultwarden", saas: "1Password/Bitwarden",
+      desc: "1Password代替の「Vaultwarden」をVPSでセルフホストする方法。256MBで動く超軽量Bitwardenサーバーをセルフホストしてパスワードを完全自前管理。",
+    },
+    {
+      slug: "gitea-selfhost-vps",
+      oss: "Gitea", saas: "GitHub",
+      desc: "GitHub代替の「Gitea」をVPSでセルフホストする方法。Issues・PR・Actionsを自前サーバーで運用。Forgejoとの違いも解説。",
+    },
+    {
+      slug: "n8n-selfhost-vps",
+      oss: "n8n", saas: "Zapier",
+      desc: "Zapier代替の「n8n」をVPSでセルフホストする方法。Docker Composeで構築するワークフロー自動化環境の設定と運用ポイント。",
+    },
+    {
+      slug: "appflowy-selfhost-vps",
+      oss: "AppFlowy", saas: "Notion",
+      desc: "Notion代替の「AppFlowy」をVPSでセルフホストする方法。自前サーバーでプライベートなワークスペースを構築するステップを解説。",
+    },
+    {
+      slug: "baserow-selfhost-vps",
+      oss: "Baserow", saas: "Airtable",
+      desc: "Airtable代替の「Baserow」をVPSでセルフホストする方法。ノーコードDBを自前サーバーで運用するDocker構成と設定のポイント。",
+    },
+    {
+      slug: "plausible-selfhost-vps",
+      oss: "Plausible", saas: "Google Analytics",
+      desc: "Google Analytics代替の「Plausible」をVPSでセルフホストする方法。プライバシー重視のアクセス解析を自前サーバーで運用。",
+    },
+    {
+      slug: "metabase-selfhost-vps",
+      oss: "Metabase", saas: "Tableau",
+      desc: "Tableau代替の「Metabase」をVPSでセルフホストする方法。BIダッシュボードを自前サーバーで無料運用するDocker構成を解説。",
+    },
+    {
+      slug: "nocodb-selfhost-vps",
+      oss: "NocoDB", saas: "Airtable",
+      desc: "Airtable代替の「NocoDB」をVPSでセルフホストする方法。既存DBをノーコードUIで操作できる環境を自前サーバーで構築。",
+    },
+    {
+      slug: "umami-selfhost-vps",
+      oss: "Umami", saas: "Google Analytics",
+      desc: "Google Analytics代替の「Umami」をVPSでセルフホストする方法。軽量アクセス解析を自前サーバーで無料運用するDocker構成を解説。",
+    },
+  ];
+
+  for (const g of SELFHOST_GUIDES) {
+    routes.push({
+      path: `/guides/${g.slug}`,
+      title: `${g.oss}をVPSでセルフホストする方法｜${g.saas}代替OSSを自分のサーバーで構築 | ${SITE_NAME}`,
+      description: g.desc,
+      canonical: `${BASE_URL}/guides/${g.slug}`,
+    });
+  }
+
   return routes;
 }

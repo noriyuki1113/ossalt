@@ -12,7 +12,6 @@ import { Badge } from "@/components/ui/badge";
 import { CountUp } from "@/components/CountUp";
 import { useSeo } from "@/hooks/use-seo";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 interface SaasItem {
   name: string;
@@ -62,18 +61,21 @@ export default function SavingsPage() {
   const [toolIdMap, setToolIdMap] = useState<Record<string, number>>({});
 
   useEffect(() => {
+    let cancelled = false;
     const ossNames = SAAS_LIST.map((s) => s.ossName);
-    supabase
-      .from("tools")
-      .select("id, name")
-      .in("name", ossNames)
-      .then(({ data }) => {
-        if (data) {
+    import("@/integrations/supabase/client").then(({ supabase }) => {
+      supabase
+        .from("tools")
+        .select("id, name")
+        .in("name", ossNames)
+        .then(({ data }) => {
+          if (cancelled || !data) return;
           const map: Record<string, number> = {};
           data.forEach((t) => { if (t.name) map[t.name] = t.id; });
           setToolIdMap(map);
-        }
-      });
+        });
+    });
+    return () => { cancelled = true; };
   }, []);
 
   const [teamSize, setTeamSize] = useState(10);
