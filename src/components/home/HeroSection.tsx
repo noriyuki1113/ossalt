@@ -18,10 +18,13 @@ const QUICK_CHIPS = [
 export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden flex items-center min-h-[88vh] md:min-h-[80vh]">
-      {/* Mesh gradient blobs */}
+      {/* Mesh gradient blobs — static (no animation): a continuously animated
+          transform on a heavily blurred layer forces the browser to
+          recomposite an expensive blur every frame, which reads as jank/
+          freezing on load, especially on mobile GPUs. */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-primary/[0.13] rounded-full blur-[130px] animate-float" />
-        <div className="absolute -top-20 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-accent/[0.10] rounded-full blur-[110px] animate-float [animation-delay:2.5s]" />
+        <div className="absolute -top-20 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-primary/[0.13] rounded-full blur-[130px]" />
+        <div className="absolute -top-20 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-accent/[0.10] rounded-full blur-[110px]" />
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-blue-600/[0.06] rounded-full blur-[100px]" />
       </div>
 
