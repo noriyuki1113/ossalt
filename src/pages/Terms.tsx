@@ -4,8 +4,8 @@ import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
 
 export default function TermsPage() {
   useSeo({
-    title: "利用規約",
-    description: "OSSアルタナティブの利用規約です。",
+    title: "利用規約 | OSSアルタナティブ",
+    description: "OSSアルタナティブの利用条件、掲載ツールの選定基準、禁止事項について定めた利用規約です。",
     canonical: "https://ossalt.jp/terms",
   });
 

@@ -124,7 +124,7 @@ export function SiteHeader() {
             id="alt"
             label="代替を探す"
             items={ALTERNATIVES_NAV}
-            allTo="/ranking"
+            allTo="/alternatives"
             allLabel="すべて見る →"
           />
           <Dropdown
@@ -182,6 +182,15 @@ export function SiteHeader() {
           {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </button>
 
+        {/* Mobile search shortcut */}
+        <button
+          className="md:hidden h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+          aria-label="ツールを検索"
+          onClick={() => setMobileOpen(true)}
+        >
+          <Search className="h-4 w-4" />
+        </button>
+
         {/* Mobile toggle */}
         <button
           className="md:hidden h-8 w-8 flex items-center justify-center rounded-md hover:bg-secondary transition-colors"
@@ -210,6 +219,18 @@ export function SiteHeader() {
               <X className="h-4 w-4" />
             </button>
           </div>
+          <form onSubmit={handleSearch} className="px-4 pt-3 pb-1 shrink-0">
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="ツールを検索…"
+                value={headerSearch}
+                onChange={(e) => setHeaderSearch(e.target.value)}
+                className="h-9 w-full rounded-lg border border-border bg-background pl-8 pr-3 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/40"
+              />
+            </div>
+          </form>
           <nav
             className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-1"
             style={{ paddingBottom: "calc(24px + env(safe-area-inset-bottom))" }}
@@ -227,6 +248,13 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/alternatives"
+              className="block px-3 py-2 text-sm text-primary font-medium hover:bg-secondary transition-colors rounded-md"
+              onClick={() => setMobileOpen(false)}
+            >
+              すべて見る →
+            </Link>
             <div className="border-t border-border pt-2 mt-2">
               <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider px-3 pb-0.5">
                 A vs B 比較
@@ -269,18 +297,6 @@ export function SiteHeader() {
                 </Link>
               ))}
             </div>
-            <form onSubmit={handleSearch} className="pt-2">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="ツールを検索…"
-                  value={headerSearch}
-                  onChange={(e) => setHeaderSearch(e.target.value)}
-                  className="h-9 w-full rounded-lg border border-border bg-background pl-8 pr-3 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/40"
-                />
-              </div>
-            </form>
           </nav>
         </div>
       )}

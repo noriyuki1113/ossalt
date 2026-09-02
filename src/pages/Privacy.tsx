@@ -5,8 +5,8 @@ import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
 
 export default function PrivacyPage() {
   useSeo({
-    title: "プライバシーポリシー",
-    description: "OSSアルタナティブのプライバシーポリシーです。",
+    title: "プライバシーポリシー | OSSアルタナティブ",
+    description: "OSSアルタナティブが取得する個人情報の範囲、利用目的、Cookie・アクセス解析の使い方について説明しています。",
     canonical: "https://ossalt.jp/privacy",
   });
 

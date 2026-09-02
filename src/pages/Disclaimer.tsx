@@ -4,8 +4,8 @@ import { PageBackTop, PageBackBottom } from "@/components/PageBackNav";
 
 export default function DisclaimerPage() {
   useSeo({
-    title: "免責事項",
-    description: "OSSアルタナティブの免責事項です。",
+    title: "免責事項 | OSSアルタナティブ",
+    description: "掲載情報の正確性、外部サイトへのリンク、スポンサー掲載の扱いについてOSSアルタナティブの免責事項を説明します。",
     canonical: "https://ossalt.jp/disclaimer",
   });
 

@@ -8,6 +8,7 @@ const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default:
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 
 const ToolDetail = lazy(() => import("./pages/ToolDetail"));
@@ -18,6 +19,7 @@ const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AlternativesPage = lazy(() => import("./pages/AlternativesPage"));
+const AlternativesIndexPage = lazy(() => import("./pages/AlternativesIndexPage"));
 const RankingPage = lazy(() => import("./pages/Ranking"));
 const QuizPage = lazy(() => import("./pages/Quiz"));
 const NewsPage = lazy(() => import("./pages/News"));
@@ -71,11 +73,13 @@ const App = () => (
       <Suspense fallback={null}><Sonner /></Suspense>
       <BrowserRouter>
         <ScrollToTop />
+        <ErrorBoundary>
         <Suspense fallback={<div className="min-h-screen bg-background" />}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/category/:slug" element={<Index />} />
             <Route path="/tools/:id" element={<ToolDetail />} />
+            <Route path="/alternatives" element={<AlternativesIndexPage />} />
             <Route path="/guides/notion-alternatives" element={<NotionAlternativesGuide />} />
             <Route path="/guides/n8n-selfhost-vps" element={<N8nSelfhostVpsGuide />} />
             <Route path="/guides/appflowy-selfhost-vps" element={<AppFlowySelfhostVpsGuide />} />
@@ -112,6 +116,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
+        </ErrorBoundary>
         <CookieBanner />
       </BrowserRouter>
     </TooltipProvider>

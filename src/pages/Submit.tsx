@@ -53,7 +53,7 @@ const UPSELL_OPTIONS = [
 export default function Submit() {
   useSeo({
     title: "無料掲載申請 | OSSアルタナティブ",
-    description: "OSSプロジェクトや関連サービスを無料で掲載申請できます。",
+    description: "自作・運営中のOSSプロジェクトをOSSアルタナティブに無料で掲載申請できます。カテゴリ・GitHubリンクを入力するだけの簡単フォーム。",
     canonical: "https://ossalt.jp/submit",
   });
 
