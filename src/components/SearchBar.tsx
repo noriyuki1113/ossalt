@@ -24,6 +24,7 @@ export function SearchBar({
       <Search className={`absolute ${isHero ? "left-4 md:left-5" : "left-3.5 md:left-4"} h-4 w-4 md:h-5 md:w-5 text-muted-foreground/50`} />
       <input
         type="text"
+        aria-label="OSSツールを検索"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
