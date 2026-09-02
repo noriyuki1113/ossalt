@@ -12,7 +12,10 @@ async function searchAndWaitForApi(page: Page, query: string) {
   );
   await page.getByLabel("OSSツールを検索").fill(query);
   const response = await responsePromise;
-  expect(response.ok(), `tools API request failed: ${response.status()} ${response.url()}`).toBeTruthy();
+  if (!response.ok()) {
+    const body = await response.text().catch(() => "<no body>");
+    throw new Error(`tools API request failed: ${response.status()} ${response.url()}\nBody: ${body}`);
+  }
   return response;
 }
 
