@@ -19,7 +19,6 @@ import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
 import type { Tool } from "@/hooks/use-tools";
 import { COMPETITOR_TO_SLUG, COMPARE_LINKS } from "./AlternativesPage";
-import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
@@ -175,15 +174,15 @@ export default function ToolDetailPage() {
   });
 
   const { data: relatedTools } = useQuery({
-    queryKey: ["related-tools", tool?.primary_competitor, tool?.parent_category_ja, tool?.id],
+    queryKey: ["related-tools", tool?.competitor_slug, tool?.category_slug, tool?.id],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
       const results: Tool[] = [];
 
-      if (tool!.primary_competitor && tool!.primary_competitor !== "有料SaaS") {
+      if (tool!.competitor_slug) {
         const { data } = await supabase
           .from("tools").select("*")
-          .eq("primary_competitor", tool!.primary_competitor)
+          .eq("competitor_slug", tool!.competitor_slug)
           .neq("id", tool!.id)
           .or("url.not.is.null,github_url.not.is.null")
           .order("stars_num", { ascending: false, nullsFirst: false })
@@ -191,11 +190,11 @@ export default function ToolDetailPage() {
         if (data) results.push(...(data as Tool[]));
       }
 
-      if (results.length < 6 && tool!.parent_category_ja) {
+      if (results.length < 6 && tool!.category_slug) {
         const existingIds = new Set([tool!.id, ...results.map(t => t.id)]);
         const { data } = await supabase
           .from("tools").select("*")
-          .eq("parent_category_ja", tool!.parent_category_ja!)
+          .eq("category_slug", tool!.category_slug!)
           .or("url.not.is.null,github_url.not.is.null")
           .order("stars_num", { ascending: false, nullsFirst: false })
           .limit(10);
@@ -292,15 +291,15 @@ export default function ToolDetailPage() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
-          ...(tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? [{
+          ...(tool.category_slug && tool.parent_category_ja ? [{
             "@type": "ListItem",
             position: 2,
             name: tool.parent_category_ja,
-            item: `https://ossalt.jp/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}`,
+            item: `https://ossalt.jp/category/${tool.category_slug}`,
           }] : []),
           {
             "@type": "ListItem",
-            position: tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
+            position: tool.category_slug ? 3 : 2,
             name: tool.name || "",
             item: `https://ossalt.jp/tools/${tool.id}`,
           },
@@ -380,7 +379,7 @@ export default function ToolDetailPage() {
           {tool.parent_category_ja && (
             <>
               <Link
-                to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}
+                to={tool.category_slug ? `/category/${tool.category_slug}` : `/`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
                 {tool.parent_category_ja}
@@ -1158,7 +1157,7 @@ export default function ToolDetailPage() {
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
           {tool.parent_category_ja && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}>
+              <Link to={tool.category_slug ? `/category/${tool.category_slug}` : `/`}>
                 {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

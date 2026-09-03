@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Brain, Code2, Server, BarChart2, FileText, Zap, Shield, Users, Box, ArrowRight } from "lucide-react";
 import { useToolCategories } from "@/hooks/use-tools";
-import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import { track } from "@/lib/track";
 
 const CATEGORIES = [
@@ -23,8 +22,7 @@ export function PopularCategoriesGrid() {
   const countMap: Record<string, number> = {};
   if (categoryData) {
     for (const c of categoryData) {
-      const slug = CATEGORY_JA_TO_SLUG[c.name];
-      if (slug) countMap[slug] = c.count;
+      countMap[c.slug] = c.count;
     }
   }
 

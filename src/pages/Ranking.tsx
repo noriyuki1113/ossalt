@@ -15,6 +15,7 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { CATEGORY_MAP } from "@/components/CategoryFilter";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import type { Tool } from "@/hooks/use-tools";
 
 /* ---------- helpers ---------- */
@@ -48,9 +49,11 @@ function timeAgo(dateStr: string | null): string {
   return `${Math.floor(days / 365)}年前`;
 }
 
-// UI labels (short form). Query against the DB with CATEGORY_MAP[label], which
-// resolves to the actual parent_category_ja value (long form, e.g. "AI・機械学習").
-const CATEGORIES = Object.keys(CATEGORY_MAP).filter((c) => c !== "すべて");
+// UI labels (short form) paired with their category_slug for querying —
+// category_slug is a validated FK column, so no free-text matching needed.
+const CATEGORIES = Object.keys(CATEGORY_MAP)
+  .filter((label) => label !== "すべて")
+  .map((label) => ({ label, slug: CATEGORY_JA_TO_SLUG[CATEGORY_MAP[label]] }));
 
 /* ---------- Rank Badge ---------- */
 
@@ -217,16 +220,16 @@ function OverallTab() {
 /* ---------- Tab: Category ---------- */
 
 function CategoryTab() {
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [categorySlug, setCategorySlug] = useState(CATEGORIES[0].slug);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["ranking-category", category],
+    queryKey: ["ranking-category", categorySlug],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
         .select("*")
-        .eq("parent_category_ja", CATEGORY_MAP[category] || category)
+        .eq("category_slug", categorySlug)
         .order("stars_num", { ascending: false, nullsFirst: false })
         .limit(20);
       if (error) throw error;
@@ -237,14 +240,14 @@ function CategoryTab() {
   return (
     <div>
       <div className="mb-6">
-        <Select value={category} onValueChange={setCategory}>
+        <Select value={categorySlug} onValueChange={setCategorySlug}>
           <SelectTrigger className="w-full max-w-xs rounded-xl">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {CATEGORIES.map((c) => (
-              <SelectItem key={c} value={c}>
-                {c}
+              <SelectItem key={c.slug} value={c.slug}>
+                {c.label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -305,15 +308,15 @@ function AnnualBestTab() {
       const { supabase } = await import("@/integrations/supabase/client");
       // Parallel per-category queries — guarantees top-3 for every category
       const categoryResults = await Promise.all(
-        CATEGORIES.map(async (cat) => {
+        CATEGORIES.map(async (c) => {
           const { data, error } = await supabase
             .from("tools")
             .select("*")
-            .eq("parent_category_ja", CATEGORY_MAP[cat] || cat)
+            .eq("category_slug", c.slug)
             .order("stars_num", { ascending: false, nullsFirst: false })
             .limit(3);
           if (error) throw error;
-          return { category: cat, tools: (data as Tool[]) || [] };
+          return { category: c.label, tools: (data as Tool[]) || [] };
         })
       );
       return categoryResults.filter((r) => r.tools.length > 0);

@@ -16,6 +16,7 @@ export interface Tool {
   parent_category_ja: string | null;
   category_en: string | null;
   category_ja: string | null;
+  category_slug: string | null;
   github_url: string | null;
   license: string | null;
   stars: string | null;
@@ -23,6 +24,7 @@ export interface Tool {
   created_at: string | null;
   primary_competitor: string | null;
   primary_competitor_ja: string | null;
+  competitor_slug: string | null;
   replaces: string[] | null;
   replaces_ja: string[] | null;
   forks_num: number | null;
@@ -54,8 +56,10 @@ export const TOOL_CARD_COLUMNS = [
   "description_ja",
   "description_en",
   "parent_category_ja",
+  "category_slug",
   "primary_competitor",
   "primary_competitor_ja",
+  "competitor_slug",
   "stars_num",
   "language",
   "license",
@@ -139,18 +143,18 @@ export function useToolCategories() {
     queryFn: async () => {
       const { data, error } = await (await sb())
         .from("tools")
-        .select("parent_category_ja");
+        .select("category_slug");
       if (error) throw error;
 
       const counts = new Map<string, number>();
       data?.forEach((t) => {
-        const cat = t.parent_category_ja;
-        if (cat) counts.set(cat, (counts.get(cat) || 0) + 1);
+        const slug = t.category_slug;
+        if (slug) counts.set(slug, (counts.get(slug) || 0) + 1);
       });
 
       return Array.from(counts.entries())
         .sort((a, b) => b[1] - a[1])
-        .map(([name, count]) => ({ name, count }));
+        .map(([slug, count]) => ({ slug, count }));
     },
   });
 }
@@ -165,7 +169,7 @@ export function useToolStats() {
       const supabase = await sb();
       const [headResult, dataResult] = await Promise.all([
         supabase.from("tools").select("*", { count: "exact", head: true }),
-        supabase.from("tools").select("stars_num, parent_category_ja"),
+        supabase.from("tools").select("stars_num, category_slug"),
       ]);
 
       if (headResult.error) throw headResult.error;
@@ -173,7 +177,7 @@ export function useToolStats() {
 
       const totalStars = dataResult.data?.reduce((sum, t) => sum + (t.stars_num || 0), 0) || 0;
       const categories = new Set(
-        dataResult.data?.map((t) => t.parent_category_ja).filter(Boolean)
+        dataResult.data?.map((t) => t.category_slug).filter(Boolean)
       );
 
       return {

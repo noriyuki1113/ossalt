@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
+import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
 import type { Tool } from "@/hooks/use-tools";
 
 function formatStars(num: number | null): string {
@@ -24,18 +25,9 @@ function getFaviconUrl(url: string | null): string | null {
   }
 }
 
-const CATEGORIES = [
-  "AI・機械学習",
-  "ビジネスソフトウェア",
-  "開発者ツール",
-  "インフラ・運用",
-  "データ・分析",
-  "コンテンツ・パブリッシング",
-  "生産性・ユーティリティ",
-  "セキュリティ・プライバシー",
-  "コミュニティ・ソーシャル",
-  "その他",
-];
+// { label, slug } for every category — slug is what's queried against
+// category_slug (a validated FK column), label is the display name.
+const CATEGORIES = Object.entries(CATEGORY_JA_TO_SLUG).map(([label, slug]) => ({ label, slug }));
 
 /* ── News Card ── */
 
@@ -143,15 +135,15 @@ export default function NewsPage() {
       const { supabase } = await import("@/integrations/supabase/client");
       // Parallel per-category queries — guarantees every category is represented
       const results = await Promise.all(
-        CATEGORIES.map(async (cat) => {
+        CATEGORIES.map(async (c) => {
           const { data } = await supabase
             .from("tools")
             .select("*")
-            .eq("parent_category_ja", cat)
+            .eq("category_slug", c.slug)
             .order("stars_num", { ascending: false, nullsFirst: false })
             .limit(15);
           if (!data?.length) return null;
-          return { category: cat, tool: (data as Tool[])[Math.floor(Math.random() * data.length)] };
+          return { category: c.label, tool: (data as Tool[])[Math.floor(Math.random() * data.length)] };
         })
       );
       return results.filter((r): r is { category: string; tool: Tool } => r !== null);
