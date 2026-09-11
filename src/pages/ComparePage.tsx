@@ -1,5 +1,6 @@
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from "@/components/ui/table";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Check, Minus, ExternalLink, ChevronRight } from "lucide-react";
+import { ArrowLeft, Check, ChevronRight } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
 import { useCompareContent } from "@/hooks/use-compare-content";
@@ -131,7 +132,7 @@ export default function ComparePage() {
             OSS vs SaaS 比較
           </div>
 
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex flex-wrap items-center gap-4 mb-4">
             <div className="flex items-center gap-2">
               <ClearbitLogo url={content.ossUrl} name={content.ossName} />
               <span className="font-bold text-xl">{content.ossName}</span>
@@ -166,27 +167,32 @@ export default function ComparePage() {
         {/* Comparison table */}
         <section className="mb-10">
           <h2 className="text-base font-bold text-foreground mb-4">項目別比較</h2>
-          <div className="rounded-xl border border-border overflow-hidden">
-            <div className="grid grid-cols-[1fr_1fr_1fr] bg-muted/50 text-xs font-semibold text-muted-foreground">
-              <div className="px-4 py-3">項目</div>
-              <div className="px-4 py-3 border-l border-border text-primary">{content.ossName}（OSS）</div>
-              <div className="px-4 py-3 border-l border-border">{content.saasName}</div>
-            </div>
-            {content.comparison.map((row, i) => (
-              <div key={i} className="grid grid-cols-[1fr_1fr_1fr] border-t border-border text-sm">
-                <div className="px-4 py-3.5 font-medium text-foreground">{row.category}</div>
-                <div className={`px-4 py-3.5 border-l border-border flex items-start gap-1.5 ${row.winner === "oss" ? "bg-primary/5" : ""}`}>
-                  {row.winner === "oss" && <Check className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />}
-                  {row.winner === "draw" && <Minus className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />}
-                  <span className={row.winner === "oss" ? "text-foreground" : "text-muted-foreground"}>{row.oss}</span>
-                </div>
-                <div className={`px-4 py-3.5 border-l border-border flex items-start gap-1.5 ${row.winner === "saas" ? "bg-amber-500/5" : ""}`}>
-                  {row.winner === "saas" && <Check className="h-3.5 w-3.5 text-amber-500 shrink-0 mt-0.5" />}
-                  {row.winner === "draw" && <Minus className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />}
-                  <span className={row.winner === "saas" ? "text-foreground" : "text-muted-foreground"}>{row.saas}</span>
-                </div>
-              </div>
-            ))}
+          <p className="text-sm text-muted-foreground mb-3">優位な項目数は総合評価ではありません。必要な機能と運用負担を優先して比較してください。</p>
+          <div className="rounded-xl border border-border">
+            <Table className="min-w-[560px]">
+              <TableCaption className="pb-3">{content.ossName}と{content.saasName}の比較。狭い画面では横にスクロールできます。</TableCaption>
+              <TableHeader><TableRow>
+                <TableHead scope="col">項目</TableHead>
+                <TableHead scope="col">{content.ossName}</TableHead>
+                <TableHead scope="col">{content.saasName}</TableHead>
+              </TableRow></TableHeader>
+              <TableBody>{content.comparison.map((row, i) => (
+                <TableRow key={i}>
+                  <TableHead scope="row" className="text-foreground">{row.category}</TableHead>
+                  <TableCell className={row.winner === "oss" ? "bg-primary/5" : ""}>
+                    {row.oss}{row.winner === "oss" && <span className="block text-sm text-primary mt-1">この項目で優位</span>}
+                  </TableCell>
+                  <TableCell className={row.winner === "saas" ? "bg-amber-500/5" : ""}>
+                    {row.saas}{row.winner === "saas" && <span className="block text-sm mt-1">この項目で優位</span>}
+                  </TableCell>
+                </TableRow>
+              ))}</TableBody>
+            </Table>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">セルフホストでは、サーバー代や保守作業が別途必要になる場合があります。料金・日本語対応・移行条件は導入前に公式サイトで確認してください。</p>
+          <div className="flex flex-wrap gap-4 mt-3 text-sm">
+            <a href={content.ossUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">{content.ossName}の公式サイト</a>
+            <a href={content.saasUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">{content.saasName}の公式サイト</a>
           </div>
         </section>
 

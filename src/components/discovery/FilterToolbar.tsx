@@ -12,6 +12,8 @@ interface FilterToolbarProps {
   onLicenseChange: (v: string) => void;
   hasGithub: boolean;
   onHasGithubChange: (v: boolean) => void;
+  hasDocker: boolean;
+  onHasDockerChange: (v: boolean) => void;
   totalCount: number;
 }
 
@@ -22,11 +24,14 @@ export function FilterToolbar({
   onLicenseChange,
   hasGithub,
   onHasGithubChange,
+  hasDocker,
+  onHasDockerChange,
   totalCount,
 }: FilterToolbarProps) {
   const activeFilters: { key: string; label: string; onRemove: () => void }[] = [];
   if (license) activeFilters.push({ key: "license", label: `ライセンス: ${license}`, onRemove: () => onLicenseChange("") });
   if (hasGithub) activeFilters.push({ key: "github", label: "GitHub あり", onRemove: () => onHasGithubChange(false) });
+  if (hasDocker) activeFilters.push({ key: "docker", label: "Docker 対応", onRemove: () => onHasDockerChange(false) });
 
   return (
     <div className="space-y-3">
@@ -62,6 +67,17 @@ export function FilterToolbar({
           GitHub あり
         </button>
 
+        <button
+          onClick={() => onHasDockerChange(!hasDocker)}
+          className={`h-8 px-3 text-xs rounded-lg border transition-colors ${
+            hasDocker
+              ? "bg-primary text-primary-foreground border-primary"
+              : "border-border bg-background text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Docker 対応
+        </button>
+
         {/* Sort */}
         <Select value={sort} onValueChange={(v) => onSortChange(v as SortOption)}>
           <SelectTrigger className="h-8 w-auto min-w-[130px] text-xs rounded-lg border-border gap-1.5">
@@ -93,7 +109,7 @@ export function FilterToolbar({
           {activeFilters.length > 1 && (
             <button
               className="text-xs text-muted-foreground hover:text-foreground underline"
-              onClick={() => { onLicenseChange(""); onHasGithubChange(false); }}
+              onClick={() => { onLicenseChange(""); onHasGithubChange(false); onHasDockerChange(false); }}
             >
               すべてクリア
             </button>

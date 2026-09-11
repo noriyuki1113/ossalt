@@ -85,7 +85,7 @@ for (const route of routes) {
 
   // Inject JSON-LD schema
   if (route.jsonLd) {
-    const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(route.jsonLd)}</script>`;
+    const jsonLdScript = `<script type="application/ld+json" data-seo-jsonld="true">${JSON.stringify(route.jsonLd).replace(/</g, "\\u003c")}</script>`;
     html = html.replace("</head>", `${jsonLdScript}\n</head>`);
   }
 
@@ -145,5 +145,5 @@ function escapeHtml(str) {
 }
 
 function escapeAttr(str) {
-  return str.replace(/"/g, "&quot;").replace(/&/g, "&amp;");
+  return escapeHtml(str).replace(/"/g, "&quot;");
 }
