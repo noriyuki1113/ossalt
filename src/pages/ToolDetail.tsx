@@ -760,8 +760,10 @@ export default function ToolDetailPage() {
                     346: { slug: "umami-selfhost-vps", label: "Umamiセルフホスト手順" },
                   };
                   const isSelfHostable =
-                    tool.docker_available === true ||
-                    (!!tool.github_url && (tool.stars_num || 0) >= 1000);
+                    tool.self_hostable != null
+                      ? tool.self_hostable
+                      : tool.docker_available === true ||
+                        (!!tool.github_url && (tool.stars_num || 0) >= 1000);
                   if (!isSelfHostable) return null;
                   const guide = SELFHOST_GUIDES[tool.id];
                   return (
@@ -926,7 +928,9 @@ export default function ToolDetailPage() {
               <Server className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">セルフホスト</p>
               <p className="text-xs font-semibold text-foreground">
-                {tool.github_url ? "可能" : "要確認"}
+                {tool.self_hostable != null
+                  ? (tool.self_hostable ? "可能" : "非対応")
+                  : tool.github_url ? "可能（推定）" : "要確認"}
               </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
@@ -992,7 +996,29 @@ export default function ToolDetailPage() {
                   </p>
                 </div>
               )}
+              {tool.verified_at && (
+                <div>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">確認日</p>
+                  <p className="text-sm font-medium flex items-center gap-1.5 text-foreground">
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                    {new Date(tool.verified_at).toLocaleDateString("ja-JP")}
+                  </p>
+                </div>
+              )}
             </div>
+            {tool.verification_source_url && (
+              <p className="text-[11px] text-muted-foreground mt-4 pt-4 border-t border-border/60">
+                情報の確認元:{" "}
+                <a
+                  href={tool.verification_source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline break-all"
+                >
+                  {tool.verification_source_url}
+                </a>
+              </p>
+            )}
           </div>
         </section>
 

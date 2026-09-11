@@ -37,6 +37,9 @@ export interface Tool {
   subscriber_count: number | null;
   docker_available: boolean | null;
   docker_compose_url: string | null;
+  self_hostable: boolean | null;
+  verified_at: string | null;
+  verification_source_url: string | null;
 }
 
 // NOTE: every column here must actually exist on the live `tools` table.

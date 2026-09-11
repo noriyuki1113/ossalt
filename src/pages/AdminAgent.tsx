@@ -436,6 +436,9 @@ export default function AdminAgentPage() {
           category_slug: CATEGORY_JA_TO_SLUG[draft.category] ?? "other",
           docker_available: draft.docker_supported,
           competitor_slug: competitorSlug,
+          self_hostable: draft.vps_supported || draft.docker_supported,
+          verified_at: new Date().toISOString(),
+          verification_source_url: draft.github_url || draft.source_url || null,
         })
         .select("id")
         .single();
