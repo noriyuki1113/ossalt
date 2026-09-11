@@ -65,7 +65,12 @@
     <!-- AdSense: load after interaction to prevent render blocking -->
     <script>
       (function() {
+        var adsLoaded = false;
+        var adsTimer;
         function loadAds() {
+          if (adsLoaded) return;
+          adsLoaded = true;
+          clearTimeout(adsTimer);
           var s = document.createElement('script');
           s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545568883714689';
           s.async = true;
@@ -77,7 +82,7 @@
         window.addEventListener('scroll', loadAds, { once: true, passive: true });
         window.addEventListener('pointerdown', loadAds, { once: true });
         // Fallback: load after 4s even without interaction
-        setTimeout(loadAds, 4000);
+        adsTimer = setTimeout(loadAds, 4000);
       })();
     </script>
 

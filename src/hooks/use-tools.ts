@@ -1,3 +1,4 @@
+import { searchTerms, toolSearchFilter } from "@/lib/tool-search";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORY_MAP } from "@/components/CategoryFilter";
 
@@ -100,10 +101,8 @@ export function useTools(options?: UseToolsOptions) {
         query = query.eq("parent_category_ja", dbCategory);
       }
 
-      if (options?.search) {
-        query = query.or(
-          `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%,description_en.ilike.%${options.search}%,primary_competitor.ilike.%${options.search}%,primary_competitor_ja.ilike.%${options.search}%`
-        );
+      for (const term of searchTerms(options?.search || "")) {
+        query = query.or(toolSearchFilter(term));
       }
 
       if (options?.license) {

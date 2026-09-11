@@ -3,7 +3,7 @@ import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom"
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
-import { CategoryFilter, CATEGORY_MAP } from "@/components/CategoryFilter";
+import { CategoryFilter } from "@/components/CategoryFilter";
 import { ToolCard, ToolCardSkeleton } from "@/components/ToolCard";
 import { HeroSection } from "@/components/home/HeroSection";
 import { QuickAlternativesPills } from "@/components/home/QuickAlternativesPills";
@@ -114,34 +114,36 @@ export default function IndexPage() {
   useEffect(() => {
     const qCat = searchParams.get("category");
     if (qCat && !categorySlug && CATEGORY_TO_SLUG[qCat]) {
-      navigate(`/category/${CATEGORY_TO_SLUG[qCat]}`, { replace: true });
+      const params = new URLSearchParams(searchParams);
+      params.delete("category");
+      navigate({ pathname: `/category/${CATEGORY_TO_SLUG[qCat]}`, search: params.toString() }, { replace: true });
     }
   }, [searchParams, categorySlug, navigate]);
 
-  // Sync selectedCategory when URL slug changes (e.g. user clicks a category card)
+  // The URL is the source of truth, including browser back/forward and shared links.
   useEffect(() => {
-    const next = slugCategory || "すべて";
-    setSelectedCategory((prev) => {
-      if (prev === next) return prev;
-      setPage(0);
-      setAllTools([]);
-      return next;
-    });
-    if (slugCategory) {
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }
-  }, [slugCategory]);
+    setSearch(urlSearch);
+    setPage(0);
+    setAllTools([]);
+  }, [urlSearch, urlCategory]);
 
   const [search, setSearch] = useState(urlSearch);
-  const [debouncedSearch, setDebouncedSearch] = useState(urlSearch);
-  const [selectedCategory, setSelectedCategory] = useState(urlCategory);
+  const debouncedSearch = urlSearch;
+  const selectedCategory = urlCategory;
   const [sort, setSort] = useState<SortOption>("stars");
   const [license, setLicense] = useState("");
   const [hasGithub, setHasGithub] = useState(false);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
-  const prevSearchRef = useRef(search);
+
+  const commitSearch = useCallback((value: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (value.trim()) params.set("search", value.trim());
+    else params.delete("search");
+    setSearchParams(params, { replace: true });
+    setPage(0);
+  }, [searchParams, setSearchParams]);
 
   const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて" || !!license || hasGithub;
 
@@ -226,7 +228,7 @@ export default function IndexPage() {
     jsonLd,
   });
 
-  const { data, isLoading } = useTools({
+  const { data, isLoading, isError, refetch } = useTools({
     category: selectedCategory,
     search: debouncedSearch,
     page,
@@ -236,45 +238,31 @@ export default function IndexPage() {
   });
 
   useEffect(() => {
-    if (search === prevSearchRef.current && search === debouncedSearch) return;
+    if (search.trim() === debouncedSearch) return;
     debounceRef.current = setTimeout(() => {
-      setDebouncedSearch(search);
-      setPage(0);
-      setAllTools([]);
-      prevSearchRef.current = search;
+      commitSearch(search);
     }, 300);
     return () => clearTimeout(debounceRef.current);
-  }, [search]);
-
-  useEffect(() => {
-    if (categorySlug) return;
-    const params = new URLSearchParams();
-    if (selectedCategory !== "すべて") params.set("category", selectedCategory);
-    if (debouncedSearch) params.set("search", debouncedSearch);
-    setSearchParams(params, { replace: true });
-  }, [selectedCategory, debouncedSearch, setSearchParams, categorySlug]);
+  }, [search, debouncedSearch, commitSearch]);
 
   useEffect(() => {
     if (data?.tools) {
       if (page === 0) {
         setAllTools(data.tools);
       } else {
-        setAllTools((prev) => [...prev, ...data.tools]);
+        setAllTools((prev) => Array.from(new Map([...prev, ...data.tools].map(tool => [tool.id, tool])).values()));
       }
     }
   }, [data, page]);
 
   const handleCategoryChange = useCallback((cat: string) => {
-    setSelectedCategory(cat);
     setPage(0);
     setAllTools([]);
+    const params = new URLSearchParams(searchParams);
+    params.delete("category");
     const slug = CATEGORY_TO_SLUG[cat];
-    if (slug) {
-      navigate(`/category/${slug}`);
-    } else {
-      navigate("/");
-    }
-  }, [navigate]);
+    navigate({ pathname: slug ? `/category/${slug}` : "/", search: params.toString() });
+  }, [navigate, searchParams]);
 
   const handleSortChange = useCallback((value: SortOption) => {
     setSort(value);
@@ -294,13 +282,21 @@ export default function IndexPage() {
     setAllTools([]);
   }, []);
 
-  const hasMore = data ? allTools.length < data.totalCount : false;
+  // Read page zero directly so submitting a cached query never blanks its results.
+  const visibleTools = page === 0 ? data?.tools ?? [] : allTools;
+  const hasMore = data ? visibleTools.length < data.totalCount : false;
 
   return (
     <SiteLayout>
       <HeroSection
         search={search}
         onSearchChange={setSearch}
+        onSearchSubmit={() => {
+          clearTimeout(debounceRef.current);
+          setSearch(search.trim());
+          commitSearch(search);
+          window.setTimeout(() => document.getElementById("search-results")?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+        }}
       />
 
       <QuickAlternativesPills />
@@ -312,7 +308,7 @@ export default function IndexPage() {
       </section>
 
       {isBrowsing ? (
-        <section className="container pb-16 pt-8">
+        <section id="search-results" aria-label="検索結果" className="container pb-16 pt-8 scroll-mt-36">
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mb-6">
               <nav aria-label="パンくずリスト" className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
@@ -331,7 +327,12 @@ export default function IndexPage() {
             </div>
           )}
 
-          {(isLoading && page === 0) || (!data && allTools.length === 0) ? (
+          {isError ? (
+            <div role="alert" className="text-center py-12 space-y-4">
+              <p>ツールを読み込めませんでした。時間をおいて再度お試しください。</p>
+              <Button variant="outline" onClick={() => refetch()}>再読み込み</Button>
+            </div>
+          ) : (isLoading && page === 0) || (!data && visibleTools.length === 0) ? (
             <>
               <Suspense fallback={<div className="h-10" />}>
                 <FilterToolbar
@@ -347,18 +348,18 @@ export default function IndexPage() {
                 ))}
               </div>
             </>
-          ) : allTools.length > 0 ? (
+          ) : visibleTools.length > 0 ? (
             <>
               <Suspense fallback={<div className="h-10" />}>
                 <FilterToolbar
                   sort={sort} onSortChange={handleSortChange}
                   license={license} onLicenseChange={handleLicenseChange}
                   hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
-                  totalCount={data?.totalCount ?? allTools.length}
+                  totalCount={data?.totalCount ?? visibleTools.length}
                 />
               </Suspense>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                {allTools.map((tool, i) => (
+                {visibleTools.map((tool, i) => (
                   <ToolCard key={tool.id} tool={tool} index={i} />
                 ))}
               </div>
@@ -378,7 +379,15 @@ export default function IndexPage() {
           ) : (
             <div className="text-center py-20">
               <p className="text-muted-foreground">ツールが見つかりませんでした</p>
-              <p className="text-sm text-muted-foreground mt-1">検索条件を変更してみてください</p>
+              <p className="text-sm text-muted-foreground mt-2">サービス名を短くするか、絞り込み条件を解除してください。</p>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                <Button variant="outline" onClick={() => {
+                  clearTimeout(debounceRef.current);
+                  setLicense(""); setHasGithub(false); setSearch("");
+                  setPage(0); setAllTools([]); navigate("/");
+                }}>検索条件をリセット</Button>
+                <Button variant="outline" asChild><Link to="/alternatives">サービス別の代替一覧を見る</Link></Button>
+              </div>
             </div>
           )}
 
