@@ -145,7 +145,9 @@ export default function IndexPage() {
     setPage(0);
   }, [searchParams, setSearchParams]);
 
-  const isBrowsing = debouncedSearch !== "" || selectedCategory !== "すべて" || !!license || hasGithub;
+  // The home page is a directory first: visitors can browse useful tools before
+  // they know the name of a specific SaaS product.
+  const isBrowsing = true;
 
   const categorySeo = selectedCategory !== "すべて" ? CATEGORY_SEO[selectedCategory] : null;
   const seoTitle = categorySeo
@@ -309,6 +311,16 @@ export default function IndexPage() {
 
       {isBrowsing ? (
         <section id="search-results" aria-label="検索結果" className="container pb-16 pt-8 scroll-mt-36">
+          {selectedCategory === "すべて" && !debouncedSearch && !license && !hasGithub && (
+            <div className="mb-6 max-w-2xl">
+              <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
+                OSSを探す
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                人気順で表示しています。用途、ライセンス、GitHubの有無で絞り込めます。
+              </p>
+            </div>
+          )}
           {selectedCategory !== "すべて" && !debouncedSearch && (
             <div className="mb-6">
               <nav aria-label="パンくずリスト" className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
@@ -488,3 +500,4 @@ export default function IndexPage() {
     </SiteLayout>
   );
 }
+
