@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { Box, ChevronRight, Clock3, Flame, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -133,6 +133,7 @@ export default function IndexPage() {
   const [sort, setSort] = useState<SortOption>("stars");
   const [license, setLicense] = useState("");
   const [hasGithub, setHasGithub] = useState(false);
+  const [hasDocker, setHasDocker] = useState(false);
   const [page, setPage] = useState(0);
   const [allTools, setAllTools] = useState<Tool[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
@@ -237,6 +238,7 @@ export default function IndexPage() {
     sort,
     license: license || undefined,
     hasGithub: hasGithub || undefined,
+    hasDocker: hasDocker || undefined,
   });
 
   useEffect(() => {
@@ -284,6 +286,23 @@ export default function IndexPage() {
     setAllTools([]);
   }, []);
 
+  const handleHasDockerChange = useCallback((value: boolean) => {
+    setHasDocker(value);
+    setPage(0);
+    setAllTools([]);
+  }, []);
+
+  const applyCollection = useCallback((collection: "popular" | "new" | "ai" | "selfhost") => {
+    setSearch("");
+    setLicense("");
+    setHasGithub(false);
+    setHasDocker(collection === "selfhost");
+    setSort(collection === "new" ? "newest" : "stars");
+    setPage(0);
+    setAllTools([]);
+    navigate(collection === "ai" ? "/category/ai-ml" : "/");
+  }, [navigate]);
+
   // Read page zero directly so submitting a cached query never blanks its results.
   const visibleTools = page === 0 ? data?.tools ?? [] : allTools;
   const hasMore = data ? visibleTools.length < data.totalCount : false;
@@ -309,9 +328,29 @@ export default function IndexPage() {
         </div>
       </section>
 
+      <section className="border-b border-border bg-secondary/20">
+        <div className="container flex gap-2 overflow-x-auto py-3 scrollbar-hide" aria-label="コレクション">
+          {[
+            { id: "popular", label: "人気", icon: Flame },
+            { id: "new", label: "新着", icon: Clock3 },
+            { id: "ai", label: "AI", icon: Sparkles },
+            { id: "selfhost", label: "Docker対応", icon: Box },
+          ].map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => applyCollection(id as "popular" | "new" | "ai" | "selfhost")}
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground hover:border-primary/40 hover:bg-primary/[0.06] hover:text-primary transition-colors"
+            >
+              <Icon className="h-3.5 w-3.5" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </section>
+
       {isBrowsing ? (
         <section id="search-results" aria-label="検索結果" className="container pb-16 pt-8 scroll-mt-36">
-          {selectedCategory === "すべて" && !debouncedSearch && !license && !hasGithub && (
+          {selectedCategory === "すべて" && !debouncedSearch && !license && !hasGithub && !hasDocker && (
             <div className="mb-6 max-w-2xl">
               <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
                 OSSを探す
@@ -351,6 +390,7 @@ export default function IndexPage() {
                   sort={sort} onSortChange={handleSortChange}
                   license={license} onLicenseChange={handleLicenseChange}
                   hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                  hasDocker={hasDocker} onHasDockerChange={handleHasDockerChange}
                   totalCount={0}
                 />
               </Suspense>
@@ -367,6 +407,7 @@ export default function IndexPage() {
                   sort={sort} onSortChange={handleSortChange}
                   license={license} onLicenseChange={handleLicenseChange}
                   hasGithub={hasGithub} onHasGithubChange={handleHasGithubChange}
+                  hasDocker={hasDocker} onHasDockerChange={handleHasDockerChange}
                   totalCount={data?.totalCount ?? visibleTools.length}
                 />
               </Suspense>
@@ -395,7 +436,7 @@ export default function IndexPage() {
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 <Button variant="outline" onClick={() => {
                   clearTimeout(debounceRef.current);
-                  setLicense(""); setHasGithub(false); setSearch("");
+                  setLicense(""); setHasGithub(false); setHasDocker(false); setSearch("");
                   setPage(0); setAllTools([]); navigate("/");
                 }}>検索条件をリセット</Button>
                 <Button variant="outline" asChild><Link to="/alternatives">サービス別の代替一覧を見る</Link></Button>
@@ -500,4 +541,3 @@ export default function IndexPage() {
     </SiteLayout>
   );
 }
-

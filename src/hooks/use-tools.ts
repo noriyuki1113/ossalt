@@ -68,6 +68,7 @@ interface UseToolsOptions {
   sort?: SortOption;
   license?: string;
   hasGithub?: boolean;
+  hasDocker?: boolean;
 }
 
 export function useTools(options?: UseToolsOptions) {
@@ -111,6 +112,12 @@ export function useTools(options?: UseToolsOptions) {
 
       if (options?.hasGithub) {
         query = query.not("github_url", "is", null);
+      }
+
+      if (options?.hasDocker) {
+        // The column is present in production but not yet in the generated
+        // Supabase TypeScript schema.
+        query = query.filter("docker_available", "eq", true);
       }
 
       const { data, error, count } = await query;
