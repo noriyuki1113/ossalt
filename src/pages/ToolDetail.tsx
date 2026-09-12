@@ -91,8 +91,8 @@ function getNotGoodFor(tool: Tool): { text: string; icon: typeof XCircle }[] {
 function getBenefits(tool: Tool): { title: string; desc: string }[] {
   const cat = (tool.parent_category_ja || "").toLowerCase();
   const benefits: { title: string; desc: string }[] = [
-    { title: "ライセンス費用ゼロ", desc: `${tool.license && tool.license !== "NOASSERTION" ? tool.license : "オープンソース"}ライセンスで、チーム規模が増えても追加費用なし` },
-    { title: "データの完全管理", desc: "セルフホストにより顧客データを外部に預けず、自社で完全にコントロール" },
+    { title: "ライセンス情報", desc: tool.license && tool.license !== "NOASSERTION" ? `${tool.license}。商用利用や再配布の条件は公式ライセンスを確認してください` : "ライセンス条件は公式リポジトリで確認してください" },
+    { title: "導入前の確認", desc: "セルフホスト可否、必要なインフラ、バックアップ方法は公式ドキュメントで確認してください" },
   ];
 
   if (cat.includes("ai")) {
@@ -908,8 +908,6 @@ export default function ToolDetailPage() {
               <p className="text-xs font-semibold text-foreground text-center">
                 {tool.docker_available
                   ? "対応"
-                  : tool.github_url && (tool.stars_num || 0) > 5000
-                  ? "対応（推定）"
                   : "要確認"}
               </p>
               {tool.docker_compose_url && (
@@ -927,7 +925,7 @@ export default function ToolDetailPage() {
               <Server className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">セルフホスト</p>
               <p className="text-xs font-semibold text-foreground">
-                {tool.github_url ? "可能" : "要確認"}
+                要確認
               </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">

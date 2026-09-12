@@ -73,6 +73,24 @@ export default function AboutPage() {
 
         <h2 className="text-xl font-bold flex items-center gap-3 mb-6">
           <span className="w-1 h-6 rounded-full bg-primary shrink-0" />
+          掲載とランキングの考え方
+        </h2>
+        <div className="space-y-4 text-muted-foreground leading-relaxed">
+          <p>
+            ランキングはGitHubスター数を基準に表示しています。スター数は人気の目安であり、導入の適性や安全性を保証するものではありません。
+          </p>
+          <p>
+            スポンサー・提携掲載は、通常の検索順位やランキングとは完全に分離します。有償掲載にはラベルを表示し、掲載内容の確認は正確性を高めるために行います。
+          </p>
+          <p>
+            ライセンス、セルフホスト可否、最終更新、導入条件は変わるため、導入前に公式サイトと公式リポジトリをご確認ください。
+          </p>
+        </div>
+
+        <hr className="border-border my-10" />
+
+        <h2 className="text-xl font-bold flex items-center gap-3 mb-6">
+          <span className="w-1 h-6 rounded-full bg-primary shrink-0" />
           運営
         </h2>
         <p className="text-muted-foreground">
