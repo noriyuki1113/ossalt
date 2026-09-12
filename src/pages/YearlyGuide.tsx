@@ -81,8 +81,8 @@ export default function YearlyGuide() {
       const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
-        .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, primary_competitor_ja, stars_num, language, license, forks_num, last_commit, scorecard_score, docker_available, created_at")
-        .eq("primary_competitor", competitor!)
+        .select("id, name, url, github_url, description_ja, description_en, parent_category_ja, primary_competitor, primary_competitor_ja, competitor_slug, stars_num, language, license, forks_num, last_commit, scorecard_score, docker_available, created_at")
+        .eq("competitor_slug", slug!)
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
       return (data as unknown as Tool[]) || [];

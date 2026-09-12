@@ -1,4 +1,23 @@
-import { test, expect } from "../playwright-fixture";
+import { test, expect, type Page } from "../playwright-fixture";
+
+// Fills the hero search box and waits for the underlying Supabase `tools`
+// query to complete, asserting it actually succeeded. This turns a vague
+// "locator not visible" timeout into a clear "API returned 401/500/etc."
+// failure when something upstream (network, RLS, credentials) is broken,
+// which is otherwise very hard to diagnose from CI logs alone.
+async function searchAndWaitForApi(page: Page, query: string) {
+  const responsePromise = page.waitForResponse(
+    (res) => res.url().includes("/rest/v1/tools") && res.url().includes("ilike"),
+    { timeout: 10000 },
+  );
+  await page.getByLabel("代替を探したいサービス名・ツール名").fill(query);
+  const response = await responsePromise;
+  if (!response.ok()) {
+    const body = await response.text().catch(() => "<no body>");
+    throw new Error(`tools API request failed: ${response.status()} ${response.url()}\nBody: ${body}`);
+  }
+  return response;
+}
 
 test.describe("OSSアルタナティブ Core Flows", () => {
   test.beforeEach(async ({ page }) => {
@@ -7,50 +26,40 @@ test.describe("OSSアルタナティブ Core Flows", () => {
     await page.locator("h1").first().waitFor({ state: "visible", timeout: 15000 });
   });
 
-  test("landing page loads with hero and CTAs", async ({ page }) => {
+  test("landing page loads with hero, search and quick chips", async ({ page }) => {
     // Hero title
-    await expect(page.locator("h1")).toContainText("有料SaaS、もういらない。");
+    await expect(page.locator("h1")).toContainText("代替OSSを探す");
 
-    // CTA buttons
-    const primaryCta = page.getByRole("button", { name: "無料でOSSを探す" });
-    const secondaryCta = page.getByRole("button", { name: "代替ツールを見つける" });
-    await expect(primaryCta).toBeVisible();
-    await expect(secondaryCta).toBeVisible();
-
-    // Search input
-    const searchInput = page.getByPlaceholder("ツール名やカテゴリで検索…");
+    // Hero search input
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
     await expect(searchInput).toBeVisible();
+
+    // Quick chip
+    const quickChip = page.getByRole("button", { name: "Notion代替" });
+    await expect(quickChip).toBeVisible();
+
+    // Category filter
+    const categoryAll = page.getByRole("button", { name: "すべて" });
+    await expect(categoryAll).toBeVisible();
   });
 
-  test("primary CTA scrolls to catalog section", async ({ page }) => {
-    const primaryCta = page.getByRole("button", { name: "無料でOSSを探す" });
-    const initialScrollY = await page.evaluate(() => window.scrollY);
+  test("quick chip click fills the search input", async ({ page }) => {
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
+    await page.getByRole("button", { name: "Notion代替" }).click();
 
-    await primaryCta.click();
-    // Wait for smooth scroll to complete
-    await page.waitForTimeout(1000);
-
-    const newScrollY = await page.evaluate(() => window.scrollY);
-    expect(newScrollY).toBeGreaterThan(initialScrollY);
+    await expect(searchInput).toHaveValue("Notion");
   });
 
-  test("secondary CTA scrolls to popular alternatives", async ({ page }) => {
-    const secondaryCta = page.getByRole("button", { name: "代替ツールを見つける" });
-    const initialScrollY = await page.evaluate(() => window.scrollY);
-
-    await secondaryCta.click();
-    await page.waitForTimeout(1000);
-
-    const newScrollY = await page.evaluate(() => window.scrollY);
-    expect(newScrollY).toBeGreaterThan(initialScrollY);
+  test("category filter navigates to /category/:slug", async ({ page }) => {
+    await page.getByRole("button", { name: "AI・ML" }).click();
+    await page.waitForURL("**/category/ai-ml", { timeout: 10000 });
+    expect(page.url()).toContain("/category/ai-ml");
   });
 
   test("search for 'Notion' shows results", async ({ page }) => {
-    const searchInput = page.getByPlaceholder("ツール名やカテゴリで検索…");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
-    // Wait for debounce + results to load
-    const resultCards = page.locator('[class*="grid"] a[href*="/tools/"]');
+    const resultCards = page.locator('a[href*="/tools/"]');
     await expect(resultCards.first()).toBeVisible({ timeout: 10000 });
 
     const count = await resultCards.count();
@@ -58,10 +67,8 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("card navigation to detail page", async ({ page }) => {
-    const searchInput = page.getByPlaceholder("ツール名やカテゴリで検索…");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
-    // Wait for results
     const firstCard = page.locator('a[href*="/tools/"]').first();
     await expect(firstCard).toBeVisible({ timeout: 10000 });
 
@@ -73,8 +80,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("detail page has title and links", async ({ page }) => {
-    const searchInput = page.getByPlaceholder("ツール名やカテゴリで検索…");
-    await searchInput.fill("Notion");
+    await searchAndWaitForApi(page, "Notion");
 
     const firstCard = page.locator('a[href*="/tools/"]').first();
     await expect(firstCard).toBeVisible({ timeout: 10000 });
@@ -92,8 +98,8 @@ test.describe("OSSアルタナティブ Core Flows", () => {
     await expect(externalLink).toBeVisible({ timeout: 5000 });
   });
 
-  test("empty search does not crash", async ({ page }) => {
-    const searchInput = page.getByPlaceholder("ツール名やカテゴリで検索…");
+  test("empty/no-match search does not crash", async ({ page }) => {
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
     await searchInput.fill("xyznonexistent12345");
 
     // Wait for debounce
@@ -107,6 +113,6 @@ test.describe("OSSアルタナティブ Core Flows", () => {
     await page.waitForTimeout(500);
 
     // Hero should still be visible
-    await expect(page.locator("h1")).toContainText("有料SaaS、もういらない。");
+    await expect(page.locator("h1")).toContainText("代替OSSを探す");
   });
 });

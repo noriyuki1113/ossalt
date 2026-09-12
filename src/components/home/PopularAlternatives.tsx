@@ -54,9 +54,8 @@ export function PopularAlternatives() {
       const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("tools")
-        .select("id, name, primary_competitor, primary_competitor_ja, stars_num")
-        .not("primary_competitor", "is", null)
-        .not("primary_competitor", "eq", "有料SaaS")
+        .select("id, name, primary_competitor, primary_competitor_ja, competitor_slug, stars_num")
+        .not("competitor_slug", "is", null)
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
 

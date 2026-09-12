@@ -149,7 +149,7 @@ export default function AlternativesPage() {
       const { data, error } = await supabase
         .from("tools")
         .select(TOOL_CARD_COLUMNS)
-        .eq("primary_competitor", competitor!)
+        .eq("competitor_slug", slug!)
         .order("stars_num", { ascending: false, nullsFirst: false });
       if (error) throw error;
       return (data as unknown as Tool[]) || [];

@@ -6,12 +6,15 @@ export default defineConfig({
   reporter: 'html',
 
   projects: [
-    // 本番サイト向け（既存テスト）
+    // コアフロー（旧: 本番サイト直接テスト。PRの変更を検証するため
+    // ローカルのdev serverに向け直した — 本番URLを叩くと、そのPRの
+    // 差分と無関係に「今ossalt.jpに何がデプロイされているか」だけで
+    // 合否が決まってしまい、CIとして機能しない）
     {
-      name: 'production',
+      name: 'core-flows',
       testMatch: /e2e\.spec\.ts/,
       use: {
-        baseURL: 'https://ossalt.jp',
+        baseURL: 'http://localhost:8080',
         ...devices['iPhone 14'],
       },
     },
@@ -26,7 +29,7 @@ export default defineConfig({
     },
   ],
 
-  // ローカルプロジェクト実行時にdev serverを起動
+  // 両プロジェクトともdev serverを利用
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:8080',

@@ -6,32 +6,30 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const CATEGORY_MAP: Record<string, string> = {
-  "AI & Machine Learning": "AI・機械学習",
-  "Business Software": "ビジネスソフトウェア",
-  "Developer Tools": "開発者ツール",
-  "Infrastructure & Operations": "インフラ・運用",
-  "Data & Analytics": "データ・分析",
-  "Content & Publishing": "コンテンツ・パブリッシング",
-  "Productivity & Utilities": "生産性・ユーティリティ",
-  "Security & Privacy": "セキュリティ・プライバシー",
-  "Community & Social": "コミュニティ・ソーシャル",
-  "Miscellaneous": "その他",
+// Maps the source README's English category heading to the slug in the
+// `tool_categories` table (see supabase/migrations/20260903000002_*.sql).
+// Writing `category_slug` (validated by an FK + sync trigger) instead of
+// `parent_category_ja` directly is what prevents this function from ever
+// writing a category value that the rest of the site doesn't recognize.
+const CATEGORY_EN_TO_SLUG: Record<string, string> = {
+  "AI & Machine Learning": "ai-ml",
+  "Business Software": "business",
+  "Developer Tools": "developer-tools",
+  "Infrastructure & Operations": "infrastructure",
+  "Data & Analytics": "data-analytics",
+  "Content & Publishing": "content",
+  "Productivity & Utilities": "productivity",
+  "Security & Privacy": "security",
+  "Community & Social": "community",
+  "Miscellaneous": "other",
 };
 
-// Map parent categories to likely primary competitors
-const COMPETITOR_MAP: Record<string, string> = {
-  "AI & Machine Learning": "OpenAI",
-  "Business Software": "Salesforce",
-  "Developer Tools": "GitHub",
-  "Infrastructure & Operations": "AWS",
-  "Data & Analytics": "Tableau",
-  "Content & Publishing": "WordPress.com",
-  "Productivity & Utilities": "Microsoft 365",
-  "Security & Privacy": "CrowdStrike",
-  "Community & Social": "Discord",
-  "Miscellaneous": "",
-};
+// NOTE: no competitor guessing here anymore. The previous COMPETITOR_MAP
+// assigned one crude placeholder competitor per category (e.g. every
+// "Business Software" tool got "Salesforce") — low-quality guesses that
+// mostly don't exist in the `competitors` table and would now fail the FK
+// constraint. Leave competitor_slug unset; a human (AdminAgent) or
+// refine-alternatives can assign a real competitor later.
 
 interface ParsedTool {
   name: string;
@@ -185,10 +183,7 @@ Deno.serve(async (req) => {
     let errors = 0;
 
     for (const tool of newTools) {
-      const parentCategoryJa =
-        CATEGORY_MAP[tool.parent_category_en] || "その他";
-      const primaryCompetitor =
-        COMPETITOR_MAP[tool.parent_category_en] || "";
+      const categorySlug = CATEGORY_EN_TO_SLUG[tool.parent_category_en] || "other";
 
       // Skip aggregator URLs (openalternative.co) — they would all share the same favicon
       const isAggregatorUrl = (() => {
@@ -204,14 +199,12 @@ Deno.serve(async (req) => {
         description_en: tool.description,
         description_ja: tool.description, // placeholder until translated
         parent_category_en: tool.parent_category_en,
-        parent_category_ja: parentCategoryJa,
         category_en: tool.category_en,
         category_ja: tool.category_en, // keep English subcategory for now
+        category_slug: categorySlug, // parent_category_ja is derived by the DB trigger
         license: tool.license,
         stars: tool.stars_text,
         stars_num: parseStarsNum(tool.stars_text),
-        primary_competitor: primaryCompetitor || null,
-        primary_competitor_ja: primaryCompetitor || null,
       };
 
       const { error: insertError } = await supabase

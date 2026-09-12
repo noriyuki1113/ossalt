@@ -36,8 +36,8 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium webkit
 
-      - name: Run E2E tests (production)
-        run: npx playwright test --project=production
+      - name: Run E2E tests (core flows)
+        run: npx playwright test --project=core-flows
 
       - name: Upload test report on failure
         if: failure()

@@ -7,20 +7,6 @@ const corsHeaders = {
 
 const BASE_URL = "https://ossalt.jp";
 
-// Maps parent_category_ja (from DB, long form) → clean URL slug
-const CATEGORY_SLUG_MAP: Record<string, string> = {
-  "AI・機械学習": "ai-ml",
-  "ビジネスソフトウェア": "business",
-  "開発者ツール": "developer-tools",
-  "インフラ・運用": "infrastructure",
-  "データ・分析": "data-analytics",
-  "コンテンツ・パブリッシング": "content",
-  "生産性・ユーティリティ": "productivity",
-  "セキュリティ・プライバシー": "security",
-  "コミュニティ・ソーシャル": "community",
-  "その他": "other",
-};
-
 Deno.serve(async () => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
@@ -29,15 +15,15 @@ Deno.serve(async () => {
   // Fetch all tools
   const { data: tools } = await supabase
     .from("tools")
-    .select("id, parent_category_ja")
+    .select("id, category_slug")
     .order("id");
 
-  // Collect distinct category slugs (mapped from Japanese DB values)
+  // Collect distinct category slugs — category_slug is a validated FK into
+  // tool_categories, so no translation table is needed here anymore.
   const categorySlugs = new Set<string>();
   if (tools) {
     for (const t of tools) {
-      const slug = t.parent_category_ja ? CATEGORY_SLUG_MAP[t.parent_category_ja] : undefined;
-      if (slug) categorySlugs.add(slug);
+      if (t.category_slug) categorySlugs.add(t.category_slug);
     }
   }
 
