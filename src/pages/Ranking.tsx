@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Star, ArrowLeft, Trophy, Flame, Crown } from "lucide-react";
+import { Star, ArrowLeft, Trophy, Flame, Crown, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -417,6 +417,13 @@ export default function RankingPage() {
           </p>
         </div>
 
+        <div className="mb-6 rounded-xl border border-primary/15 bg-primary/[0.04] p-4 text-sm text-muted-foreground">
+          <div className="flex gap-2">
+            <Info className="h-4 w-4 shrink-0 mt-0.5 text-primary" />
+            <p>ランキングはGitHubスター数を基準にしています。スポンサー・提携掲載や掲載情報の確認によって、通常の順位が変わることはありません。スター数は導入の適性・安全性・サポート品質を保証するものではないため、公式情報も確認してください。</p>
+          </div>
+        </div>
+
         {/* Tabs */}
         <Tabs defaultValue="overall" className="space-y-6">
           <TabsList className="w-full justify-start gap-1 bg-muted/50 p-1 rounded-xl overflow-x-auto flex-nowrap">
@@ -427,7 +434,7 @@ export default function RankingPage() {
               カテゴリ別
             </TabsTrigger>
             <TabsTrigger value="trending" className="rounded-lg text-sm whitespace-nowrap">
-              今週のトレンド
+              新着
             </TabsTrigger>
             <TabsTrigger value="annual" className="rounded-lg text-sm whitespace-nowrap">
               年間Best
