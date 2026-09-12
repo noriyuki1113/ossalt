@@ -28,7 +28,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
 
   test("landing page loads with hero, search and quick chips", async ({ page }) => {
     // Hero title
-    await expect(page.locator("h1")).toContainText("OSSで代替する");
+    await expect(page.locator("h1")).toContainText("代替OSSを探す");
 
     // Hero search input
     const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
@@ -113,6 +113,6 @@ test.describe("OSSアルタナティブ Core Flows", () => {
     await page.waitForTimeout(500);
 
     // Hero should still be visible
-    await expect(page.locator("h1")).toContainText("OSSで代替する");
+    await expect(page.locator("h1")).toContainText("代替OSSを探す");
   });
 });
