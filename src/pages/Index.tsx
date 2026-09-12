@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Box, ChevronRight, Clock3, Flame, GitCompareArrows, ListFilter, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Box, ChevronRight, Clock3, Flame, GitCompareArrows, ListFilter, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
