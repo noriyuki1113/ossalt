@@ -32,52 +32,41 @@ const AUDIENCES = [
 
 const PLANS = [
   {
-    name: "優先掲載",
-    price: "¥12,000 / 回",
-    desc: "通常の掲載フローをスキップし、優先的に掲載します。新しいOSSの公開を急ぎたい場合や、リリースに合わせて早く掲載したい場合に向いています。",
+    name: "カテゴリスポンサー",
+    price: "個別見積もり",
+    desc: "特定カテゴリの読者に向けて、スポンサー枠として掲載します。テーマが明確な読者層に対して、関連するサービスを届けたい企業に向いています。",
     items: [
-      { label: "対象", text: "OSSプロジェクト" },
-      { label: "効果", text: "公開までの時間を短縮" },
-      { label: "表示ラベル", text: "優先掲載" },
+      { label: "対象", text: "開発者向けSaaS / クラウド / インフラ / 周辺ツール" },
+      { label: "掲載面", text: "カテゴリページのスポンサー枠" },
+      { label: "表示ラベル", text: "スポンサー" },
+      { label: "順位への影響", text: "なし" },
     ],
-    value: "expedited",
-  },
-  {
-    name: "注目掲載",
-    price: "¥29,800 / 月",
-    desc: "カテゴリページや代替比較ページで、目立つ位置に掲載します。比較検討中の読者に、自然な文脈で認知を広げたいプロジェクト向けです。",
-    items: [
-      { label: "対象", text: "OSSプロジェクト / 代替候補として認知を広げたいサービス" },
-      { label: "掲載面", text: "カテゴリページ / 代替比較ページ" },
-      { label: "効果", text: "比較中ユーザーへの継続的な露出" },
-      { label: "表示ラベル", text: "注目" },
-    ],
-    value: "featured",
+    value: "category-sponsor",
     popular: true,
   },
   {
-    name: "カテゴリスポンサー",
-    price: "¥49,800 / 月",
-    desc: "特定カテゴリの読者に向けて、スポンサー枠として掲載します。テーマが明確な読者層に対して、認知を広げたい企業に向いています。",
-    items: [
-      { label: "対象", text: "開発者向けSaaS / クラウド / インフラ / 周辺ツール" },
-      { label: "掲載面", text: "カテゴリページ" },
-      { label: "効果", text: "関心の高い読者層への自然な訴求" },
-      { label: "表示ラベル", text: "スポンサー" },
-    ],
-    value: "category-sponsor",
-  },
-  {
-    name: "詳細ページ関連掲載",
-    price: "¥39,800 / 月",
-    desc: "特定ツールを検討中のユーザーに、関連サービスとして掲載します。導入支援、マネージド版、ホスティングなど、高意図ユーザーへの送客に向いています。",
+    name: "関連サービス掲載",
+    price: "個別見積もり",
+    desc: "特定ツールを検討中のユーザーに、導入支援、マネージド版、ホスティングなどの関連サービスとして掲載します。",
     items: [
       { label: "対象", text: "導入支援 / マネージド版 / ホスティング / インフラ提供企業" },
       { label: "掲載面", text: "関連するツール詳細ページ" },
-      { label: "効果", text: "導入検討中ユーザーへの送客" },
       { label: "表示ラベル", text: "提携" },
+      { label: "順位への影響", text: "なし" },
     ],
     value: "detail-partner",
+  },
+  {
+    name: "掲載情報の確認",
+    price: "無償",
+    desc: "OSSプロジェクトの提供元による掲載内容の修正・確認を受け付けます。確認済みの情報として表示しますが、検索順位や評価は変わりません。",
+    items: [
+      { label: "対象", text: "掲載中または新規のOSSプロジェクト" },
+      { label: "内容", text: "公式URL、説明、ライセンス、導入情報の確認" },
+      { label: "表示ラベル", text: "確認済み" },
+      { label: "順位への影響", text: "なし" },
+    ],
+    value: "listing-review",
   },
 ];
 
@@ -104,23 +93,23 @@ const GOOD_FIT = [
 ];
 
 const STEPS = [
-  { n: "01", title: "お問い合わせ", desc: "フォームからご希望のプランをご連絡ください。" },
+  { n: "01", title: "お問い合わせ", desc: "フォームから掲載目的をご連絡ください。" },
   { n: "02", title: "内容確認", desc: "掲載先ページや掲載内容を確認します。" },
   { n: "03", title: "クリエイティブ確認", desc: "表示内容、リンク先、文言を確認します。" },
-  { n: "04", title: "掲載開始", desc: "通常 2〜3 営業日で掲載を開始します。" },
+  { n: "04", title: "掲載開始", desc: "掲載内容と関連性を確認してから開始します。" },
 ];
 
 const FAQ = [
-  { q: "掲載には広告ラベルが付きますか？", a: "はい。すべての掲載には「優先掲載」「注目」「スポンサー」「提携」などのラベルが付きます。" },
+  { q: "掲載には広告ラベルが付きますか？", a: "はい。有償掲載には「スポンサー」または「提携」のラベルが付きます。掲載情報の確認は「確認済み」と表示します。" },
   { q: "スポンサー掲載で順位は上がりますか？", a: "いいえ。スポンサー掲載は自然順位やランキングとは完全に分離しています。" },
-  { q: "まずは1か月だけ試せますか？", a: "はい。月額プランは1か月からご利用いただけます。" },
+  { q: "まずは1か月だけ試せますか？", a: "はい。掲載期間や表示回数は、計測方法を含めて個別にご案内します。" },
   { q: "どのプランが合うか分かりません", a: "掲載目的に応じて、相性の良いプランをご案内します。まずはお気軽にご相談ください。" },
 ];
 
 export default function Advertise() {
   useSeo({
-    title: "広告掲載・スポンサー | ossalt",
-    description: "ossalt は、有料SaaSの代替OSSを探すユーザーに自然にリーチできる掲載プラットフォームです。",
+    title: "スポンサー・関連サービス掲載 | ossalt",
+    description: "ossalt は、OSSの導入・比較を検討する読者に関連サービスを届けるための掲載窓口です。",
     canonical: "https://ossalt.jp/advertise",
   });
 
@@ -196,7 +185,7 @@ export default function Advertise() {
           <div className="flex flex-wrap items-center justify-center gap-4 mb-8 text-sm text-muted-foreground">
             {[
               { icon: LayoutGrid, text: "680+ のOSSツールを掲載" },
-              { icon: Eye, text: "5,000+ 月間ページビュー" },
+              { icon: Eye, text: "比較・導入を検討する読者" },
               { icon: Users, text: "比較検討中の高意図ユーザーが中心" },
             ].map((h) => (
               <span key={h.text} className="inline-flex items-center gap-1.5">
@@ -243,12 +232,12 @@ export default function Advertise() {
       {/* ── 3 & 4. Pricing ── */}
       <section id="plans" className="py-14 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-5xl">
-          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-2">Phase 1 掲載プラン</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-2">スポンサー・関連サービス掲載</h2>
           <p className="text-sm text-muted-foreground text-center mb-3 max-w-xl mx-auto">
-            まずは、小さく試しやすい固定価格プランをご用意しています。
+            掲載内容と計測方法を確認したうえで、関連性の高い枠をご案内します。
           </p>
           <p className="text-xs text-muted-foreground text-center mb-10 max-w-xl mx-auto">
-            認知拡大、比較検討中ユーザーへの訴求、導入支援の送客など、目的に応じて選べます。
+            検索順位やランキングへの影響はなく、すべての有償掲載にラベルを表示します。
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
