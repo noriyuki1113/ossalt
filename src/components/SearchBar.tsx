@@ -20,11 +20,12 @@ export function SearchBar({
   const isHero = size === "hero";
 
   return (
-    <div className="relative flex items-center rounded-xl border border-border bg-card shadow-sm focus-within:shadow-md focus-within:border-primary/40 transition-all duration-200 mx-1 md:mx-0">
+    <form role="search" onSubmit={(event) => { event.preventDefault(); onSubmit?.(); }} className="relative flex items-center rounded-xl border border-border bg-card shadow-sm focus-within:shadow-md focus-within:border-primary/40 transition-all duration-200 mx-1 md:mx-0">
       <Search className={`absolute ${isHero ? "left-4 md:left-5" : "left-3.5 md:left-4"} h-4 w-4 md:h-5 md:w-5 text-muted-foreground/50`} />
       <input
-        type="text"
-        aria-label="OSSツールを検索"
+        type="search"
+        name="search"
+        aria-label="代替を探したいサービス名・ツール名"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -33,10 +34,10 @@ export function SearchBar({
       <Button
         size="sm"
         className={`absolute right-1.5 md:right-2 rounded-lg font-semibold ${isHero ? "px-4 md:px-8 h-9 md:h-11 text-xs md:text-sm" : "px-4 md:px-5 h-8 md:h-9 text-xs"}`}
-        onClick={onSubmit}
+        type="submit"
       >
         検索
       </Button>
-    </div>
+    </form>
   );
 }

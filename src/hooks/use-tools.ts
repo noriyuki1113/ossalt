@@ -1,3 +1,4 @@
+import { searchTerms, toolSearchFilter } from "@/lib/tool-search";
 import { useQuery } from "@tanstack/react-query";
 import { CATEGORY_MAP } from "@/components/CategoryFilter";
 
@@ -83,6 +84,7 @@ interface UseToolsOptions {
   sort?: SortOption;
   license?: string;
   hasGithub?: boolean;
+  hasDocker?: boolean;
 }
 
 export function useTools(options?: UseToolsOptions) {
@@ -116,10 +118,8 @@ export function useTools(options?: UseToolsOptions) {
         query = query.eq("parent_category_ja", dbCategory);
       }
 
-      if (options?.search) {
-        query = query.or(
-          `name.ilike.%${options.search}%,description_ja.ilike.%${options.search}%,description_en.ilike.%${options.search}%,primary_competitor.ilike.%${options.search}%,primary_competitor_ja.ilike.%${options.search}%`
-        );
+      for (const term of searchTerms(options?.search || "")) {
+        query = query.or(toolSearchFilter(term));
       }
 
       if (options?.license) {
@@ -128,6 +128,12 @@ export function useTools(options?: UseToolsOptions) {
 
       if (options?.hasGithub) {
         query = query.not("github_url", "is", null);
+      }
+
+      if (options?.hasDocker) {
+        // The column is present in production but not yet in the generated
+        // Supabase TypeScript schema.
+        query = query.filter("docker_available", "eq", true);
       }
 
       const { data, error, count } = await query;

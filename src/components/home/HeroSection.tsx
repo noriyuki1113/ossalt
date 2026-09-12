@@ -4,6 +4,7 @@ import { track } from "@/lib/track";
 interface HeroSectionProps {
   search: string;
   onSearchChange: (value: string) => void;
+  onSearchSubmit: () => void;
 }
 
 const QUICK_CHIPS = [
@@ -15,9 +16,9 @@ const QUICK_CHIPS = [
   { label: "Figma代替", search: "Figma" },
 ];
 
-export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
+export function HeroSection({ search, onSearchChange, onSearchSubmit }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden flex items-center min-h-[88vh] md:min-h-[80vh]">
+    <section className="relative overflow-hidden flex items-center">
       {/* Mesh gradient blobs — static (no animation): a continuously animated
           transform on a heavily blurred layer forces the browser to
           recomposite an expensive blur every frame, which reads as jank/
@@ -28,9 +29,9 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-blue-600/[0.06] rounded-full blur-[100px]" />
       </div>
 
-      <div className="container relative z-10 py-20 md:py-28 text-center">
+      <div className="container relative z-10 py-8 md:py-12 text-center">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-full px-4 py-1.5 mb-8">
+        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-full px-4 py-1.5 mb-4">
           <span
             className="w-1.5 h-1.5 bg-green-500 rounded-full"
             style={{ boxShadow: "0 0 6px #22c55e" }}
@@ -39,16 +40,15 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         </div>
 
         {/* Headline */}
-        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto min-h-[8.4rem] sm:min-h-[11rem] md:min-h-[14rem]">
-          高額SaaSを<br />
-          <span className="text-gradient">OSSで代替する</span><br />
-          最短ルートを探す
+        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto">
+          いま使っているSaaSの<br />
+          <span className="text-gradient">代替OSSを探す</span>
         </h1>
 
-        <p className="text-sm md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-10 min-h-[4.5rem] md:min-h-[5.5rem]">
+        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
           Notion・Airtable・Google Analytics…<br />
           使い続けるのか、OSSに切り替えるのか。<br />
-          日本語で比較・検討できる唯一のディレクトリ。
+          日本語の紹介と比較で、用途に合うツールを探せます。
         </p>
 
         {/* Search */}
@@ -56,9 +56,9 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
           <SearchBar
             value={search}
             onChange={onSearchChange}
-            placeholder="「Notion 代替」「セルフホスト」「無料 BI」など..."
+            placeholder="代替を探したいサービス名（例：Notion）"
             size="hero"
-            onSubmit={() => track("hero_search", { keyword: search })}
+            onSubmit={() => { track("hero_search", { keyword: search }); onSearchSubmit(); }}
           />
         </div>
 
@@ -79,15 +79,15 @@ export function HeroSection({ search, onSearchChange }: HeroSectionProps) {
         </div>
 
         {/* Value props */}
-        <div className="flex items-center justify-center gap-6 mt-8 text-xs text-muted-foreground/50">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> 完全無料
+            <span className="text-green-500/80">✓</span> サイト利用無料
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> 日本語対応
+            <span className="text-green-500/80">✓</span> 日本語で紹介
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> OSS限定
+            <span className="text-green-500/80">✓</span> 比較記事あり
           </span>
         </div>
       </div>

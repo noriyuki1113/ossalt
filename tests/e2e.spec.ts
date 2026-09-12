@@ -10,7 +10,7 @@ async function searchAndWaitForApi(page: Page, query: string) {
     (res) => res.url().includes("/rest/v1/tools") && res.url().includes("ilike"),
     { timeout: 10000 },
   );
-  await page.getByLabel("OSSツールを検索").fill(query);
+  await page.getByLabel("代替を探したいサービス名・ツール名").fill(query);
   const response = await responsePromise;
   if (!response.ok()) {
     const body = await response.text().catch(() => "<no body>");
@@ -31,7 +31,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
     await expect(page.locator("h1")).toContainText("OSSで代替する");
 
     // Hero search input
-    const searchInput = page.getByLabel("OSSツールを検索");
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
     await expect(searchInput).toBeVisible();
 
     // Quick chip
@@ -44,7 +44,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("quick chip click fills the search input", async ({ page }) => {
-    const searchInput = page.getByLabel("OSSツールを検索");
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
     await page.getByRole("button", { name: "Notion代替" }).click();
 
     await expect(searchInput).toHaveValue("Notion");
@@ -99,7 +99,7 @@ test.describe("OSSアルタナティブ Core Flows", () => {
   });
 
   test("empty/no-match search does not crash", async ({ page }) => {
-    const searchInput = page.getByLabel("OSSツールを検索");
+    const searchInput = page.getByLabel("代替を探したいサービス名・ツール名");
     await searchInput.fill("xyznonexistent12345");
 
     // Wait for debounce
