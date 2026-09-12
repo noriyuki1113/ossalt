@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
-import { Box, ChevronRight, Clock3, Flame, Sparkles } from "lucide-react";
+import { ArrowRight, Box, ChevronRight, Clock3, Flame, GitCompareArrows, ListFilter, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -97,6 +97,70 @@ const CATEGORY_SEO: Record<string, { title: string; description: string }> = {
     description: "さまざまなカテゴリの有料SaaSの代替となるオープンソースツールを比較。",
   },
 };
+
+const HOME_ROUTES = [
+  {
+    icon: ListFilter,
+    eyebrow: "01 置き換える",
+    title: "使っているサービスから探す",
+    description: "Notion、Slack、Figmaなど、いまのSaaS名から代替候補を絞り込みます。",
+    to: "/alternatives",
+    action: "サービス別の代替を見る",
+  },
+  {
+    icon: GitCompareArrows,
+    eyebrow: "02 比較する",
+    title: "導入条件を並べて比べる",
+    description: "費用、ライセンス、セルフホスト可否などを同じ観点で確認します。",
+    to: "/compare",
+    action: "比較一覧を見る",
+  },
+  {
+    icon: ShieldCheck,
+    eyebrow: "03 確認する",
+    title: "導入前のポイントを確認する",
+    description: "VPS、バックアップ、運用の基本をガイドで確認してから導入を進めます。",
+    to: "/selfhost-vps",
+    action: "導入ガイドを見る",
+  },
+];
+
+function HomeDecisionRoutes() {
+  return (
+    <section className="border-y border-border bg-secondary/[0.18]">
+      <div className="container py-10 md:py-14">
+        <div className="max-w-2xl mb-7">
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Start here</p>
+          <h2 className="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
+            代替OSSを、導入まで迷わず選ぶ
+          </h2>
+          <p className="mt-2 text-sm md:text-base text-muted-foreground">
+            名前で探すだけでなく、比較と導入準備まで一つの流れで進められます。
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {HOME_ROUTES.map((route) => (
+            <Link
+              key={route.to}
+              to={route.to}
+              className="group rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-primary/45 hover:shadow-lg"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <route.icon className="h-5 w-5" />
+              </div>
+              <p className="mt-5 text-[11px] font-semibold tracking-wider text-primary">{route.eyebrow}</p>
+              <h3 className="mt-1 text-base font-bold text-foreground">{route.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{route.description}</p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                {route.action}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function SectionFallback() {
   return <div className="h-32" />;
@@ -320,7 +384,22 @@ export default function IndexPage() {
         }}
       />
 
-      <QuickAlternativesPills />
+      {selectedCategory === "すべて" && !debouncedSearch && (
+        <>
+          <HomeDecisionRoutes />
+          <QuickAlternativesPills />
+          <LazySection placeholderHeight="300px">
+            <Suspense fallback={<SectionFallback />}>
+              <PopularComparisonsSection />
+            </Suspense>
+          </LazySection>
+          <LazySection placeholderHeight="320px">
+            <Suspense fallback={<SectionFallback />}>
+              <PopularCategoriesGrid />
+            </Suspense>
+          </LazySection>
+        </>
+      )}
 
       <section className="sticky top-14 z-40 bg-background/80 backdrop-blur-xl border-b border-border py-2.5">
         <div className="container">
@@ -353,10 +432,10 @@ export default function IndexPage() {
           {selectedCategory === "すべて" && !debouncedSearch && !license && !hasGithub && !hasDocker && (
             <div className="mb-6 max-w-2xl">
               <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
-                OSSを探す
+                すべてのOSSツール
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                人気順で表示しています。用途、ライセンス、GitHubの有無で絞り込めます。
+                サービス名、カテゴリ、ライセンス、Docker対応で絞り込み、導入候補を比較できます。
               </p>
             </div>
           )}
