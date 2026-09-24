@@ -3,34 +3,33 @@ import { ArrowRight, Github } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
 import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
-import { isKnownCompetitor } from "@/lib/competitors";
 import { track } from "@/lib/track";
-import type { Tool } from "@/hooks/use-tools";
+import type { AlternativeListing } from "@/hooks/use-alternatives";
 
 interface SimilarProjectsSectionProps {
-  tools: Tool[];
-  currentTool: Tool;
+  listings: AlternativeListing[];
+  currentName: string | null;
+  currentCategory: string | null;
   competitorDisplay: string | null;
   hasCompetitor: boolean;
   altSlug: string | undefined;
 }
 
-function SimilarCard({ tool }: { tool: Tool }) {
-  const competitor = isKnownCompetitor(tool.primary_competitor)
-    ? (tool.primary_competitor_ja || tool.primary_competitor)
-    : null;
+function SimilarCard({ listing }: { listing: AlternativeListing }) {
+  const name = listing.project_name_ja || listing.project_name;
+  const competitor = listing.product_name_ja || listing.product_name;
 
   return (
     <Link
-      to={`/tools/${tool.id}`}
+      to={`/tools/${listing.project_slug}`}
       className="group flex flex-col rounded-xl border border-border/60 bg-card p-4 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
     >
       <div className="flex items-center gap-2.5 mb-2 min-w-0">
-        <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={24} id={tool.id} />
+        <ToolIcon url={listing.official_url} githubUrl={listing.repository_url} name={name} size={24} />
         <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate flex-1 min-w-0">
-          {tool.name}
+          {name}
         </h4>
-        <StarCount count={tool.stars_num} size="sm" />
+        <StarCount count={listing.stars_count} size="sm" />
       </div>
 
       {competitor && (
@@ -40,14 +39,14 @@ function SimilarCard({ tool }: { tool: Tool }) {
       )}
 
       <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed flex-1">
-        {tool.description_ja || tool.description_en || ""}
+        {listing.short_description_ja || ""}
       </p>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-3">
         <span className="inline-flex items-center gap-1 text-[11px] font-medium text-primary group-hover:gap-1.5 transition-all">
           詳しく見る <ArrowRight className="h-3 w-3" />
         </span>
-        {tool.github_url && (
+        {listing.repository_url && (
           <span
             role="link"
             tabIndex={0}
@@ -58,14 +57,14 @@ function SimilarCard({ tool }: { tool: Tool }) {
               try {
                 track("external_link_click", {
                   provider: "github",
-                  tool_id: tool.id,
-                  tool_name: tool.name ?? "",
-                  link_url: tool.github_url!,
+                  tool_slug: listing.project_slug,
+                  tool_name: name ?? "",
+                  link_url: listing.repository_url!,
                   cta_label: "GitHub",
                   source: "similar_projects",
                 });
               } catch { /* best effort */ }
-              window.open(tool.github_url!, "_blank", "noopener,noreferrer");
+              window.open(listing.repository_url!, "_blank", "noopener,noreferrer");
             }}
           >
             <Github className="h-3 w-3" /> GitHub
@@ -77,21 +76,22 @@ function SimilarCard({ tool }: { tool: Tool }) {
 }
 
 export function SimilarProjectsSection({
-  tools,
-  currentTool,
+  listings,
+  currentName,
+  currentCategory,
   competitorDisplay,
   hasCompetitor,
   altSlug,
 }: SimilarProjectsSectionProps) {
-  if (!tools.length) return null;
+  if (!listings.length) return null;
 
   const title = hasCompetitor
     ? `${competitorDisplay}の他のOSS代替`
-    : `${currentTool.parent_category_ja || "関連"}の人気OSSツール`;
+    : `${currentCategory || "関連"}の人気OSSツール`;
 
   const subtitle = hasCompetitor
-    ? `${currentTool.name}と同様に${competitorDisplay}の代替として使えるOSS`
-    : `${currentTool.parent_category_ja || "同カテゴリ"}の注目プロジェクト`;
+    ? `${currentName}と同様に${competitorDisplay}の代替として使えるOSS`
+    : `${currentCategory || "同カテゴリ"}の注目プロジェクト`;
 
   return (
     <section className="py-10">
@@ -111,8 +111,8 @@ export function SimilarProjectsSection({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {tools.map((t) => (
-          <SimilarCard key={t.id} tool={t} />
+        {listings.map((l) => (
+          <SimilarCard key={l.relation_id} listing={l} />
         ))}
       </div>
 

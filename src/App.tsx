@@ -94,7 +94,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/category/:slug" element={<Index />} />
-            <Route path="/tools/:id" element={<ToolDetail />} />
+            <Route path="/tools/:slug" element={<ToolDetail />} />
             <Route path="/alternatives" element={<AlternativesIndexPage />} />
             <Route path="/guides/notion-alternatives" element={<NotionAlternativesGuide />} />
             <Route path="/guides/n8n-selfhost-vps" element={<N8nSelfhostVpsGuide />} />

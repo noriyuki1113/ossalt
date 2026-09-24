@@ -4,16 +4,24 @@ import { MemoryRouter, Routes, Route, useLocation, useNavigate } from "react-rou
 import type { ReactNode } from "react";
 import IndexPage from "@/pages/Index";
 
+const MOCK_CATEGORIES = [
+  { id: "cat-1", slug: "business", nameJa: "業務ソフト", sortOrder: 1, children: [] },
+  { id: "cat-2", slug: "ai", nameJa: "AI・機械学習", sortOrder: 2, children: [] },
+];
+
 const state = vi.hoisted(() => ({
-  data: { tools: [{ id: 1, name: "Sample tool" }], totalCount: 1 },
+  data: { listings: [{ relation_id: "1", project_slug: "sample-tool", project_name: "Sample tool", project_name_ja: null }], totalCount: 1 },
   isError: false,
   refetch: vi.fn(),
 }));
-vi.mock("@/hooks/use-tools", () => ({ useTools: () => ({ ...state, isLoading: false }) }));
+vi.mock("@/hooks/use-alternatives", () => ({
+  useAlternativeListings: () => ({ ...state, isLoading: false }),
+  useCategories: () => ({ data: MOCK_CATEGORIES }),
+}));
 vi.mock("@/hooks/use-seo", () => ({ useSeo: () => {} }));
 vi.mock("@/lib/track", () => ({ track: () => {} }));
 vi.mock("@/components/SiteLayout", () => ({ SiteLayout: ({ children }: { children: ReactNode }) => <>{children}</> }));
-vi.mock("@/components/ToolCard", () => ({ ToolCard: ({ tool }: { tool: { name: string } }) => <p>{tool.name}</p>, ToolCardSkeleton: () => null }));
+vi.mock("@/components/ToolCard", () => ({ ToolCard: ({ listing }: { listing: { project_name: string } }) => <p>{listing.project_name}</p>, ToolCardSkeleton: () => null }));
 vi.mock("@/components/LazySection", () => ({ LazySection: () => null }));
 vi.mock("@/components/StatsBar", () => ({ StatsBar: () => null }));
 vi.mock("@/components/home/QuickAlternativesPills", () => ({ QuickAlternativesPills: () => null }));

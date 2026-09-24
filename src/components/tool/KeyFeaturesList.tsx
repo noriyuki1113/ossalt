@@ -1,15 +1,20 @@
 import { Globe, Lock, Code2, Zap, GitFork, Users, HardDrive, Shield, Settings, BarChart2, MessageSquare, FileText } from "lucide-react";
-import type { Tool } from "@/hooks/use-tools";
 
 interface Feature {
   icon: typeof Globe;
   label: string;
 }
 
-function getFeatures(tool: Tool): Feature[] {
-  const cat = (tool.parent_category_ja || "").toLowerCase();
-  const stars = tool.stars_num || 0;
-  const forks = tool.forks_num || 0;
+interface KeyFeaturesListProps {
+  category: string | null;
+  starsCount: number | null;
+  forksCount: number | null;
+}
+
+function getFeatures({ category, starsCount, forksCount }: KeyFeaturesListProps): Feature[] {
+  const cat = (category || "").toLowerCase();
+  const stars = starsCount || 0;
+  const forks = forksCount || 0;
   const features: Feature[] = [];
 
   // Universal OSS features
@@ -69,8 +74,8 @@ function getFeatures(tool: Tool): Feature[] {
   return unique;
 }
 
-export function KeyFeaturesList({ tool }: { tool: Tool }) {
-  const features = getFeatures(tool);
+export function KeyFeaturesList(props: KeyFeaturesListProps) {
+  const features = getFeatures(props);
 
   return (
     <section className="py-8">

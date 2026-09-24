@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import {
   ExternalLink, Github, Star, ArrowRight, Copy,
   Users, Zap, Shield, GitFork, Clock, Code2, Scale,
   CheckCircle2, XCircle, Twitter, ChevronRight,
-  Server, HardDrive, Settings, MessageSquare, Box, Building2, Mail,
+  Server, HardDrive, Settings, MessageSquare, Building2, Mail,
   ShieldCheck, Container,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
@@ -17,9 +15,8 @@ import { ToolIcon } from "@/components/ToolIcon";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
 import { formatCount, getLanguageBadgeClass } from "@/lib/format";
 import { useSeo } from "@/hooks/use-seo";
-import type { Tool } from "@/hooks/use-tools";
-import { COMPETITOR_TO_SLUG, COMPARE_LINKS } from "./AlternativesPage";
-import { CATEGORY_JA_TO_SLUG } from "@/lib/category-slugs";
+import { useProjectDetail, useRelatedListings, type ProjectDetail } from "@/hooks/use-alternatives";
+import { getSelfhostGuideLink } from "@/lib/selfhost-guides";
 import { toast } from "sonner";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { ConsultationCTA } from "@/components/ads/ConsultationCTA";
@@ -31,16 +28,38 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { track } from "@/lib/track";
 import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
-import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
-import { usePartnerCards } from "@/hooks/use-partner-cards";
 
 /* ── helpers ── */
 
-function getTargetUsers(tool: Tool, competitor: string | null): { text: string; icon: typeof Users }[] {
-  const cat = (tool.parent_category_ja || "").toLowerCase();
+function pickPrimaryRelation(relations: ProjectDetail["relations"]) {
+  if (!relations.length) return null;
+  return [...relations].sort((a, b) => (a.editorial_rank ?? Infinity) - (b.editorial_rank ?? Infinity))[0];
+}
+
+function pickPrimaryCategory(categories: ProjectDetail["project_categories"]) {
+  if (!categories.length) return null;
+  return categories.find((c) => c.is_primary)?.category ?? categories[0].category;
+}
+
+function pickLatestSnapshot(snapshots: ProjectDetail["project_snapshots"]) {
+  if (!snapshots.length) return null;
+  return [...snapshots].sort((a, b) => new Date(b.observed_at).getTime() - new Date(a.observed_at).getTime())[0];
+}
+
+function schemaCategoryFor(categoryName: string | null): string {
+  const c = (categoryName || "").toLowerCase();
+  if (c.includes("ai") || c.includes("開発") || c.includes("インフラ")) return "DeveloperApplication";
+  if (c.includes("ビジネス") || c.includes("データ") || c.includes("マーケティング")) return "BusinessApplication";
+  if (c.includes("セキュリティ")) return "SecurityApplication";
+  if (c.includes("コミュニケーション") || c.includes("コラボレーション")) return "SocialNetworkingApplication";
+  return "SoftwareApplication";
+}
+
+function getTargetUsers(category: string | null, competitor: string | null): { text: string; icon: typeof Users }[] {
+  const cat = (category || "").toLowerCase();
   const results: { text: string; icon: typeof Users }[] = [];
 
-  if (competitor && competitor !== "有料SaaS") {
+  if (competitor) {
     results.push({ text: `${competitor}のコストや制約に不満がある方`, icon: Zap });
   } else {
     results.push({ text: "有料SaaSのコストを削減したい方", icon: Zap });
@@ -64,7 +83,7 @@ function getTargetUsers(tool: Tool, competitor: string | null): { text: string; 
   } else if (cat.includes("セキュリティ")) {
     results.push({ text: "セキュリティを自社管理したい方", icon: Shield });
     results.push({ text: "コンプライアンス対応が必要な方", icon: CheckCircle2 });
-  } else if (cat.includes("コミュニティ")) {
+  } else if (cat.includes("コミュニ")) {
     results.push({ text: "社内コミュニケーション基盤を自前で持ちたい方", icon: MessageSquare });
     results.push({ text: "データの外部共有を最小限にしたい方", icon: Shield });
   } else {
@@ -75,8 +94,8 @@ function getTargetUsers(tool: Tool, competitor: string | null): { text: string; 
   return results.slice(0, 3);
 }
 
-function getNotGoodFor(tool: Tool): { text: string; icon: typeof XCircle }[] {
-  const stars = tool.stars_num || 0;
+function getNotGoodFor(starsCount: number | null): { text: string; icon: typeof XCircle }[] {
+  const stars = starsCount || 0;
   const results: { text: string; icon: typeof XCircle }[] = [];
   results.push({ text: "サーバー運用の知識がない方には導入ハードルが高い場合があります", icon: XCircle });
   if (stars < 5000) {
@@ -88,10 +107,10 @@ function getNotGoodFor(tool: Tool): { text: string; icon: typeof XCircle }[] {
   return results.slice(0, 3);
 }
 
-function getBenefits(tool: Tool): { title: string; desc: string }[] {
-  const cat = (tool.parent_category_ja || "").toLowerCase();
+function getBenefits(category: string | null, licenseSpdx: string | null, forksCount: number | null): { title: string; desc: string }[] {
+  const cat = (category || "").toLowerCase();
   const benefits: { title: string; desc: string }[] = [
-    { title: "ライセンス情報", desc: tool.license && tool.license !== "NOASSERTION" ? `${tool.license}。商用利用や再配布の条件は公式ライセンスを確認してください` : "ライセンス条件は公式リポジトリで確認してください" },
+    { title: "ライセンス情報", desc: licenseSpdx ? `${licenseSpdx}。商用利用や再配布の条件は公式ライセンスを確認してください` : "ライセンス条件は公式リポジトリで確認してください" },
     { title: "導入前の確認", desc: "セルフホスト可否、必要なインフラ、バックアップ方法は公式ドキュメントで確認してください" },
   ];
 
@@ -104,7 +123,7 @@ function getBenefits(tool: Tool): { title: string; desc: string }[] {
   } else if (cat.includes("データ")) {
     benefits.push({ title: "柔軟な可視化", desc: "ダッシュボードやレポートを自由にカスタマイズ可能" });
   } else {
-    benefits.push({ title: "活発なコミュニティ", desc: `${(tool.forks_num || 0) > 1000 ? formatCount(tool.forks_num!) + "以上のフォークと" : ""}多くの開発者が継続的に改善中` });
+    benefits.push({ title: "活発なコミュニティ", desc: `${(forksCount || 0) > 1000 ? formatCount(forksCount!) + "以上のフォークと" : ""}多くの開発者が継続的に改善中` });
   }
 
   benefits.push({ title: "透明性と安全性", desc: "ソースコードが公開されており、セキュリティ監査や独自の修正が可能" });
@@ -112,7 +131,7 @@ function getBenefits(tool: Tool): { title: string; desc: string }[] {
   return benefits;
 }
 
-function getComparisonRows(tool: Tool, competitor: string): [string, string, string, boolean][] {
+function getComparisonRows(): [string, string, string, boolean][] {
   return [
     ["費用", "無料（セルフホスト）", "月額課金制", true],
     ["データ管理", "自社サーバーで完全管理", "ベンダー管理", true],
@@ -124,14 +143,14 @@ function getComparisonRows(tool: Tool, competitor: string): [string, string, str
   ];
 }
 
-function getDifficultyInfo(tool: Tool) {
-  const stars = tool.stars_num || 0;
-  const hasForks = (tool.forks_num || 0) > 500;
-  
+function getDifficultyInfo(starsCount: number | null, forksCount: number | null) {
+  const stars = starsCount || 0;
+  const hasForks = (forksCount || 0) > 500;
+
   let setupLevel: "easy" | "medium" | "hard" = "medium";
   let setupLabel = "中程度";
   let setupDesc = "Docker等の基本的なインフラ知識があれば導入可能";
-  
+
   let selfHostLevel: "easy" | "medium" | "hard" = "medium";
   let selfHostLabel = "中程度";
   let selfHostDesc = "サーバーの用意とDockerの基本操作が必要";
@@ -158,102 +177,60 @@ function getDifficultyInfo(tool: Tool) {
   return { setupLevel, setupLabel, setupDesc, selfHostLevel, selfHostLabel, selfHostDesc };
 }
 
+const EVIDENCE_KIND_LABEL: Record<string, string> = {
+  official_site: "公式サイト",
+  official_docs: "公式ドキュメント",
+  official_repository: "公式リポジトリ",
+  license: "ライセンス",
+  release_note: "リリースノート",
+  security_score: "セキュリティ評価",
+  editorial_note: "編集部メモ",
+};
+
 /* ── Main ── */
 
 export default function ToolDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
 
-  const { data: tool, isLoading } = useQuery({
-    queryKey: ["tool", id],
-    queryFn: async () => {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase.from("tools").select("*").eq("id", Number(id)).single();
-      if (error) throw error;
-      return data as Tool;
-    },
-    enabled: !!id,
+  const { data: project, isLoading } = useProjectDetail(slug);
+
+  const primaryRelation = project ? pickPrimaryRelation(project.relations) : null;
+  const primaryCategory = project ? pickPrimaryCategory(project.project_categories) : null;
+  const latestSnapshot = project ? pickLatestSnapshot(project.project_snapshots) : null;
+
+  const { data: relatedListings } = useRelatedListings({
+    productSlug: primaryRelation?.product.slug,
+    categorySlug: primaryCategory?.slug,
+    excludeProjectId: project?.id,
   });
 
-  const { data: relatedTools } = useQuery({
-    queryKey: ["related-tools", tool?.primary_competitor, tool?.parent_category_ja, tool?.id],
-    queryFn: async () => {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const results: Tool[] = [];
+  const competitorJa = primaryRelation?.product.name_ja || null;
+  const competitorEn = primaryRelation?.product.name || "";
+  const competitorDisplay = competitorJa || competitorEn || null;
+  const hasCompetitor = !!primaryRelation;
+  const name = project?.name_ja || project?.name || null;
 
-      if (tool!.primary_competitor && tool!.primary_competitor !== "有料SaaS") {
-        const { data } = await supabase
-          .from("tools").select("*")
-          .eq("primary_competitor", tool!.primary_competitor)
-          .neq("id", tool!.id)
-          .or("url.not.is.null,github_url.not.is.null")
-          .order("stars_num", { ascending: false, nullsFirst: false })
-          .limit(6);
-        if (data) results.push(...(data as Tool[]));
-      }
-
-      if (results.length < 6 && tool!.parent_category_ja) {
-        const existingIds = new Set([tool!.id, ...results.map(t => t.id)]);
-        const { data } = await supabase
-          .from("tools").select("*")
-          .eq("parent_category_ja", tool!.parent_category_ja!)
-          .or("url.not.is.null,github_url.not.is.null")
-          .order("stars_num", { ascending: false, nullsFirst: false })
-          .limit(10);
-        if (data) {
-          for (const t of data as Tool[]) {
-            if (!existingIds.has(t.id) && results.length < 6) {
-              results.push(t);
-            }
-          }
-        }
-      }
-
-      return results;
-    },
-    enabled: !!tool,
-  });
-
-  const { data: partnerCards = [] } = usePartnerCards(tool?.id ?? 0, tool?.name ?? null);
-
-  const competitorJa = tool?.primary_competitor_ja || null;
-  const competitorEn = tool?.primary_competitor || "";
-  const competitorDisplay = competitorEn || competitorJa || null;
-  const hasCompetitor = competitorEn && competitorEn !== "有料SaaS";
-
-  const SCHEMA_CATEGORY: Record<string, string> = {
-    "AI・機械学習": "DeveloperApplication",
-    "開発者ツール": "DeveloperApplication",
-    "インフラ・運用": "DeveloperApplication",
-    "データ・分析": "BusinessApplication",
-    "ビジネスソフトウェア": "BusinessApplication",
-    "コンテンツ・パブリッシング": "WebApplication",
-    "生産性・ユーティリティ": "UtilitiesApplication",
-    "セキュリティ・プライバシー": "SecurityApplication",
-    "コミュニティ・ソーシャル": "SocialNetworkingApplication",
-  };
-
-  const seoTitle = tool
+  const seoTitle = project
     ? hasCompetitor
-      ? `${tool.name}は${competitorDisplay}の代替？特徴と違いを解説`
-      : `${tool.name} — OSSアルタナティブ`
+      ? `${name}は${competitorDisplay}の代替？特徴と違いを解説`
+      : `${name} — OSSアルタナティブ`
     : "OSSアルタナティブ";
-  const seoDescription = tool
+  const seoDescription = project
     ? hasCompetitor
-      ? `${tool.name}は${competitorDisplay}の代替OSSです。${tool.description_ja || ""}。無料・セルフホスト可能。`
-      : tool.description_ja || tool.description_en || ""
+      ? `${name}は${competitorDisplay}の代替OSSです。${project.short_description_ja || ""}。無料・セルフホスト可能。`
+      : project.short_description_ja || ""
     : "";
 
   const toolOgImage = "https://ossalt.jp/og-image.png";
 
-  const jsonLd = tool ? {
+  const jsonLd = project ? {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "SoftwareApplication",
-        name: tool.name,
-        description: tool.description_ja || tool.description_en || "",
-        applicationCategory: SCHEMA_CATEGORY[tool.parent_category_ja || ""] ?? "SoftwareApplication",
-        applicationSubCategory: tool.category_ja || tool.parent_category_ja || undefined,
+        name,
+        description: project.short_description_ja || "",
+        applicationCategory: schemaCategoryFor(primaryCategory?.name_ja ?? null),
         offers: {
           "@type": "Offer",
           price: "0",
@@ -262,25 +239,24 @@ export default function ToolDetailPage() {
         },
         isAccessibleForFree: true,
         operatingSystem: "Linux, Windows, macOS, Web",
-        ...(tool.url ? { url: tool.url } : {}),
-        ...(tool.github_url ? { codeRepository: tool.github_url, sameAs: tool.github_url } : {}),
-        ...(tool.license && tool.license !== "NOASSERTION" ? { license: tool.license } : {}),
-        ...(tool.last_commit ? { dateModified: tool.last_commit.split("T")[0] } : {}),
-        ...(tool.language ? { programmingLanguage: tool.language } : {}),
-        ...(tool.stars_num ? { aggregateRating: {
+        ...(project.official_url ? { url: project.official_url } : {}),
+        ...(project.repository_url ? { codeRepository: project.repository_url, sameAs: project.repository_url } : {}),
+        ...(project.license_spdx ? { license: project.license_spdx } : {}),
+        ...(latestSnapshot?.last_commit_at ? { dateModified: latestSnapshot.last_commit_at.split("T")[0] } : {}),
+        ...(latestSnapshot?.stars_count ? { aggregateRating: {
           "@type": "AggregateRating",
-          ratingValue: tool.stars_num >= 10000 ? "4.8" : tool.stars_num >= 1000 ? "4.5" : "4.0",
-          ratingCount: tool.stars_num,
+          ratingValue: latestSnapshot.stars_count >= 10000 ? "4.8" : latestSnapshot.stars_count >= 1000 ? "4.5" : "4.0",
+          ratingCount: latestSnapshot.stars_count,
           bestRating: "5",
           worstRating: "1",
         }} : {}),
-        ...(tool.scorecard_score != null ? {
+        ...(latestSnapshot?.scorecard_score != null ? {
           review: {
             "@type": "Review",
-            reviewBody: `OpenSSF Scorecardによるセキュリティ評価スコア: ${tool.scorecard_score.toFixed(1)}/10`,
+            reviewBody: `OpenSSF Scorecardによるセキュリティ評価スコア: ${latestSnapshot.scorecard_score.toFixed(1)}/10`,
             reviewRating: {
               "@type": "Rating",
-              ratingValue: tool.scorecard_score.toFixed(1),
+              ratingValue: latestSnapshot.scorecard_score.toFixed(1),
               bestRating: "10",
               worstRating: "0",
             },
@@ -292,17 +268,17 @@ export default function ToolDetailPage() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "ホーム", item: "https://ossalt.jp" },
-          ...(tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? [{
+          ...(primaryCategory ? [{
             "@type": "ListItem",
             position: 2,
-            name: tool.parent_category_ja,
-            item: `https://ossalt.jp/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}`,
+            name: primaryCategory.name_ja,
+            item: `https://ossalt.jp/category/${primaryCategory.slug}`,
           }] : []),
           {
             "@type": "ListItem",
-            position: tool.parent_category_ja && CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? 3 : 2,
-            name: tool.name || "",
-            item: `https://ossalt.jp/tools/${tool.id}`,
+            position: primaryCategory ? 3 : 2,
+            name: name || "",
+            item: `https://ossalt.jp/tools/${project.slug}`,
           },
         ],
       },
@@ -312,7 +288,7 @@ export default function ToolDetailPage() {
   useSeo({
     title: seoTitle,
     description: seoDescription,
-    canonical: tool ? `https://ossalt.jp/tools/${tool.id}` : undefined,
+    canonical: project ? `https://ossalt.jp/tools/${project.slug}` : undefined,
     ogImage: toolOgImage,
     jsonLd,
   });
@@ -336,7 +312,7 @@ export default function ToolDetailPage() {
     );
   }
 
-  if (!tool) {
+  if (!project) {
     return (
       <SiteLayout>
         <div className="container py-24 text-center">
@@ -349,25 +325,26 @@ export default function ToolDetailPage() {
     );
   }
 
-  const shareUrl = `https://ossalt.jp/tools/${tool.id}`;
-  const shareText = `${tool.name} — ${tool.description_ja || tool.description_en || ""}`;
+  const shareUrl = `https://ossalt.jp/tools/${project.slug}`;
+  const shareText = `${name} — ${project.short_description_ja || ""}`;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   const hatenaUrl = `https://b.hatena.ne.jp/add?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
-  const altSlug = COMPETITOR_TO_SLUG[competitorEn];
-  const targetUsers = getTargetUsers(tool, competitorDisplay);
-  const notGoodFor = getNotGoodFor(tool);
-  const benefits = getBenefits(tool);
-  const comparisonRows = hasCompetitor ? getComparisonRows(tool, competitorDisplay!) : [];
-  const difficulty = getDifficultyInfo(tool);
-  const langClass = tool.language ? getLanguageBadgeClass(tool.language) : null;
+  const altSlug = primaryRelation?.product.slug;
+  const targetUsers = getTargetUsers(primaryCategory?.name_ja ?? null, competitorDisplay);
+  const notGoodFor = getNotGoodFor(latestSnapshot?.stars_count ?? null);
+  const benefits = getBenefits(primaryCategory?.name_ja ?? null, project.license_spdx, latestSnapshot?.forks_count ?? null);
+  const comparisonRows = hasCompetitor ? getComparisonRows() : [];
+  const difficulty = getDifficultyInfo(latestSnapshot?.stars_count ?? null, latestSnapshot?.forks_count ?? null);
+  const langClass = project.primary_language ? getLanguageBadgeClass(project.primary_language) : null;
+  const guideLink = getSelfhostGuideLink(project.name);
 
   const copyLink = () => {
     navigator.clipboard.writeText(shareUrl);
     toast.success("リンクをコピーしました");
   };
 
-  const lastCommitText = tool.last_commit
-    ? formatDistanceToNow(new Date(tool.last_commit), { addSuffix: true, locale: ja })
+  const lastCommitText = latestSnapshot?.last_commit_at
+    ? formatDistanceToNow(new Date(latestSnapshot.last_commit_at), { addSuffix: true, locale: ja })
     : null;
 
   return (
@@ -377,18 +354,18 @@ export default function ToolDetailPage() {
         <nav className="flex items-center gap-1.5 text-xs text-muted-foreground pt-6 pb-6 overflow-x-auto">
           <Link to="/" className="hover:text-foreground transition-colors shrink-0">ホーム</Link>
           <ChevronRight className="h-3 w-3 shrink-0" />
-          {tool.parent_category_ja && (
+          {primaryCategory && (
             <>
               <Link
-                to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}
+                to={`/category/${primaryCategory.slug}`}
                 className="hover:text-foreground transition-colors shrink-0"
               >
-                {tool.parent_category_ja}
+                {primaryCategory.name_ja}
               </Link>
               <ChevronRight className="h-3 w-3 shrink-0" />
             </>
           )}
-          <span className="text-foreground font-medium truncate">{tool.name}</span>
+          <span className="text-foreground font-medium truncate">{name}</span>
         </nav>
 
         <section className="pb-10 -mx-4 md:-mx-8 px-4 md:px-8 pt-4 rounded-2xl bg-gradient-to-b from-primary/[0.04] to-transparent">
@@ -400,26 +377,26 @@ export default function ToolDetailPage() {
                 </div>
               )}
               <div className="flex items-center gap-3.5 mb-3">
-                <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={44} id={tool.id} />
+                <ToolIcon url={project.official_url} githubUrl={project.repository_url} name={name} size={44} />
                 <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground leading-tight">
-                  {tool.name}
+                  {name}
                 </h1>
               </div>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5 max-w-xl">
-                {tool.description_ja || tool.description_en || `${tool.name}は${tool.category_ja || tool.parent_category_ja || "多用途"}のオープンソースツールです。`}
+                {project.short_description_ja || `${name}は${primaryCategory?.name_ja || "多用途"}のオープンソースツールです。`}
               </p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground mb-5">
-                {tool.stars_num && (
+                {latestSnapshot?.stars_count != null && (
                   <span className="inline-flex items-center gap-1">
                     <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                    <span className="font-semibold text-foreground tabular-nums">{formatCount(tool.stars_num)}</span>
+                    <span className="font-semibold text-foreground tabular-nums">{formatCount(latestSnapshot.stars_count)}</span>
                     <span>stars</span>
                   </span>
                 )}
-                {tool.forks_num && tool.forks_num > 0 && (
+                {latestSnapshot?.forks_count != null && latestSnapshot.forks_count > 0 && (
                   <span className="inline-flex items-center gap-1">
                     <GitFork className="h-3.5 w-3.5" />
-                    <span className="font-medium text-foreground tabular-nums">{formatCount(tool.forks_num)}</span>
+                    <span className="font-medium text-foreground tabular-nums">{formatCount(latestSnapshot.forks_count)}</span>
                   </span>
                 )}
                 {lastCommitText && (
@@ -430,26 +407,27 @@ export default function ToolDetailPage() {
                 )}
               </div>
               <div className="flex flex-wrap items-center gap-1.5">
-                {tool.language && langClass && (
+                {project.primary_language && langClass && (
                   <Badge className={`text-[11px] font-normal border px-2.5 py-0.5 h-6 ${langClass}`}>
                     <Code2 className="h-3 w-3 mr-1" />
-                    {tool.language}
+                    {project.primary_language}
                   </Badge>
                 )}
-                {tool.category_ja && (
+                {primaryCategory && (
                   <Badge variant="secondary" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
-                    {tool.category_ja}
+                    {primaryCategory.name_ja}
                   </Badge>
                 )}
-                {tool.parent_category_ja && tool.parent_category_ja !== tool.category_ja && (
-                  <Badge variant="secondary" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
-                    {tool.parent_category_ja}
-                  </Badge>
-                )}
-                {tool.license && tool.license !== "NOASSERTION" && (
+                {project.license_spdx && (
                   <Badge variant="outline" className="text-[11px] font-normal px-2.5 py-0.5 h-6">
                     <Scale className="h-3 w-3 mr-1" />
-                    {tool.license}
+                    {project.license_spdx}
+                  </Badge>
+                )}
+                {project.verification_state === "verified" && (
+                  <Badge className="text-[11px] font-normal border px-2.5 py-0.5 h-6 bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
+                    <ShieldCheck className="h-3 w-3 mr-1" />
+                    確認済み
                   </Badge>
                 )}
               </div>
@@ -458,25 +436,25 @@ export default function ToolDetailPage() {
             <div className="lg:w-[260px] shrink-0">
               <div className="card-unified p-5 space-y-3">
                 <div className="space-y-2">
-                  {tool.url && (
+                  {project.official_url && (
                     <Button className="w-full gap-2 rounded-lg h-10 text-sm font-semibold" asChild>
-                      <a href={tool.url} target="_blank" rel="noopener noreferrer"
-                        onClick={() => track("external_link_click", { tool: tool.name, target: "official", url: tool.url })}
+                      <a href={project.official_url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: name ?? "", target: "official", url: project.official_url })}
                       >
                         公式サイトへ <ExternalLink className="h-4 w-4" />
                       </a>
                     </Button>
                   )}
-                  {tool.github_url && (
+                  {project.repository_url && (
                     <Button variant="outline" className="w-full gap-2 rounded-lg h-9 text-sm border-border" asChild>
-                      <a href={tool.github_url} target="_blank" rel="noopener noreferrer"
-                        onClick={() => track("external_link_click", { tool: tool.name, target: "github", url: tool.github_url })}
+                      <a href={project.repository_url} target="_blank" rel="noopener noreferrer"
+                        onClick={() => track("external_link_click", { tool: name ?? "", target: "github", url: project.repository_url })}
                       >
                         <Github className="h-4 w-4" /> GitHubを見る
                       </a>
                     </Button>
                   )}
-                  {!tool.url && !tool.github_url && (
+                  {!project.official_url && !project.repository_url && (
                     <p className="text-xs text-muted-foreground text-center py-2">
                       公式サイト・GitHub情報は確認中
                     </p>
@@ -519,42 +497,39 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {(() => {
-          const extras = (tool.replaces_ja && tool.replaces_ja.length > 0)
-            ? tool.replaces_ja
-            : (tool.replaces && tool.replaces.length > 0)
-              ? tool.replaces
-              : [];
-          const primary = hasCompetitor ? competitorDisplay! : null;
-          const others = extras.filter((r) => !primary || r.toLowerCase() !== primary.toLowerCase());
-          if (!primary && others.length === 0) return null;
-          const allBadges = [primary, ...others].filter(Boolean) as string[];
-          return (
-            <section className="py-6">
-              <div className="card-unified p-4 sm:p-5">
-                <h2 className="text-sm font-semibold text-foreground mb-2">
-                  {tool.name} は何の代替として使えるOSS？
-                </h2>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3 break-words">
-                  {tool.name} は{" "}
-                  {primary && (
-                    <span className="font-bold text-primary">{primary}</span>
-                  )}
-                  {primary && others.length > 0 && " / "}
-                  {others.join(" / ")}
-                  {" "}の代替として使えるオープンソースツールです。
+        {project.relations.length > 0 && (
+          <section className="py-6">
+            <div className="card-unified p-4 sm:p-5">
+              <h2 className="text-sm font-semibold text-foreground mb-2">
+                {name} は何の代替として使えるOSS？
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3 break-words">
+                {name} は{" "}
+                {project.relations.map((r, i) => (
+                  <span key={r.id}>
+                    {i > 0 && " / "}
+                    <span className={i === 0 ? "font-bold text-primary" : undefined}>
+                      {r.product.name_ja || r.product.name}
+                    </span>
+                  </span>
+                ))}
+                {" "}の代替として使えるオープンソースツールです。
+              </p>
+              {primaryRelation?.migration_summary_ja && (
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
+                  {primaryRelation.migration_summary_ja}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {allBadges.map((r) => (
-                    <AlternativeBadge key={r} competitor={r} size="sm" />
-                  ))}
-                </div>
+              )}
+              <div className="flex flex-wrap gap-1.5">
+                {project.relations.map((r) => (
+                  <AlternativeBadge key={r.id} competitor={r.product.name_ja || r.product.name} size="sm" />
+                ))}
               </div>
-            </section>
-          );
-        })()}
+            </div>
+          </section>
+        )}
 
-        {tool.github_url && (tool.stars_num || tool.forks_num || tool.last_commit || tool.license) && (
+        {project.repository_url && (latestSnapshot?.stars_count || latestSnapshot?.forks_count || lastCommitText || project.license_spdx) && (
           <section className="py-6">
             <div className="card-unified p-4 sm:p-5">
               <div className="flex items-center justify-between mb-4">
@@ -563,33 +538,33 @@ export default function ToolDetailPage() {
                   GitHub
                 </h2>
                 <a
-                  href={tool.github_url} target="_blank" rel="noopener noreferrer"
-                  onClick={() => track("external_link_click", { tool: tool.name, target: "github_stats", url: tool.github_url })}
+                  href={project.repository_url} target="_blank" rel="noopener noreferrer"
+                  onClick={() => track("external_link_click", { tool: name ?? "", target: "github_stats", url: project.repository_url })}
                   className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
                 >
                   リポジトリを見る <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                {tool.stars_num != null && tool.stars_num > 0 && (
+                {latestSnapshot?.stars_count != null && latestSnapshot.stars_count > 0 && (
                   <div className="text-center p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20">
-                    <p className="text-xl font-black text-amber-500 tabular-nums">{formatCount(tool.stars_num)}</p>
+                    <p className="text-xl font-black text-amber-500 tabular-nums">{formatCount(latestSnapshot.stars_count)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> Stars
                     </p>
                   </div>
                 )}
-                {tool.forks_num != null && tool.forks_num > 0 && (
+                {latestSnapshot?.forks_count != null && latestSnapshot.forks_count > 0 && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(tool.forks_num)}</p>
+                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(latestSnapshot.forks_count)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <GitFork className="h-3 w-3" /> Forks
                     </p>
                   </div>
                 )}
-                {tool.language && (
+                {project.primary_language && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.language}</p>
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{project.primary_language}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Code2 className="h-3 w-3" /> 言語
                     </p>
@@ -603,17 +578,17 @@ export default function ToolDetailPage() {
                     </p>
                   </div>
                 )}
-                {tool.license && tool.license !== "NOASSERTION" && (
+                {project.license_spdx && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-sm font-bold text-foreground leading-tight truncate">{tool.license}</p>
+                    <p className="text-sm font-bold text-foreground leading-tight truncate">{project.license_spdx}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       <Scale className="h-3 w-3" /> ライセンス
                     </p>
                   </div>
                 )}
-                {tool.open_issues_count != null && tool.open_issues_count > 0 && (
+                {latestSnapshot?.open_issues_count != null && latestSnapshot.open_issues_count > 0 && (
                   <div className="text-center p-3 rounded-xl bg-secondary/60">
-                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(tool.open_issues_count)}</p>
+                    <p className="text-xl font-black text-foreground tabular-nums">{formatCount(latestSnapshot.open_issues_count)}</p>
                     <p className="text-[11px] text-muted-foreground mt-1 flex items-center justify-center gap-1">
                       Issues
                     </p>
@@ -624,7 +599,7 @@ export default function ToolDetailPage() {
           </section>
         )}
 
-        {tool.scorecard_score != null && (
+        {latestSnapshot?.scorecard_score != null && (
           <>
             <div className="border-t border-border/60" />
             <section className="py-6">
@@ -635,9 +610,9 @@ export default function ToolDetailPage() {
                     OSS健全性スコア
                     <span className="text-[10px] text-muted-foreground font-normal">powered by OpenSSF Scorecard</span>
                   </h2>
-                  {tool.github_url && (
+                  {project.repository_url && (
                     <a
-                      href={`https://scorecard.dev/viewer/?uri=github.com/${tool.github_url.replace(/^https?:\/\/github\.com\//, "")}`}
+                      href={`https://scorecard.dev/viewer/?uri=github.com/${project.repository_url.replace(/^https?:\/\/github\.com\//, "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
@@ -649,46 +624,46 @@ export default function ToolDetailPage() {
                 <div className="flex items-center gap-5">
                   <div className="flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 shrink-0"
                     style={{
-                      background: tool.scorecard_score >= 7
+                      background: latestSnapshot.scorecard_score >= 7
                         ? 'linear-gradient(135deg, #f0fdf4, #dcfce7)'
-                        : tool.scorecard_score >= 5
+                        : latestSnapshot.scorecard_score >= 5
                         ? 'linear-gradient(135deg, #fffbeb, #fef3c7)'
                         : 'linear-gradient(135deg, #fef2f2, #fee2e2)',
-                      borderColor: tool.scorecard_score >= 7 ? '#bbf7d0'
-                        : tool.scorecard_score >= 5 ? '#fde68a'
+                      borderColor: latestSnapshot.scorecard_score >= 7 ? '#bbf7d0'
+                        : latestSnapshot.scorecard_score >= 5 ? '#fde68a'
                         : '#fecaca',
                     }}
                   >
                     <span className={`text-2xl font-black tabular-nums ${
-                      tool.scorecard_score >= 7
+                      latestSnapshot.scorecard_score >= 7
                         ? "text-emerald-700"
-                        : tool.scorecard_score >= 5
+                        : latestSnapshot.scorecard_score >= 5
                         ? "text-amber-700"
                         : "text-red-700"
                     }`}>
-                      {tool.scorecard_score.toFixed(1)}
+                      {latestSnapshot.scorecard_score.toFixed(1)}
                     </span>
                     <span className="text-[10px] text-muted-foreground">/ 10</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm font-semibold mb-1 ${
-                      tool.scorecard_score >= 7
+                      latestSnapshot.scorecard_score >= 7
                         ? "text-emerald-700"
-                        : tool.scorecard_score >= 5
+                        : latestSnapshot.scorecard_score >= 5
                         ? "text-amber-700"
                         : "text-red-600"
                     }`}>
-                      {tool.scorecard_score >= 7
+                      {latestSnapshot.scorecard_score >= 7
                         ? "セキュリティ対応が充実しています"
-                        : tool.scorecard_score >= 5
+                        : latestSnapshot.scorecard_score >= 5
                         ? "セキュリティ対応は標準的です"
                         : "セキュリティ対応の改善が必要です"}
                     </p>
                     <p className="text-xs text-muted-foreground leading-relaxed">
                       OpenSSF Scorecardによるセキュリティ自動評価。コードレビュー体制・ブランチ保護・脆弱性対応などを0〜10点で採点。
-                      {tool.scorecard_updated_at && (
+                      {latestSnapshot.observed_at && (
                         <span className="ml-1">
-                          （{new Date(tool.scorecard_updated_at).toLocaleDateString("ja-JP")}時点）
+                          （{new Date(latestSnapshot.observed_at).toLocaleDateString("ja-JP")}時点）
                         </span>
                       )}
                     </p>
@@ -732,13 +707,13 @@ export default function ToolDetailPage() {
               <div>
                 <p className="text-[10px] text-muted-foreground mb-2">対象ユーザー</p>
                 <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-secondary text-foreground border-border">
-                  {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
+                  {(latestSnapshot?.stars_count || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
                 </span>
               </div>
               <div>
                 <p className="text-[10px] text-muted-foreground mb-2">チーム規模</p>
                 <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border bg-secondary text-foreground border-border">
-                  {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
+                  {(latestSnapshot?.stars_count || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
                 </span>
               </div>
             </div>
@@ -750,37 +725,21 @@ export default function ToolDetailPage() {
               <div>
                 <p className="text-[11px] font-medium text-foreground mb-1">セルフホストについて</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">{difficulty.selfHostDesc}</p>
-                {(() => {
-                  const SELFHOST_GUIDES: Record<number, { slug: string; label: string }> = {
-                    415: { slug: "n8n-selfhost-vps", label: "n8nセルフホスト手順" },
-                    185: { slug: "appflowy-selfhost-vps", label: "AppFlowyセルフホスト手順" },
-                    217: { slug: "baserow-selfhost-vps", label: "Baserowセルフホスト手順" },
-                    340: { slug: "plausible-selfhost-vps", label: "Plausibleセルフホスト手順" },
-                    358: { slug: "metabase-selfhost-vps", label: "Metabaseセルフホスト手順" },
-                    418: { slug: "nocodb-selfhost-vps", label: "NocoDBセルフホスト手順" },
-                    346: { slug: "umami-selfhost-vps", label: "Umamiセルフホスト手順" },
-                  };
-                  const isSelfHostable =
-                    tool.docker_available === true ||
-                    (!!tool.github_url && (tool.stars_num || 0) >= 1000);
-                  if (!isSelfHostable) return null;
-                  const guide = SELFHOST_GUIDES[tool.id];
-                  return (
-                    <>
-                      <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
-                        このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
-                      </p>
-                      <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
-                        セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
+                {project.docker_available && (
+                  <>
+                    <p className="mt-2 text-[11px] text-muted-foreground leading-relaxed">
+                      このOSSはセルフホスト運用にも対応しています。自分のサーバーで使いたい場合は、セルフホスト環境の選び方も確認しておきましょう。
+                    </p>
+                    <Link to="/selfhost-vps" className="inline-flex items-center gap-1 mt-1.5 text-[11px] text-primary hover:underline">
+                      セルフホスト環境を見る <ArrowRight className="h-3 w-3" />
+                    </Link>
+                    {guideLink && (
+                      <Link to={guideLink} className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
+                        {name}セルフホスト手順 <ArrowRight className="h-3 w-3" />
                       </Link>
-                      {guide && (
-                        <Link to={`/guides/${guide.slug}`} className="inline-flex items-center gap-1 mt-1.5 ml-3 text-[11px] text-primary hover:underline">
-                          {guide.label} <ArrowRight className="h-3 w-3" />
-                        </Link>
-                      )}
-                    </>
-                  );
-                })()}
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -843,14 +802,18 @@ export default function ToolDetailPage() {
         </section>
 
         <div className="border-t border-border/60" />
-        <KeyFeaturesList tool={tool} />
+        <KeyFeaturesList
+          category={primaryCategory?.name_ja ?? null}
+          starsCount={latestSnapshot?.stars_count ?? null}
+          forksCount={latestSnapshot?.forks_count ?? null}
+        />
 
         {hasCompetitor && (
           <>
             <div className="border-t border-border/60" />
             <section className="py-10">
               <h2 className="text-lg font-bold text-foreground mb-5">
-                {tool.name} vs {competitorDisplay}
+                {name} vs {competitorDisplay}
               </h2>
               <div className="card-unified overflow-hidden overflow-x-auto">
                 <table className="w-full text-sm min-w-[400px]">
@@ -858,11 +821,11 @@ export default function ToolDetailPage() {
                     <tr className="border-b border-border/60">
                       <th className="text-left p-3 md:p-4 font-medium text-muted-foreground text-xs w-[28%]">比較項目</th>
                       <th className="text-left p-3 md:p-4 font-medium text-primary text-xs bg-primary/[0.03]">
-                        {tool.name}
+                        {name}
                         <span className="text-[10px] text-muted-foreground font-normal ml-1">(OSS)</span>
                       </th>
                       <th className="text-left p-3 md:p-4 font-medium text-muted-foreground text-xs">
-                        {competitorEn || competitorDisplay}
+                        {competitorDisplay}
                         <span className="text-[10px] text-muted-foreground/50 font-normal ml-1">(SaaS)</span>
                       </th>
                     </tr>
@@ -889,7 +852,7 @@ export default function ToolDetailPage() {
                   to={`/alternatives/${altSlug}`}
                   className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium mt-4"
                 >
-                  {competitorEn}の代替をもっと見る
+                  {competitorDisplay}の代替をもっと見る
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               )}
@@ -906,40 +869,28 @@ export default function ToolDetailPage() {
               <Container className="h-5 w-5 text-sky-500" />
               <p className="text-[10px] text-muted-foreground">Docker対応</p>
               <p className="text-xs font-semibold text-foreground text-center">
-                {tool.docker_available
-                  ? "対応"
-                  : "要確認"}
+                {project.docker_available == null ? "要確認" : project.docker_available ? "対応" : "非対応"}
               </p>
-              {tool.docker_compose_url && (
-                <a
-                  href={tool.docker_compose_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] text-primary hover:underline"
-                >
-                  Compose設定
-                </a>
-              )}
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Server className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">セルフホスト</p>
               <p className="text-xs font-semibold text-foreground">
-                要確認
+                {project.docker_available == null ? "要確認" : project.docker_available ? "可能" : "要確認"}
               </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Users className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">対象ユーザー</p>
               <p className="text-xs font-semibold text-foreground text-center">
-                {(tool.stars_num || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
+                {(latestSnapshot?.stars_count || 0) > 20000 ? "技術者〜非技術者" : "技術者向け"}
               </p>
             </div>
             <div className="card-unified p-4 flex flex-col items-center gap-2">
               <Building2 className="h-5 w-5 text-primary/70" />
               <p className="text-[10px] text-muted-foreground">チーム規模</p>
               <p className="text-xs font-semibold text-foreground text-center">
-                {(tool.stars_num || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
+                {(latestSnapshot?.stars_count || 0) > 30000 ? "小〜大規模" : "小〜中規模"}
               </p>
             </div>
           </div>
@@ -951,35 +902,30 @@ export default function ToolDetailPage() {
           <h2 className="text-lg font-bold text-foreground mb-5">概要</h2>
           <div className="card-unified p-6">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {tool.description_ja || `${tool.name}は${tool.category_ja || tool.parent_category_ja || "多用途"}のオープンソースツールです。`}
+              {project.short_description_ja || `${name}は${primaryCategory?.name_ja || "多用途"}のオープンソースツールです。`}
             </p>
-            {tool.description_en && tool.description_ja && (
-              <p className="text-xs text-muted-foreground/50 leading-relaxed mt-3 italic">
-                {tool.description_en}
-              </p>
-            )}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-4 border-t border-border/60">
-              {tool.language && (
+              {project.primary_language && (
                 <div>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">言語</p>
                   <p className="text-sm font-medium flex items-center gap-1.5 text-foreground">
-                    <Code2 className="h-3.5 w-3.5" />{tool.language}
+                    <Code2 className="h-3.5 w-3.5" />{project.primary_language}
                   </p>
                 </div>
               )}
-              {tool.license && tool.license !== "NOASSERTION" && (
+              {project.license_spdx && (
                 <div>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">ライセンス</p>
                   <p className="text-sm font-medium flex items-center gap-1.5 text-foreground">
-                    <Scale className="h-3.5 w-3.5" />{tool.license}
+                    <Scale className="h-3.5 w-3.5" />{project.license_spdx}
                   </p>
                 </div>
               )}
-              {tool.forks_num != null && tool.forks_num > 0 && (
+              {latestSnapshot?.forks_count != null && latestSnapshot.forks_count > 0 && (
                 <div>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">フォーク</p>
                   <p className="text-sm font-medium flex items-center gap-1.5 text-foreground">
-                    <GitFork className="h-3.5 w-3.5" />{formatCount(tool.forks_num)}
+                    <GitFork className="h-3.5 w-3.5" />{formatCount(latestSnapshot.forks_count)}
                   </p>
                 </div>
               )}
@@ -992,15 +938,38 @@ export default function ToolDetailPage() {
                 </div>
               )}
             </div>
+            {project.verified_at && (
+              <p className="text-[11px] text-muted-foreground mt-4 pt-4 border-t border-border/60">
+                確認日: {new Date(project.verified_at).toLocaleDateString("ja-JP")}
+              </p>
+            )}
           </div>
         </section>
 
-        {partnerCards.length > 0 && (
+        {project.evidence_sources.length > 0 && (
           <>
             <div className="border-t border-border/60" />
-            <div className="py-6">
-              <AffiliateCTA toolName={tool.name || ""} cards={partnerCards} />
-            </div>
+            <section className="py-8">
+              <h2 className="text-lg font-bold text-foreground mb-4">情報の確認元</h2>
+              <div className="card-unified p-4 sm:p-5 space-y-2.5">
+                {project.evidence_sources.map((e) => (
+                  <div key={e.id} className="flex items-start gap-2.5 text-xs">
+                    <Badge variant="outline" className="text-[10px] font-normal shrink-0">
+                      {EVIDENCE_KIND_LABEL[e.kind] ?? e.kind}
+                    </Badge>
+                    <div className="min-w-0 flex-1">
+                      <a href={e.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">
+                        {e.label}
+                      </a>
+                      <span className="text-muted-foreground ml-2">
+                        （{new Date(e.observed_at).toLocaleDateString("ja-JP")}確認）
+                      </span>
+                      {e.note_ja && <p className="text-muted-foreground mt-0.5">{e.note_ja}</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
           </>
         )}
 
@@ -1009,14 +978,15 @@ export default function ToolDetailPage() {
           <AdSlot slotId="detail-before-related" format="horizontal" />
         </div>
 
-        {relatedTools && relatedTools.length > 0 && (
+        {relatedListings && relatedListings.length > 0 && (
           <>
             <div className="border-t border-border/60" />
             <SimilarProjectsSection
-              tools={relatedTools}
-              currentTool={tool}
+              listings={relatedListings}
+              currentName={name}
+              currentCategory={primaryCategory?.name_ja ?? null}
               competitorDisplay={competitorDisplay}
-              hasCompetitor={!!hasCompetitor}
+              hasCompetitor={hasCompetitor}
               altSlug={altSlug}
             />
           </>
@@ -1026,29 +996,29 @@ export default function ToolDetailPage() {
         <section className="py-10">
           <h2 className="text-lg font-bold text-foreground mb-5">公式リンク</h2>
           <div className="flex flex-wrap gap-3">
-            {tool.url && (
+            {project.official_url && (
               <a
-                href={tool.url} target="_blank" rel="noopener noreferrer"
+                href={project.official_url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
-                onClick={() => track("external_link_click", { tool: tool.name, target: "official_bottom", url: tool.url })}
+                onClick={() => track("external_link_click", { tool: name ?? "", target: "official_bottom", url: project.official_url })}
               >
                 <ExternalLink className="h-4 w-4 text-primary" />
                 公式サイト
               </a>
             )}
-            {tool.github_url && (
+            {project.repository_url && (
               <a
-                href={tool.github_url} target="_blank" rel="noopener noreferrer"
+                href={project.repository_url} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-foreground hover:border-primary/30 transition-colors"
-                onClick={() => track("external_link_click", { tool: tool.name, target: "github_bottom", url: tool.github_url })}
+                onClick={() => track("external_link_click", { tool: name ?? "", target: "github_bottom", url: project.repository_url })}
               >
                 <Github className="h-4 w-4" />
                 GitHub リポジトリ
               </a>
             )}
-            {tool.github_url && (
+            {project.repository_url && (
               <a
-                href={`${tool.github_url}/issues`} target="_blank" rel="noopener noreferrer"
+                href={`${project.repository_url}/issues`} target="_blank" rel="noopener noreferrer"
                 className="card-unified px-4 py-3 flex items-center gap-2 text-sm text-muted-foreground hover:border-primary/30 transition-colors"
               >
                 <MessageSquare className="h-4 w-4" />
@@ -1060,7 +1030,13 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
         <section className="py-8">
-          <EditorialInsightCard tool={tool} />
+          <EditorialInsightCard
+            name={name}
+            category={primaryCategory?.name_ja ?? null}
+            starsCount={latestSnapshot?.stars_count ?? null}
+            forksCount={latestSnapshot?.forks_count ?? null}
+            competitorName={competitorDisplay}
+          />
         </section>
 
         {hasCompetitor && altSlug && (
@@ -1070,8 +1046,7 @@ export default function ToolDetailPage() {
                 {
                   title: `${competitorDisplay}代替を選ぶときのポイント`,
                   description: `${competitorDisplay}の代わりに使えるOSSを比較・選定するための観点を解説`,
-                  href: competitorDisplay === "Notion" ? "/guides/notion-alternatives"
-                    : `/alternatives/${altSlug}`,
+                  href: `/alternatives/${altSlug}`,
                 },
                 {
                   title: "セルフホストガイド一覧",
@@ -1085,7 +1060,7 @@ export default function ToolDetailPage() {
 
         <div className="border-t border-border/60" />
         <section className="py-8">
-          <CommunityParticipationCTA toolName={tool.name || undefined} context="detail" />
+          <CommunityParticipationCTA toolName={name || undefined} context="detail" />
         </section>
 
         <section className="pb-8">
@@ -1093,11 +1068,11 @@ export default function ToolDetailPage() {
         </section>
 
         <div className="pb-4">
-          <PartnerCTA toolName={tool.name || undefined} />
+          <PartnerCTA toolName={name || undefined} />
         </div>
 
         <div className="pb-4">
-          <ConsultationCTA toolName={tool.name || undefined} />
+          <ConsultationCTA toolName={name || undefined} />
         </div>
 
         <div className="border-t border-border/60" />
@@ -1125,39 +1100,11 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {(() => {
-          const altSlug = hasCompetitor && competitorEn ? COMPETITOR_TO_SLUG[competitorEn] : null;
-          const compareItems = altSlug ? (COMPARE_LINKS[altSlug] ?? []) : [];
-          const matchedCompare = compareItems.find(({ ossName }) =>
-            (tool.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") ===
-            ossName.toLowerCase().replace(/[^a-z0-9]/g, "")
-          );
-          if (!matchedCompare) return null;
-          return (
-            <section className="mb-8 pt-6 border-t border-border/60">
-              <Link
-                to={`/compare/${matchedCompare.slug}`}
-                className="card-unified p-4 flex items-center justify-between gap-3 hover:border-primary/40 transition-colors group"
-              >
-                <div>
-                  <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {matchedCompare.ossName} vs {competitorEn} を徹底比較
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    コスト・機能・セルフホスト対応を項目別に比較
-                  </div>
-                </div>
-                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
-              </Link>
-            </section>
-          );
-        })()}
-
         <div className="pb-12 flex flex-col sm:flex-row items-center justify-center gap-3">
-          {tool.parent_category_ja && (
+          {primaryCategory && (
             <Button className="w-full sm:w-auto gap-2 rounded-xl" asChild>
-              <Link to={CATEGORY_JA_TO_SLUG[tool.parent_category_ja] ? `/category/${CATEGORY_JA_TO_SLUG[tool.parent_category_ja]}` : `/`}>
-                {tool.parent_category_ja}のツールを見る <ArrowRight className="h-4 w-4" />
+              <Link to={`/category/${primaryCategory.slug}`}>
+                {primaryCategory.name_ja}のツールを見る <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           )}
