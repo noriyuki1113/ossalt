@@ -135,9 +135,9 @@ export function SiteHeader() {
             allLabel="比較一覧を見る →"
           />
           {[
-            { to: "/", label: "OSSを探す" },
-            { to: "/ranking", label: "人気ランキング" },
-            { to: "/selfhost-vps", label: "セルフホスト" },
+            { to: "/", label: "ツールを探す" },
+            { to: "/selfhost-vps", label: "導入ガイド" },
+            { to: "/ranking", label: "ランキング" },
           ].map((item) => (
             <Link
               key={item.to}
@@ -166,7 +166,7 @@ export function SiteHeader() {
           <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
           <input
             type="text"
-            placeholder="ツールを検索…"
+            placeholder="サービス名で検索…"
             value={headerSearch}
             onChange={(e) => setHeaderSearch(e.target.value)}
             className="h-8 w-48 rounded-lg border border-border bg-background pl-8 pr-3 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary/40 focus:border-primary/40 transition-colors"
@@ -279,9 +279,9 @@ export function SiteHeader() {
             </div>
             <div className="border-t border-border pt-2 mt-2 space-y-1">
               {[
-                { to: "/", label: "OSSを探す" },
-                { to: "/ranking", label: "人気ランキング" },
-                { to: "/selfhost-vps", label: "セルフホスト" },
+                { to: "/", label: "ツールを探す" },
+                { to: "/selfhost-vps", label: "導入ガイド" },
+                { to: "/ranking", label: "ランキング" },
               ].map((item) => (
                 <Link
                   key={item.to}
