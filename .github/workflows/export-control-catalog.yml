@@ -35,26 +35,50 @@ jobs:
           test -n "$SUPABASE_URL" || (echo "SUPABASE_URL is missing" && exit 1)
           test -n "$SUPABASE_ANON_KEY" || (echo "SUPABASE_ANON_KEY is missing" && exit 1)
 
-          HTTP_STATUS=$(curl --silent --show-error --retry 3 --retry-all-errors \
-            --get "$SUPABASE_URL/rest/v1/tools" \
-            --data-urlencode 'select=id,name,url,github_url,license,docker_available' \
-            --data-urlencode 'order=id.asc' \
-            --data-urlencode 'limit=1000' \
-            -H "apikey: $SUPABASE_ANON_KEY" \
-            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
-            -H 'Accept: application/json' \
-            -o /tmp/ossalt-tools.json \
-            -w '%{http_code}')
+          PAGE_SIZE=1000
+          OFFSET=0
+          echo '[]' > /tmp/ossalt-tools-all.json
 
-          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
-            echo "Catalog export request failed with HTTP $HTTP_STATUS"
-            exit 1
-          fi
+          while true; do
+            PAGE_FILE="/tmp/ossalt-tools-$OFFSET.json"
+            HTTP_STATUS=$(curl --silent --show-error --retry 3 --retry-all-errors \
+              --get "$SUPABASE_URL/rest/v1/tools" \
+              --data-urlencode 'select=id,name,url,github_url,license,docker_available' \
+              --data-urlencode 'order=id.asc' \
+              --data-urlencode "limit=$PAGE_SIZE" \
+              --data-urlencode "offset=$OFFSET" \
+              -H "apikey: $SUPABASE_ANON_KEY" \
+              -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+              -H 'Accept: application/json' \
+              -o "$PAGE_FILE" \
+              -w '%{http_code}')
 
-          jq -e 'type == "array" and length > 0' /tmp/ossalt-tools.json >/dev/null
+            if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+              echo "Catalog export request failed with HTTP $HTTP_STATUS at offset $OFFSET"
+              exit 1
+            fi
+
+            jq -e 'type == "array"' "$PAGE_FILE" >/dev/null
+            PAGE_COUNT=$(jq 'length' "$PAGE_FILE")
+            jq -s '.[0] + .[1]' /tmp/ossalt-tools-all.json "$PAGE_FILE" > /tmp/ossalt-tools-next.json
+            mv /tmp/ossalt-tools-next.json /tmp/ossalt-tools-all.json
+
+            echo "Fetched $PAGE_COUNT tools at offset $OFFSET."
+            if [ "$PAGE_COUNT" -lt "$PAGE_SIZE" ]; then
+              break
+            fi
+
+            OFFSET=$((OFFSET + PAGE_SIZE))
+            if [ "$OFFSET" -gt 50000 ]; then
+              echo "Catalog export exceeded the 50,000-tool safety limit"
+              exit 1
+            fi
+          done
+
+          jq -e 'type == "array" and length > 0' /tmp/ossalt-tools-all.json >/dev/null
           jq -n \
             --arg generated_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            --slurpfile tools /tmp/ossalt-tools.json \
+            --slurpfile tools /tmp/ossalt-tools-all.json \
             '{schema_version: 1, generated_at: $generated_at, tools: $tools[0]}' \
             > /tmp/control-catalog.json
 
