@@ -1,0 +1,95 @@
+name: Export OSSALT Control Catalog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 19 * * *'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/export-control-catalog.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ossalt-control-catalog-export
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Export sanitized public tool catalog
+        shell: bash
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$SUPABASE_URL" || (echo "SUPABASE_URL is missing" && exit 1)
+          test -n "$SUPABASE_ANON_KEY" || (echo "SUPABASE_ANON_KEY is missing" && exit 1)
+
+          HTTP_STATUS=$(curl --silent --show-error --retry 3 --retry-all-errors \
+            --get "$SUPABASE_URL/rest/v1/tools" \
+            --data-urlencode 'select=id,name,url,github_url,license,docker_available' \
+            --data-urlencode 'order=id.asc' \
+            --data-urlencode 'limit=1000' \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H 'Accept: application/json' \
+            -o /tmp/ossalt-tools.json \
+            -w '%{http_code}')
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Catalog export request failed with HTTP $HTTP_STATUS"
+            exit 1
+          fi
+
+          jq -e 'type == "array" and length > 0' /tmp/ossalt-tools.json >/dev/null
+          jq -n \
+            --arg generated_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --slurpfile tools /tmp/ossalt-tools.json \
+            '{schema_version: 1, generated_at: $generated_at, tools: $tools[0]}' \
+            > /tmp/control-catalog.json
+
+          echo "Validated $(jq '.tools | length' /tmp/control-catalog.json) public tools."
+
+      - name: Publish catalog branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin control-catalog >/dev/null 2>&1; then
+            git fetch origin control-catalog:control-catalog
+            git switch control-catalog
+          else
+            git switch --orphan control-catalog
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p export
+          cp /tmp/control-catalog.json export/control-catalog.json
+          cat > README.md <<'EOF'
+          # OSSALT Control Catalog Export
+
+          This branch is generated automatically for OSSALT Control.
+
+          `export/control-catalog.json` contains only public OSS catalog fields. Do not edit generated files manually.
+          EOF
+
+          git add README.md export/control-catalog.json
+          if git diff --cached --quiet; then
+            echo "Catalog is unchanged; nothing to publish."
+            exit 0
+          fi
+
+          git commit -m "chore: refresh OSSALT Control catalog"
+          git push origin control-catalog
