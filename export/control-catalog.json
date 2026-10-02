@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-02T08:12:48Z",
+  "generated_at": "2026-10-02T08:14:27Z",
   "tools": [
     {
       "id": 1,
@@ -8000,6 +8000,2630 @@
       "url": null,
       "github_url": null,
       "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1001,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1002,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1003,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1004,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1005,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1006,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1007,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1008,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1009,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1010,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1011,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1012,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1013,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1014,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1015,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1016,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1017,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1018,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1019,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1020,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1021,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1022,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1023,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1024,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1025,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1026,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1027,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1028,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1029,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1030,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1031,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1032,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1033,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1034,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1035,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1036,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1037,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1038,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1039,
+      "name": "LangWatch",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1040,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1041,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1042,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1043,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1044,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1045,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1046,
+      "name": "Redmine",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1047,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1048,
+      "name": "Jean",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1049,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1050,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1051,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1052,
+      "name": "SearXNG",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1053,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1054,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1055,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1056,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1057,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1058,
+      "name": "Vector",
+      "url": null,
+      "github_url": null,
+      "license": "MPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1059,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1060,
+      "name": "Zabbix",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1061,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1062,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1063,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1064,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1065,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1066,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1067,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1068,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1069,
+      "name": "2FAS",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1070,
+      "name": "Aegis Authenticator",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1071,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1072,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1073,
+      "name": "Sevalla",
+      "url": "https://sevalla.com/?utm_source=openalternative&utm_medium=Referral&utm_campaign=website",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1074,
+      "name": "Sent",
+      "url": "https://s.dm/sent-api-oa?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1075,
+      "name": "ScreenshotOne",
+      "url": "https://go.openalternative.co/screenshotone?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1076,
+      "name": "Capture",
+      "url": "https://capture.page?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1077,
+      "name": "CodeRabbit",
+      "url": "https://coderabbit.link/openalternative?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1078,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1079,
+      "name": "LangWatch",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1080,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1081,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1082,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1083,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1084,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1085,
+      "name": "Redmine",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1086,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1087,
+      "name": "Anki",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1088,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1089,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1090,
+      "name": "Apache APISIX",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1091,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1092,
+      "name": "Jean",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1093,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1094,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1095,
+      "name": "SearXNG",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1096,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1097,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1098,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1099,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1100,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1101,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1102,
+      "name": "Vector",
+      "url": null,
+      "github_url": null,
+      "license": "MPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1103,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1104,
+      "name": "Zabbix",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1105,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1106,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1107,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1108,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1109,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1110,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1111,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1112,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1113,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1114,
+      "name": "Kodi",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1115,
+      "name": "Zotero",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1116,
+      "name": "2FAS",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1117,
+      "name": "Aegis Authenticator",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1118,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1119,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1120,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1121,
+      "name": "Sevalla",
+      "url": "https://sevalla.com/?utm_source=openalternative&utm_medium=Referral&utm_campaign=website",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1122,
+      "name": "ScreenshotOne",
+      "url": "https://go.openalternative.co/screenshotone?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1123,
+      "name": "CodeRabbit",
+      "url": "https://coderabbit.link/openalternative?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1124,
+      "name": "Sent",
+      "url": "https://s.dm/sent-api-oa?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1125,
+      "name": "Capture",
+      "url": "https://capture.page?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1126,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1127,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1128,
+      "name": "LangWatch",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1129,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1130,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1131,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1132,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1133,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1134,
+      "name": "Redmine",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1135,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1136,
+      "name": "Anki",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1137,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1138,
+      "name": "Hyvor Blogs",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1139,
+      "name": "Nonograph",
+      "url": null,
+      "github_url": null,
+      "license": "Unlicense",
+      "docker_available": null
+    },
+    {
+      "id": 1140,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1141,
+      "name": "Jean",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1142,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1143,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1144,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1145,
+      "name": "Apache APISIX",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1146,
+      "name": "Fusio",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1147,
+      "name": "Keploy",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1148,
+      "name": "Neovim",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1149,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1150,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1151,
+      "name": "FalkorDB",
+      "url": null,
+      "github_url": null,
+      "license": "SSPL-1.0",
+      "docker_available": null
+    },
+    {
+      "id": 1152,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1153,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1154,
+      "name": "Dagu",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1155,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1156,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1157,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1158,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1159,
+      "name": "Apache SkyWalking",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1160,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1161,
+      "name": "Grafana Loki",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1162,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1163,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1164,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1165,
+      "name": "Vector",
+      "url": null,
+      "github_url": null,
+      "license": "MPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1166,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1167,
+      "name": "Zabbix",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1168,
+      "name": "SearXNG",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1169,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1170,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1171,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1172,
+      "name": "Kodi",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1173,
+      "name": "Zotero",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1174,
+      "name": "2FAS",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1175,
+      "name": "Aegis Authenticator",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1176,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1177,
+      "name": "Capd",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1178,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1179,
+      "name": "ChatbotX",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1180,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1181,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1182,
+      "name": "Sevalla",
+      "url": "https://sevalla.com/?utm_source=openalternative&utm_medium=Referral&utm_campaign=website",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1183,
+      "name": "CodeRabbit",
+      "url": "https://coderabbit.link/openalternative?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1184,
+      "name": "ScreenshotOne",
+      "url": "https://go.openalternative.co/screenshotone?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1185,
+      "name": "Sent",
+      "url": "https://s.dm/sent-api-oa?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1186,
+      "name": "Capture",
+      "url": "https://capture.page?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1187,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1188,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1189,
+      "name": "LangWatch",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1190,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1191,
+      "name": "ego lite",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1192,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1193,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1194,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1195,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1196,
+      "name": "Redmine",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1197,
+      "name": "Pretix",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1198,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1199,
+      "name": "Anki",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1200,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1201,
+      "name": "Hyvor Blogs",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1202,
+      "name": "Nonograph",
+      "url": null,
+      "github_url": null,
+      "license": "Unlicense",
+      "docker_available": null
+    },
+    {
+      "id": 1203,
+      "name": "imgproxy",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1204,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1205,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1206,
+      "name": "Apache APISIX",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1207,
+      "name": "Fusio",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1208,
+      "name": "Keploy",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1209,
+      "name": "Neovim",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1210,
+      "name": "Jean",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1211,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1212,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1213,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1214,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1215,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1216,
+      "name": "Dagu",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1217,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1218,
+      "name": "Svix",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1219,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1220,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1221,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1222,
+      "name": "FalkorDB",
+      "url": null,
+      "github_url": null,
+      "license": "SSPL-1.0",
+      "docker_available": null
+    },
+    {
+      "id": 1223,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1224,
+      "name": "Apache SkyWalking",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1225,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1226,
+      "name": "Grafana Loki",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1227,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1228,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1229,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1230,
+      "name": "Uptimepage",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1231,
+      "name": "Vector",
+      "url": null,
+      "github_url": null,
+      "license": "MPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1232,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1233,
+      "name": "Zabbix",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1234,
+      "name": "SearXNG",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1235,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1236,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1237,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1238,
+      "name": "Kodi",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1239,
+      "name": "Silverbullet",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1240,
+      "name": "Zotero",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1241,
+      "name": "2FAS",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1242,
+      "name": "Aegis Authenticator",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1243,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1244,
+      "name": "Capd",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1245,
+      "name": "ego lite",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1246,
+      "name": "ChatbotX",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1247,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1248,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1249,
+      "name": "Pocket ID",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1250,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1251,
+      "name": "Sent",
+      "url": "https://s.dm/sent-api-oa?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1252,
+      "name": "Capture",
+      "url": "https://capture.page?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1253,
+      "name": "CodeRabbit",
+      "url": "https://coderabbit.link/openalternative?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1254,
+      "name": "ScreenshotOne",
+      "url": "https://go.openalternative.co/screenshotone?utm_source=openalternative.co",
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1255,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1256,
+      "name": "Kortix",
+      "url": null,
+      "github_url": null,
+      "license": "Elastic-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1257,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1258,
+      "name": "LangWatch",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1259,
+      "name": "llama.cpp",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1260,
+      "name": "vLLM",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1261,
+      "name": "ego lite",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1262,
+      "name": "Eigent",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1263,
+      "name": "NanoClaw",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1264,
+      "name": "OpenBot",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1265,
+      "name": "Rakazo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1266,
+      "name": "UnoPim",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1267,
+      "name": "Redmine",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1268,
+      "name": "Busabase",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1269,
+      "name": "Pretix",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1270,
+      "name": "Paperless-ngx",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1271,
+      "name": "Dub Partners",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1272,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1273,
+      "name": "Anki",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1274,
+      "name": "Hyvor Blogs",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1275,
+      "name": "Nonograph",
+      "url": null,
+      "github_url": null,
+      "license": "Unlicense",
+      "docker_available": null
+    },
+    {
+      "id": 1276,
+      "name": "imgproxy",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1277,
+      "name": "Tianji",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1278,
+      "name": "Convertigo",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1279,
+      "name": "GoRules",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1280,
+      "name": "Apache APISIX",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1281,
+      "name": "Fusio",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1282,
+      "name": "Keploy",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1283,
+      "name": "Neovim",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1284,
+      "name": "Jean",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1285,
+      "name": "Paperclip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1286,
+      "name": "Paseo",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1287,
+      "name": "Dagu",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1288,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1289,
+      "name": "WireGuard",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1290,
+      "name": "Apache Druid",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1291,
+      "name": "Apache IoTDB",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1292,
+      "name": "FalkorDB",
+      "url": null,
+      "github_url": null,
+      "license": "SSPL-1.0",
+      "docker_available": null
+    },
+    {
+      "id": 1293,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1294,
+      "name": "Svix",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1295,
+      "name": "Apache SkyWalking",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1296,
+      "name": "BugPin",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1297,
+      "name": "GlitchTip",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1298,
+      "name": "Grafana Loki",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1299,
+      "name": "Healthchecks",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-3-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1300,
+      "name": "Maple",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1301,
+      "name": "Scanopy",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1302,
+      "name": "Tianji",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1303,
+      "name": "Uptimepage",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1304,
+      "name": "Vector",
+      "url": null,
+      "github_url": null,
+      "license": "MPL-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1305,
+      "name": "VictoriaMetrics",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1306,
+      "name": "Zabbix",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1307,
+      "name": "SearXNG",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1308,
+      "name": "SeekStorm",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1309,
+      "name": "Spinifex",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1310,
+      "name": "Gladys Assistant",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1311,
+      "name": "Inkscape",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1312,
+      "name": "Kodi",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1313,
+      "name": "Nightingale",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1314,
+      "name": "Compositor",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1315,
+      "name": "Silverbullet",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1316,
+      "name": "Zotero",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1317,
+      "name": "2FAS",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1318,
+      "name": "Aegis Authenticator",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1319,
+      "name": "ownCloud",
+      "url": null,
+      "github_url": null,
+      "license": "Apache-2.0",
+      "docker_available": null
+    },
+    {
+      "id": 1320,
+      "name": "Capd",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1321,
+      "name": "ego lite",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1322,
+      "name": "LibreWolf",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1323,
+      "name": "Waterfox",
+      "url": null,
+      "github_url": null,
+      "license": null,
+      "docker_available": null
+    },
+    {
+      "id": 1324,
+      "name": "ChatbotX",
+      "url": null,
+      "github_url": null,
+      "license": "MIT",
+      "docker_available": null
+    },
+    {
+      "id": 1325,
+      "name": "Dograh",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
+      "docker_available": null
+    },
+    {
+      "id": 1326,
+      "name": "Paralino",
+      "url": null,
+      "github_url": null,
+      "license": "AGPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1327,
+      "name": "Mole",
+      "url": null,
+      "github_url": null,
+      "license": "GPL-3.0",
+      "docker_available": null
+    },
+    {
+      "id": 1328,
+      "name": "Pocket ID",
+      "url": null,
+      "github_url": null,
+      "license": "BSD-2-Clause",
       "docker_available": null
     }
   ]
