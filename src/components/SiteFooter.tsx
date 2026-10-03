@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 const SITE_LINKS = [
-  { to: "/", label: "OSSを探す" },
+  { to: "/", label: "ツールを探す" },
+  { to: "/alternatives", label: "サービス別の代替一覧" },
+  { to: "/compare", label: "OSS比較" },
+  { to: "/selfhost-vps", label: "導入ガイド" },
   { to: "/ranking", label: "人気ランキング" },
-  { to: "/selfhost-vps", label: "セルフホストガイド" },
   { to: "/about", label: "このサイトについて" },
-  { to: "/contact", label: "お問い合わせ" },
 ];
 
 const LEGAL_LINKS = [
@@ -32,7 +33,7 @@ export function SiteFooter() {
             </p>
             <div className="mt-3 flex items-center gap-1.5 text-[10px] text-muted-foreground/70">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              GitHubデータ: 毎日自動更新
+              公開データをもとに情報を更新
             </div>
           </div>
 
@@ -78,7 +79,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()} OSSアルタナティブ. All rights reserved.
           </p>
           <p className="text-[11px] text-muted-foreground/50">
-            データソース: openalternative.co (CC0) + GitHub API · すべてのOSSに感謝。
+            データソース: openalternative.co (CC0) と GitHub API をもとに掲載。
           </p>
         </div>
       </div>
