@@ -1,37 +1,18 @@
 import { memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ExternalLink, Github, ArrowRight, GitFork, Clock, Container, ShieldCheck, Server } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight, CheckCircle2, Clock, Container, ExternalLink, Github, ShieldCheck, Star } from "lucide-react";
 import { ToolIcon } from "@/components/ToolIcon";
-import { StarCount } from "@/components/StarCount";
 import { AlternativeBadge } from "@/components/AlternativeBadge";
-
-import { formatRelativeDate, getLanguageBadgeClass, formatCount } from "@/lib/format";
+import { formatCount, formatRelativeDate } from "@/lib/format";
 import { isKnownCompetitor } from "@/lib/competitors";
 import { getSelfhostGuideLink } from "@/lib/selfhost-guides";
 import { track } from "@/lib/track";
 import type { Tool } from "@/hooks/use-tools";
 
-function getScorecardBadgeClass(score: number): string {
-  if (score >= 7) return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-  if (score >= 5) return "bg-amber-500/10 text-amber-400 border-amber-500/20";
-  return "bg-red-500/10 text-red-400 border-red-500/20";
-}
-
-function isInactive(tool: Tool): boolean {
-  if (!tool.last_commit) return false;
-  const daysSince = (Date.now() - new Date(tool.last_commit).getTime()) / 86400000;
-  return daysSince > 365;
-}
-
-function getHighlightLabel(tool: Tool): { text: string; cls: string } | null {
-  if (isInactive(tool)) return { text: "⚠️ 非活発", cls: "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20" };
-  if (tool.stars_num && tool.stars_num >= 50000) return { text: "🔥 人気", cls: "bg-orange-500/10 text-orange-400 border border-orange-500/20" };
-  if (tool.created_at) {
-    const days = Math.floor((Date.now() - new Date(tool.created_at).getTime()) / 86400000);
-    if (days <= 30) return { text: "🆕 新着", cls: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" };
-  }
-  return null;
+function statusLabel(tool: Tool) {
+  if (tool.last_commit && (Date.now() - new Date(tool.last_commit).getTime()) / 86400000 > 365) return "更新状況を要確認";
+  if (tool.github_stars_updated_at) return "GitHub情報あり";
+  return "公式情報を確認";
 }
 
 export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool; index?: number }) {
@@ -39,137 +20,63 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
   const competitor = isKnownCompetitor(tool.primary_competitor)
     ? (tool.primary_competitor_ja || tool.primary_competitor)
     : null;
-  const highlightLabel = getHighlightLabel(tool);
   const guideLink = getSelfhostGuideLink(tool.name);
+  const updated = formatRelativeDate(tool.last_commit);
 
   return (
     <Link
       to={`/tools/${tool.id}`}
-      className="group card-unified-hover p-5 flex flex-col relative animate-fade-in-up"
-      style={{ animationDelay: `${Math.min(index * 40, 400)}ms`, animationFillMode: "both" }}
+      className="group relative flex min-h-[270px] flex-col rounded-2xl border border-border bg-card p-5 transition duration-200 hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_22px_48px_-30px_rgba(13,201,172,0.5)] animate-fade-in-up"
+      style={{ animationDelay: `${Math.min(index * 35, 350)}ms`, animationFillMode: "both" }}
       onMouseEnter={() => { void import("@/pages/ToolDetail"); }}
     >
-      {highlightLabel && (
-        <span className={`absolute -top-2.5 right-4 text-[10px] font-bold px-2 py-0.5 rounded-full ${highlightLabel.cls}`}>
-          {highlightLabel.text}
-        </span>
-      )}
-
-      {competitor && (
-        <div className="mb-2">
-          <AlternativeBadge competitor={competitor} />
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={32} id={tool.id} />
+          <div className="min-w-0">
+            <h3 className="truncate text-base font-bold text-foreground">{tool.name}</h3>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{tool.parent_category_ja || "OSSツール"}</p>
+          </div>
         </div>
-      )}
-
-      <div className="flex items-start gap-3 mb-2 min-w-0">
-        <div className="flex-1 min-w-0 flex items-center gap-2.5">
-          <ToolIcon url={tool.url} githubUrl={tool.github_url} name={tool.name} size={22} id={tool.id} />
-          <h3 className="font-bold text-sm text-foreground leading-tight line-clamp-1 break-all">
-            {tool.name}
-          </h3>
-        </div>
-        <StarCount count={tool.stars_num} size="sm" />
+        {tool.stars_num != null && tool.stars_num > 0 && (
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-500/10 px-2 py-1 text-[11px] font-semibold text-amber-400">
+            <Star className="h-3 w-3 fill-current" /> {formatCount(tool.stars_num)}
+          </span>
+        )}
       </div>
 
-      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-3 flex-1 break-words">
-        {tool.description_ja || tool.description_en || "説明なし"}
+      {competitor && <div className="mt-4"><AlternativeBadge competitor={competitor} /></div>}
+
+      <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+        {tool.description_ja || tool.description_en || "説明を準備中です。"}
       </p>
 
-      <div className="flex flex-wrap items-center gap-1.5 mb-3">
-        {tool.language && (
-          <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 ${getLanguageBadgeClass(tool.language)}`}>
-            {tool.language}
-          </Badge>
-        )}
-        {tool.parent_category_ja && (
-          <Badge variant="secondary" className="text-[10px] font-normal px-2 py-0 h-5">
-            {tool.parent_category_ja}
-          </Badge>
-        )}
-        {tool.license && tool.license !== "NOASSERTION" && (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5">
-            {tool.license}
-          </Badge>
-        )}
-        {tool.forks_num && tool.forks_num > 0 ? (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5">
-            <GitFork className="h-2.5 w-2.5" />
-            {formatCount(tool.forks_num)}
-          </Badge>
-        ) : null}
-        {formatRelativeDate(tool.last_commit) && (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5">
-            <Clock className="h-2.5 w-2.5" />
-            {formatRelativeDate(tool.last_commit)}
-          </Badge>
-        )}
-        {tool.scorecard_score != null && (
-          <Badge className={`text-[10px] font-normal border px-2 py-0 h-5 gap-0.5 ${getScorecardBadgeClass(tool.scorecard_score)}`}>
-            <ShieldCheck className="h-2.5 w-2.5" />
-            {tool.scorecard_score.toFixed(1)}
-          </Badge>
-        )}
-        {tool.docker_available && (
-          <Badge variant="outline" className="text-[10px] font-normal px-2 py-0 h-5 gap-0.5 text-sky-400 border-sky-500/20 bg-sky-500/10">
-            <Container className="h-2.5 w-2.5" />
-            Docker
-          </Badge>
-        )}
+      <div className="mt-5 flex flex-wrap gap-2">
+        {tool.license && tool.license !== "NOASSERTION" && <span className="rounded-md border border-border bg-background/60 px-2 py-1 text-[10px] text-muted-foreground">{tool.license}</span>}
+        {tool.language && <span className="rounded-md border border-border bg-background/60 px-2 py-1 text-[10px] text-muted-foreground">{tool.language}</span>}
+        {tool.docker_available && <span className="inline-flex items-center gap-1 rounded-md border border-primary/20 bg-primary/10 px-2 py-1 text-[10px] text-primary"><Container className="h-3 w-3" />Docker</span>}
       </div>
 
-      {guideLink && (
-        <span
-          role="link"
-          tabIndex={0}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            track("tool_card_guide_click", { tool_id: tool.id, tool_name: tool.name ?? "" });
-            navigate(guideLink);
-          }}
-          className="mb-3 -mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-sky-600 dark:text-sky-400 hover:underline w-fit cursor-pointer"
-        >
-          <Server className="h-3 w-3" />
-          セルフホストガイドを見る
-        </span>
-      )}
-
-      <div className="flex items-center gap-2 pt-3 border-t border-border/60">
-        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-primary group-hover:gap-2 transition-all duration-200">
-          詳しく見る
-          <ArrowRight className="h-3 w-3" />
-        </span>
-        <div className="ml-auto flex items-center gap-1">
-          {tool.url && (
-            <span role="link"
-              className="inline-flex items-center h-7 px-2.5 text-[11px] gap-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(tool.url!, "_blank", "noopener,noreferrer"); }}>
-              <ExternalLink className="h-3 w-3" />
-              サイト
-            </span>
-          )}
-          {tool.github_url && (
-            <span role="link"
-              className="inline-flex items-center h-7 px-2.5 text-[11px] gap-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors cursor-pointer"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                try {
-                  track("external_link_click", {
-                    provider: "github",
-                    tool_id: tool.id,
-                    tool_name: tool.name ?? "",
-                    link_url: tool.github_url!,
-                    cta_label: "GitHub",
-                    source: "tool_card",
-                  });
-                } catch { /* best effort */ }
-                window.open(tool.github_url!, "_blank", "noopener,noreferrer");
-              }}>
-              <Github className="h-3 w-3" />
-              GitHub
-            </span>
-          )}
+      <div className="mt-auto pt-5">
+        <div className="flex items-center gap-1.5 border-t border-border pt-3 text-[11px] text-muted-foreground">
+          <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+          <span>{statusLabel(tool)}</span>
+          {updated && <span className="ml-auto inline-flex items-center gap-1"><Clock className="h-3 w-3" />{updated}</span>}
+        </div>
+        <div className="mt-3 flex items-center">
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">導入条件を見る <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+          <div className="ml-auto flex items-center gap-1">
+            {guideLink && (
+              <span
+                role="link"
+                tabIndex={0}
+                onClick={(event) => { event.preventDefault(); event.stopPropagation(); track("tool_card_guide_click", { tool_id: tool.id, tool_name: tool.name ?? "" }); navigate(guideLink); }}
+                className="rounded-md px-2 py-1 text-[11px] text-muted-foreground hover:bg-secondary hover:text-foreground"
+              >ガイド</span>
+            )}
+            {tool.url && <span role="link" onClick={(event) => { event.preventDefault(); event.stopPropagation(); window.open(tool.url!, "_blank", "noopener,noreferrer"); }} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"><ExternalLink className="h-3.5 w-3.5" /></span>}
+            {tool.github_url && <span role="link" onClick={(event) => { event.preventDefault(); event.stopPropagation(); track("external_link_click", { provider: "github", tool_id: tool.id, tool_name: tool.name ?? "", link_url: tool.github_url!, source: "tool_card" }); window.open(tool.github_url!, "_blank", "noopener,noreferrer"); }} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground"><Github className="h-3.5 w-3.5" /></span>}
+          </div>
         </div>
       </div>
     </Link>
@@ -178,22 +85,11 @@ export const ToolCard = memo(function ToolCard({ tool, index = 0 }: { tool: Tool
 
 export function ToolCardSkeleton() {
   return (
-    <div className="card-unified p-5 animate-pulse">
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <div className="h-6 w-6 bg-secondary rounded-md" />
-          <div className="h-4 w-28 bg-secondary rounded" />
-        </div>
-        <div className="h-4 w-12 bg-secondary rounded" />
-      </div>
-      <div className="h-4 w-full bg-secondary rounded mb-3" />
-      <div className="flex gap-1.5 mb-3">
-        <div className="h-5 w-14 bg-secondary rounded-md" />
-        <div className="h-5 w-18 bg-secondary rounded-md" />
-      </div>
-      <div className="pt-3 border-t border-border">
-        <div className="h-4 w-20 bg-secondary rounded" />
-      </div>
+    <div className="min-h-[270px] animate-pulse rounded-2xl border border-border bg-card p-5">
+      <div className="flex items-center gap-3"><div className="h-8 w-8 rounded-lg bg-secondary" /><div className="h-4 w-28 rounded bg-secondary" /></div>
+      <div className="mt-6 h-4 w-full rounded bg-secondary" /><div className="mt-2 h-4 w-4/5 rounded bg-secondary" />
+      <div className="mt-6 flex gap-2"><div className="h-5 w-16 rounded bg-secondary" /><div className="h-5 w-12 rounded bg-secondary" /></div>
+      <div className="mt-16 h-4 w-24 rounded bg-secondary" />
     </div>
   );
 }

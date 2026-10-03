@@ -1,3 +1,4 @@
+import { ArrowDown, CheckCircle2, Sparkles } from "lucide-react";
 import { SearchBar } from "@/components/SearchBar";
 import { track } from "@/lib/track";
 
@@ -8,88 +9,71 @@ interface HeroSectionProps {
 }
 
 const QUICK_CHIPS = [
-  { label: "Notion代替", search: "Notion" },
-  { label: "Airtable代替", search: "Airtable" },
-  { label: "Google Analytics代替", search: "Google Analytics" },
-  { label: "Slack代替", search: "Slack" },
-  { label: "Zapier代替", search: "Zapier" },
-  { label: "Figma代替", search: "Figma" },
+  { label: "Notion", search: "Notion" },
+  { label: "Slack", search: "Slack" },
+  { label: "Figma", search: "Figma" },
+  { label: "Zapier", search: "Zapier" },
+  { label: "Google Analytics", search: "Google Analytics" },
 ];
 
 export function HeroSection({ search, onSearchChange, onSearchSubmit }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden flex items-center">
-      {/* Mesh gradient blobs — static (no animation): a continuously animated
-          transform on a heavily blurred layer forces the browser to
-          recomposite an expensive blur every frame, which reads as jank/
-          freezing on load, especially on mobile GPUs. */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-primary/[0.13] rounded-full blur-[130px]" />
-        <div className="absolute -top-20 right-1/4 translate-x-1/2 w-[500px] h-[500px] bg-accent/[0.10] rounded-full blur-[110px]" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-blue-600/[0.06] rounded-full blur-[100px]" />
+    <section className="relative overflow-hidden border-b border-border">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-48 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-primary/15 blur-[120px]" />
+        <div className="absolute right-[8%] top-20 h-40 w-40 rounded-full border border-primary/25" />
+        <div className="absolute left-[6%] top-44 h-16 w-16 rounded-full bg-accent/15 blur-xl" />
       </div>
 
-      <div className="container relative z-10 py-8 md:py-12 text-center">
-        {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-full px-4 py-1.5 mb-4">
-          <span
-            className="w-1.5 h-1.5 bg-green-500 rounded-full"
-            style={{ boxShadow: "0 0 6px #22c55e" }}
-          />
-          <span className="text-xs text-primary font-medium tracking-wide">280+ OSSツールを収録</span>
+      <div className="container relative py-16 md:py-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary">
+            <Sparkles className="h-3.5 w-3.5" /> 日本語で探す OSS移行ナビ
+          </div>
+          <h1 className="mt-6 text-4xl font-black leading-[1.08] tracking-[-0.04em] text-foreground md:text-6xl">
+            使っているSaaSを、
+            <span className="block text-gradient">次の選択肢へ。</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            サービス名から代替OSSを探し、導入条件を比較し、公式情報を確認する。
+            <br className="hidden md:block" />移行の判断を日本語で支えます。
+          </p>
+
+          <div className="mx-auto mt-9 max-w-2xl">
+            <SearchBar
+              value={search}
+              onChange={onSearchChange}
+              placeholder="置き換えたいサービス名を入力（例：Notion）"
+              size="hero"
+              onSubmit={() => { track("hero_search", { keyword: search, journey: "rebuild" }); onSearchSubmit(); }}
+            />
+          </div>
+
+          <div className="mt-5 flex flex-wrap justify-center gap-2">
+            <span className="mr-1 py-1 text-xs text-muted-foreground">よく探されるサービス</span>
+            {QUICK_CHIPS.map((chip) => (
+              <button
+                key={chip.label}
+                onClick={() => { track("quick_chip_click", { chip: chip.label, journey: "rebuild" }); onSearchChange(chip.search); }}
+                className="rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-medium text-foreground transition hover:border-primary/50 hover:bg-primary/10"
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
+            {["サービス別の代替候補", "比較・導入ガイド", "公式情報への導線"].map((item) => (
+              <span key={item} className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-primary" /> {item}
+              </span>
+            ))}
+          </div>
         </div>
+      </div>
 
-        {/* Headline */}
-        <h1 className="font-display text-[2rem] sm:text-[2.8rem] md:text-[3.6rem] font-black leading-[1.12] tracking-[-0.03em] mb-5 max-w-3xl mx-auto">
-          いま使っているSaaSの<br />
-          <span className="text-gradient">代替OSSを探す</span>
-        </h1>
-
-        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
-          Notion・Airtable・Google Analytics…<br />
-          使い続けるのか、OSSに切り替えるのか。<br />
-          日本語の紹介と比較で、用途に合うツールを探せます。
-        </p>
-
-        {/* Search */}
-        <div className="max-w-[620px] mx-auto mb-5">
-          <SearchBar
-            value={search}
-            onChange={onSearchChange}
-            placeholder="代替を探したいサービス名（例：Notion）"
-            size="hero"
-            onSubmit={() => { track("hero_search", { keyword: search }); onSearchSubmit(); }}
-          />
-        </div>
-
-        {/* Tag pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {QUICK_CHIPS.map((chip) => (
-            <button
-              key={chip.label}
-              onClick={() => {
-                track("quick_chip_click", { chip: chip.label });
-                onSearchChange(chip.search);
-              }}
-              className="inline-flex items-center rounded-full border border-border bg-card px-3.5 py-1.5 text-xs text-muted-foreground hover:border-primary/50 hover:bg-primary/[0.06] hover:text-primary hover:-translate-y-0.5 transition-all duration-150"
-            >
-              {chip.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Value props */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> サイト利用無料
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> 日本語で紹介
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-green-500/80">✓</span> 比較記事あり
-          </span>
-        </div>
+      <div className="relative z-10 flex justify-center pb-5 text-muted-foreground">
+        <ArrowDown className="h-4 w-4" />
       </div>
     </section>
   );

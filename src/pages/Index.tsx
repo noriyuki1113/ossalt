@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
-import { Box, ChevronRight, Clock3, Flame, Sparkles } from "lucide-react";
+import { ArrowRight, Box, ChevronRight, Clock3, Flame, GitCompareArrows, ListFilter, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/SiteLayout";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -97,6 +97,41 @@ const CATEGORY_SEO: Record<string, { title: string; description: string }> = {
     description: "さまざまなカテゴリの有料SaaSの代替となるオープンソースツールを比較。",
   },
 };
+
+const JOURNEY_STEPS = [
+  { icon: ListFilter, step: "01", title: "サービスから探す", description: "いま使っているSaaS名から、移行候補となるOSSを見つけます。", to: "/alternatives", action: "代替一覧を見る" },
+  { icon: GitCompareArrows, step: "02", title: "条件を比較する", description: "費用、ライセンス、運用負担を同じ観点で比較します。", to: "/compare", action: "比較を始める" },
+  { icon: ShieldCheck, step: "03", title: "導入前に確認する", description: "セルフホスト、VPS、バックアップの基本を確認します。", to: "/selfhost-vps", action: "導入ガイドを見る" },
+];
+
+function MigrationJourney() {
+  return (
+    <section className="border-b border-border bg-card/40">
+      <div className="container py-12 md:py-16">
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div>
+            <p className="text-xs font-bold tracking-[0.18em] text-primary">MIGRATION JOURNEY</p>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-foreground md:text-3xl">移行判断を、3つのステップで。</h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">候補探しで終わらせず、比較と導入準備まで進められる構成にしました。</p>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {JOURNEY_STEPS.map((item) => (
+            <Link key={item.to} to={item.to} className="group rounded-2xl border border-border bg-background/60 p-5 transition hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_18px_42px_-28px_rgba(13,201,172,0.5)]">
+              <div className="flex items-start justify-between">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><item.icon className="h-5 w-5" /></span>
+                <span className="text-xs font-bold text-primary/70">{item.step}</span>
+              </div>
+              <h3 className="mt-6 text-base font-bold text-foreground">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">{item.action}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function SectionFallback() {
   return <div className="h-32" />;
@@ -320,9 +355,31 @@ export default function IndexPage() {
         }}
       />
 
-      <QuickAlternativesPills />
+      {selectedCategory === "すべて" && !debouncedSearch && (
+        <>
+          <MigrationJourney />
+          <QuickAlternativesPills />
+          <section className="container py-10 md:py-14">
+            <div className="flex flex-col justify-between gap-4 border-b border-border pb-5 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-xs font-bold tracking-[0.18em] text-primary">EXPLORE BY INTENT</p>
+                <h2 className="mt-2 text-xl font-extrabold text-foreground md:text-2xl">よく比較されるOSS</h2>
+              </div>
+              <Link to="/compare" className="text-sm font-semibold text-primary hover:underline">比較をすべて見る</Link>
+            </div>
+            <div className="mt-5">
+              <Suspense fallback={<SectionFallback />}><PopularComparisonsSection /></Suspense>
+            </div>
+          </section>
+          <section className="border-y border-border bg-card/30">
+            <div className="container py-10 md:py-14">
+              <Suspense fallback={<SectionFallback />}><PopularCategoriesGrid /></Suspense>
+            </div>
+          </section>
+        </>
+      )}
 
-      <section className="sticky top-14 z-40 bg-background/80 backdrop-blur-xl border-b border-border py-2.5">
+      <section className="sticky top-16 z-40 bg-background/90 backdrop-blur-xl border-b border-border py-2.5">
         <div className="container">
           <CategoryFilter selected={selectedCategory} onSelect={handleCategoryChange} />
         </div>
@@ -353,10 +410,10 @@ export default function IndexPage() {
           {selectedCategory === "すべて" && !debouncedSearch && !license && !hasGithub && !hasDocker && (
             <div className="mb-6 max-w-2xl">
               <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground">
-                OSSを探す
+                すべてのOSSツール
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                人気順で表示しています。用途、ライセンス、GitHubの有無で絞り込めます。
+                サービス名、カテゴリ、ライセンス、Docker対応から導入候補を絞り込めます。
               </p>
             </div>
           )}
