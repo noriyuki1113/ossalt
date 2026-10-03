@@ -33,6 +33,7 @@ import { KeyFeaturesList } from "@/components/tool/KeyFeaturesList";
 import { SimilarProjectsSection } from "@/components/tool/SimilarProjectsSection";
 import { AffiliateCTA } from "@/components/ads/AffiliateCTA";
 import { usePartnerCards } from "@/hooks/use-partner-cards";
+import { DataTrustPanel } from "@/components/tool/DataTrustPanel";
 
 /* ── helpers ── */
 
@@ -518,6 +519,14 @@ export default function ToolDetailPage() {
             </div>
           </div>
         </section>
+
+        <DataTrustPanel
+          officialUrl={tool.url}
+          githubUrl={tool.github_url}
+          githubUpdatedAt={tool.github_stars_updated_at}
+          lastCommit={tool.last_commit}
+          scorecardUpdatedAt={tool.scorecard_updated_at}
+        />
 
         {(() => {
           const extras = (tool.replaces_ja && tool.replaces_ja.length > 0)
