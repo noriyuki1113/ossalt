@@ -519,6 +519,48 @@ export type Database = {
         }
         Relationships: []
       }
+      openalternative_candidates: {
+        Row: {
+          id: number
+          name: string
+          source_url: string
+          description_en: string
+          parent_category_en: string
+          category_en: string
+          license_claim: string | null
+          stars_claim: string | null
+          status: string
+          discovered_at: string
+          reviewed_at: string | null
+        }
+        Insert: {
+          id?: number
+          name: string
+          source_url: string
+          description_en: string
+          parent_category_en: string
+          category_en: string
+          license_claim?: string | null
+          stars_claim?: string | null
+          status?: string
+          discovered_at?: string
+          reviewed_at?: string | null
+        }
+        Update: {
+          id?: number
+          name?: string
+          source_url?: string
+          description_en?: string
+          parent_category_en?: string
+          category_en?: string
+          license_claim?: string | null
+          stars_claim?: string | null
+          status?: string
+          discovered_at?: string
+          reviewed_at?: string | null
+        }
+        Relationships: []
+      }
       partner_cards: {
         Row: {
           active: boolean

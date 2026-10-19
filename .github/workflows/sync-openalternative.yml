@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       max:
-        description: 'Max new tools to insert per run'
+        description: 'Max candidates to queue per run (1-100)'
         default: '50'
         required: false
 
@@ -18,10 +18,17 @@ jobs:
       - name: Call sync-openalternative Edge Function
         run: |
           MAX="${{ github.event.inputs.max || '50' }}"
+          case "$MAX" in
+            ''|*[!0-9]*) echo 'max must be an integer'; exit 1 ;;
+          esac
+          if [ "$MAX" -lt 1 ] || [ "$MAX" -gt 100 ]; then
+            echo 'max must be between 1 and 100'; exit 1
+          fi
           HTTP_STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
             -X POST \
             "${{ secrets.SUPABASE_URL }}/functions/v1/sync-openalternative?max=${MAX}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "x-sync-token: ${{ secrets.SYNC_OPENALTERNATIVE_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{}")
 

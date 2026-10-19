@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { SiteLayout } from "@/components/SiteLayout";
 import { useSeo } from "@/hooks/use-seo";
@@ -10,8 +10,9 @@ import { RefreshCw, CheckCircle, AlertCircle, Loader2, Sparkles, BarChart3, Bot 
 interface SyncResult {
   message: string;
   total_parsed: number;
-  new_inserted: number;
+  new_queued: number;
   skipped_existing: number;
+  remaining: number;
   errors: number;
   timestamp: string;
 }
@@ -38,7 +39,7 @@ function AdminMetrics() {
     queryKey: ["admin-subscriber-count"],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
-      const { count } = await supabase.from("newsletter_subscribers" as any).select("*", { count: "exact", head: true });
+      const { count } = await supabase.from("newsletter_subscribers").select("*", { count: "exact", head: true });
       return count || 0;
     },
   });
@@ -102,6 +103,38 @@ export default function AdminPage() {
   const [refineLoading, setRefineLoading] = useState(false);
   const [refineResult, setRefineResult] = useState<RefineResult | null>(null);
   const [refineError, setRefineError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const [candidateFilter, setCandidateFilter] = useState<"pending" | "reviewed">("pending");
+  const { data: candidates = [], error: candidateError } = useQuery({
+    queryKey: ["openalternative-candidates", candidateFilter],
+    queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data, error } = await supabase.from("openalternative_candidates")
+        .select("id,name,source_url,description_en,category_en,license_claim,stars_claim")
+        .eq("status", candidateFilter)
+        .order("discovered_at", { ascending: true })
+        .limit(20);
+      if (error) throw error;
+      return data as Array<{ id: number; name: string; source_url: string; description_en: string; category_en: string; license_claim: string | null; stars_claim: string | null }>;
+    },
+  });
+  const [candidateAction, setCandidateAction] = useState<number | null>(null);
+  const [candidateActionError, setCandidateActionError] = useState<string | null>(null);
+  const markCandidate = async (id: number, status: "pending" | "reviewed" | "rejected") => {
+    setCandidateAction(id);
+    setCandidateActionError(null);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.from("openalternative_candidates")
+        .update({ status, reviewed_at: status === "pending" ? null : new Date().toISOString() }).eq("id", id);
+      if (error) throw error;
+      await queryClient.invalidateQueries({ queryKey: ["openalternative-candidates"] });
+    } catch (err: unknown) {
+      setCandidateActionError(err instanceof Error ? err.message : "更新に失敗しました");
+    } finally {
+      setCandidateAction(null);
+    }
+  };
 
   const runSync = async () => {
     setLoading(true);
@@ -112,8 +145,9 @@ export default function AdminPage() {
       const { data, error: fnError } = await supabase.functions.invoke("sync-openalternative");
       if (fnError) throw fnError;
       setResult(data as SyncResult);
-    } catch (err: any) {
-      setError(err.message || "同期に失敗しました");
+      await queryClient.invalidateQueries({ queryKey: ["openalternative-candidates"] });
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "同期に失敗しました");
     } finally {
       setLoading(false);
     }
@@ -128,8 +162,8 @@ export default function AdminPage() {
       const { data, error: fnError } = await supabase.functions.invoke("refine-alternatives");
       if (fnError) throw fnError;
       setRefineResult(data as RefineResult);
-    } catch (err: any) {
-      setRefineError(err.message || "精査に失敗しました");
+    } catch (err: unknown) {
+      setRefineError(err instanceof Error ? err.message : "精査に失敗しました");
     } finally {
       setRefineLoading(false);
     }
@@ -166,8 +200,9 @@ export default function AdminPage() {
               OpenAlternative 同期
             </CardTitle>
             <CardDescription>
-              openalternative.co のREADMEから新しいツールを取得して自動追加します。
-              毎週月曜0時に自動実行されます。
+              OpenAlternative の公開一覧から候補を非公開の確認待ちに取り込みます。
+              ライセンスとStar数は参照元の記載であり、掲載前に公式リポジトリで確認してください。
+              毎週月曜4時に自動実行されます。
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -191,10 +226,12 @@ export default function AdminPage() {
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>取得ツール数</div>
                   <div className="font-mono font-medium">{result.total_parsed}</div>
-                  <div>新規追加</div>
-                  <div className="font-mono font-medium text-green-600">{result.new_inserted}</div>
+                  <div>確認待ちへ追加</div>
+                  <div className="font-mono font-medium text-green-600">{result.new_queued}</div>
                   <div>既存スキップ</div>
                   <div className="font-mono font-medium text-muted-foreground">{result.skipped_existing}</div>
+                  <div>次回以降の候補</div>
+                  <div className="font-mono font-medium">{result.remaining}</div>
                   <div>エラー</div>
                   <div className="font-mono font-medium text-red-500">{result.errors}</div>
                 </div>
@@ -211,6 +248,36 @@ export default function AdminPage() {
                 <p className="text-sm text-red-600 mt-1">{error}</p>
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>掲載候補の確認</CardTitle>
+            <CardDescription>先頭20件を表示。参照元から公式GitHubとライセンスを確認し、掲載する場合はエージェントで下書きを作成してください。</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex gap-2">
+              <Button size="sm" variant={candidateFilter === "pending" ? "default" : "outline"} onClick={() => setCandidateFilter("pending")}>確認待ち</Button>
+              <Button size="sm" variant={candidateFilter === "reviewed" ? "default" : "outline"} onClick={() => setCandidateFilter("reviewed")}>確認済み</Button>
+            </div>
+            {candidateError && <p className="text-sm text-red-600">候補を取得できませんでした: {candidateError.message}</p>}
+            {candidateActionError && <p className="text-sm text-red-600">{candidateActionError}</p>}
+            {!candidateError && candidates.length === 0 && <p className="text-sm text-muted-foreground">この状態の候補はありません。</p>}
+            {candidates.map(candidate => (
+              <div key={candidate.id} className="rounded-lg border p-3 space-y-2">
+                <div className="font-medium">{candidate.name} <span className="text-xs text-muted-foreground">{candidate.category_en}</span></div>
+                <p className="text-sm text-muted-foreground">{candidate.description_en}</p>
+                <p className="text-xs text-muted-foreground">参照元の記載: ライセンス {candidate.license_claim || "不明"} · Stars {candidate.stars_claim || "不明"}</p>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <Button asChild size="sm" variant="outline"><a href={candidate.source_url} target="_blank" rel="noopener noreferrer">参照元を開く</a></Button>
+                  {candidateFilter === "pending"
+                    ? <Button size="sm" variant="secondary" disabled={candidateAction === candidate.id} onClick={() => markCandidate(candidate.id, "reviewed")}>確認済みにする</Button>
+                    : <Button size="sm" variant="secondary" disabled={candidateAction === candidate.id} onClick={() => markCandidate(candidate.id, "pending")}>確認待ちに戻す</Button>}
+                  <Button size="sm" variant="ghost" disabled={candidateAction === candidate.id} onClick={() => markCandidate(candidate.id, "rejected")}>見送る</Button>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
