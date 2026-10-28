@@ -1,9 +1,7 @@
 name: Sync OpenAlternative (Weekly)
 
 on:
-  schedule:
-    # Monday 04:00 JST = Sunday 19:00 UTC
-    - cron: '0 19 * * 0'
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
     inputs:
       max:
