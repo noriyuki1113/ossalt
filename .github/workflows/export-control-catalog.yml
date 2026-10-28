@@ -1,13 +1,8 @@
 name: Export OSSALT Control Catalog
 
 on:
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
-  schedule:
-    - cron: '30 19 * * *'
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/export-control-catalog.yml'
 
 permissions:
   contents: write
