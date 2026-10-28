@@ -1,9 +1,7 @@
 name: Fetch GitHub Stats (Nightly)
 
 on:
-  schedule:
-    # 03:00 JST = 18:00 UTC
-    - cron: '0 18 * * *'
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
     inputs:
       limit:
