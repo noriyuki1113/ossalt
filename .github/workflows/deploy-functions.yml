@@ -1,11 +1,7 @@
 name: Deploy Edge Functions
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'supabase/functions/**'
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
 
 jobs:

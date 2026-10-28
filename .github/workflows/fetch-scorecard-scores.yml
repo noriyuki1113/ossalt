@@ -1,9 +1,7 @@
 name: Fetch Scorecard Scores (Weekly)
 
 on:
-  schedule:
-    # 月曜 04:30 JST = 日曜 19:30 UTC（openalternative sync の 30 分後）
-    - cron: '30 19 * * 0'
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
     inputs:
       limit:

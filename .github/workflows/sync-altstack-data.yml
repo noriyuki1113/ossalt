@@ -1,9 +1,7 @@
 name: Sync Altstack Data (Monthly)
 
 on:
-  schedule:
-    # 毎月1日 05:00 JST = 毎月1日 20:00 UTC
-    - cron: '0 20 1 * *'
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
 
 jobs:
