@@ -1,18 +1,7 @@
 name: E2E Tests
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "tests/**"
-      - "public/**"
-      - "index.html"
-  pull_request:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "tests/**"
+  # Automatic triggers paused 2026-10-29; manual runs remain available.
   workflow_dispatch:
 
 jobs:
